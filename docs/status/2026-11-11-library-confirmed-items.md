@@ -10,10 +10,11 @@ Dean asked for a professional recommendation on each of the sixteen open items o
 - **States.** S1 to S5 confirmed as drawn: one "Outcome unknown" wording with forms included, placeholders inside pages, plain empty states, not refreshed, and incomplete ([record](../decisions/library-states.md), section 6). S2 refinement: placeholders appear only after a read has taken about 300 ms. S4 refinement: "Shown as at" names the day when it is not today.
 - **Forms save bar.** Because of S1, Form / Save bar's uncertain state takes the Outcome banner with Check the outcome and Retry the same action, replacing Confirm original save. The Forms record's saving rule and values table now say so.
 
-**Checked:** the three records were read back after editing. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
+- **In Figma.** The changes followed the same day: Gantt card 9, Forms card 10 and States card 9 and their page headers list the confirmed items. The S1 save bar and the S2 and S4 refinements are drawn. The Read me records the sixteen items. The first attempt was refused at the Figma connection's tool-call limit (200 a day on a Professional Full seat), which frees up over a rolling day, so the edits were spread out.
+
+**Checked:** the three records were read back after editing. The changed cards and the save bar were rendered and inspected. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
 
 **Not done:**
-- The Figma file is unchanged. On 11 November 2026 the Figma connection refused further edits: the account had reached its daily limit for tool calls, 200 a day on a Professional Full seat. The confirmed items, the S1 save bar, and the S2 and S4 refinements are drawn once the limit allows. Section 7 of each record lists the changes.
 - No page is accepted and the library is not published.
 - No application code, binding, register or page guide changed.
 

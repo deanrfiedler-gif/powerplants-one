@@ -72,7 +72,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | 6 · Outcome unknown | `166:347` | The six banner states; forms today and external sends; rules |
 | 7 · Connection and session | `166:480` | Offline and back; session changed; could not start; where sign-in pages live; rules |
 | 8 · Do and Don't | `167:373` | Three pairs |
-| 9 · Values, sources and items to confirm | `167:453` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 9 · Values, sources and confirmed items | `167:453` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated: the page index, rules 2 and 4, the variable, style and component lists and the next steps on Read me; a row in the layout table, two text-style specimens and the text-styles card title on Foundations.
 
@@ -104,7 +104,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 
 ## 6. Confirmed — 11 November 2026
 
-Asked for a recommendation on each open item, the answer recommended confirming all five as drawn, with refinements to S2 and S4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the five Gantt items and the six Forms items). Confirming S1 changes the Forms page: Form / Save bar's uncertain state takes the Outcome banner and its two actions ([Forms record](library-forms.md), section 4).
+Asked for a recommendation on each open item, the answer recommended confirming all five as drawn, with refinements to S2 and S4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the five Gantt items and the six Forms items). Card 9 and the page header now say so. The 300 ms rule is on card 2, in the Placeholder description and in card 9's values; the day in "Shown as at" is in cards 1 and 4 and the Inline notice description. Confirming S1 changes the Forms page: Form / Save bar's uncertain state takes the Outcome banner and its two actions ([Forms record](library-forms.md), section 4).
 
 | ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
@@ -118,15 +118,11 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Module files unchanged.** The frozen "PPO - Design" file keeps the accepted System pages and its parts. Module pages switch to these parts after acceptance and publishing; the built pages change only through reviewed application work, as the System pages decision's build needs list.
-- **Figma not yet changed.** The Figma file still shows the drawing from before 11 November 2026. On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls was reached (200 a day on a Professional Full seat). The following are made once it allows:
-  - card 9 and the page header list the confirmed items;
-  - card 2 and Placeholder's description gain the 300 ms rule (S2);
-  - the Not refreshed notice and card 4 gain the day (S4);
-  - Form / Save bar's Uncertain variants on the Forms page take the Outcome banner and its two actions (S1).
+- **Forms page changed.** Form / Save bar's Uncertain variants now say Outcome unknown and offer Check the outcome and Retry the same action (S1), and card 6 on this page says forms use the one wording ([Forms record](library-forms.md)).
 - **Not here.** Sign-in, session expired and signed out (System pages and the login template); Toast (Controls); the field workspace's offline queue (ADR-0013); Request access (System pages D4, outside the baseline); an unknown-outcomes indicator and reference lookup (System pages ideas I5 and I6).
 - **No proof beyond the design.** No prototype links were set. Announcements, focus on the message heading and reduced-motion behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. `state/panel-width` has no CSS property yet.
-- **Next in the recommended order.** Record, then Phone patterns, then the shell and page template.
+- **Next in the recommended order.** The [Record page](library-record.md) followed and uses these parts on record pages; then Phone patterns, then the shell and page template.
 
 ## 8. Checks
 
@@ -134,4 +130,5 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 - A structural read of the States page (1,135 nodes, 165 instances) found, outside instances, no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style, no plain corner radius, no layer named as a default and no component set without a status line.
 - Variables read back from the file: 66 in "PPO colour", 34 in "PPO layout", 11 in "Gantt colour", 3 in "Grid density" and 5 in "Control size" (119). Roboto Mono was confirmed available before Text / Reference was made.
 - The Read me texts were read back after their update; the Foundations text-styles card was rendered.
+- On 11 November 2026, after S1 to S5 were confirmed, card 9, the page header, cards 1, 2, 4 and 6 and the Placeholder and Inline notice descriptions were changed. Cards 6 and 9 were rendered and inspected.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `python3 scripts/check_design_tokens.py`.

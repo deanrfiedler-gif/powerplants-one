@@ -8,14 +8,14 @@
       "Control size",
       "Gantt colour"
     ],
-    "read_on": "2026-11-10",
+    "read_on": "2026-11-11",
     "read_by": "Figma connector, read-only"
   },
-  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md, docs/decisions/library-forms.md and docs/decisions/library-states.md.",
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md, docs/decisions/library-forms.md, docs/decisions/library-states.md, docs/decisions/library-record.md and docs/decisions/library-drawer-widths.md.",
   "counts": {
-    "variables": 119,
+    "variables": 124,
     "mapped": 30,
-    "no_code_name": 89
+    "no_code_name": 94
   },
   "variables": [
     {
@@ -623,8 +623,8 @@
     },
     {
       "collection": "PPO layout",
-      "name": "form/panel-width",
-      "value": 680,
+      "name": "drawer/wide",
+      "value": 640,
       "status": "no-code-name"
     },
     {
@@ -637,6 +637,36 @@
       "collection": "PPO layout",
       "name": "state/panel-width",
       "value": 560,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "record/details-width",
+      "value": 380,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "record/details-folded",
+      "value": 44,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "drawer/standard",
+      "value": 480,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "drawer/narrow",
+      "value": 360,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "drawer/extra-wide",
+      "value": 800,
       "status": "no-code-name"
     },
     {

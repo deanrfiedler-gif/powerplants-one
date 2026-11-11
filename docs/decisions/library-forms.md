@@ -54,7 +54,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | `control/text-size` | 13 / 13 / 16 | Text inside a control; 16 px in Touch so a phone does not zoom on focus |
 | `control/line-height` | 18 / 18 / 24 | Line height of text inside a control |
 | `form/check-width` | 380 | Check and review column beside a full form |
-| `form/panel-width` | 680 | Quick-add panel over its host |
+| `drawer/wide` (was `form/panel-width`) | 640 (was 680) | Quick-add drawer over its host; renamed and set to 640 when Dean set the drawer widths on 11 November 2026 ([drawer widths](library-drawer-widths.md)) |
 | `form/phone-action` | 48 | Main action on a phone form |
 
 **Text styles added:** Text / Control (Roboto Regular, size and line height bound to the two control variables, so it follows the Control size mode) and Text / Section label (11 Medium, capitals, 6% tracking). The library now has eleven text styles.
@@ -72,7 +72,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Form / Option list | `142:142` | 4: Results, Loading, Failed, Empty |
 | Form / Day | `142:155` | 6: Rest, Hover, Today, Selected, Outside, Unavailable. Option: Day |
 | Form / Date picker | `142:156` | One component |
-| Form / Save bar | `142:353` | 8: Layout (Desktop, Phone) by State (Ready, Disabled, Saving, Uncertain). Exposed: Cancel, Primary |
+| Form / Save bar | `142:353` | 8: Layout (Desktop, Phone) by State (Ready, Disabled, Saving, Uncertain). Exposed: Cancel, Primary. Since 11 November 2026 the Uncertain variants say Outcome unknown and offer Check the outcome and Retry the same action (States S1); on desktop the two buttons wrap together below the sentence in a narrow place |
 
 **Changed on the Controls page** (`46:2031`), all still `Status: Proposed`:
 - **Controls / Field** `51:249` now has 24 variants: a Date type (with the Calendar icon) joins Text, Select and Textarea. The asterisk became the requirement in words, with a new Requirement option ("Required" or "Or say why unknown"). The hint (the Helper option) moved from under the input to under the label. The input grows from `control/field-height` when its value wraps, and its text uses Text / Control. The error message wraps to the field's width.
@@ -96,7 +96,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | 7 · Saving and leaving | `152:748` | Saving, saved with the next step, not sure it saved, refused because something changed, leave with unsaved entries, limited by permission; rules |
 | 8 · Sizes and layouts | `152:970` | Quick add, full form and 1024 px as diagrams; a 390 px phone form in Touch size; rules |
 | 9 · Do and Don't | `155:929` | Three pairs |
-| 10 · Values, sources and items to confirm | `155:1037` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 10 · Values, sources and confirmed items | `155:1037` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated: the page index, rules 2 and 4, the variable, style and component lists and the next steps on Read me; the Touch column and two rows in the Control size table, three form rows in the layout table, and two text-style specimens on Foundations.
 
@@ -114,7 +114,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 - **Saving.** Entries lock while saving and the status is announced. Saved names the record, its number, version, who and when, and offers the next step (D6). If the outcome is unknown, the form shows the States page's Outcome banner: it holds new changes and offers Check the outcome, which only reads, and Retry the same action, which repeats the same request so nothing is created twice; Cancel is not offered until the outcome is known (D7; States S1, confirmed 11 November 2026, which replaces the drawn Confirm original save). A refusal says what changed and keeps every entry.
 - **Leaving.** Cancel, Back, closing a panel or leaving the page with unsaved entries opens an app dialog in plain words; closing the tab keeps the browser's prompt (D16, Q13). Esc closes a panel through the same check, except while saving or unsure.
 - **Permissions.** Only permitted options are listed; a disabled field says what unlocks it; Save is disabled only when nothing could be saved, and the save bar says why.
-- **Sizes.** Quick add is a 680 px panel over its host, only where the accepted page has + (Q1). A full form has the check in a 380 px column; at 1024 px and 200% zoom the check moves above the form. On a phone the form fills the screen in Touch size, Back replaces Cancel, the main action is 48 px and pickers open as sheets (D8, Q3).
+- **Sizes.** Quick add is a 640 px drawer (`drawer/wide`) over its host, only where the accepted page has + (Q1). A full form has the check in a 380 px column; at 1024 px and 200% zoom the check moves above the form. On a phone the form fills the screen in Touch size, Back replaces Cancel, the main action is 48 px and pickers open as sheets (D8, Q3).
 
 ## 5. Values and sources
 
@@ -126,7 +126,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 | Section | Card on surface/canvas, line/soft edge, 8 px corners, 16 px padding and gaps; heading in Text / Section label | Create forms D1 |
 | Columns | Two for short values on desktop; one on phones and for long text | Create forms |
 | Check column | 380 px (`form/check-width`); stacked above at 1024 px | Create forms D5 |
-| Quick add | 680 px panel (`form/panel-width`) over its host | Create forms Q1 |
+| Quick add | 640 px drawer (`drawer/wide`) over its host | Create forms Q1; width from Dean's drawer widths, 11 November 2026 (was 680 px) |
 | Save bar | Sentence, Cancel, main action; phone main action 48 px (`form/phone-action`) | Create forms D5, D8 |
 | Search picker | 400 px list; options 36 px (Touch 44); Elevation / Popover; Not known yet and Create | Create forms D4, D15; lookup |
 | Error summary | Danger tone and icon, a count, a link per field; focus moves to it | ErrorNotice |
@@ -137,7 +137,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 
 ## 6. Confirmed — 11 November 2026
 
-Asked for a recommendation on each open item, the answer recommended confirming all six as drawn, with one refinement to F4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these six, the five Gantt items and the five States items). Confirming F1 means the built forms move from 44 px to 36 px fields on desktop, and keep 44 px with 16 px text on phones and touch tablets, through reviewed application work. The States page's S1, confirmed in the same answer, changes this page's save bar (section 4, Saving).
+Asked for a recommendation on each open item, the answer recommended confirming all six as drawn, with one refinement to F4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these six, the five Gantt items and the five States items). Card 10 and the page header now say so. Confirming F1 means the built forms move from 44 px to 36 px fields on desktop, and keep 44 px with 16 px text on phones and touch tablets, through reviewed application work. The States page's S1, confirmed in the same answer, changes this page's save bar (section 4, Saving).
 
 | ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
@@ -155,7 +155,7 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 - **Not here.** Address lookup (kept in module files, as the Grid record notes); attachments and uploads; rich text; multi-step wizards such as Create estimate; inline editing in registers (Grid page); a switch, a search field, a segmented control and pagination.
 - **No proof beyond the design.** No prototype links were set on the Form parts. Focus order, announcements, keyboard behaviour in the picker and the date picker, and touch sizes need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The five new variables have no CSS property yet; the built app's `--ppo-control-height` (44 px) matches the Touch value, not Medium, which F1 confirms for desktop.
-- **Figma not yet changed.** Card 10, the page header and Form / Save bar's two Uncertain variants still show the drawing before 11 November 2026: "items to confirm" and Confirm original save. On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls (200 a day on a Professional Full seat) was reached. They are changed once it allows: the Uncertain variants to the Outcome banner and its two actions (S1), card 10 and the header to the confirmed items.
+- **Drawer widths.** On 11 November 2026 Dean set right-hand drawers at 360, 480, 640 and 800 px by content ([drawer widths](library-drawer-widths.md)). Quick add moved from 680 to 640 px and `form/panel-width` became `drawer/wide`. The accepted Create forms page keeps 680 px until it is redrawn from the library.
 - **Next in the recommended order.** States, then Record, then Phone patterns, then the shell and page template. The [States page](library-states.md) followed; Dean confirmed its item S1 on 11 November 2026, so the uncertain state of Form / Save bar takes the System pages "Outcome unknown" banner and wording instead of Confirm original save.
 
 ## 8. Checks
@@ -165,4 +165,5 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 - A structural read of the Forms page (1,713 nodes, 338 instances) found, outside instances, no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style, no plain corner radius and no component without a status line. Nine frames named "Text" were renamed. The changed Controls components (Field, Radio, Banner) passed the same read.
 - Variables read back from the file: 66 in "PPO colour", 33 in "PPO layout", 11 in "Gantt colour", 3 in "Grid density" and 5 in "Control size" with modes Medium, Small and Touch (118). Text / Control was read back with its size and line height bound to the two variables.
 - The Read me texts were read back after their update and the card rendered; the Foundations tables and specimens were rendered.
+- On 11 November 2026, after F1 to F6 and S1 were confirmed, card 10, the page header, card 7's saving step and rule, and Form / Save bar's Uncertain variants were changed. Card 7 and the Uncertain variants were rendered and inspected. A defect was fixed: the new second button squeezed the sentence in card 7's narrow step, so the desktop variant now wraps both buttons together below the sentence. The quick-add texts and card 8 were changed to 640 px and rendered.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `python3 scripts/check_design_tokens.py`.

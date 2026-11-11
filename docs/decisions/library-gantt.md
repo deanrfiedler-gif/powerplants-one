@@ -91,7 +91,7 @@ The nine code names are the custom properties `src/app/projects-gantt.css` alrea
 | 6 · Changing dates | `121:2212` | Move a bar, stretch the end, the drop opens the task panel, without dragging |
 | 7 · States | `121:2977` | Loading, undated task, partial source, view only |
 | 8 · Do and Don't | `121:3047` | Three pairs |
-| 9 · Values, sources and items to confirm | `121:3142` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 9 · Values, sources and confirmed items | `121:3142` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated: the page index, rules 2 and 4, the variable and component lists, a Gantt colour card with eleven bound swatches, three rows in the layout table, and the twenty-four confirmed items on the Grid, Controls, Move, Board and Time pages.
 
@@ -129,7 +129,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 
 ## 6. Confirmed — 11 November 2026
 
-Asked for a recommendation on each open item, the answer recommended confirming all five as drawn. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the six Forms items and the five States items). None of the refinements concerns this page. Confirming G2 means the built ProjectsGantt's 38 px rows move to 40 px in a later reviewed change.
+Asked for a recommendation on each open item, the answer recommended confirming all five as drawn. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the six Forms items and the five States items). None of the refinements concerns this page. Card 9 and the page header now say so, and card 9's change log records the answer. Confirming G2 means the built ProjectsGantt's 38 px rows move to 40 px in a later reviewed change.
 
 | ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
@@ -143,9 +143,7 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Projects file unchanged.** The Projects file and pull request #896 were not touched. Its Schedule and Programme sheets (PG01 to PG13, ST01) switch to these parts once that file is accepted and the library is published.
-- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows and its own bars until a reviewed change aligns it with this page and G1 to G5, which Dean confirmed.
-- **Board not yet marked.** Card 9 and the page header still read "items to confirm". On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls (200 a day on a Professional Full seat) was reached; they are marked once it allows.
-- **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
+- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows and its own bars until a reviewed change aligns it with this page and G1 to G5, which Dean confirmed.- **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
 - **No proof beyond the design.** No prototype links were set on the Gantt parts. Dragging, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two dependency colours and the three new layout variables have no CSS property yet.
 - **Accepted order complete.** Every page in the accepted order is now drawn. Forms · Fields and validation followed, as the first of the groups the design-to-build standard requires ([its record](library-forms.md)); it changed Controls / Field and Banner, which the task panel on card 6 uses.
@@ -156,4 +154,5 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 - A structural read of the page (3,652 nodes, 189 instances) found, outside instances, no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style and no layer named as a default. The milestone diamond's plain 2 px corner was bound to the new `radius/milestone`; the section and component-set frames keep Figma's default corners, as on the other pages.
 - Variables read back from the file: 66 in "PPO colour", 30 in "PPO layout", 3 in "Grid density", 3 in "Control size" and 11 in "Gantt colour" (113). The nine Gantt code names were matched against `src/app/projects-gantt.css`.
 - The Read me texts were read back after their update; the Gantt colour card was rendered and inspected.
+- On 11 November 2026, after G1 to G5 were confirmed, card 9 and the page header were updated and card 9 was rendered and inspected. An earlier attempt the same day was refused at the Figma connection's tool-call limit; a read of card 9 showed it had changed nothing.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py`, `python3 scripts/check_design_tokens.py`.
