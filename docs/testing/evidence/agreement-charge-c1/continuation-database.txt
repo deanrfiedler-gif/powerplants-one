@@ -1,0 +1,17 @@
+✔ C1 late audit_events failure rolls back whole-charge reservation and permits exact retry (6013.166158ms)
+✔ C1 late operation_receipts failure rolls back whole-charge reservation and permits exact retry (5808.285611ms)
+✔ C1 late outbox_jobs failure rolls back whole-charge reservation and permits exact retry (7106.953708ms)
+✔ C1 accepted target survives local outcome rollback and is recovered only by original lookup (9203.214139ms)
+✔ C1 exact scheduled fee uses the existing review, unknown-result and historical reconciliation pipeline once (14597.267874ms)
+✔ C1 whole charges race once; reasoned cancellation releases and no ProjectClaim identity is allocated (19232.11354ms)
+✔ C1 requires exact independently approved, current and due agreement charge authority (20894.694809ms)
+✔ C1 SQL guards retain exact source amount, disjoint identities and immutable schedule evidence (23437.868284ms)
+✔ C1 source grants govern reads, queues and original-operation receipts after revocation (5726.185876ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 114581.562863

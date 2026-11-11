@@ -39,3 +39,65 @@ Full real-renderer database/browser suites remain unrun locally because Chrome i
 Independent Claude review and full final-head/merged-tree CI are outstanding. C1 must retarget to main after M2 merges; agents do not merge. No full TS-01/02, device/visual, operational financial policy, real MYOB or SharePoint acceptance is claimed.
 
 Unmodified-main control: detached clean main `9926da5fa9a3b60fbc22843d25ddea1af4830bf5` reproduced the same `assert.ok(bytes.pdf.length > 1000)` failure with the same optional synthetic renderer. The C1 branch reaches that same unchanged assertion after its reconstructed-history fix. The separate unmocked command-only late-installation proof passes and does not claim to verify PDF size or layout. No assertion or renderer bytes were relaxed.
+
+## Continuation validation — 11 November 2026
+
+This session resumes the released #904/#905 claims at M2 `6b26031e0` and C1 `3ffb1cd77`, against main `9926da5fa`. Both remain draft and unmerged; #897 belongs to another workstream. Three implemented Codex contributions are open, so this batch fixes and validates existing C1 rather than opening another build. No runtime implementation, migration history, grant, seed or fee policy changes in this follow-up.
+
+### Attributable CI fix
+
+[Contacts job 130201651306](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42922816685/job/130201651306) failed before browser execution because its Finance context pin was stale. `python3 scripts/build-contacts-design.py --check` reproduced the failure. Main/M2's `src/finance/context.ts` SHA-256 is `92f937346437b460bcfc0fdf9a4fe16d07c5a5cd80b98d003c2b98b2d029300a`; C1's is `b94d7c9d79b31c39b15781944dd8bb45f54f9fb02bc946163e5f5d2ab6ef6602`. After reading the complete diff, Contacts binding bd-04 and the active-person/company-context model assertions, the working pin is refreshed. The WorkOrder audience query and `SourceAudienceChanged` refusal are unchanged. Issued HTML, historical manifests and visual acceptance are preserved. Deterministic build and all **103 Contacts model groups pass**.
+
+### Fresh environment and commands
+
+The setup command was `PPO_TOOLS_DIR=/workspace/work/.ppo-tools PPO_DOCUMENT_DIRECTORY=/workspace/work/.ppo-tools/synthetic-documents bash scripts/cloud-setup.sh`, in the isolated C1 worktree. It succeeded with Node 24.21.0, npm 11.19.0 and disposable PostgreSQL 16.15. Every new test shell sources `/workspace/work/.ppo-tools/env.sh`. The setup reports browser unavailable; `npm run browser:check` independently fails because `/opt/google/chrome/chrome` is absent. The system Chromium is not substituted for the repository's reviewed Chrome channel. No real PDF/browser claim follows.
+
+Executed unmocked commands:
+
+```sh
+npm run check
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/database/agreement-charge-finance.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='SV08|C1 command-only' tests/database/maintenance-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/demo/upgrade.test.ts
+python3 scripts/build-contacts-design.py --check
+node scripts/check-contacts-model.mjs
+npm run typecheck
+npx --no-install eslint tests/helpers/agreement-charge-restart.ts tests/database/agreement-charge-finance.test.ts
+npx --no-install prettier --check tests/helpers/agreement-charge-restart.ts tests/database/agreement-charge-finance.test.ts
+```
+
+- `npm run check` passes: Studio, full lint, TypeScript, **1,452 units**, production build. Final helper edits also receive the focused lint/format/type checks above; application source is unchanged.
+- **9/9 C1 database cases pass unmocked**, including four added recovery cases. Injected late audit, receipt and outbox failures leave the entire Finance/audit/receipt/outbox snapshot unchanged; exact retries reserve one whole entitlement. A local outcome failure after the simulator accepts preserves one exact AUD 4,800.00 target, refuses fresh dispatch and recovers it through original lookup to one Consumed hold.
+- **2/2 selected late-Maintenance upgrades and 7/7 demo upgrades pass unmocked**, preserving exact prior rows/ledgers and exercising rollback. The renderer-dependent late-Maintenance case is excluded explicitly by the positive name selector; it is not counted as executed. No hosted demo was accessed.
+- Foundation/prototype/naming/migration/status/documentation checks and **44 documentation unit tests** pass. Documentation-scope is checked again after the final commits. Raw focused results and restart verification are retained beside this chapter; the private checkpoint with the synthetic record graph stays outside Git.
+
+Initial failure: the first nine-case run passed eight and failed the new accepted-target test because it expected `readFinance().targets` to expose a target before an outcome existed. The reader intentionally joins targets through recorded outcomes. The test now checks the independently committed simulator row directly, asserts that the ordinary read still hides it, then verifies original lookup/reconciliation. The complete nine-case rerun passes. No production behavior or assertion about rendered output was relaxed.
+
+### Compiled HTTP and actual restart
+
+The ordinary compiled-server HTTP case passes **1/1 without renderer substitution**, following a fresh `db:reset`. A separate clean reset starts the new two-phase proof. Its write phase uses native agreement setup and ordinary HTTP commands to create, submit, independently approve and dispatch one exact charge with AcceptedThenTimeout, then withdraw the agreement. The verify phase runs after actual app/PostgreSQL restarts. Six original HTTP receipts and their operation lookups replay exactly; new use of the withdrawn agreement and cancellation of the unknown effect are refused; original lookup and reconciliation produce one Matched AUD 4,800.00 target, one processing attempt and one Consumed hold. The two recovery commands replay without mutation.
+
+Actual command sequence (all local, unmocked):
+
+```sh
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 tests/http/agreement-charge-finance.test.ts
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+PPO_RESTART_SERVER_PID=9966 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts write /workspace/work/c1-restart
+PPO_RESTART_SERVER_PID=9966 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts verify /workspace/work/c1-restart
+# Expected refusal: no application restart has occurred. Check this exact assertion.
+# Verify /proc/9966/cmdline is this owned compiled server, then send SIGTERM.
+env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH docker --host=unix:///var/run/docker.sock restart ppo-postgres
+# Restart the same compiled application with the ordinary local launcher:
+node --env-file=.env.local --import tsx scripts/local-server.ts --compiled
+# In the next shell (server PID recorded by the launcher):
+PPO_RESTART_SERVER_PID=10431 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts verify /workspace/work/c1-restart
+```
+
+[Machine-readable restart verification](continuation-restart.json) retains both process identities, the unchanged compiled build ID, different `pg_postmaster_start_time()` values, graph hashes and exact result counts. The no-restart negative control refuses as intended. [HTTP result](continuation-http.txt), [database cases](continuation-database.txt), [late upgrades](continuation-late-upgrade.txt), [demo upgrades](continuation-demo-upgrade.txt), [Contacts model](continuation-contacts.txt) and [log digests](continuation-log-digests.json) distinguish this session from earlier checkpoints. No session credentials or full private checkpoint are committed.
+
+The first actual-restart attempt recovered all six receipts but failed the whole-audit snapshot assertion because fresh local sign-ins legitimately append Session audit rows. The final harness first compares the complete saved graph and migration ledger before sign-in, then verifies preservation of every old audit row and exactly five new Accepted Session rows for the five named test profiles. It then requires the entire source/Finance/audit/receipt/outbox graph to remain unchanged across replay and refused effects. A fresh reset/write/restart/verify cycle passes; this correction excludes no Finance audit evidence and changes no production behavior.
+
+### Delivery gates
+
+At the incoming C1 head, Application assurance's workflow summary was successful but its database/HTTP/runtime jobs were **skipped because the PR is draft**. This is not full CI validation. Contacts was the attributable failing job; other workflow results are observed separately on GitHub. Updated-head CI and Claude's one independent defect review remain separate gates. C1 stays on M2 until Dean merges M2, then needs retargeting and current-main validation. Complete TS-01/02, real rendered suites, customer output, operating pricing/tax/accounting authority and deployment remain unclaimed.

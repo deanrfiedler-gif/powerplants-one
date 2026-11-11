@@ -22,6 +22,8 @@ versioning: git
 
 Change record: r01 draft prepared 30 October 2026 at Dean's request, following TS-01's structure, from a reading of main at `fa15714`.
 
+Implementation checkpoint — 11 November 2026: M1 #770 is on main. M2 #904 provides agreement-covered defaults through the Finance API and C1 #905 provides reviewed agreement charges through the existing pipeline; both remain draft, with independent review and final delivery gates separate. The existing UI does not consume M2 defaults or author C1 schedules. These API/component proofs do not execute this scenario. The quarterly dates and manual work-order instructions below retain the original unexecuted fixture; a coordinated six-monthly scenario refresh is still required before its next full run under the adopted maintenance decision. See [current reconciliation](../delivery/backend-reconciliation.md#project--service--finance-continuation--11-november-2026).
+
 ## 1. Purpose and scope
 
 TS-02 tests one planned maintenance service from its due date to Finance, and the sales follow-up a field finding creates. It continues TS-01: Bellbird Ridge Berries' maintenance agreement is Active and three quarterly services were generated in TS01-15.05. The first, due 12 June 2027, finds a worn dosing pump.

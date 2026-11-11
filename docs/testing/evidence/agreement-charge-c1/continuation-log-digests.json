@@ -1,0 +1,54 @@
+{
+  "c1-check.log": {
+    "bytes": 179197,
+    "sha256": "1833bdb2742f89d62f6c17b801f8220b68da2144d815a8d4632e3a84dbc6c255"
+  },
+  "c1-db.log": {
+    "bytes": 1915,
+    "sha256": "59270539a38d2c7fdb0f4183aa74d470c24b9edac465f107b8c45b05f3239329"
+  },
+  "c1-db-final.log": {
+    "bytes": 1140,
+    "sha256": "bbb0005fd24dbf66582dc94a4606dcfa07cf692179a6f21e2ac8d7d2aeb37dda"
+  },
+  "c1-late-upgrade.log": {
+    "bytes": 347,
+    "sha256": "2dc9c43aed9ac354aab4877d46a85643e49a3bfee9cbe0c04a822361d79b48fa"
+  },
+  "c1-demo-upgrade.log": {
+    "bytes": 43835,
+    "sha256": "046f926fb6f49ec4b228f0ca531415da0ba11806ac3dfc068fb641a760e2ac50"
+  },
+  "c1-contacts-build.log": {
+    "bytes": 179,
+    "sha256": "e61d58f56877780d5e22d53fe3bdc8899a4e55e0b3ce47320530ba50a996e776"
+  },
+  "c1-contacts-model.log": {
+    "bytes": 8126,
+    "sha256": "1c85cd66221f968dc10f18acfd7eb95e61d2bbba1d3ed5a0423170bb02c3e5c6"
+  },
+  "c1-browser-probe.log": {
+    "bytes": 660,
+    "sha256": "a5ef4f94b4cf679b3e50e4f80a721a5c43f11d3ac7369d476c17a8e67dbed893"
+  },
+  "c1-http.log": {
+    "bytes": 231,
+    "sha256": "45edb566866bc6f14985eccba7424c4bcb2c692fd098cf51bc9815958e14c457"
+  },
+  "c1-restart-write.log": {
+    "bytes": 126,
+    "sha256": "cf1af1164de44c9d4bb240776625b47824f7c72732173502b2cc2b03547eb979"
+  },
+  "c1-restart-verify-initial.log": {
+    "bytes": 133288,
+    "sha256": "b78a5db96b8346afc8ed804bd8f0adee3af51b25dbe3343d78b1a9f2cc5e15c1"
+  },
+  "c1-restart-negative-final.log": {
+    "bytes": 612,
+    "sha256": "b4d9b1d95515d73300c1538bbfafc0cc216134febb2f399bab0ad38fdabceb09"
+  },
+  "c1-restart-verify.log": {
+    "bytes": 124,
+    "sha256": "ef1b751f0d571c500ac8d9344225f10a92acd8f8a662814721ef00fe82ab0d68"
+  }
+}

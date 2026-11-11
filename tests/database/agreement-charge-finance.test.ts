@@ -9,7 +9,12 @@ import {
 } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { agreementCommand } from "../../src/maintenance/agreements";
-import { saveFinance, cancelFinance } from "../../src/finance/service";
+import {
+  saveFinance,
+  cancelFinance,
+  submitFinance,
+  recordFinanceOutcome,
+} from "../../src/finance/service";
 import { listFinance } from "../../src/finance/reads";
 import { readOperation } from "../../src/shared/receipts";
 import {
@@ -41,6 +46,125 @@ const holds = async (id: string) =>
       [id],
     )
   ).rows;
+
+for (const table of ["audit_events", "operation_receipts", "outbox_jobs"])
+  test(`C1 late ${table} failure rolls back whole-charge reservation and permits exact retry`, async () => {
+    const f = await agreementChargeFixture(),
+      a = await saveAgreementClaim(f),
+      before = await readFinance(f.preparer, a.id),
+      cmd = { ...base(), expected_version: before.handoff.version };
+    const snapshot = async () => {
+      const result: Record<string, unknown> = {};
+      for (const name of [
+        "finance_handoffs",
+        "finance_revisions",
+        "finance_lines",
+        "finance_allocation_holds",
+        "finance_events",
+        "audit_events",
+        "operation_receipts",
+        "outbox_jobs",
+      ])
+        result[name] = (
+          await database().query(
+            `SELECT to_jsonb(x) AS row FROM ppo.${name} x ORDER BY to_jsonb(x)::text`,
+          )
+        ).rows;
+      return result;
+    };
+    const original = await snapshot();
+    await database().query(
+      `CREATE FUNCTION ppo.fail_c1() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'SYN C1 late failure'; END $$;
+       CREATE TRIGGER c1_fail BEFORE INSERT ON ppo.${table} FOR EACH ROW EXECUTE FUNCTION ppo.fail_c1()`,
+    );
+    try {
+      await assert.rejects(
+        submitFinance(f.preparer, a.id, cmd),
+        /SYN C1 late failure/,
+      );
+    } finally {
+      await database().query(
+        `DROP TRIGGER c1_fail ON ppo.${table}; DROP FUNCTION ppo.fail_c1()`,
+      );
+    }
+    assert.deepEqual(await snapshot(), original);
+    const accepted = await submitFinance(f.preparer, a.id, cmd);
+    assert.deepEqual(
+      (await submitFinance(f.preparer, a.id, cmd)).receipt,
+      accepted.receipt,
+    );
+    assert.equal(
+      (await readFinance(f.preparer, a.id)).handoff.status,
+      "ReadyForReview",
+    );
+    assert.deepEqual(
+      (await holds(a.id)).map((h) => h.state),
+      ["Held"],
+    );
+  });
+
+test("C1 accepted target survives local outcome rollback and is recovered only by original lookup", async () => {
+  const f = await agreementChargeFixture(),
+    a = await saveAgreementClaim(f);
+  await submitAgreementClaim(f, a.id);
+  await reviewAgreementClaim(f, a.id);
+  await beginAgreementClaim(f, a.id);
+  const before = await readFinance(f.processor, a.id),
+    cmd = {
+      ...base(),
+      expected_version: before.handoff.version,
+      attempt_id: before.handoff.active_attempt_id,
+      action: "Dispatch",
+    };
+  await assert.rejects(
+    recordFinanceOutcome(f.processor, a.id, cmd, {
+      beforeRecord: async () => {
+        throw Error("SYN C1 outcome persistence failure");
+      },
+    }),
+    /SYN C1 outcome persistence failure/,
+  );
+  const failed = await readFinance(f.processor, a.id);
+  assert.equal(failed.outcomes.length, 0);
+  // The normal read exposes targets only through a recorded outcome. Inspect the
+  // independently committed simulator here to prove the accepted effect survived.
+  assert.equal(failed.targets.length, 0);
+  const targets = (
+    await database().query(
+      "SELECT * FROM ppo.finance_simulator_targets WHERE handoff_id=$1",
+      [a.id],
+    )
+  ).rows;
+  assert.equal(targets.length, 1);
+  assert.equal(targets[0].lines[0].amount, "4800.00");
+  assert.deepEqual(
+    (await holds(a.id)).map((h) => h.state),
+    ["Held"],
+  );
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*)::int n FROM ppo.operation_receipts WHERE operation_id=$1",
+        [cmd.operation_id],
+      )
+    ).rows[0].n,
+    0,
+  );
+  await assert.rejects(
+    recordFinanceOutcome(f.processor, a.id, { ...cmd, ...base() }),
+    code("OriginalLookupRequired"),
+  );
+  await outcomeAgreementClaim(f, a.id, "LookupOriginal");
+  await reconcileAgreementClaim(f, a.id);
+  const recovered = await readFinance(f.reconciler, a.id);
+  assert.equal(recovered.reconciliations[0].result, "Matched");
+  assert.equal(recovered.targets.length, 1);
+  assert.equal(recovered.attempts.length, 1);
+  assert.deepEqual(
+    (await holds(a.id)).map((h) => h.state),
+    ["Consumed"],
+  );
+});
 
 test("C1 exact scheduled fee uses the existing review, unknown-result and historical reconciliation pipeline once", async () => {
   const f = await agreementChargeFixture(),
