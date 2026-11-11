@@ -2,14 +2,14 @@
 document_id: PPO-SETTINGS-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposal in progress, 10 November 2026; the build stopped part-way when the Figma tool-call limit for the day was reached (section 6), and the Global configuration sheets GL02 to GL06, the Interaction states page and the four Read me cards are still to be drawn; design acceptance is Dean's and has not been given; no named version is saved; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
+status: Proposal, 11 November 2026; all sheets, the Read me cards, the file-wide verification and the audit are complete (sections 6 and 9); design acceptance is Dean's and has not been given; no named version is saved; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
 source_commit: 1888cc81d4c99e68836390110a6655e767fa17d5
 versioning: git
 ---
 
 # Settings module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposal, build in progress. Sections 1 to 8 are the proposal record. Later sections will record the audit, Dean's acceptance, further batches and named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Proposal. Sections 1 to 8 are the proposal record and section 9 the audit. Later sections will record the audit, Dean's acceptance, further batches and named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 10 November 2026 Dean asked for the refined UI pages of the Powerplants One Settings module to be designed in a new, empty private Figma file, "PPO - Settings module (proposal)", inside the accepted shell and to at least the standard of the Sales module file. The module is the **Administration** workspace reached from More (fourteen pages in the accepted Shell menu), the **Settings** rail item that opens the Settings hub, **Assistant settings** (AI-06), **My account and preferences** (SH-03, SH-05, EC-02) and the module's own **global configuration**. His brief set the scope, decisions D1 to D13, one synthetic dataset as at Thursday 5 November 2026, 09:00 AEDT, signed in as systems administrator Taylor Quinn, and Addendum A3 (persona and story reconciliation, as amended for Service, Finance and Settings on 10 November 2026). He added a standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The ten questions in the brief (Q1 to Q10) were therefore answered by their stated defaults; each is recorded in section 5 and can be reversed.
 
@@ -72,6 +72,8 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 
 | Item | Node |
 |---|---|
+| Read me cards: header, "Sheet index and notes" (generated from the pages, the authority for every code and node), audit, page template | `151:876`, `151:888`, `151:971`, `151:1002` |
+| Notes cards: AD-02 `35:7571`, AD-03 `58:6138`, AD-04 `50:6399`, AD-05 `54:5413`, AD-06 `107:4527`, AD-07 `61:4210`, AD-09 `82:6748`, AD-10 `121:4385`, AI-06 `113:4282`, My account `128:4696`, Global configuration `136:3005`, Interaction states `140:4046`; the AD-01 and AD-08 cards are listed on the Sheet index card | one per page |
 | Pages: Read me `0:1`, — Accepted — `11:2`, — Proposals — `11:3`, Shell and kit `11:18`, Scratch `11:19` | separators and Scratch are empty |
 | Shell and kit: helper library `20:600` (hidden text), rebuild library `11:88`, icons `11:89`, page kit `15:21` to `15:86`, top bars `16:7` and `16:66`, rail set `16:585`, right strip `16:586`, phone chrome `16:611` to `16:697`, docked Administration menu `18:1647`, collapsed strip `18:1652`, Account menu `18:1653`, flyout `18:1741`, record header toolbar `19:804` and phone `19:805` | on page `11:18` |
 
@@ -145,8 +147,8 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | IN06a–b | Duplicate prevented; retry already in progress | S | `49:9729`, `49:10084` |
 | IN10 | Dependent item waiting behind the refused receipt | S | `49:10422` |
 | IN11a–c | Connector Not configured; Read-only with a partial run; MYOB refused as the source owner sees it | S | `49:10751`, `49:11050`, `49:11388` |
-| TB01 | Overview on tablet | T | `50:5755` |
-| IN12a–c | Overview; sync item Refused; Retry stays on desktop (phone) | P | `50:6118`, `50:6212`, `50:6305` |
+| IN-TB01 | Overview on tablet | T | `50:5755` |
+| IN-PH01–03 | Overview; sync item Refused; Retry stays on desktop (phone) | P | `50:6118`, `50:6212`, `50:6305` |
 
 ### External mappings · AD-05 — page `11:9` · 17 sheets
 
@@ -162,8 +164,8 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | EM07b | Resolve difference — through Finance | X | `53:3453` |
 | EM05 | Two PPO records claim one MYOB record (Mallee Fresh) | S | `53:3827` |
 | EM08a–d | Run in progress; MYOB source out of date; difference past due; nothing unmapped | S | `53:4159`, `53:4469`, `53:4749`, `53:5029` |
-| TB01 | Register on tablet | T | `54:4901` |
-| EM10a–b | Reconciliation summary; difference record (phone) | P | `54:5240`, `54:5326` |
+| EM-TB01 | Register on tablet | T | `54:4901` |
+| EM-PH01–02 | Reconciliation summary; difference record (phone) | P | `54:5240`, `54:5326` |
 
 ### Data quality · AD-03 — page `11:7` · 20 sheets
 
@@ -176,9 +178,9 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | DQ06 | Rules and policies — read only, SYN-DQ-P01 to P07 | D | `55:2789` |
 | DQ05a–c | Draft correction; Review proposal; Dismiss with reason | X | `56:2364`, `56:2790`, `56:3180` |
 | DQ07 | Report a data problem | X | `56:3535` |
-| DQ08a–g | Policy not configured; source stale; target changed; owner returned; outcome unknown; counterpart unavailable; save failed with the draft kept | S | `57:3475` to `57:5432` |
-| TB01 | Findings queue on tablet | T | `58:5551` |
-| DQ09a–c | In review list; finding; Review sheet (Jordan Kim, phone) | P | `58:5886`, `58:5955`, `58:6058` |
+| DQ08a–g | Policy not configured; source stale; target changed; owner returned; outcome unknown; counterpart unavailable; save failed with the draft kept | S | `57:3475`, `57:3803`, `57:4126`, `57:4456`, `57:4785`, `57:5108`, `57:5432` |
+| DQ-TB01 | Findings queue on tablet | T | `58:5551` |
+| DQ-PH01–03 | In review list; finding; Review sheet (Jordan Kim, phone) | P | `58:5886`, `58:5955`, `58:6058` |
 
 ### Audit history · AD-07 — page `11:11` · 14 sheets
 
@@ -193,8 +195,8 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | AH07 | Approve export — Dean Fiedler, not the requester | X | `60:2816` |
 | AH04 | Withheld events counted, never listed | S | `61:2725` |
 | AH09a–c | Export too large for one file; requester is the approver (refused); no audit access | S | `61:3021`, `61:3291`, `61:3563` |
-| TB01 | History on tablet | T | `61:3741` |
-| AH10a–b | Record timeline; event detail (phone) | P | `61:4051`, `61:4127` |
+| AH-TB01 | History on tablet | T | `61:3741` |
+| AH-PH01–02 | Record timeline; event detail (phone) | P | `61:4051`, `61:4127` |
 
 ### Operational health · AD-09 — page `11:12` · 25 sheets
 
@@ -317,7 +319,6 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | ST01 | Interaction states and accessibility — buttons, fields, inline edit, chips in words, keyboard order and zoom, and the contrast table (full length) | D | `138:882` |
 | PS01–PS12 | Loading permitted evidence; true-empty with its count; filtered-empty; could not load; denied or not found with Request access; stale (a newer revision); partial source (MYOB Not reachable); outcome unknown, lookup only; read only in its seven forms; bulk action partly failed; permission changed while open; two administrators at once | S | `139:1169`, `139:1489`, `139:1763`, `139:2039`, `139:2311`, `139:2489`, `139:2761`, `139:3053`, `139:3337`, `139:3621`, `139:3913`, `139:4177` |
 
-Still to draw: the four Read me cards.
 
 ## 4. Rules applied
 
@@ -408,18 +409,94 @@ Questions Q1 to Q10 of the brief were answered by their defaults: Q1 Shell label
 
 ## 6. Verification
 
-Done so far: every scope page was built in batches; representative sheets of every page type were rendered at 900 to 1440 px and read, and the problems found were fixed in the file before moving on (truncated cells and chips, a mislabelled sub-menu highlight, the recovery item corrected to the dataset's single report re-issue, lifecycle words aligned with D5 and primary actions with section 9.14, two gendered pronouns on the Retention page replaced with names, and violet removed from a non-practice chip). Each page's sections were refitted and restacked after its batch.
+While drawing: every scope page was built in batches, and representative sheets of every page type were rendered at 900 to 1440 px and read. The problems found were fixed in the file before moving on (section 9, C1 to C6). Each page's sections were refitted and restacked after its batch.
 
-Not yet done, and required before Dean is asked to accept: the remaining sheets in section 3; a structural pass and position audit over every page; the independence scan; the words scan (including the pronouns on the earlier pages); the story scan across pages; the capability and authority scan; the contrast table from the PPO colour variables on ST01; the audit (C, R, G, N, P) with a recommended order; and the Read me cards. The build stopped when the Figma tool-call limit for the day was reached (200 calls a day for this seat); it resumes when the limit resets.
+File-wide pass (11 November 2026), run as a script over all fourteen scope pages and the Read me, separator and Scratch pages:
+
+| Check | Result |
+|---|---|
+| Structure: every sheet inside its section; every direct child inside its sheet | Pass on all 267 sheets |
+| Positions: no overlap between sections, or between sheets, labels and notes cards inside a section | Pass; nothing loose on any page; the separators and Scratch are empty |
+| Labels: a label 26 px above each sheet starting with the sheet's code | Pass on all 267 sheets |
+| Fonts | Roboto only (the mixed-weight runs are Roboto) |
+| Words: effective, production ready, cut over, deleted, safe, secure, compliant, uptime | Pass after fixes. The remaining hits are the allowed forms: "approved, not effective", "Not deleted: MYOB is the book of record", the "Safe retry" label (A30) and negative statements such as "never says production ready" |
+| Pronouns: he, she, his, her and the like | Pass after replacing ten instances with names |
+| Violet only on `PRACTICE-` records | Pass after recolouring three chips |
+| Contrast from the PPO colour variables (WCAG formula), shown on ST01 | Lowest text pair 4.95:1 (text/secondary on surface/navy-tint); chips 5.14 to 6.46:1; control edge 3.32:1; focus ring 3.57:1. **One failure:** white on brand/green-deep at 3.57:1, the accepted record toolbar's primary button (C7) |
+| Inventory | The Read me "Sheet index and notes" card is generated from the pages and counts 267 sheets, matching section 3 |
+
+Not run as file-wide extractions: the independence scan, the story scan and the capability and authority scan. Each was checked sheet by sheet while drawing: every gated act names its people, every refusal names who may act, and the dataset was re-read when a page drew a fact. The Operational health correction (C1) shows that a cross-page story pass is still worth running before acceptance (section 9, G3). Not done: prototype links, and a person's keyboard, screen reader, zoom and device review.
 
 Repository checks run for this change: `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`.
 
 ## 7. Not drawn and open questions
 
-Not drawn yet: the items listed at the end of section 3. Not drawn by design: prototype links; module settings pages (each module file draws its own); the Assistant pages AI-01 to AI-05 and AI-07; Help Centre DK-07 (a link out); My Work (Settings contributes items to it, section 6.9 of the brief).
+Not drawn by design: prototype links; module settings pages (each module file draws its own); the Assistant pages AI-01 to AI-05 and AI-07; Help Centre DK-07 (a link out); My Work (Settings contributes items to it, section 6.9 of the brief).
 
-Open questions, cited and not resolved here: D-020 (role bundles never adopted); D-012 (SharePoint retention and deletion); the retry count and the 10-minute queue limit (synthetic examples, not operating thresholds); the audit export retention (90 days, proposed) and size limit (25,000 rows, proposed); the lifecycle run time (02:00, a design choice); every retention legal basis (To be confirmed); the assistant model (Not selected); AD-01's build block of 20 October ("Leave AD-01 blocked; continue with accepted pages"); AD-03 Q1 to Q7; AD-04 Q1 to Q6; the AD-05 notes card (not transcribed); AD-07 Q1 to Q7; AD-10 X1 to X6; the scheduling policy's 200-booking refusal limit as built; A26 (who confirms an incident closure); and the proposed type-catalogue additions (A52), including a clash in the brief's registry where Supply and Finance both propose DSP.
+Open questions, cited and not resolved here: D-020 (role bundles never adopted); D-012 (SharePoint retention and deletion); the retry count and the 10-minute queue limit (synthetic examples, not operating thresholds); the audit export retention (90 days, proposed) and size limit (25,000 rows, proposed); the lifecycle run time (02:00, a design choice); every retention legal basis (To be confirmed); the assistant model (Not selected); AD-01's build block of 20 October ("Leave AD-01 blocked; continue with accepted pages"); AD-03 Q1 to Q7; AD-04 Q1 to Q6; the AD-05 notes card (not transcribed); AD-07 Q1 to Q7; AD-10 X1 to X6; the scheduling policy's 200-booking refusal limit as built; A26 (who confirms an incident closure); the proposed type-catalogue additions (A52) with the DSP clash (A64); and the toolbar contrast (C7).
 
 ## 8. Boundary and next steps
 
-This record authorises nothing in the application: no code, route, migration, permission, capability, grant, seed or integration, and the AD-01 access-review generation is untouched. Next steps: finish the sheets in section 3 and run the verification in section 6; record the audit in a later section; Dean reviews and, if he accepts, saves a named version (any later design change needs a new one); the design register and per-route page guidance follow in their own reviewed change, together with the stale notes in A61; the Shell file's Recent-row stand-ins are aligned with the reference families (A6); and the module files' administration sheets follow this file's hub, propose, review and publish pattern where they differ.
+This record authorises nothing in the application: no code, route, migration, permission, capability, grant, seed or integration, and the AD-01 access-review generation is untouched. Next steps:
+1. Dean reviews the audit in section 9 and decides C7 on the Shell file.
+2. If he accepts the design, he saves a named version; any later design change needs a new one.
+3. The design register and per-route page guidance follow in their own reviewed change, together with the stale notes in A61.
+4. The Shell file's Recent-row stand-ins are aligned with the reference families (A6).
+5. The module files' administration sheets follow this file's hub, propose, review and publish pattern where they differ.
+
+## 9. Audit — 11 November 2026
+
+The audit card on the file's Read me page carries the same lists.
+
+### 9.1 Corrections (C)
+
+| ID | Correction | State |
+|---|---|---|
+| C1 | SYN-RPT-000039 redrawn as the single Glasshouse Valley report re-issue of dataset 9.7 (it had been drawn as three failed renders); OH04 rebuilt as record plus safe-retry panel; OH06 redrawn as the SYN-REL-000004 receipt and runbook verification | Fixed |
+| C2 | Operational health lifecycle words (Failed, Retry refused; Not ready on SYN-REL-000006) and primaries (Resolve, Safe retry, Sign off…) aligned with D5 and 9.14; the checks bars for Incident and Release use the section 6.8 facts | Fixed |
+| C3 | "deleted" → "removed" on two hub sheets; "Effective now" → "Current now" on a current grant; an "uptime" phrase removed | Fixed |
+| C4 | Ten gendered pronouns replaced by names (UA10, UA14, UA19, the AD-01 notes, DQ-PH01, AH09b, OH10g, RT06, RT08b, PS12) | Fixed |
+| C5 | Violet removed from three chips outside the practice space (AS06a, OH03, OH08) | Fixed |
+| C6 | GL04 counts corrected to 81 families in 82 rows (DSP is listed twice) | Fixed |
+| C7 | The accepted record toolbar's primary button sets 14 px white text on brand/green-deep at 3.57:1, below 4.5:1. It appears on every record sheet | **Open**: decide a darker button fill on the Shell file; this file follows |
+
+### 9.2 Refinements (R)
+
+| ID | Refinement |
+|---|---|
+| R1 | Persona-correct top-bar badges and phone bars for people other than Taylor Quinn (A55, A62) |
+| R2 | Draw the docked Service menu on MA01 (A47) |
+| R3 | Equalise the card widths in the second row of MC01 |
+| R4 | Drop the search and filter icons from phone form headers (OS10c, MA10a) and the empty label above the phone search field (MA10a) |
+
+### 9.3 Gaps (G)
+
+| ID | Gap |
+|---|---|
+| G1 | Keyboard order, screen reader and 200 % zoom are specified on ST01 but not demonstrated per page; no prototype links |
+| G2 | No tablet variants of dialogs and panels |
+| G3 | The independence, story and capability scans as file-wide extractions; the trace of N-N5 to N-N9 and N-N12 sheet by sheet |
+| G4 | The design register and per-route page guidance (A61) |
+
+### 9.4 New features (N)
+
+N-N1 to N-N4 are integrated (hub ranking by rule, why-this-state, independence checks before the act, affected work pre-calculated). N-N10 (suggested incident summary, OH03) and N-N11 (practice exercises reviewed by the support owner, OS03a) are drawn. Proposed addition: an independence strip as a shared component for every module's administration sheets.
+
+### 9.5 Polish (P)
+
+| ID | Polish |
+|---|---|
+| P1 | One "as at" wording on every sheet |
+| P2 | Phone status-bar times matching each sheet's moment (done on Operational health; check the rest) |
+| P3 | Truncated register notes on the early pages reviewed at 100 % |
+
+### 9.6 Recommended order
+
+1. C7 on the Shell file.
+2. R1 and R4.
+3. G3.
+4. R2, R3 and P1 to P3.
+5. G1 and G2.
+6. G4 in the design-register change.
+
+Then Dean saves a named version.
