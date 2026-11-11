@@ -244,6 +244,10 @@ The controlled regression in `tests/browser/appointment-detail.spec.ts` holds th
 
 PR #733 retains that distinct regression after reconciliation with #736; it adds no second readiness helper or planner wait. The shared phone-menu helper still performs one activation at its existing deadline. See the [investigation close-out](../../../status/2026-11-04-p05-phone-menu-regression.md) for evidence and limits. No runtime, layout, permission, timeout, owner/device acceptance or review fingerprint changes are implied.
 
+## Phone tab bar labels and rail colours — 10 November 2026
+
+Dean adopted a visible label on every phone tab bar and directed that the bar take the desktop rail's colours ([decision](../../../decisions/phone-tab-bar-labels-and-rail-colours.md), rules T1–T8). Every cell shows its icon and a short label that fits a five-cell bar at 320 px. The current cell keeps `aria-current="page"`, the rail's lighter surface and a 3 px green top line. The application still hides the labels until Codex's build. The component requirements are in the [application shell binding note](../component-bindings/2026-11-10-phone-tab-bar.md).
+
 ## System pages design — 1 November 2026
 
 The [System pages design decision](../../../decisions/system-pages-figma-design.md) accepts the whole-page messages and shared patterns that sit in the shell, with [System pages design r01 captures](../../../reference/ui/application-shell/system-pages-design-r01/README.md) (not a UI baseline). `src/app/not-found.tsx` and `src/app/error.tsx` have no route, so this contract records them. Not built.

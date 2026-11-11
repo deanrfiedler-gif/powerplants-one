@@ -47,7 +47,7 @@ Review the real global search, workspace switcher, rail, More and utility contro
 
 ## Mobile
 
-Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. The refined opt-in does not replace the accepted header below 768 px.
+Resize the actual browser window to review the mobile shell; component-frame presets do not resize the surrounding application. The refined opt-in does not replace the accepted header below 768 px. From 10 November 2026 every phone tab bar cell shows its icon and a visible label that fits a five-cell bar at 320 px, on the desktop rail's colours ([decision](../../../decisions/phone-tab-bar-labels-and-rail-colours.md), rules T1–T8; [binding note](../component-bindings/2026-11-10-phone-tab-bar.md)); dated sections below that describe an icon-only bar are history.
 
 ## Keyboard and accessibility
 

@@ -32,6 +32,8 @@ The private PPO design file was read through the authorised Figma connection. Th
 - Phone uses the page name in the header, three labelled quick actions, flush attention/agenda rows and the icon-only navy bottom bar. Accessible names, selected state, exact destinations, touch targets and the floating Create control remain.
 - The existing semantic glyphs use the licensed runtime icon mechanism; no Pro SVG/font/capture bytes are added to public source. Offline/test fallback glyphs remain a distinct state, not evidence that the licensed Kit loaded.
 
+**Amendment — 10 November 2026.** The icon-only navy bottom bar is superseded: every phone tab shows a visible label and the bar takes the desktop rail's colours ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)).
+
 ## Explicit adaptations and remaining work
 
 Operational Workspace selection, local synthetic identity, Page guide, development access and other permitted utilities remain reachable. Figma's sample rail/menu counters are omitted where no authoritative read exists. Each department keeps its permitted current destinations rather than inventing working screens. Weather stays hidden while no provider is configured. No provider or weather backend is introduced. Exact context, dates, years and time zone remain available even where compact display uses AEST and ellipsis; activity details retain the full content.

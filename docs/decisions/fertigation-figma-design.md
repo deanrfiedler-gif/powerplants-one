@@ -16,6 +16,8 @@ Dean set the authorities himself:
 - **Content:** the built page and the board. That means its sections, registers, figures, states, wording and the rules behind them. "Where the two disagree on appearance, follow the Figma conventions and list the difference, so the application can be aligned afterwards."
 - **Design freedom:** module-specific elements with no Figma precedent may be designed fresh from the file's tokens, type styles and icons, with honest data, and marked as candidate shared components.
 
+**Amendment — 10 November 2026.** The icon-only v2 Tab bar named here and in the build sections below is superseded: every phone tab shows a visible label ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)).
+
 Claude drew the proposal and listed eight questions, each with a recommendation except the last. Dean replied: "Regarding those decisions you need from me, I am happy for you to proceed based on your recommendations." As with the earlier record pages, this accepts the design with its recommended answers. The design reference is the named Figma version "ES-02 Priva Fertigation Workbench — Pipedrive pattern, accepted", which Dean saves himself.
 
 This record retains:
