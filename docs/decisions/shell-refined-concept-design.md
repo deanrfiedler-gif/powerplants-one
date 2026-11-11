@@ -2,7 +2,7 @@
 document_id: PPO-SHELL-REFINED-FIGMA-DEC
 date: 2026-11-08
 owner: Dean Fiedler
-status: Owner-accepted design (named version saved 8 November 2026); captures and application build separate
+status: Owner-accepted design (named versions saved 8 and 10 November 2026); captures and application build separate
 source_commit: 1672c062981402037355fb9d813dbedabd87cfbb
 versioning: git
 ---
@@ -175,4 +175,21 @@ Dean asked, from a screenshot of a quotation record header (breadcrumb, title wi
 
 **Verification.** Every frame was rendered and inspected after a sizing correction (vertical auto-layout frames whose height `resize()` had fixed were set back to hug); the page's top-level nodes do not overlap and every section contains its children; after the move the Components section was extended to 8,978 px and the new items sit 120 px below its lowest earlier component; the 17 references on the page use the short form of the [readable reference namespaces decision](readable-reference-namespaces.md) (`SYN-QUO-000214`, `SYN-EST-000312`). The synthetic story on the sheet is the Sales file's Riverbend quotation.
 
-**Named version.** A new named version of this file is Dean's to save, for example "Shell refined concept — accepted · record header toolbar"; under [Build from the named Figma version](figma-named-version-build-handoff.md) rule 5 the 8 November version does not carry the toolbar, so until the new one is recorded builds cite "Shell refined concept — accepted" for the shell and this section for the toolbar.
+**Named version.** A new named version of this file is Dean's to save, for example "Shell refined concept — accepted · record header toolbar"; under [Build from the named Figma version](figma-named-version-build-handoff.md) rule 5 the 8 November version does not carry the toolbar, so until the new one is recorded builds cite "Shell refined concept — accepted" for the shell and this section for the toolbar. Dean saved it on 10 November 2026 under that name (section 11).
+
+## 11. Named version for the record header toolbar — 10 November 2026
+
+Dean saved a new named version of the file: "I have saved the named version as Shell refined concept — accepted · record header toolbar". The name is the one section 10 suggested.
+
+**What it pins.** The file as it stood when saved: the shell page "Shell refined · desktop shell and menus", the page "Workspace menus · flyout and docked (accepted 8 November 2026)" and the page "Record header toolbar (accepted 9 November 2026)" `170:9926`, with the component set Shell / Record header · toolbar `170:10178` and the component Shell / Record header · toolbar · phone `170:10215` in the accepted Components section `7:2767`, and the rules card that R116 to R125 reproduce.
+
+**What builds cite.** Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+
+| Build | Named version it cites |
+|---|---|
+| A build of the record header toolbar, or any build step that starts after 10 November 2026 and uses the shell | "Shell refined concept — accepted · record header toolbar" (10 November 2026) |
+| A build step already started from the 8 November version, such as the [S1 build](shell-refined-s1-build.md) | "Shell refined concept — accepted" (8 November 2026), unchanged; moving it to the new version is its own step (rule 5) |
+
+The module proposal records that cite the 8 November version and Addendum A1 for the toolbar stay accurate for the sheets they describe; each cites the new version when it is next changed.
+
+**Verification.** Recorded on Dean's statement. This session cannot read the file's version history, so no comparison between the two versions was made; the node IDs above are those section 10 recorded. Nothing is built, and no application, capture or baseline changes.
