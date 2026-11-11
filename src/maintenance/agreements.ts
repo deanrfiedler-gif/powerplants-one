@@ -102,6 +102,21 @@ async function saveRevision(
         "Retain every held or consumed charge with its exact date, amount, currency and tax basis. No reversal policy is defined.",
       );
   }
+  if (
+    predecessor &&
+    !x.charge_schedule &&
+    (
+      await c.query(
+        `SELECT 1 FROM ppo.agreement_revisions WHERE workspace_id=$1
+       AND agreement_id=$2 AND content ? 'charge_schedule' LIMIT 1`,
+        [p.workspace_id, row.id],
+      )
+    ).rowCount
+  )
+    invalid(
+      "charge_schedule",
+      "Supply the explicit charge schedule for this successor. Removing an agreement charge schedule is not supported.",
+    );
   await insert(c, "agreement_revisions", {
     id,
     workspace_id: p.workspace_id,
@@ -267,6 +282,15 @@ export async function agreementCommand(
     async (c, row) => {
       expected(row.version, cmd.expected_version);
       const current = await agreementRevision(c, p, row.current_revision_id);
+      // Historical schedules keep their review duty even if a legacy successor
+      // omitted the schedule. A second omission must not erase that duty.
+      const chargedRevisions = (
+        await c.query<{ content: AgreementContent }>(
+          `SELECT content FROM ppo.agreement_revisions
+           WHERE workspace_id=$1 AND agreement_id=$2 AND content ? 'charge_schedule'`,
+          [p.workspace_id, row.id],
+        )
+      ).rows;
       if (action === "Revise") {
         const revision = randomUUID(),
           next = { ...row, revision: row.revision + 1 };
@@ -299,20 +323,20 @@ export async function agreementCommand(
           "authority_reference",
           "Record the exact approval or withdrawal authority evidence.",
         );
-      if (action === "Approve" && current.revision.content.charge_schedule) {
+      if (action === "Approve" && chargedRevisions.length) {
         if (current.revision.created_by === p.actor_id)
           invalid(
             "action",
             "A different Finance reviewer must approve the exact charge schedule.",
           );
-        for (const site of current.revision.content.sites)
-          await companyContext(
-            c,
-            p,
-            row.company_id,
-            site.site_id,
-            "finance.review",
-          );
+        const sites = new Set([
+          ...current.revision.content.sites.map((s) => s.site_id),
+          ...chargedRevisions.flatMap((r) =>
+            r.content.sites.map((s) => s.site_id),
+          ),
+        ]);
+        for (const site of sites)
+          await companyContext(c, p, row.company_id, site, "finance.review");
       }
       if (
         action === "Approve" &&

@@ -1,7 +1,13 @@
 // Synthetic-only, two-process proof. The caller stops/restarts the compiled app
 // and PostgreSQL between write and verify; this script never simulates a restart.
 import assert from "node:assert/strict";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import {
+  mkdir,
+  readFile,
+  writeFile,
+  readdir,
+  readlink,
+} from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { agreementCommand } from "../../src/maintenance/agreements";
 import { localConfig } from "../../src/platform/config";
@@ -32,11 +38,40 @@ async function application() {
     command.includes("scripts/local-server.ts") &&
       command.includes("--compiled"),
   );
+  assert.equal(
+    await readlink(`/proc/${pid}/cwd`),
+    process.cwd(),
+    "Use the compiled application from this checkout",
+  );
   const stat = await readFile(`/proc/${pid}/stat`, "utf8");
+  // Tie the supplied process to the exact loopback listener used by h.call.
+  const sockets = new Set<string>();
+  for (const fd of await readdir(`/proc/${pid}/fd`)) {
+    try {
+      const target = await readlink(`/proc/${pid}/fd/${fd}`);
+      const match = /^socket:\[(\d+)\]$/.exec(target);
+      if (match) sockets.add(match[1]);
+    } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "ENOENT") throw error;
+    }
+  }
+  const endpoint = `0100007F:${localConfig().port.toString(16).toUpperCase().padStart(4, "0")}`;
+  const listeners = (await readFile(`/proc/${pid}/net/tcp`, "utf8"))
+    .trim()
+    .split("\n")
+    .slice(1)
+    .map((line) => line.trim().split(/\s+/));
+  assert.ok(
+    listeners.some(
+      (row) => row[1] === endpoint && row[3] === "0A" && sockets.has(row[9]),
+    ),
+    "The compiled PID must own the configured HTTP loopback listener",
+  );
   return {
     pid,
     started: stat.slice(stat.lastIndexOf(")") + 2).split(" ")[19],
     build: (await readFile(".next/BUILD_ID", "utf8")).trim(),
+    origin: localConfig().origin,
   };
 }
 const postmaster = async () =>
@@ -203,6 +238,11 @@ try {
       saved.application,
       "Restart the actual compiled application",
     );
+    await assert.rejects(
+      readFile(`/proc/${saved.application.pid}/stat`, "utf8"),
+      (error: unknown) => (error as NodeJS.ErrnoException).code === "ENOENT",
+      "The original application process must have exited before recovery",
+    );
     assert.notEqual(
       currentDb,
       saved.postmaster,
@@ -322,6 +362,11 @@ try {
         )
       ).rows,
       [{ state: "Consumed" }],
+    );
+    assert.deepEqual(
+      await application(),
+      currentApp,
+      "Keep the proven listener through recovery",
     );
     const final = await snapshot();
     for (const o of recovery) {

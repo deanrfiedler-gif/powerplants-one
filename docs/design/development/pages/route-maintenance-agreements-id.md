@@ -24,7 +24,7 @@ Reused components: PageHeader, Field, Button/ButtonLink, Status, ReadState, Reco
 2. Choose Whole site or Selected facilities. Select covered equipment only where the source restricts it; retain explicit exclusions.
 3. Open Decisions & handovers to propose a successor or record separate commercial approval/withdrawal. A successor remains Proposed until approved.
 
-Commercial approval requires maintenance.agreement.approve. Operational coverage and Finance treatment remain separate.
+Commercial approval requires maintenance.agreement.approve. If any revision contains a charge schedule, the server additionally requires an independent Finance reviewer at every current and charged historical site. The existing form cannot carry a charge schedule: it withholds successor preparation and displays an explicit unavailable notice, leaving original charges unchanged. Agreements with no charge history retain the normal successor form. Operational coverage and Finance treatment remain separate.
 
 ## Handovers and states
 

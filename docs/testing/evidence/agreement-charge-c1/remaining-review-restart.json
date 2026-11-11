@@ -1,0 +1,29 @@
+{
+  "passed": true,
+  "source_superseded_before_restart": true,
+  "original_receipts": 6,
+  "new_session_audit_rows": 5,
+  "recovery_receipts": 2,
+  "graph_before": "159ecd048492d5d7dce01bede78881382301718a73874bce99f14cd66c429031",
+  "graph_after": "8bc79494670d0136f85dc0242a03b7ffab65449b4d8510182ed0bb46fc1e43eb",
+  "application_before": {
+    "pid": 34832,
+    "started": "1570522",
+    "build": "lBlhGgAqS6Soj74WnNyr0",
+    "origin": "http://127.0.0.1:3000"
+  },
+  "application_after": {
+    "pid": 35333,
+    "started": "1573078",
+    "build": "lBlhGgAqS6Soj74WnNyr0",
+    "origin": "http://127.0.0.1:3000"
+  },
+  "postmaster_before": "2026-11-11 00:48:15.292923+00",
+  "postmaster_after": "2026-11-11 04:43:58.409465+00",
+  "target_count": 1,
+  "attempts": 1,
+  "amount": "4800.00",
+  "currency": "AUD",
+  "hold": "Consumed",
+  "result": "Matched"
+}

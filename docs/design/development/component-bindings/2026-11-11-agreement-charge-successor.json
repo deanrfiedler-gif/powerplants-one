@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "maintenance-form": {
+      "states": [{
+        "id": "charge-successor-unavailable",
+        "label": "Charge-bearing successor form unavailable",
+        "description": "The agreement action consumer withholds the successor form when any retained revision carries a charge schedule and explains that the existing schedule is unchanged. Agreements without charge history keep the ordinary form. No charge editor or visual acceptance is implied."
+      }],
+      "dependencies": ["docs/contracts/maintenance-warranty-api.md"],
+      "used_on": ["route:/maintenance/agreements/[id]"]
+    }
+  }
+}

@@ -168,3 +168,75 @@ PPO_RESTART_SERVER_PID=17529 node --env-file=.env.local --import tsx tests/helpe
 ```
 
 Main advanced to `935e5776f866bd2459efba6e3852057afc99614e` through #911's two Service design documentation files, with no runtime/migration changes. C1 integrates it before final push. M2 was marked ready externally during this session at unchanged `e8f9124cd`; that state is preserved, with replacement full CI queued/pending and earlier superseded cancellations distinguished from a successful run. C1 stays draft and stacked; its final-head CI, independent review of new migration 0128/C1-1 and Dean's M2 merge remain outstanding. Retarget C1 after M2 merges and verify the resulting main-based contribution. No full scenarios or operational acceptance is implied.
+
+## Remaining review findings C1-2–C1-4 — 11 November 2026
+
+Claude's [review at c58b2c94](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#pullrequestreview-5852407753) confirms C1-1 and independently reviews 0128, but finds a lossy native amendment/approval bypass, ambiguous later-start renewal wording and a restart-harness false positive. Dean instructed the next step after checking merge readiness. This continuation [claimed those findings](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6787092009) and [recorded the bounded choices](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6787113512). M2 is now merged; C1 was already retargeted to `main` and marked ready externally. Main `a65ac3f4a9a675f68c47567d8070a098b4f31b3f` is integrated without conflicts. The ready state is preserved, not treated as merge or business acceptance. Other active branches are untouched.
+
+### Corrections
+
+- **C1-2:** after any charged revision, a successor must explicitly carry a schedule. Complete omission before reservation returns `InvalidData`; existing Held/Consumed refusal remains `AgreementChargeReserved`. A legacy chain of schedule-less successors still requires an independent Finance reviewer with `finance.review` at every current and historically charged site. The native form cannot carry the schedule, so successor preparation is withheld with a clear unavailable notice; uncharged agreements retain their form. No charge editor, schedule-removal policy, grant or migration is introduced. The owning page contract, existing guide paragraphs and component consumer binding record the limitation.
+- **C1-3:** the existing fail-closed date and reserved-term rules remain. Contracts now state that every reserved due date must remain inside the successor term. The supported renewal pattern retains the original effective start and extends the end; a separate later-start term excluding those dates uses a new agreement. A new fee has a new UUID. The regression consumes the original charge, proves both invalid later-start alternatives refuse without effects, and approves the supported extension with one original target/Consumed hold retained. No historical-date exemption, pricing authority or automatic renewal fee is added.
+- **C1-4:** the helper verifies the compiled PID's checkout and actual socket ownership: `/proc/<pid>/fd` socket inode must match the LISTEN entry for the configured IPv4 loopback port. Verification also requires the old PID to be absent, the same build ID, changed PostgreSQL postmaster identity, and the same proven listener through recovery. It fails closed if those facts cannot be read. A compiled decoy on port 3001 cannot validate HTTP served on port 3000.
+
+0127 and 0128 remain byte-for-byte unchanged from `c58b2c94`. Approval changes use existing duties and immutable source history; historical schemas without schedules still work. Original receipts and the existing Finance holds, audit and recovery paths remain in use.
+
+### Fresh validation
+
+The earlier successful cloud setup is reused; every Node shell sources `/workspace/.ppo-tools/env.sh`. Only disposable `ppo_synthetic_test` is used. No renderer mock is loaded in these new C1 tests.
+
+- `npm run check` passes Studio, lint, TypeScript, **1,452 unit tests** and production build. A final `npm run build` passes after the six narrow agreement-guide paragraph edits, so the compiled HTTP/restart proof includes them. Final build ID: `lBlhGgAqS6Soj74WnNyr0`.
+- **18/18 complete C1 database cases pass**: the original fifteen plus three new correction cases. [Raw result](remaining-review-database.txt). The first focused run passed two cases and failed the legacy-approval assertion because it expected `Forbidden`; the authority layer correctly returned `RecordUnavailable`. That exact expected code was corrected, with no runtime change, and the focused 3/3 and complete 18/18 reruns pass. [Initial failure](remaining-review-initial.txt).
+- **2/2 selected 0127 upgrade cases pass**, including preserved history/recovery and duplicate-history refusal. [Result](remaining-review-upgrades.txt). **3/3 existing MA01/MA02/MA05 compatibility cases pass**, covering uncharged agreement identity/approval, source successors and renewal ownership. [Result](remaining-review-maintenance.txt). Earlier full migration/Products/demo evidence remains historical; unchanged migrations do not justify repeating every earlier proof.
+- **1/1 ordinary compiled HTTP case passes**, now also refusing a lossy schedule omission before exercising the existing claim/recovery pipeline. [Result](remaining-review-http.txt).
+- Contacts artifact remains deterministic; **103 model groups pass**. Focused ESLint/format checks, Studio after the binding changes, foundation/prototype/naming/migration/status/scope checks and **44 documentation tests** pass. [Local log digests](remaining-review-log-digests.json) distinguish those executions.
+- Required Chrome is still absent at `/opt/google/chrome/chrome`; the fresh `npm run browser:check` fails. The new desktop/mobile form-boundary case is discoverable (**11 cases including warm-up** in that file's two projects), but is not executed locally. Final-head Chrome CI and visual acceptance are separate. No full TS-01/TS-02 or real PDF evidence is claimed.
+
+Actual check commands:
+
+```sh
+npm run check
+npm run build
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 tests/database/agreement-charge-review.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 tests/database/agreement-charge-finance.test.ts tests/database/agreement-charge-review.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 --test-name-pattern='C1-1' tests/database/agreement-charge-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 --test-name-pattern='MA01|MA02 a later|MA05' tests/database/maintenance.test.ts
+npx --no-install eslint src/maintenance/agreements.ts src/components/maintenance-record-actions.tsx tests/database/agreement-charge-review.test.ts tests/helpers/agreement-charge-restart.ts tests/http/agreement-charge-finance.test.ts tests/browser/maintenance.spec.ts
+npx --no-install prettier --check src/maintenance/agreements.ts tests/helpers/agreement-charge-restart.ts tests/database/agreement-charge-review.test.ts tests/http/agreement-charge-finance.test.ts
+npm run studio:check
+python3 scripts/build-contacts-design.py --check
+node scripts/check-contacts-model.mjs
+npm run browser:check
+npx --no-install playwright test tests/browser/maintenance.spec.ts --list
+python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+python3 scripts/check_migrations.py
+python3 -m unittest discover -s scripts -p 'test_documentation*.py'
+python3 scripts/build_status.py --check
+python3 scripts/check_documentation_scope.py --base origin/main --head HEAD
+```
+
+### Actual restart and negative controls
+
+A private Python subprocess orchestration (`/workspace/work/c1-r2-restart-run.py`) owns each server PID, waits for `/login`, records each child result, and uses `terminate()`/`wait()` on only its own server children. It executes the commands below serially and stops every child in `finally`. Its logs and full checkpoint remain private; the bounded [verification result](remaining-review-restart.json) is retained here.
+
+```sh
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+node --env-file=.env.local --import tsx scripts/local-server.ts --compiled
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 tests/http/agreement-charge-finance.test.ts
+PPO_ALLOW_RESET=dispose-synthetic PPO_RESET_DATABASE=ppo_synthetic_test npm run db:reset
+PPO_RESTART_SERVER_PID=34832 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts write /workspace/work/c1-r2-restart
+PPO_RESTART_SERVER_PID=34832 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts verify /workspace/work/c1-r2-restart
+# Expected no-application-restart refusal, before replay.
+PPO_PORT=3001 node --env-file=.env.local --import tsx scripts/local-server.ts --compiled
+env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH docker --host=unix:///var/run/docker.sock restart ppo-postgres
+PPO_RESTART_SERVER_PID=34947 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts verify /workspace/work/c1-r2-restart
+# Expected listener-ownership refusal; original PID 34832 is still serving :3000.
+# The orchestration terminates/waits for decoy 34947 and original 34832, then:
+env -u DOCKER_HOST -u DOCKER_CONTEXT -u DOCKER_TLS -u DOCKER_TLS_VERIFY -u DOCKER_CERT_PATH docker --host=unix:///var/run/docker.sock restart ppo-postgres
+node --env-file=.env.local --import tsx scripts/local-server.ts --compiled
+PPO_RESTART_SERVER_PID=35333 node --env-file=.env.local --import tsx tests/helpers/agreement-charge-restart.ts verify /workspace/work/c1-r2-restart
+```
+
+The [no-restart control](remaining-review-no-restart.txt) and [decoy control](remaining-review-decoy.txt) both fail at their intended assertions before recovery mutations. The genuine cycle passes after source supersession and withdrawal: six inert original receipts, exactly five fresh Accepted Session audit rows, two replay-safe recovery commands, one AUD 4,800.00 target, one processing attempt, one Consumed hold and Matched reconciliation. The same build spans different actual listener PIDs and different postmaster times; the old PID is absent. All owned servers are stopped. Final-head CI and Claude's confirmation of C1-2/C1-3/C1-4 remain outstanding at handover; no merge, deployment or operational acceptance.

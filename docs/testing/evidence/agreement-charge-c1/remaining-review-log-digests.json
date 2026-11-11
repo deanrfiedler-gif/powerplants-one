@@ -1,0 +1,46 @@
+{
+  "c1-r2-check.txt": {
+    "sha256": "be83f007864cb554224cb3c2c76c3ae9bbfc3e1b67f64b68730ebb613e63eda3",
+    "bytes": 179175
+  },
+  "c1-r2-final-build.txt": {
+    "sha256": "b6d2e733b2895ffe0326930db6304d56b8840296d32102c620113273c65f98a7",
+    "bytes": 36345
+  },
+  "c1-r2-focused-final.txt": {
+    "sha256": "61bac394f7bda673e90e3c9eeaaba8517eebcd5ba9126b600ac6d05acda9acb2",
+    "bytes": 463
+  },
+  "c1-r2-format.txt": {
+    "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+    "bytes": 66
+  },
+  "c1-r2-focused-lint.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "c1-r2-browser-check.txt": {
+    "sha256": "a5ef4f94b4cf679b3e50e4f80a721a5c43f11d3ac7369d476c17a8e67dbed893",
+    "bytes": 660
+  },
+  "c1-r2-browser-list.txt": {
+    "sha256": "8c3dd72c6a19150f3468b1f36265695382e97b86854a877f76f2f06769195384",
+    "bytes": 1509
+  },
+  "c1-r2-contacts.txt": {
+    "sha256": "0db29f8740b7904a7cb6dab9c6276a490a8d20930f1b70636c751ccf69403cf2",
+    "bytes": 8305
+  },
+  "c1-r2-studio-final.txt": {
+    "sha256": "16debfddedad4bd22a0731b1d70894a823979f95b9e8829cbf447428c333eff6",
+    "bytes": 1084
+  },
+  "c1-r2-doc-tests.txt": {
+    "sha256": "dfe19f3c3e7f886cbcfb1078ab11b42bab488bff4647ee95383ef2f3a27f17b6",
+    "bytes": 143
+  },
+  "c1-r2-restart-run.txt": {
+    "sha256": "ea91f48429a942d0211834875c6174faf4371e37c7e1697f6d3913656a122d8e",
+    "bytes": 1157
+  }
+}

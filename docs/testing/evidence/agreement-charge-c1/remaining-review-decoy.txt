@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: The compiled PID must own the configured HTTP loopback listener
+    at application (/workspace/work/agreement-charge-c1/tests/helpers/agreement-charge-restart.ts:64:10)
+    at async <anonymous> (/workspace/work/agreement-charge-c1/tests/helpers/agreement-charge-restart.ts:229:24) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

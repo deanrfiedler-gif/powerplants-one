@@ -14,6 +14,16 @@ const h = httpAcceptance(localConfig().origin);
 test("C1 compiled HTTP uses existing Finance routes, exact source receipt replay and protected queue", async () => {
   const f = await agreementChargeFixture(),
     cmd = f.draft();
+  const { charge_schedule: retained, ...omitted } = f.content;
+  void retained;
+  const lossy = await h.call("coordinator", `maintenance/agreements/${f.id}`, {
+    ...base(),
+    expected_version: 2,
+    action: "Revise",
+    content: { ...omitted, title: "SYN lossy amendment refused" },
+  });
+  assert.equal(lossy.status, 422, JSON.stringify(lossy.body));
+  assert.equal(lossy.body.code, "InvalidData");
   const created = await h.call("finance", "finance/handoffs", cmd);
   assert.equal(created.status, 201, JSON.stringify(created.body));
   const path = `finance/handoffs/${cmd.id}`,
