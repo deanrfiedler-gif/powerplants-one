@@ -57,3 +57,44 @@ npm run check
 ```
 
 Final local result: `npm run check` passed (1,450 unit tests, Studio, lint, TypeScript and production build). The broad run passed all 15 B4 cases and eight M2 cases; the only failure was the disputed-successor fixture described above. Its corrected unmocked rerun passed 1/1. Thus all nine M2 and 15 B4 cases are covered across these runs, not a claimed single green broad run. [Before-fix output](review-before.txt), [broad run](review-broad.txt) and [corrected fixture](review-corrected.txt) retain exact results. Foundation/prototype/naming/migration/status checks and all 44 documentation tests passed; documentation-scope is checked after commit. Synthetic-byte cases remain command/persistence proof only; no PDF/browser or full TS-01/02 execution is claimed. No migration, grant, seed or UI change. Claude finding confirmation on the final head and full final-head runtime CI remain separate gates. C1 stays stacked until Dean merges M2.
+
+## CI failure follow-up and residual proof — 11 November 2026
+
+The user reported failed checks at `e8f9124cdb777a3b7170218c90cd7d811c9c5249`. This continuation [claimed diagnosis and correction](https://github.com/deanrfiedler-gif/powerplants-one/pull/904#issuecomment-6785159653) after Claude released the finding-confirmation claim. Main `f03d8618f` is merged without conflicts, including the now-merged #897 People change and the intervening documentation contributions. No other contributor's branch is written.
+
+### Observed failures
+
+[Machine-readable diagnosis](ci-failure-diagnosis.json) records the exact jobs and limitations. Four old aggregate jobs failed because their dependency matrices were cancelled when the draft was marked ready. Their logs explicitly contain `PPO_SUITE_RESULT`, `PPO_E1_RESULT` or `PPO_SUPPLY_RESULT: cancelled`; these are not failing test bodies. The replacement Application assurance run has a separate genuine [browser-2 failure](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42933062654/job/130255574399): `planner.spec.ts:386` times out after 5 seconds waiting for the move dialog after a native drag. The same test passed in the separate [compiled desktop-2 job](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42933062564/job/130248969293) at the same head (401 cases passed in that lane).
+
+Source inspection identifies a missing test precondition: retained planner tiles remain visible during schedule refresh, while `draggable` requires current usable data. The test now awaits `draggable=true` on the exact source tile before the same native `dragTo`. All dialog, conflict, original-position and uncertain-result assertions remain; no retries, synthetic events, deadline increases or runtime changes. This closes the readiness gap without claiming the unavailable trace proves it caused this specific gesture failure. The artifact export succeeded, but the environment proxy refused the download host (CONNECT 403), so neither trace nor screenshot was inspected. GitHub refused a single-job rerun while its parent workflow was still running. The new pushed head triggers fresh full CI, including the current-main merged-tree check.
+
+### Residual independent-review proof
+
+Claude's two confirmations agree the M2 behavior is correct; [the reconciled outstanding item](https://github.com/deanrfiedler-gif/powerplants-one/pull/904#issuecomment-6784696049) is a low regression-proof gap. The added case natively authorises seeded Disputed WorkOrder 4 with its nonempty agreement reference, verifies current scope equals authorised approved scope and charging route remains FinanceReview, then requires no allocation default. The [unmocked focused case passes](ci-status-proof.txt). Temporarily removing only the production coverage-status predicate makes the new assertion fail with an erroneous NonBillable default; [the mutation control](ci-status-mutation.txt) records that decisive failure. Production source was restored byte-for-byte immediately afterward and is unchanged in this correction.
+
+### Commands and delivery boundary
+
+Every Node shell sources `/workspace/.ppo-tools/env.sh` from the successful setup earlier in this session. The database remains disposable `ppo_synthetic_test`. Actual commands:
+
+```sh
+npm run browser:check
+npm run check
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=120000 --test-name-pattern='M2 authorised approved Disputed' tests/database/finance-agreement-defaults.test.ts
+# The same focused command also runs under the temporary predicate mutation, then source is restored.
+PPO_B2_SYNTHETIC_RENDERER=command-proof-only node --env-file=.env.local --experimental-test-module-mocks --import tsx --import ./tests/helpers/project-claims-synthetic-renderer.mjs --test --test-concurrency=1 --test-timeout=120000 tests/database/finance-agreement-defaults.test.ts tests/database/finance-project-work.test.ts tests/database/finance-project-ts01.test.ts
+npx --no-install eslint tests/browser/planner.spec.ts tests/database/finance-agreement-defaults.test.ts
+npx --no-install playwright test tests/browser/planner.spec.ts --list --project=desktop-chromium
+python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+python3 scripts/check_migrations.py
+python3 -m unittest discover -s scripts -p 'test_documentation*.py'
+python3 scripts/build_status.py --check
+python3 scripts/check_documentation_scope.py --base origin/main --head HEAD
+```
+
+The fresh browser probe still fails because `/opt/google/chrome/chrome` is absent; no alternate browser is substituted. Playwright test discovery passes, but discovery is not browser execution. The changed browser test requires final-head Chrome CI. Document-dependent connected database cases use explicitly synthetic stored bytes, not real PDF/browser or full TS-01/02 evidence. Local results, pending final-head CI, Claude's remaining-item confirmation and Dean's merge remain separate gates; C1 needs the updated parent and eventual retarget after M2 merges.
+
+Fresh `npm run check` passes: Studio, lint, TypeScript, **1,450 unit tests** and production build. Focused lint, new database-test formatting, foundation/prototype/naming/migration/status checks and **44 documentation tests** pass. [Log digests](ci-log-digests.json) preserve the local check records. The browser discovery lists the unchanged controlled-move scenario; it does not execute it. No new local HTTP/restart proof is required by these test-only changes; earlier M2/C1 recovery evidence remains separately recorded.
+
+The complete connected rerun passes **26/26** in one execution: ten M2 cases, fifteen B4 cases and the TS-01 Finance component. [Raw result](ci-connected.txt) retains the exact case names and timings. No case failed or was skipped in this run.

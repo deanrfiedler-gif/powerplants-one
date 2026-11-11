@@ -55,7 +55,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 
 | Item | Value | Use |
 |---|---|---|
-| Collection "Control size", modes "Medium" and "Small" | `control/height` 32 / 28, `control/field-height` 36 / 32, `control/padding-x` 12 / 10 | One component serves pages (Medium) and toolbars, popovers and tables (Small); the mode is set on a frame |
+| Collection "Control size", modes "Medium" and "Small" | `control/height` 32 / 28, `control/field-height` 36 / 32, `control/padding-x` 12 / 10 | One component serves pages (Medium) and toolbars, popovers and tables (Small); the mode is set on a frame. The [Forms page](library-forms.md) added a Touch mode (44 / 44 / 12) and `control/text-size` and `control/line-height` |
 | `radius/dialog` | 12 | Dialogs (shell R70) |
 | `radius/pill` | 999 | Filter chips and avatars |
 | `radius/checkbox` | Changed from 3 to 4 | The accepted Sales kit |
@@ -76,13 +76,14 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Tab | `50:92` | 4: Default, Hover, Current, Focus. Option: Label |
 | Controls / Avatar | `50:117` | 12: six hues by 24 and 32 px. Option: Initials |
 | Controls / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint). Formerly Grid / Checkbox |
+| Controls / Radio | `137:654` | 8: State (Off, On, Disabled, Focus) by Surface (White, Tint). Added with the [Forms page](library-forms.md) |
 | Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Helper, Helper text |
-| Controls / Field | `51:249` | 18: Type (Text, Select, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Value, Helper, Helper text, Error text |
+| Controls / Field | `51:249` | 24: Type (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
 | Controls / Menu item | `50:146` | 5: Default, Hover, Selected, Disabled, Focus. Options: Label, Leading icon, Icon, Shortcut, Shortcut text |
 | Controls / Menu divider | `50:147` | One component |
 | Controls / Tooltip | `50:118` | One component. Options: Label, Shortcut, Shortcut text |
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Action |
-| Controls / Banner | `50:240` | 4 tones. Options: Message, Action |
+| Controls / Banner | `50:240` | 4 tones. Options: Message, Action, Dismiss. The wrapping message and the Dismiss option came with the [Forms page](library-forms.md) |
 | Controls / Dialog | `51:295` | 2: Confirm, Destructive. Options: Title, Body; footer buttons exposed |
 
 **Review board** `52:126`
@@ -148,12 +149,12 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 ## 7. Not done and open
 
 - **Page acceptance and publishing.** As for the grid page: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
-- **Not yet here.** Radio, switch, date picker, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
+- **Not yet here.** Switch, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Radio and the date picker were added with the [Forms page](library-forms.md). Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
 - **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 20 the library uses so far, drawn by hand, and is not the shared icon set.
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.
 - **No proof beyond the design.** 32 prototype links (button, link, icon button and checkbox states) were set and read back, not played. Keyboard and screen-reader behaviour needs the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The Control size variables and the new layout variables have no CSS property yet.
-- **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board · Cards and stages followed the same day ([its record](library-board.md)). Time · Planners and calendars followed ([its record](library-time.md)). At Dean's choice the Gantt parts were drawn on a library page, Gantt · Bars and links, instead of in the Projects file ([its record](library-gantt.md)); every page in the accepted order is now drawn.
+- **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board · Cards and stages followed the same day ([its record](library-board.md)). Time · Planners and calendars followed ([its record](library-time.md)). At Dean's choice the Gantt parts were drawn on a library page, Gantt · Bars and links, instead of in the Projects file ([its record](library-gantt.md)); every page in the accepted order is now drawn. Forms · Fields and validation followed ([its record](library-forms.md)) and changed Controls / Field and Controls / Banner and added Controls / Radio, as the rows above now say.
 
 ## 8. Checks
 

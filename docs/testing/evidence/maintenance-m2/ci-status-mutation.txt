@@ -1,0 +1,35 @@
+✖ M2 authorised approved Disputed coverage with an agreement retains FinanceReview without a default (5824.465017ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8229.935998
+
+✖ failing tests:
+
+test at tests/database/finance-agreement-defaults.test.ts:1:1453
+✖ M2 authorised approved Disputed coverage with an agreement retains FinanceReview without a default (5824.465017ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + {
+  +   disposition: 'NonBillable',
+  +   reason: 'Covered by agreement SYN-PPO-AGR-000004',
+  +   target_group: null
+  + }
+  - null
+  
+      at TestContext.<anonymous> (/workspace/work/maintenance-m2/tests/database/finance-agreement-defaults.test.ts:73:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: { disposition: 'NonBillable', reason: 'Covered by agreement SYN-PPO-AGR-000004', target_group: null },
+    expected: null,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

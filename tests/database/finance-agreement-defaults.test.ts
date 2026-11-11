@@ -44,6 +44,39 @@ test("M2 unauthorised Covered, NotCovered, Disputed, Unknown and NotApplicable r
     );
 });
 
+test("M2 authorised approved Disputed coverage with an agreement retains FinanceReview without a default", async () => {
+  const { readWorkOrder, authoriseWorkOrder } =
+    await import("../../src/service/work-orders");
+  const owner = await principal();
+  const w = (await readWorkOrder(owner, id("90", 4))).items[0];
+  const scope = w.scopes.find((s) => s.id === w.scope_revision_id)!;
+  assert.equal(scope.coverage.status, "Disputed");
+  assert.ok(scope.coverage.agreement_reference);
+  await authoriseWorkOrder(owner, w.id, {
+    ...base(),
+    expected_version: w.version,
+    scope_revision_id: scope.id,
+    scope_version: scope.version,
+    policy_version_id: scope.policy_version_id,
+  });
+  const authorised = (await readWorkOrder(owner, w.id)).items[0];
+  const approved = authorised.scopes.find(
+    (s) => s.id === authorised.scope_revision_id,
+  )!;
+  assert.equal(
+    authorised.scope_revision_id,
+    authorised.authorised_scope_revision_id,
+  );
+  assert.ok(approved.approved_at);
+  assert.equal(approved.coverage.status, "Disputed");
+  assert.equal(approved.coverage.charging_route, "FinanceReview");
+  assert.equal(
+    (await financeSources(await principal("finance"), w.id))
+      .allocation_defaults,
+    null,
+  );
+});
+
 test("M2 coverage alone without an agreement does not silently grant free service", async () => {
   const f = await financeDraft();
   assert.equal(
