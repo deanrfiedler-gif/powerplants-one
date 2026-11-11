@@ -68,7 +68,7 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 
 ## 3. Sheet inventory
 
-248 sheets so far on thirteen scope pages, each with its "Flows and notes" card. Node IDs are those of the sheet frame. A sheet label reads `CODE · Page — state (scope) [source]`; the label above each sheet in the file carries the full text. Sections: D = Desktop 1440, X = Dialogs and panels, S = States, T = Tablet 1024, P = Phone 390 and 320.
+267 sheets on fourteen scope pages (the thirteen scope areas and Interaction states), each page with its "Flows and notes" card. Node IDs are those of the sheet frame. A sheet label reads `CODE · Page — state (scope) [source]`; the label above each sheet in the file carries the full text. Sections: D = Desktop 1440, X = Dialogs and panels, S = States, T = Tablet 1024, P = Phone 390 and 320.
 
 | Item | Node |
 |---|---|
@@ -298,13 +298,26 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | TB01 | Notifications on tablet | T | `127:4289` |
 | MA10a–d | Phone menu (P4) with the account entry; section list; Notifications; Offline devices at 320 (technician bar) | P | `127:4559`, `127:4662`, `127:4771`, `127:4867` |
 
-### Global configuration · AD — page `11:16` · 1 sheet so far
+### Global configuration · AD — page `11:16` · 7 sheets
 
 | Code | Sheet | Sec. | Node |
 |---|---|---|---|
 | GL01 | Edit menu (administrators) — Administration menu defaults version 2, reviewed; sets defaults for everyone | D | `129:882` |
+| GL02 | Manage workspaces — landing and secondary pages, readiness Ready or Unavailable, feature readiness; version 1 in force (full length) | D | `132:1183` |
+| GL03 | Companies and tenants — Powerplants AU (SYN01) and SYN Greenhouse Demonstration (SYN02 read only, Authority not configured) | D | `132:1721` |
+| GL04 | Numbering families registry — 81 families in 82 rows (19 adopted, 62 proposed), the DSP clash flagged (full length) | D | `133:1727` |
+| GL05 | Notification defaults, the seven nudges with their rules, the support owner, run times and retention (full length) | D | `134:2311` |
+| GL06 | Publish configuration version — Taylor Quinn publishes after Dean Fiedler's review; server checks and impact | X | `135:2578` |
+| TB01 | Numbering families on tablet, the clash view | T | `135:2937` |
 
-Still to draw on this page: GL02 Manage workspaces with feature readiness, GL03 Companies and tenants, GL04 Numbering families registry, GL05 Notification defaults, nudges and the support owner, GL06 Publish configuration version, the tablet GL04, and the notes card. Still to draw elsewhere: the Interaction states page (`11:17`) with ST01 and the cross-cutting page states PS01 to PS12, and the four Read me cards.
+### Interaction states · AD — page `11:17` · 13 sheets
+
+| Code | Sheet | Sec. | Node |
+|---|---|---|---|
+| ST01 | Interaction states and accessibility — buttons, fields, inline edit, chips in words, keyboard order and zoom, and the contrast table (full length) | D | `138:882` |
+| PS01–PS12 | Loading permitted evidence; true-empty with its count; filtered-empty; could not load; denied or not found with Request access; stale (a newer revision); partial source (MYOB Not reachable); outcome unknown, lookup only; read only in its seven forms; bulk action partly failed; permission changed while open; two administrators at once | S | `139:1169`, `139:1489`, `139:1763`, `139:2039`, `139:2311`, `139:2489`, `139:2761`, `139:3053`, `139:3337`, `139:3621`, `139:3913`, `139:4177` |
+
+Still to draw: the four Read me cards.
 
 ## 4. Rules applied
 
@@ -385,6 +398,11 @@ Each item is for Dean's decision. A1 to A49 are cited on the sheets and notes ca
 | A60 | Story reconciliations under D7 and Addendum A3 supersede earlier fixtures: Dean or "SYN Systems" as the signed-in administrator; fourteen identities; SYN-A and SYN-B; `SYN-PPO-ACR-`; `SYN P05`; `SYN-INC-` on Operational health; `SYN-EXC-` on Migration; Alex Nguyen on My account; the Design's SYN-RPT-000067, SYN-PIR-000001 and Glasshouse 4 hold read as SYN-RPT-000039, SYN-PIR-000002 and the Goulburn hold | Keep |
 | A61 | Stale repository notes are recorded and not fixed here: the design register shows AD-02 "Implemented; AD-02 review pending", AD-07 without a route and every visual status "Needs review"; the fourteen Administration page labels are recorded nowhere; the README's 31 hosted capabilities differ from the checks' 36 | Fix in the design-register change |
 | A62 | Sheets signed in as someone other than Taylor Quinn keep the accepted shell's badge counts in the top bar | Keep for the proposal |
+| A63 | Administration menu defaults version 2 adds one change, a count on Migration & cutover (open exceptions); the version 1 dates on the Global configuration sheets are synthetic | Keep |
+| A64 | The registry shows the DSP clash (proposed by Supply and by Finance) and does not resolve it | Decide through PPO-STD-001 |
+| A65 | Nudge thresholds are the brief's (five working days, a day, the 10-minute example) | Keep as examples |
+| A66 | The stale and two-administrator page states (PS06, PS12) use Record references and GL01 so both cases stay inside this module | Keep |
+| A67 | PS11 (permission changed while a dialog is open) is a counterfactual: Taylor Quinn's apply duty is unchanged in the story | Keep |
 
 Questions Q1 to Q10 of the brief were answered by their defaults: Q1 Shell labels as titles; Q2 signed in as Taylor Quinn with Jordan Kim reviewing and Dean publishing, approving and signing off; Q3 the 38-identity roster; Q4 `SYN-OPI-` and `SYN-MEX-`; Q5 the five send words; Q6 the Global configuration area, marked proposed; Q7 Users and access redrawn although its build is blocked (20 October), which records no acceptance and changes no build order; Q8 proposed capabilities marked †; Q9 the two companies; Q10 My account with Taylor's, Casey Ward's and Dean's examples.
 
