@@ -76,12 +76,17 @@ export async function peopleRegister(
           NOT EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=$1 AND pc.person_id=r.id AND ${scopeSql("pc.company_id")})
           OR EXISTS(SELECT 1 FROM ppo.person_company_contexts pc WHERE pc.workspace_id=$1 AND pc.person_id=r.id AND NOT ${scopeSql("pc.company_id")}) AS notices_restricted
         FROM ppo.people r WHERE r.workspace_id=$1 AND ${visibility("Person")}
-      ), affiliations AS MATERIALIZED (
-        SELECT rel.person_id,o.id,o.display_name AS name,rel.role_label AS role
+      ), affiliation_candidates AS MATERIALIZED (
+        SELECT rel AS relationship,o AS organisation
         FROM ppo.relationships rel JOIN permitted pe ON pe.id=rel.person_id
         JOIN ppo.organisations o ON (o.workspace_id,o.id)=(rel.workspace_id,rel.organisation_id)
         WHERE rel.workspace_id=$1 AND rel.valid_from<=CURRENT_DATE AND (rel.valid_to IS NULL OR rel.valid_to>CURRENT_DATE)
-          AND ${scopeSql("rel.company_id")} AND ${visibility("Organisation", "o")}
+      ), affiliations AS MATERIALIZED (
+        SELECT rel.person_id,o.id,o.display_name AS name,rel.role_label AS role
+        FROM affiliation_candidates candidate
+        CROSS JOIN LATERAL (SELECT (candidate.relationship).*) rel
+        CROSS JOIN LATERAL (SELECT (candidate.organisation).*) o
+        WHERE ${scopeSql("rel.company_id")} AND ${visibility("Organisation", "o")}
       ), primary_sites AS MATERIALIZED (
         SELECT s.primary_contact_id AS person_id,s.id,s.display_name AS name
         FROM ppo.sites s JOIN permitted pe ON pe.id=s.primary_contact_id
