@@ -1,0 +1,5 @@
+# People register row-width correction — 11 November 2026
+
+[CLAIMED by Codex] Follow-up to Claude's F1 review of merged PR #897 at `0e817c4a2747b649ff7bd1dcf7092a4aa2af4134`. This branch starts from main `a55b09790` and narrows materialised affiliation candidates to fields actually consumed. Existing predicates, output and frozen reader remain the authority. Scope: CS-02; CRM-01/08; NFR-01/04.
+
+Declared paths: `src/shared/people-register.ts`, `tests/database/people-register-candidate-plan.test.ts`, `tests/helpers/people-register-plan.ts`, `docs/testing/evidence/visibility-plan-audit/README.md`, a new dated evidence JSON in that directory, and this fragment. Prove native long organisation notes do not inflate candidate materialisation, retain original plan bounds and semantic oracle, and preserve historical evidence. No migration, grant, index, dependency, workflow or frontend change. Implementation, validation and Claude's finding confirmation are pending; no merge or deployment is authorised.
