@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-FORMS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; six items in section 6 await Dean's confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the six items in section 6 were confirmed by Dean on 11 November 2026, F4 with a refinement; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Forms · Fields and validation in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Six items in [section 6](#6-to-confirm) await Dean's confirmation; the page awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The six items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The page itself awaits acceptance.
 
 After the [Gantt page](library-gantt.md), the last in the order Dean had accepted, Dean asked: "Are there any other features, interactions, etc., that should be included in this Figma file?" The answer named the groups that section 5 of the [design-to-build standard](../standards/design-to-build-standard.md) requires and the library did not yet hold: forms, states, record, phone patterns, and the shell with the page template. It recommended starting with forms. Dean answered: "Proceed however you believe is the most professional." This record covers that page, named "Forms · Fields and validation".
 
@@ -111,7 +111,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 - **Check before creating.** For organisations, people, leads and deals, a right-hand column lists records that may be the same: why each matched, its title and number, and Open or Use this record. It is a prompt, never a block, and nothing merges (D3, Q2, Q7). With no match it says so honestly.
 - **Review before save.** The column, or the sentence above the buttons on quick add and phones, lists what will be saved in plain words, unknowns included (D5).
 - **Validation.** Problems are reported on Save, all at once: a summary that counts them and links to each field, which takes focus, and a message under each field. A value that cannot be read, such as a date, is flagged when the person leaves the field. Messages say what to do; nothing entered is lost. The server checks everything again and its refusals use the same fields and words.
-- **Saving.** Entries lock while saving and the status is announced. Saved names the record, its number, version, who and when, and offers the next step (D6). If the outcome is unknown, the only action is Confirm original save, which repeats the same request; Cancel is not offered until the outcome is known (D7). A refusal says what changed and keeps every entry.
+- **Saving.** Entries lock while saving and the status is announced. Saved names the record, its number, version, who and when, and offers the next step (D6). If the outcome is unknown, the form shows the States page's Outcome banner: it holds new changes and offers Check the outcome, which only reads, and Retry the same action, which repeats the same request so nothing is created twice; Cancel is not offered until the outcome is known (D7; States S1, confirmed 11 November 2026, which replaces the drawn Confirm original save). A refusal says what changed and keeps every entry.
 - **Leaving.** Cancel, Back, closing a panel or leaving the page with unsaved entries opens an app dialog in plain words; closing the tab keeps the browser's prompt (D16, Q13). Esc closes a panel through the same check, except while saving or unsure.
 - **Permissions.** Only permitted options are listed; a disabled field says what unlocks it; Save is disabled only when nothing could be saved, and the save bar says why.
 - **Sizes.** Quick add is a 680 px panel over its host, only where the accepted page has + (Q1). A full form has the check in a 380 px column; at 1024 px and 200% zoom the check moves above the form. On a phone the form fills the screen in Touch size, Back replaces Cancel, the main action is 48 px and pickers open as sheets (D8, Q3).
@@ -130,21 +130,21 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 | Save bar | Sentence, Cancel, main action; phone main action 48 px (`form/phone-action`) | Create forms D5, D8 |
 | Search picker | 400 px list; options 36 px (Touch 44); Elevation / Popover; Not known yet and Create | Create forms D4, D15; lookup |
 | Error summary | Danger tone and icon, a count, a link per field; focus moves to it | ErrorNotice |
-| Saving | Locked entries; Uncertain offers only Confirm original save | Create forms D7 |
+| Saving | Locked entries; Uncertain shows the Outcome banner with Check the outcome and Retry the same action | Create forms D7; System pages Q5 (States S1) |
 | Radio and Choice | 16 px radio matching Checkbox; Choice as Row or Card | New (F4) |
 | Date picker | 264 px; 32 px days; Monday first; time row when needed; zone named | New (F5) |
 | Banner | The message wraps from 40 px; Dismiss can be turned off | Controls; changed here |
 
-## 6. To confirm
+## 6. Confirmed — 11 November 2026
 
-These six items need Dean's decision. Card 10 lists them.
+Asked for a recommendation on each open item, the answer recommended confirming all six as drawn, with one refinement to F4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these six, the five Gantt items and the five States items). Confirming F1 means the built forms move from 44 px to 36 px fields on desktop, and keep 44 px with 16 px text on phones and touch tablets, through reviewed application work. The States page's S1, confirmed in the same answer, changes this page's save bar (section 4, Saving).
 
-| ID | Item | As drawn | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | F1 | Field height | 36 px on desktop, as the Sales forms and this library's Controls; 44 px with 16 px text in a new Touch size for phones and touch tablets | The Create forms pattern and the built app use 44 px on desktop too; the Sales forms, accepted later, use 36 px |
 | F2 | Requirement in words | "Required" and "Or say why unknown" beside the label replace the asterisk on Controls / Field; optional fields carry no tag | Changes a Controls component drawn earlier, to follow the accepted Create forms pattern |
 | F3 | Hint under the label | The hint moves from under the field to under the label; the error stays under the field | Changes Controls / Field; the accepted pattern draws both positions |
-| F4 | Radio and Choice | Controls / Radio and Form / Choice; five or fewer options show as choices | New: no accepted page in the library's sources draws a radio, and the accepted Choice option part was not opened |
+| F4 | Radio and Choice | Controls / Radio and Form / Choice; five or fewer options show as choices. **Refinement:** the next time the frozen "PPO - Design" file is opened, its accepted Choice option part is compared with Form / Choice and the Card style aligned with it, before either is built | New: no accepted page in the library's sources draws a radio, and the accepted Choice option part was not opened |
 | F5 | Date picker | Monday first, typing always works, a time row only when the value has a time, the time zone named | New: no accepted page draws a date picker |
 | F6 | Save stays available | Save is disabled only when nothing could be saved, and the save bar says why; otherwise pressing it lists what is needed | The accepted pattern draws both a disabled Save (permission) and errors after Save; this states when each applies |
 
@@ -154,8 +154,9 @@ These six items need Dean's decision. Card 10 lists them.
 - **Module files unchanged.** The frozen "PPO - Design" file keeps the accepted Create forms page and its local parts (Create / Notice, Match card, Review row). Module pages switch to these parts after acceptance and publishing; the built forms change only through reviewed application work.
 - **Not here.** Address lookup (kept in module files, as the Grid record notes); attachments and uploads; rich text; multi-step wizards such as Create estimate; inline editing in registers (Grid page); a switch, a search field, a segmented control and pagination.
 - **No proof beyond the design.** No prototype links were set on the Form parts. Focus order, announcements, keyboard behaviour in the picker and the date picker, and touch sizes need the browser proof once code exists.
-- **Code.** No application code, component binding, register or page guide changed. The five new variables have no CSS property yet; the built app's `--ppo-control-height` (44 px) matches the Touch value, not Medium.
-- **Next in the recommended order.** States, then Record, then Phone patterns, then the shell and page template. The [States page](library-states.md) followed; its item S1 asks whether the uncertain state of Form / Save bar should take the System pages "Outcome unknown" banner and wording instead of Confirm original save.
+- **Code.** No application code, component binding, register or page guide changed. The five new variables have no CSS property yet; the built app's `--ppo-control-height` (44 px) matches the Touch value, not Medium, which F1 confirms for desktop.
+- **Figma not yet changed.** Card 10, the page header and Form / Save bar's two Uncertain variants still show the drawing before 11 November 2026: "items to confirm" and Confirm original save. On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls (200 a day on a Professional Full seat) was reached. They are changed once it allows: the Uncertain variants to the Outcome banner and its two actions (S1), card 10 and the header to the confirmed items.
+- **Next in the recommended order.** States, then Record, then Phone patterns, then the shell and page template. The [States page](library-states.md) followed; Dean confirmed its item S1 on 11 November 2026, so the uncertain state of Form / Save bar takes the System pages "Outcome unknown" banner and wording instead of Confirm original save.
 
 ## 8. Checks
 

@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-GANTT-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; five items in section 6 await Dean's confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; the Projects file and its open pull request are unchanged; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean on 11 November 2026; every component is Status Proposed until Dean accepts the page; nothing published from the library; the Projects file and its open pull request are unchanged; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Gantt · Bars and links in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items in [section 6](#6-to-confirm) await Dean's confirmation; the page awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean accepted an order for the next pages of `PPO - Library`: Controls, shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart ([Controls record](library-controls.md)). After the [Time page](library-time.md) he answered: "Confirm all five items as recommended and draw the next page". This record covers that page, the last in the accepted order.
 
@@ -127,13 +127,13 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 | Variance | Calendar days first, working days by the named calendar | PJ-03 D2 |
 | Changing dates | Drag or stretch proposes; the task panel opens with the dates and a required reason | PJ-03 D5, PG04; new (G5) |
 
-## 6. To confirm
+## 6. Confirmed — 11 November 2026
 
-These five items need Dean's decision. Card 9 lists them.
+Asked for a recommendation on each open item, the answer recommended confirming all five as drawn. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the six Forms items and the five States items). None of the refinements concerns this page. Confirming G2 means the built ProjectsGantt's 38 px rows move to 40 px in a later reviewed change.
 
-| ID | Item | As drawn | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
-| G1 | Today stays violet | On a Gantt Today is the violet line of the colour decision; calendars and planners keep the green-deep Now line | The Time page confirmed one axis for every view (T2); this keeps two markers for "now" |
+| G1 | Today stays violet | On a Gantt Today is the violet line of the colour decision, because green means complete there; calendars and planners keep the green-deep Now line | The Time page confirmed one axis for every view (T2); this keeps two markers for "now" |
 | G2 | 40 px rows | Gantt rows take `grid/row-height` (40 px) so the task list is a Grid register | The built Gantt uses 38 px |
 | G3 | Icon on At risk and Conflict | Status in words in the list, plus the Attention icon on those bars | The colour decision names a text or icon cue as a possible refinement, designed in Figma first |
 | G4 | Whole-day snap | Moves and stretches snap to days on a Gantt; the Time page's 15-minute step applies where hours show | The Time page set a 15-minute snap for every view (T2) |
@@ -143,7 +143,8 @@ These five items need Dean's decision. Card 9 lists them.
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Projects file unchanged.** The Projects file and pull request #896 were not touched. Its Schedule and Programme sheets (PG01 to PG13, ST01) switch to these parts once that file is accepted and the library is published.
-- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows and its own bars until a reviewed change aligns it with this page and G1 to G5.
+- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows and its own bars until a reviewed change aligns it with this page and G1 to G5, which Dean confirmed.
+- **Board not yet marked.** Card 9 and the page header still read "items to confirm". On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls (200 a day on a Professional Full seat) was reached; they are marked once it allows.
 - **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
 - **No proof beyond the design.** No prototype links were set on the Gantt parts. Dragging, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two dependency colours and the three new layout variables have no CSS property yet.

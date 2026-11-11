@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-STATES-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; five items in section 6 await Dean's confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean on 11 November 2026, S2 and S4 with refinements; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # States · Loading, empty and errors in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. Five items in [section 6](#6-to-confirm) await Dean's confirmation; the page awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The page itself awaits acceptance.
 
 After the [Forms page](library-forms.md), Dean answered for the second time: "Proceed however you believe is the most professional." States came next in the recommended order of the groups that section 5 of the [design-to-build standard](../standards/design-to-build-standard.md) requires and the library did not yet hold. This record covers that page, named "States · Loading, empty and errors".
 
@@ -79,10 +79,10 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 ## 4. Rules drawn
 
 - **Choose by situation.** Card 1 maps fourteen situations to the part each uses. Every state carries words as well as colour.
-- **Loading.** Only opening the workspace shows a message. Inside a page, the frame, headers, labels and actions are drawn for real and placeholders stand where values will be. Counts, totals and badges wait for the read; 0 appears only after a successful read. "Loading…" is announced once; placeholders are hidden from screen readers and do not move.
+- **Loading.** Only opening the workspace shows a message. Inside a page, the frame, headers, labels and actions are drawn for real and placeholders stand where values will be. Placeholders appear only once a read has taken longer than about 300 ms, so a fast read never flickers (S2). Counts, totals and badges wait for the read; 0 appears only after a successful read. "Loading…" is announced once; placeholders are hidden from screen readers and do not move.
 - **Empty.** Empty is a successful read with nothing in it, never a failure. No records says what will appear and offers the first action; No matches names the filters that are on and offers Clear filters; All done says when the next thing is due. An icon, a heading, one sentence and at most one action; no illustration.
 - **Could not load.** The message panel only when nothing on the page can show; otherwise an inline notice where the failing part would be. The last confirmed result stays. Try again repeats the read and never a save. A support reference when one exists; never stack traces, error codes or internal names.
-- **Not refreshed.** The last good read stays, labelled "Shown as at" its time, with Try again. A failed refresh changes nothing.
+- **Not refreshed.** The last good read stays, labelled "Shown as at" its time, with Try again. When that time is not today, the label names the day as well, such as "Shown as at Mon 9 Nov, 16:20" (S4). A failed refresh changes nothing.
 - **Incomplete.** A value that could not be read is a dash, never a guess or zero; totals leave it out and the list says it may be incomplete.
 - **Access.** Unavailable is the same for a missing record and one the person cannot see, for a page and for a part. A workspace not permitted names only the workspace and who to ask; there is no Request access button. View only says so once and names who can make the change. Nothing on these pages grants access.
 - **Outcome unknown.** One banner for a save whose reply was lost: it shows the operation, holds new changes, and offers Check the outcome and Retry the same action, which replays the same request so nothing is created twice. It resolves to Saved or Not saved. PPO checks by itself only by reading, never by retrying. External sends whose local save is confirmed keep their own wording and have no Retry.
@@ -97,27 +97,32 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 | Connection banner | Full width under the top bar or phone header; surface/hover; Info icon | System pages D8 |
 | Inline notice | The state in words on a chip, a title and a sentence; Try again where it helps; line/soft rule below | System pages; Not refreshed and Incomplete new (S4, S5) |
 | Empty | 440 px, centred: 32 px icon, 14 Medium heading, one sentence, at most one action | ReadState; new (S3) |
-| Placeholder | surface/hover shapes: 12 px lines, blocks, 24 px circles; static | Time and Gantt pages; new (S2) |
+| Placeholder | surface/hover shapes: 12 px lines, blocks, 24 px circles; static; shown only after a read has taken about 300 ms | Time and Gantt pages; new (S2) |
+| Not refreshed | "Shown as at 16:20" today; "Shown as at Mon 9 Nov, 16:20" on an earlier day | Time page; day new (S4) |
 | Counts | Withheld while loading; 0 only after a successful read; incomplete totals say so | PT-29; NFR-05 |
 | Announcements | Loading announced once; banners and notices announced when they appear; placeholders hidden from screen readers | System pages; WCAG 4.1.3 |
 
-## 6. To confirm
+## 6. Confirmed — 11 November 2026
 
-These five items need Dean's decision. Card 9 lists them.
+Asked for a recommendation on each open item, the answer recommended confirming all five as drawn, with refinements to S2 and S4. On 11 November 2026 Dean answered: "Confirm all sixteen as recommended, with the refinements" (these five, the five Gantt items and the six Forms items). Confirming S1 changes the Forms page: Form / Save bar's uncertain state takes the Outcome banner and its two actions ([Forms record](library-forms.md), section 4).
 
-| ID | Item | As drawn | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
-| S1 | One outcome wording, forms included | Form / Save bar's uncertain state takes the Outcome banner and its two actions, replacing Confirm original save | System pages Q5 adopted one wording for every surface and listed Organisations' "Confirm original save" among the headings it replaces; the Create forms pattern, accepted the same day, kept the form's own wording (D7). The Forms page follows Create forms until this is decided |
-| S2 | Placeholders inside pages | The frame, labels and actions are drawn and placeholders stand in for values; counts wait; the message panel only while the workspace opens | System pages draws only the workspace message; the Time and Gantt pages draw placeholders. This makes the split a shared rule |
+| S1 | One outcome wording, forms included | Form / Save bar's uncertain state takes the Outcome banner and its two actions, replacing Confirm original save | System pages Q5 adopted one wording for every surface and listed Organisations' "Confirm original save" among the headings it replaces; the Create forms pattern, accepted the same day, kept the form's own wording (D7) |
+| S2 | Placeholders inside pages | The frame, labels and actions are drawn and placeholders stand in for values; counts wait; the message panel only while the workspace opens. **Refinement:** placeholders appear only once a read has taken longer than about 300 ms, so a fast read never flickers | System pages draws only the workspace message; the Time and Gantt pages draw placeholders. This makes the split a shared rule |
 | S3 | Plain empty states | An icon, a heading, one sentence and at most one action; no illustration | New: no accepted page sets an empty-state pattern |
-| S4 | Not refreshed | The last good read stays, "Shown as at" its time, with Try again | Drawn on the Time page; new as a shared part |
+| S4 | Not refreshed | The last good read stays, "Shown as at" its time, with Try again. **Refinement:** when that time is not today the label names the day too, such as "Shown as at Mon 9 Nov, 16:20" | Drawn on the Time page; new as a shared part |
 | S5 | Incomplete | A dash in place of a value that could not be read, a note, and totals that leave it out | Gantt PS13 and NFR-05 cover it; new as a shared part |
 
 ## 7. Not done and open
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Module files unchanged.** The frozen "PPO - Design" file keeps the accepted System pages and its parts. Module pages switch to these parts after acceptance and publishing; the built pages change only through reviewed application work, as the System pages decision's build needs list.
-- **Forms page unchanged.** Form / Save bar keeps Confirm original save until S1 is decided.
+- **Figma not yet changed.** The Figma file still shows the drawing from before 11 November 2026. On 11 November 2026 the Figma connection refused further edits because the account's daily limit for tool calls was reached (200 a day on a Professional Full seat). The following are made once it allows:
+  - card 9 and the page header list the confirmed items;
+  - card 2 and Placeholder's description gain the 300 ms rule (S2);
+  - the Not refreshed notice and card 4 gain the day (S4);
+  - Form / Save bar's Uncertain variants on the Forms page take the Outcome banner and its two actions (S1).
 - **Not here.** Sign-in, session expired and signed out (System pages and the login template); Toast (Controls); the field workspace's offline queue (ADR-0013); Request access (System pages D4, outside the baseline); an unknown-outcomes indicator and reference lookup (System pages ideas I5 and I6).
 - **No proof beyond the design.** No prototype links were set. Announcements, focus on the message heading and reduced-motion behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. `state/panel-width` has no CSS property yet.
