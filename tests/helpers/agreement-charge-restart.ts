@@ -3,6 +3,7 @@
 import assert from "node:assert/strict";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { agreementCommand } from "../../src/maintenance/agreements";
 import { localConfig } from "../../src/platform/config";
 import { database, closeDatabase } from "../../src/platform/database";
 import { httpAcceptance } from "./acceptance-http";
@@ -126,6 +127,22 @@ try {
     });
     r = await read();
     assert.equal(r.handoff.status, "OutcomeUnknown");
+    const revised = await agreementCommand(f.owner, f.id, {
+      ...base(),
+      expected_version: 2,
+      action: "Revise",
+      content: {
+        ...f.content,
+        title: "SYN successor before restart; original charge retained",
+      },
+    });
+    await agreementCommand(f.reviewer, f.id, {
+      ...base(),
+      expected_version: revised.receipt.record_version,
+      action: "Approve",
+      authority_reference:
+        "SYN independently approved successor before restart",
+    });
     const agreement = (
       await database().query(
         "SELECT version FROM ppo.service_agreements WHERE id=$1",
@@ -160,7 +177,7 @@ try {
       { mode: 0o600 },
     );
     console.log(
-      "Saved OutcomeUnknown with withdrawn source and six original HTTP receipts. Restart compiled app and PostgreSQL before verify.",
+      "Saved OutcomeUnknown with superseded and withdrawn source and six original HTTP receipts. Restart compiled app and PostgreSQL before verify.",
     );
   } else {
     const saved = JSON.parse(
@@ -318,6 +335,7 @@ try {
       JSON.stringify(
         {
           passed: true,
+          source_superseded_before_restart: true,
           original_receipts: saved.operations.length,
           new_session_audit_rows: additions.length,
           recovery_receipts: recovery.length,

@@ -452,8 +452,8 @@ export async function submitFinance(p: Principal, id: string, input: unknown) {
           l.source_kind === "AgreementCharge" &&
           (
             await c.query(
-              "SELECT 1 FROM ppo.finance_allocation_holds WHERE workspace_id=$1 AND agreement_revision_id=$2 AND agreement_charge_id=$3 AND state<>'Released'",
-              [p.workspace_id, l.agreement_revision_id, l.agreement_charge_id],
+              "SELECT 1 FROM ppo.finance_allocation_holds h JOIN ppo.agreement_charge_lines c ON (c.workspace_id,c.revision_id,c.charge_id)=(h.workspace_id,h.agreement_revision_id,h.agreement_charge_id) WHERE h.workspace_id=$1 AND c.agreement_id=$2 AND h.agreement_charge_id=$3 AND h.state<>'Released'",
+              [p.workspace_id, ctx.h.agreement_id, l.agreement_charge_id],
             )
           ).rowCount
         )

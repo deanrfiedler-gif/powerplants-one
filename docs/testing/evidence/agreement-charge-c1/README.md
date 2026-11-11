@@ -101,3 +101,35 @@ The first actual-restart attempt recovered all six receipts but failed the whole
 ### Delivery gates
 
 At the incoming C1 head, Application assurance's workflow summary was successful but its database/HTTP/runtime jobs were **skipped because the PR is draft**. This is not full CI validation. Contacts was the attributable failing job; other workflow results are observed separately on GitHub. Updated-head CI and Claude's one independent defect review remain separate gates. C1 stays on M2 until Dean merges M2, then needs retargeting and current-main validation. Complete TS-01/02, real rendered suites, customer output, operating pricing/tax/accounting authority and deployment remain unclaimed.
+
+## C1-1 independent review correction — 11 November 2026
+
+Claude's [review of 7d0a2254f](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#pullrequestreview-5851548128) identifies duplicate billing after a title-only successor. This session [claimed the correction](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6783153124) after the prior DONE. Current main `2d9a8ff24` is integrated; M2 remains unmerged and C1 remains one level stacked. #897 stays untouched. Incoming Contacts rerun passed; Application assurance had only Change scope executed, with all runtime jobs skipped while draft.
+
+The corrected conservation key is workspace + agreement + charge UUID. Revision remains immutable provenance. Submission checks every revision, revised pre-effect Drafts atomically transfer retained UUID holds, and successors must preserve every Held/Consumed charge's date, amount, currency and tax basis. The application returns `AgreementChargeReserved` for a forbidden amendment. The clarification implements the existing no-double-claim rule; it defines no correction/reversal, pricing, tax or ERP policy.
+
+### Additive migration and historical assurance
+
+0127 is byte-for-byte unchanged. 0128 was reserved in `a6d8647b5`, pushed with current main in `bb60c525c`, before writing SQL. The normal `--reserve` command failed because shell `gh` GraphQL is Forbidden. Connected GitHub enumeration found seven open PRs (#897/#902/#904/#905/#906/#907/#911); complete changed-filename reads found only this PR's 0127, no other migration/reservation. The unchanged reservation module ran with that observed claim set. The reservation is removed by its implementing change.
+
+0128 changes functions/indexes/triggers only. Both allocation and agreement-revision guards take the existing workspace row lock. The allocation guard derives the agreement from immutable charge provenance and rejects a competing Held/Consumed charge across revisions; the revision guard refuses removal or changed reserved terms. It neither rewrites rows nor adds grants/seeds. An ambiguous pre-fix duplicate-live history makes migration fail before any new object is committed, preserving its original ledger for explicit reconciliation.
+
+All current-version migration assertions were searched and extended, including the computed from-0025 lengths, policy lists, Products reserved-0052 starting points (including 128), late-Maintenance dependencies 0051/0123/0127/0128, and hosted-demo upgrade count/gate. Prior starting points and original ledger assertions remain. No historical migration bytes are changed.
+
+### Commands and evidence boundary
+
+The sibling M2 setup completed with Node 24.21.0/npm 11.19.0/PostgreSQL 16.15 ready. C1 installed the unchanged lockfile with `npm ci`, copied the disposable local configuration, and sources `/workspace/.ppo-tools/env.sh` in every shell. M2's fresh required-channel probe confirms absent Chrome. Database-mutating suites are serial across worktrees.
+
+```sh
+npm run check
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 tests/database/agreement-charge-finance.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 --test-name-pattern='C1-1' tests/database/agreement-charge-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 --test-name-pattern='SV08|C1 command-only' tests/database/maintenance-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 --test-name-pattern='PD upgrade from (127|128)' tests/database/products-upgrade.test.ts
+node --env-file=.env.local --import tsx --test --test-concurrency=1 --test-timeout=300000 tests/demo/upgrade.test.ts
+python3 scripts/build-contacts-design.py --check
+```
+
+Focused regressions cover consumed/OutcomeUnknown successors, immutable prior Finance revisions, single exact target recovery, reserved term/removal refusal with no audit/receipt/outbox changes, Returned cross-revision transfer versus concurrent submit, and direct SQL races. Populated-0127 proof retains consumed and unknown targets/holds through upgrade and original recovery. A separate 0127 fixture reproduces the old SQL duplicate and proves atomic migration refusal. The compiled HTTP case now attempts a duplicate through the approved successor while the original outcome is unknown. The restart harness now supersedes and withdraws the source before restarting both actual processes.
+
+Execution results and any corrected failures are recorded below when complete. Earlier successful checks remain historical evidence, not an assertion that they were rerun. Local checks, final-head CI, independent new-migration review/finding confirmation and operational acceptance remain separate. No full TS-01/02, six-monthly scenario execution, real PDF/browser, claim output or live integration is claimed.

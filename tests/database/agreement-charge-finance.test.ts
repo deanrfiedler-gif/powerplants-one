@@ -427,3 +427,268 @@ test("C1 source grants govern reads, queues and original-operation receipts afte
     0,
   );
 });
+
+async function successor(
+  f: Awaited<ReturnType<typeof agreementChargeFixture>>,
+  content = f.content,
+) {
+  const row = (
+    await database().query("SELECT * FROM ppo.service_agreements WHERE id=$1", [
+      f.id,
+    ])
+  ).rows[0];
+  const revised = await agreementCommand(f.owner, f.id, {
+    ...base(),
+    expected_version: row.version,
+    action: "Revise",
+    content,
+  });
+  await agreementCommand(f.reviewer, f.id, {
+    ...base(),
+    expected_version: revised.receipt.record_version,
+    action: "Approve",
+    authority_reference: "SYN independent successor approval",
+  });
+  return (
+    await database().query(
+      "SELECT current_revision_id FROM ppo.service_agreements WHERE id=$1",
+      [f.id],
+    )
+  ).rows[0].current_revision_id as string;
+}
+
+for (const scenario of ["Accepted", "AcceptedThenTimeout"])
+  test(`C1-1 ${scenario} charge stays reserved across title-only successors and original recovery`, async () => {
+    const f = await agreementChargeFixture(),
+      a = await saveAgreementClaim(f);
+    await submitAgreementClaim(f, a.id);
+    await reviewAgreementClaim(f, a.id);
+    await beginAgreementClaim(f, a.id, scenario);
+    await outcomeAgreementClaim(f, a.id);
+    if (scenario === "Accepted") await reconcileAgreementClaim(f, a.id);
+    const before = await readFinance(f.preparer, a.id);
+    const revision = await successor(f, {
+      ...f.content,
+      title: "SYN title-only amendment",
+    });
+    const cmd = { ...f.draft(), agreement_revision_id: revision };
+    await saveFinance(f.preparer, null, cmd);
+    await assert.rejects(
+      submitAgreementClaim(f, cmd.id),
+      code("ClaimEntitlementUnavailable"),
+    );
+    const retained = await readFinance(f.preparer, a.id);
+    for (const key of ["handoff", "revisions", "lines", "targets"] as const)
+      assert.deepEqual(retained[key], before[key]);
+    const duplicate = await readFinance(f.preparer, cmd.id);
+    await assert.rejects(
+      database().query(
+        `INSERT INTO ppo.finance_allocation_holds(workspace_id,handoff_id,revision_id,line_id,agreement_revision_id,agreement_charge_id,quantity,state)
+     VALUES($1,$2,$3,$4,$5,$6,1,'Held')`,
+        [
+          f.preparer.workspace_id,
+          cmd.id,
+          duplicate.handoff.current_revision_id,
+          duplicate.lines[0].id,
+          revision,
+          f.first,
+        ],
+      ),
+      /already held or consumed across revisions/,
+    );
+    if (scenario === "AcceptedThenTimeout") {
+      await outcomeAgreementClaim(f, a.id, "LookupOriginal");
+      await reconcileAgreementClaim(f, a.id);
+    }
+    assert.equal(
+      (await readFinance(f.reconciler, a.id)).handoff.status,
+      "Processed",
+    );
+    assert.equal(
+      (
+        await database().query(
+          "SELECT count(*) n FROM ppo.finance_simulator_targets WHERE kind='SyntheticAgreementCharge'",
+        )
+      ).rows[0].n,
+      "1",
+    );
+    assert.deepEqual(
+      (await holds(a.id)).map((x) => x.state),
+      ["Consumed"],
+    );
+    assert.deepEqual(
+      (await saveFinance(f.preparer, null, a.cmd)).receipt,
+      a.result.receipt,
+    );
+  });
+
+test("C1-1 held and consumed charge terms cannot change or disappear; refused revisions leave no effects", async () => {
+  const f = await agreementChargeFixture(),
+    a = await saveAgreementClaim(f);
+  await submitAgreementClaim(f, a.id);
+  const snapshot = async () =>
+    Object.fromEntries(
+      await Promise.all(
+        [
+          "service_agreements",
+          "agreement_revisions",
+          "agreement_charge_lines",
+          "maintenance_events",
+          "audit_events",
+          "operation_receipts",
+          "outbox_jobs",
+        ].map(async (t) => [
+          t,
+          (
+            await database().query(
+              `SELECT to_jsonb(x) row FROM ppo.${t} x ORDER BY to_jsonb(x)::text`,
+            )
+          ).rows,
+        ]),
+      ),
+    );
+  for (const consumed of [false, true]) {
+    if (consumed) {
+      await reviewAgreementClaim(f, a.id);
+      await beginAgreementClaim(f, a.id);
+      await outcomeAgreementClaim(f, a.id);
+      await reconcileAgreementClaim(f, a.id);
+    }
+    const before = await snapshot(),
+      row = (
+        await database().query(
+          "SELECT * FROM ppo.service_agreements WHERE id=$1",
+          [f.id],
+        )
+      ).rows[0];
+    for (const schedule of [
+      {
+        ...f.content.charge_schedule,
+        lines: f.content.charge_schedule.lines.map((x) =>
+          x.id === f.first ? { ...x, amount: "4800.01" } : x,
+        ),
+      },
+      {
+        ...f.content.charge_schedule,
+        lines: f.content.charge_schedule.lines.map((x) =>
+          x.id === f.first ? { ...x, due_date: "2026-02-01" } : x,
+        ),
+      },
+      {
+        ...f.content.charge_schedule,
+        lines: f.content.charge_schedule.lines.filter((x) => x.id !== f.first),
+      },
+      { ...f.content.charge_schedule, tax_basis: "SYN changed tax basis" },
+    ]) {
+      const content = { ...f.content, charge_schedule: schedule };
+      await assert.rejects(
+        agreementCommand(f.owner, f.id, {
+          ...base(),
+          expected_version: row.version,
+          action: "Revise",
+          content,
+        }),
+        code("AgreementChargeReserved"),
+      );
+      await assert.rejects(
+        database().query(
+          `INSERT INTO ppo.agreement_revisions(id,workspace_id,company_id,agreement_id,revision,predecessor_id,content,content_hash,created_by,reason)
+    SELECT $1,workspace_id,company_id,agreement_id,revision+1,id,$2,content_hash,created_by,'SYN direct SQL challenge' FROM ppo.agreement_revisions WHERE id=$3`,
+          [randomUUID(), content, f.revision],
+        ),
+        /Held or consumed agreement charge terms must be retained/,
+      );
+      assert.deepEqual(await snapshot(), before);
+    }
+  }
+});
+
+test("C1-1 Returned claim transfers a stable hold to a successor without releasing it to a competitor", async () => {
+  const f = await agreementChargeFixture(),
+    a = await saveAgreementClaim(f, [f.first, f.second]);
+  await submitAgreementClaim(f, a.id);
+  await reviewAgreementClaim(f, a.id, "Returned");
+  const revision = await successor(f, {
+    ...f.content,
+    title: "SYN successor preserves charges",
+  });
+  const before = await readFinance(f.preparer, a.id),
+    competitor = { ...f.draft(), agreement_revision_id: revision };
+  await saveFinance(f.preparer, null, competitor);
+  const revise = {
+    ...a.cmd,
+    ...base(),
+    expected_version: before.handoff.version,
+    agreement_revision_id: revision,
+    charge_ids: [f.first],
+  };
+  const results = await Promise.allSettled([
+    saveFinance(f.preparer, a.id, revise),
+    submitAgreementClaim(f, competitor.id),
+  ]);
+  assert.equal(results[0].status, "fulfilled");
+  assert.equal(results[1].status, "rejected");
+  if (results[1].status === "rejected")
+    assert.equal(results[1].reason.code, "ClaimEntitlementUnavailable");
+  assert.deepEqual(
+    (await holds(a.id)).filter((x) => x.state === "Held"),
+    [
+      {
+        state: "Held",
+        agreement_revision_id: revision,
+        agreement_charge_id: f.first,
+      },
+    ],
+  );
+  assert.equal(
+    (await holds(a.id)).filter((x) => x.state === "Released").length,
+    2,
+  );
+  await submitAgreementClaim(f, a.id);
+  const omitted = { ...f.draft([f.second]), agreement_revision_id: revision };
+  await saveFinance(f.preparer, null, omitted);
+  await submitAgreementClaim(f, omitted.id);
+});
+
+test("C1-1 SQL races across two source revisions conserve one agreement charge", async () => {
+  const f = await agreementChargeFixture(),
+    a = await saveAgreementClaim(f),
+    revision = await successor(f);
+  const cmd = { ...f.draft(), agreement_revision_id: revision };
+  await saveFinance(f.preparer, null, cmd);
+  const records = await Promise.all(
+    [a.id, cmd.id].map((id) => readFinance(f.preparer, id)),
+  );
+  const results = await Promise.allSettled(
+    records.map((r) =>
+      database().query(
+        `INSERT INTO ppo.finance_allocation_holds(workspace_id,handoff_id,revision_id,line_id,agreement_revision_id,agreement_charge_id,quantity,state)
+   VALUES($1,$2,$3,$4,$5,$6,1,'Held')`,
+        [
+          f.preparer.workspace_id,
+          r.handoff.id,
+          r.handoff.current_revision_id,
+          r.lines[0].id,
+          r.lines[0].agreement_revision_id,
+          f.first,
+        ],
+      ),
+    ),
+  );
+  assert.equal(results.filter((r) => r.status === "fulfilled").length, 1);
+  const failure = results.find((r) => r.status === "rejected");
+  assert.ok(failure && failure.status === "rejected");
+  assert.match(
+    failure.reason.message,
+    /already held or consumed across revisions/,
+  );
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*) n FROM ppo.finance_allocation_holds WHERE agreement_charge_id=$1 AND state<>'Released'",
+        [f.first],
+      )
+    ).rows[0].n,
+    "1",
+  );
+});

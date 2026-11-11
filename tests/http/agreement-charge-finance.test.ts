@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
-import { closeDatabase } from "../../src/platform/database";
+import { database, closeDatabase } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { httpAcceptance } from "../helpers/acceptance-http";
 import {
@@ -68,6 +68,45 @@ test("C1 compiled HTTP uses existing Finance routes, exact source receipt replay
   );
   r = await read();
   assert.equal(r.body.handoff.status, "OutcomeUnknown");
+  const agreementPath = `maintenance/agreements/${f.id}`;
+  const version = async () =>
+    (
+      await database().query(
+        "SELECT version,current_revision_id FROM ppo.service_agreements WHERE id=$1",
+        [f.id],
+      )
+    ).rows[0];
+  const changed = await h.call("coordinator", agreementPath, {
+    ...base(),
+    expected_version: (await version()).version,
+    action: "Revise",
+    content: { ...f.content, title: "SYN HTTP title-only successor" },
+  });
+  assert.equal(changed.status, 200, JSON.stringify(changed.body));
+  const approved = await h.call("finance-reviewer", agreementPath, {
+    ...base(),
+    expected_version: (await version()).version,
+    action: "Approve",
+    authority_reference: "SYN HTTP exact successor approval",
+  });
+  assert.equal(approved.status, 200, JSON.stringify(approved.body));
+  const duplicate = {
+    ...f.draft(),
+    agreement_revision_id: (await version()).current_revision_id,
+  };
+  const duplicateSaved = await h.call("finance", "finance/handoffs", duplicate);
+  assert.equal(duplicateSaved.status, 201, JSON.stringify(duplicateSaved.body));
+  const duplicateRead = await h.call(
+    "finance",
+    `finance/handoffs/${duplicate.id}`,
+  );
+  const refused = await h.call(
+    "finance",
+    `finance/handoffs/${duplicate.id}/submit`,
+    { ...base(), expected_version: duplicateRead.body.handoff.version },
+  );
+  assert.equal(refused.status, 409, JSON.stringify(refused.body));
+  assert.equal(refused.body.code, "ClaimEntitlementUnavailable");
   assert.equal(
     (
       await h.call("finance-processor", path + "/record-outcome", {

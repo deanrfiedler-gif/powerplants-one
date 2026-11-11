@@ -25,9 +25,9 @@ const read = (file: string) => readFile(new URL(`../../db/${file}`, import.meta.
 // Reconstruct the current-main gap from its original SQL, hashes and seed receipts.
 // Do not pretend that a 0051 ledger row means the schema already exists.
 // 0123 (maintenance M1) alters 0051's own tables, so a history without 0051 can never have
-// installed it: omit 0123 and C1 0127, but retain independent 0124–0126 and their seeds.
-// The runner adds 0051 then 0123 and 0127.
-const beforeMaintenanceDependants = [123, 127];
+// installed it: omit 0123 and C1 0127/0128, but retain independent 0124–0126 and their seeds.
+// The runner adds 0051 then 0123, 0127 and 0128.
+const beforeMaintenanceDependants = [123, 127, 128];
 async function currentMainWithoutMaintenance() {
   await recoverSchema();
   await rows("DROP TABLE IF EXISTS public.ppo_migrations");
@@ -125,7 +125,7 @@ test("SV08 seed 124 is inert when late reserved Maintenance 0051 is installed af
   assert.deepEqual(after.filter(g=>ids.has(g.id)), grants);
   assert.deepEqual(after.filter(g=>!ids.has(g.id) && g.capability === "service_escalation.record"), []);
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"),users);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127) ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127,128) ORDER BY version"),ledger);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"),seedLedger);
   const completeLedger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version"), completeSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   await migrate(); await seed(); await seed();
@@ -151,8 +151,8 @@ test("C1 command-only late Maintenance installation preserves all earlier rows a
     finance_allocation_holds: before.finance_allocation_holds.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
   };
   assert.deepEqual(await snapshot(tables), expected);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127) ORDER BY version"),ledger);
-  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version IN (51,123,127) ORDER BY version"),[{version:51},{version:123},{version:127}]);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127,128) ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version IN (51,123,127,128) ORDER BY version"),[{version:51},{version:123},{version:127}, { version: 128 }]);
   assert.deepEqual(await rows("SELECT * FROM ppo.agreement_charge_lines"),[]);
   assert.deepEqual((await createOpportunity(p, proposal)).receipt,accepted.receipt);
   const finalLedger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");

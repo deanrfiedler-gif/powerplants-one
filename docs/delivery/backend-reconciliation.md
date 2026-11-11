@@ -1,5 +1,11 @@
 # Backend implementation reconciliation
 
+## Review correction batch — 11 November 2026
+
+Current main `2d9a8ff24` contains documentation changes since `9926da5fa`; M2 #904 and C1 #905 remain unmerged drafts at inspection. Claude's independent reviews now exist on `9c29ef63a` and `7d0a2254f`: M2-1/M2-2 and C1-1 are actionable. The Contacts rerun on the incoming C1 head succeeded. Existing #897/#904/#905 still occupy the three implemented Codex slots; #897 is untouched. This batch claims and corrects the findings on those two branches, with source/contract regressions and an additive reserved 0128 guard. No C2 or duplicate M1/B1–B4 implementation is justified.
+
+The corrected contract conserves agreement + charge UUID across immutable revisions; a title-only amendment cannot reissue a Held or Consumed entitlement. Reserved terms cannot change or disappear. M2 advertises agreement defaults only for the current approved authorised scope. See [M2 evidence](../testing/evidence/maintenance-m2/README.md) and [C1 evidence](../testing/evidence/agreement-charge-c1/README.md). Independent finding confirmation/new-migration review, final-head CI and Dean's M2 merge remain separate gates; retarget C1 after that merge. Browser setup still reports unavailable and the required Chrome probe fails. Full TS-01/02 execution, six-monthly scenario refresh, native UI/OUT-14 and operational D-017 authority remain open.
+
 ## Project / Service / Finance continuation — 11 November 2026
 
 This inspection uses main `9926da5fa9a3b60fbc22843d25ddea1af4830bf5`, M2 [#904](https://github.com/deanrfiedler-gif/powerplants-one/pull/904) at `6b26031e0` and C1 [#905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) at `3ffb1cd77`. M1 #770 and project billing B1–B4 are integrated; B2 #881, B3 #883 and B4 #893 are not missing implementations. M2/C1 remain unmerged draft contributions, with C1 based on M2. No review submissions or inline threads existed on either at inspection. Previous handovers released their build claims; this continuing session claimed validation/fixes on both. People performance #897 belongs to its separate workstream and is untouched. These three implemented Codex contributions reach the repository limit, so no fourth implementation or invented C2 is started.

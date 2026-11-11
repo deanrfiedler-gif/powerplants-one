@@ -71,13 +71,11 @@ export async function saveAgreementFinance(
         await noPossibleEffect(c, p, h);
         for (const row of (
           await c.query(
-            "SELECT agreement_revision_id,agreement_charge_id FROM ppo.finance_allocation_holds WHERE workspace_id=$1 AND handoff_id=$2 AND state='Held'",
+            "SELECT agreement_charge_id FROM ppo.finance_allocation_holds WHERE workspace_id=$1 AND handoff_id=$2 AND state='Held'",
             [p.workspace_id, h.id],
           )
         ).rows)
-          retained.add(
-            `${row.agreement_revision_id}:${row.agreement_charge_id}`,
-          );
+          retained.add(row.agreement_charge_id);
       }
       await accountCurrent(c, p, ctx.a);
       const d = await definition(c, p);
@@ -192,7 +190,7 @@ export async function saveAgreementFinance(
           target_group: `${e.id}`,
           source_entry_hash: hash(e),
         });
-        if (retained.has(`${source.revision_id}:${e.id}`))
+        if (retained.has(e.id))
           await insert(c, "finance_allocation_holds", {
             workspace_id: p.workspace_id,
             handoff_id: h.id,
