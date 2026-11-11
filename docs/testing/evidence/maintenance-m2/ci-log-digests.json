@@ -1,0 +1,30 @@
+{
+  "m2-ci-check.txt": {
+    "sha256": "77a0b2f5708a67cde8eda9cc41e34b5a259e709e9bc31af8bca87bae474e5ae1",
+    "bytes": 178998
+  },
+  "m2-ci-focused-lint.txt": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "m2-ci-docs.txt": {
+    "sha256": "491276fefbb1f73af5e8f4d8c0f3be9150cb378be2cd15e8361d7118632daef9",
+    "bytes": 1266
+  },
+  "m2-ci-doc-tests.txt": {
+    "sha256": "06c783ff23d32c206bfe31e40107f2466ae4e42c6bd9b218f81d4c52a4ecbd31",
+    "bytes": 143
+  },
+  "m2-ci-browser-list.txt": {
+    "sha256": "e948314af9ac8e8c1f283be91bf7d849fbf60035e9877f965e7f590dd8b46632",
+    "bytes": 853
+  },
+  "m2-ci-final-naming.txt": {
+    "sha256": "3baf563c83978e2f240801e2f6b6923ec5e4bcaa0013e4f075b0839d22a72282",
+    "bytes": 327
+  },
+  "m2-ci-final-foundation.txt": {
+    "sha256": "3dd8010911e5526645fa34fea6a2ba9068bd5d74c24b7dbfbd7752c711fcf167",
+    "bytes": 358
+  }
+}
