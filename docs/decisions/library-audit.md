@@ -81,13 +81,13 @@ All decisions are Dean's, on 11 November 2026.
 | A4 | Add the missing states and the target-size rule | Added: <ul><li>Disabled on Filter chip</li><li>Hover on Checkbox and Radio</li><li>Hover on Form / Choice</li><li>Focus on Form / Day</li></ul>The Checkbox and Radio descriptions set a target of at least 24 px, the whole row with a label, and 44 px in Touch |
 | A5 | One truncation rule | Read me rule 6: text is cut off only in dense lists, always with the full value on hover and focus and on the record; fields, facts and messages wrap |
 | A6 | One Drawer component, on the Controls page | Controls / Drawer in the four [drawer widths](library-drawer-widths.md), with a title and Close, a content slot and a Form / Save bar footer; a Drawer card on the Controls board. Form / Save bar's desktop buttons now wrap together below the sentence, so the bar fits the Narrow drawer |
-| A7 | Dialog widths of 560 and 720 px | `dialog/standard` and `dialog/wide`. Controls / Dialog is still 400 px wide (open) |
+| A7 | Dialog widths of 560 and 720 px | `dialog/standard` and `dialog/wide`. Controls / Dialog has a Width option: Standard 560 px and Wide 720 px, tied to them |
 | A8 | Breakpoints | `breakpoint/tablet` 768, `breakpoint/laptop` 1024, `breakpoint/desktop` 1280 and `breakpoint/wide` 1440, from shell R94 and R75, the drawer rule and the shell sheets |
 | A9 | Motion timings, as proposed values | A "Motion" collection: `motion/fast` 100 ms, `motion/standard` 200 ms, `motion/slow` 300 ms and `motion/delay` 300 ms. With reduced motion nothing slides and fades are 100 ms or less. The delay is already decided (States S2; shell R93); the other three await confirmation once they can be judged in a prototype |
 
 Dean also confirmed the Record page's items R1 to R4 and R6 ([Record record](library-record.md), section 6).
 
-The library now holds 134 variables in six collections; [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
+With these the library held 134 variables in six collections (138 since the [Phone page](library-phone.md)); [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
 
 ## 5. Directions for later work
 
@@ -104,7 +104,7 @@ Dean agreed these on 11 November 2026. None is drawn yet.
 | B7 | **New features.** Draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page. AI features come later, each after a rules-based version |
 | B8 | **Publishing.** After the shell move and page template and Dean's first page acceptances; then the standard's pilot on a copy of one module file |
 
-Order of work: Phone patterns, then the shell and page template (which needs Dean's desktop copy of the shell components), then B5 to B7.
+Order of work: Phone patterns (drawn on 11 November 2026, [Phone record](library-phone.md)), then the shell and page template (which needs Dean's desktop copy of the shell components), then B5 to B7.
 
 ## 6. To align at the next reviewed change
 
@@ -118,8 +118,7 @@ None of these is changed by this record.
 
 ## 7. Not done and open
 
-- **Dialog.** Controls / Dialog is not yet resized to the dialog widths.
-- **Record card 7.** Its drawers are assembled from parts, not from Controls / Drawer.
+- **Closed with the Phone page.** Two items first listed here were done when the [Phone page](library-phone.md) was drawn, also on 11 November 2026: Controls / Dialog was fitted to the dialog widths, and the Record page's card 7 now places Controls / Drawer.
 - **Controls page leftovers.** A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit.
 - **Not addressed.** The Board page's scaled thumbnails with text below 11 px; the Grid hover reading in section 2.
 - **Motion.** The three proposed timings are not confirmed.

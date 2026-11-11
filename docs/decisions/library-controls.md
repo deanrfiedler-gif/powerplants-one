@@ -84,7 +84,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Tooltip | `50:118` | One component. Options: Label, Shortcut, Shortcut text |
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Action |
 | Controls / Banner | `50:240` | 4 tones. Options: Message, Action, Dismiss. The wrapping message and the Dismiss option came with the [Forms page](library-forms.md) |
-| Controls / Dialog | `51:295` | 2: Confirm, Destructive. Options: Title, Body; footer buttons exposed |
+| Controls / Dialog | `51:295` | 4: Confirm or Destructive, each Standard (560 px) or Wide (720 px). Options: Title, Body; footer buttons exposed |
 | Controls / Drawer | `217:656` | 4: Width (Narrow 360, Standard 480, Wide 640, Extra-wide 800), each tied to its [drawer width](library-drawer-widths.md). Options: Title, Show footer, Content (swap). Exposed: Footer (Form / Save bar). Added on 11 November 2026 |
 | Controls / Drawer content | `217:578` | One component: the placeholder the Content option swaps out |
 
@@ -102,7 +102,7 @@ The review board gained a Drawer card `220:615` and a Drawer row in card 9's val
 | 5 · Checkboxes | `53:435` | States on white and on a tinted row; with a label; rules |
 | 6 · Menus and tooltips | `53:523` | A composed menu; tooltips; rules for menus, popovers and tooltips |
 | 7 · Toasts and banners | `53:602` | Four tones of each; rules |
-| 8 · Dialogs | `53:709` | Destructive over a scrim; Confirm; rules |
+| 8 · Dialogs | `53:709` | Destructive over a scrim; Confirm; rules. Laid out again on 11 November 2026 for the dialog widths |
 | 9 · Values, sources and confirmed items | `53:773` | The table in section 5, the items in section 6, what is not yet here, change log |
 
 Every solid fill and stroke on the components and the board is bound to a PPO colour variable, every text node uses a library text style, every shadow uses an effect style, and no layer has a default name. Sizes, paddings and most corner radii are bound to variables; 24 layers in the components and 3 on the board (focus rings, state layers, tone bars) still have a plain radius.
@@ -136,7 +136,7 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Tooltip | brand/navy, 12 Regular white, 4 px corners | Shell R17 |
 | Toast | 360 px, tone bar and icon, one action, dismiss | Shell sheet S; R71 |
 | Banner | 40 px, tone surface and icon, one action, dismiss | Shell sheet S; R71 |
-| Dialog | 400 px, 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70. `dialog/standard` (560) and `dialog/wide` (720) now exist for decisions; the component is not yet resized to them |
+| Dialog | 560 px (`dialog/standard`) or 720 px (`dialog/wide`), 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70; [library audit](library-audit.md) A7. The shell sheets drew 400 px |
 | Drawer | 360, 480, 640 or 800 px by content; 14 Medium title and Close; Form / Save bar footer; Elevation / Dialog; no scrim | Dean, 11 November 2026; shell R98 |
 
 ## 6. Confirmed — 10 November 2026
@@ -156,7 +156,7 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 - **Page acceptance and publishing.** As for the grid page: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Not yet here.** Switch, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Radio and the date picker were added with the [Forms page](library-forms.md). Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
 - **Audit, 11 November 2026.** The [library audit](library-audit.md) changed this page: tabs, the new Disabled and Hover states, the target-size rule, the retired 10 px style and Controls / Drawer.
-  - The Dialog component is still 400 px; fitting it to the dialog widths is open.
+  - The Dialog component was fitted to the dialog widths with the [Phone page](library-phone.md): Standard 560 px and Wide 720 px. On a phone a dialog becomes a bottom sheet (Phone / Sheet).
   - A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit and are not yet fixed.
 - **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 20 the library uses so far, drawn by hand, and is not the shared icon set.
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.

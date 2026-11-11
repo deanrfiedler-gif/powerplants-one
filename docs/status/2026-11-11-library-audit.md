@@ -18,7 +18,7 @@ Dean asked for an audit of every page in the private Figma file "PPO - Library":
 **Checked:** each changed component and card was rendered and inspected. Variables and text styles were read back from the file. Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
 
 **Not done:**
-- Controls / Dialog is not resized to the dialog widths, and the Record page's card 7 does not yet use the Drawer component.
+- The audit left Controls / Dialog at 400 px and the Record page's card 7 without the Drawer component. Both were done with the [Phone page](2026-11-11-library-phone.md).
 - The three proposed motion timings are not confirmed.
 - The directions for later work are recorded, not drawn.
 - No page is accepted and the library is not published.

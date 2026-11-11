@@ -94,7 +94,7 @@ The edit drawer uses `drawer/standard` (480). It was created as `record/panel-wi
 | 4 · View tabs | `194:586` | Lead, deal and quotation tab rows; More when the tabs don't fit; rules |
 | 5 · Next activity and composer | `195:568` | Next activity planned and none; the composer at rest and writing; rules |
 | 6 · History and files | `195:667` | History by day with filter counts and six kinds of entry; file rows; rules |
-| 7 · Editing a record | `196:719` | A section edited in the 480 px drawer; a correction with a required reason; rules |
+| 7 · Editing a record | `196:719` | A section edited in the 480 px drawer; a correction with a required reason; rules. Since the [Phone page](library-phone.md) was drawn, both drawers are placed Controls / Drawer parts |
 | 8 · States on a record | `197:826` | Loading with placeholders, can't be shown, a part not refreshed, outcome unknown; rules |
 | 9 · Tablet and phone | `198:899` | The tablet with the folded column; a 390 px phone record in Touch size; rules |
 | 10 · Do and Don't | `199:980` | Three pairs: header actions, values nobody has yet, History |
@@ -193,7 +193,7 @@ On 11 November 2026 Dean confirmed five items as drawn: "Confirm R1–R4 and R6"
   - Quick add from a register (Forms page, the 640 px drawer).
 - **No proof beyond the design.** No prototype links were set on the Record parts. Keyboard behaviour in the tabs, focus after saving in the drawer, announcements and touch sizes need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The new variables have no CSS property yet.
-- **Next in the recommended order.** Phone patterns, then the shell and page template.
+- **Next in the recommended order.** Phone patterns, drawn on 11 November 2026 ([Phone record](library-phone.md)), then the shell and page template.
 
 ## 8. Checks
 
