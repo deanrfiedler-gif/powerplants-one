@@ -91,7 +91,7 @@ The Read me page and the Foundations board were updated for the new page and var
 - **One axis, two directions.** Time runs down the page in a calendar (days are columns) and across it in a planner or Gantt chart (people or phases are rows). The parts, colours and rules are the same; only the variable for an hour changes.
 - **Events.** Title first, then times and where or with whom. Six kinds, each with words as well as colour: Activity (the workspace's accent; a PPO activity, which never reserves time on its own), Meeting (navy; from Outlook, read only), Visit (info; reserves the crew's time), Attention (warning, with the icon and what is needed), Tentative (dashed, and says Tentative or Proposed), Busy (someone else's time; details hidden). 30 minutes or less shows the title only.
 - **Bands.** Extended hours inside the calendar but outside standard hours (allowed, with a warning); Not working outside the calendar; Unavailable for leave, closures and reservations hidden by a filter, hatched and named with their times; Past as a light wash; Today behind today's column or row. Time that was not read, or is hidden by a filter, is never drawn as free.
-- **Now line.** On today only, in brand/green-deep with the time in a pill.
+- **Now line.** On today only, in status/success with the time in a pill. It was brand/green-deep until 11 November 2026, when the [library audit](library-audit.md) measured the white time on it at 3.57:1 and Dean chose status/success (6.1:1) for the pill and the line.
 - **Time zone.** Always named in the corner; the organiser's time is added when it differs.
 - **Overlaps.** Side by side up to three, then "+N more"; the day header counts them. On a planner an overlap splits the lane's height, not its width. Whether an overlap is allowed is the server's decision.
 - **Moving, resizing and planning.** A ghost snaps to 15 minutes with a readout of the new day and times. Handles at both ends of a selected event change its times. Dragging across empty time proposes a new item with a small form. Outside a person's calendar there is no ghost: the not-allowed cursor and a reason tag say why. Every change is also in the event's menu and details panel (Change times, Move or reassign), the only route on touch and on phones. A drop proposes; the server checks calendars, crew, travel, readiness and policy holds again.
@@ -114,7 +114,7 @@ The Read me page and the Foundations board were updated for the new page and var
 | Focus and selected | 2 px text/link ring; navy edge with Elevation / Popover | Grid D1; Service planner |
 | Bands | Extended hours surface/hover; Not working and Unavailable hatched on surface/chrome; Past and Today surface/workspace | Service planner; Sales A01 |
 | Hours | Standard 08:00 to 17:00; calendars publish 07:00 to 18:00 | Dean, 10 October 2026 |
-| Now line | 2 px brand/green-deep with the time in a pill; today only | Sales A01; Service planner |
+| Now line | 2 px status/success with the time in a pill, 11 Medium white (6.1:1); today only | Sales A01; Service planner; colour from the audit, 11 November 2026. The accepted Sales week view and the built Service planner keep brand/green-deep until a reviewed change aligns them |
 | Snap | 15 minutes for moves, resizes and new items | Service planner |
 | Overlaps | Side by side up to three, then "+N more"; the day header counts them | Sales A01 ("1 overlap"); limit new |
 | Moving | Move page parts; Time / Ghost with a readout; Move or reassign | Move page; Service planner |

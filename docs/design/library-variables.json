@@ -6,16 +6,17 @@
       "PPO layout",
       "Grid density",
       "Control size",
-      "Gantt colour"
+      "Gantt colour",
+      "Motion"
     ],
     "read_on": "2026-11-11",
     "read_by": "Figma connector, read-only"
   },
-  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md, docs/decisions/library-forms.md, docs/decisions/library-states.md, docs/decisions/library-record.md and docs/decisions/library-drawer-widths.md.",
+  "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md, docs/decisions/library-forms.md, docs/decisions/library-states.md, docs/decisions/library-record.md, docs/decisions/library-drawer-widths.md and docs/decisions/library-audit.md.",
   "counts": {
-    "variables": 124,
+    "variables": 134,
     "mapped": 30,
-    "no_code_name": 94
+    "no_code_name": 104
   },
   "variables": [
     {
@@ -670,6 +671,42 @@
       "status": "no-code-name"
     },
     {
+      "collection": "PPO layout",
+      "name": "dialog/standard",
+      "value": 560,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "dialog/wide",
+      "value": 720,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "breakpoint/tablet",
+      "value": 768,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "breakpoint/laptop",
+      "value": 1024,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "breakpoint/desktop",
+      "value": 1280,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "breakpoint/wide",
+      "value": 1440,
+      "status": "no-code-name"
+    },
+    {
       "collection": "Grid density",
       "name": "grid/row-height",
       "value": 40,
@@ -827,6 +864,30 @@
       "collection": "Gantt colour",
       "name": "gantt/dependency-warning",
       "value": "#b95445",
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Motion",
+      "name": "motion/fast",
+      "value": 100,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Motion",
+      "name": "motion/standard",
+      "value": 200,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Motion",
+      "name": "motion/slow",
+      "value": 300,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "Motion",
+      "name": "motion/delay",
+      "value": 300,
       "status": "no-code-name"
     }
   ]

@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-RECORD-PROP
 date: 2026-11-11
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; five items in section 6 await Dean's confirmation and one (R5, the edit drawer width) was decided by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; the six items in section 6 were confirmed or decided by Dean on 11 November 2026; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Record · Details, tabs and history in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. Five items in [section 6](#6-to-confirm) await Dean's confirmation; R5 was decided on 11 November 2026. The page awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. The items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The page itself awaits acceptance.
 
 After the [Gantt, Forms and States items were confirmed](library-states.md#6-confirmed--11-november-2026), Dean answered for the third time: "Proceed however you believe is the most professional." Record came next in the recommended order of the groups that section 5 of the [design-to-build standard](../standards/design-to-build-standard.md) requires and the library did not yet hold. This record covers that page, named "Record · Details, tabs and history".
 
@@ -50,7 +50,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Reused components | <ul><li>Controls / Button, Icon button, Link, Chip, Filter chip, Tab, Menu item, Tooltip, Banner and Field</li><li>Form / Save bar</li><li>State / Placeholder, Inline notice, Outcome banner and Message panel</li><li>Existing icons: Calendar, Edit, Saved, Attention, Locked, Info, Blocked, Close, More, arrows and chevrons</li></ul>New in the library, all `Status: Proposed`: the eleven Record parts in section 3 and five icons |
 | Incoming handover | A register row, search result, link or notification opens the record |
 | Outgoing handover | The record's own decisions (each in its dialog or page), related records through links, the edit drawer |
-| Departures | The items in section 6 |
+| Departures | The items in section 6, confirmed |
 
 ## 3. What was drawn
 
@@ -98,7 +98,7 @@ The edit drawer uses `drawer/standard` (480). It was created as `record/panel-wi
 | 8 · States on a record | `197:826` | Loading with placeholders, can't be shown, a part not refreshed, outcome unknown; rules |
 | 9 · Tablet and phone | `198:899` | The tablet with the folded column; a 390 px phone record in Touch size; rules |
 | 10 · Do and Don't | `199:980` | Three pairs: header actions, values nobody has yet, History |
-| 11 · Values, sources and items to confirm | `200:1039` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 11 · Values, sources and confirmed items | `200:1039` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 The Read me page and the Foundations board were updated:
 - **Read me:** the page index, rules 2 and 4, the variable and component lists, the confirmed items and the next steps.
@@ -165,17 +165,20 @@ The Read me page and the Foundations board were updated:
 | Phone | 56 px header; title in the content; 48 px section links; 48 px sticky actions; Touch size | Phone header P1, P3; R124; estimate D14 (R4) |
 | Snapshot drawer | 480 px overlay from the right rail; not drawn here | Shell R66, R98, R112 (R1) |
 
-## 6. To confirm
+## 6. Confirmed — 11 November 2026
 
-Five items need Dean's decision; R5 was decided on 11 November 2026. Card 11 lists them.
+On 11 November 2026 Dean confirmed five items as drawn: "Confirm R1–R4 and R6". He had decided R5 earlier the same day with the drawer widths. Card 11 and the page header now say so.
+- **R2** means the Estimating file's stepper by the breadcrumb (A16) and its Reports menu (A17) align with the shell rules at their next reviewed change.
+- **R3** means the estimate page's 300 px tablet column and the built 280 px column fold to the strip.
+- **R4** means the shell's phone record header aligns with the phone header amendment at the shell move.
 
-| ID | Item | As drawn | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | R1 | Header stays with the shell | The record header and snapshot drawer are not redrawn here; they move into the library with the shell, and the cards draw them as layouts | Redrawing them would make a second master of accepted shell components |
 | R2 | Shell rules for the header | Previous and next in the toolbar with "n of N in view" (R120); the outputs menu named Outputs (R119); Estimating's stepper by the breadcrumb (A16) and its Reports menu (A17) align at their next reviewed change | Both were accepted on 9 November 2026 and differ |
 | R3 | Folded column on tablets | At 1024 px the details column folds to the 44 px strip and opens over the content | The project and deal pages fold it (R4, Q7); the estimate page keeps 300 px (D14); the built page uses 280 px |
 | R4 | Phone title in the content | Below 768 px the title and state sit in the content under the 56 px header | The phone header amendment moves them into the content (P3); the shell's phone record header keeps a shortened title |
-| R5 | Edit drawer width · **decided** | Editing a section opens the 480 px drawer (`drawer/standard`) | Sales A5 drew 432 px. On 11 November 2026 Dean set right-hand drawers at 360, 480, 640 and 800 px by content, with editing a section at 480 ([drawer widths](library-drawer-widths.md)) |
+| R5 | Edit drawer width | Editing a section opens the 480 px drawer (`drawer/standard`) | Sales A5 drew 432 px. On 11 November 2026 Dean set right-hand drawers at 360, 480, 640 and 800 px by content, with editing a section at 480 ([drawer widths](library-drawer-widths.md)) |
 | R6 | Default tab | Overview opens by default unless a record's own decision sets a first tab by state; the selected tab is kept in the link | Deal Q6 always opens Overview; quotation Q3 chooses the first tab by state |
 
 ## 7. Not done and open

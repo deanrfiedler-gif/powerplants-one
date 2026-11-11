@@ -59,7 +59,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | `radius/dialog` | 12 | Dialogs (shell R70) |
 | `radius/pill` | 999 | Filter chips and avatars |
 | `radius/checkbox` | Changed from 3 to 4 | The accepted Sales kit |
-| Text style "Text / 10 Medium" | 10 / 12 | Initials in a 24 px avatar, as the Sales kit |
+| Text style "Text / 10 Medium" | 10 / 12 | Initials in a 24 px avatar, as the Sales kit. Retired on 11 November 2026 after the [library audit](library-audit.md); the initials use Text / 11 Medium |
 | Effect style "Elevation / Dialog" | 0 16 48 at 24% navy | Dialogs (shell R70) |
 
 A paint bound to a colour variable loses its opacity in this Figma environment, so the dialog scrim and the button state layers are rectangles with a bound fill and a layer opacity.
@@ -72,11 +72,11 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Link | `47:187` | 4: Default, Hover, Focus, Disabled. Option: Label |
 | Controls / Icon button | `47:206` | 5: Default, Hover, Pressed, Focus, Disabled. Option: Icon |
 | Controls / Chip | `50:71` | 9 tones: Neutral, Info, Success, Warning, Danger, Tint, Grey, Navy, Accent. Option: Label |
-| Controls / Filter chip | `50:81` | 4: Default, Hover, Active, Focus. Option: Label |
-| Controls / Tab | `50:92` | 4: Default, Hover, Current, Focus. Option: Label |
+| Controls / Filter chip | `50:81` | 5: Default, Hover, Active, Focus, Disabled. Option: Label. Disabled came with the [library audit](library-audit.md) |
+| Controls / Tab | `50:92` | 5: Default, Hover, Current, Focus, Disabled. Option: Label. 48 px with a navy marker, and Disabled, since the audit |
 | Controls / Avatar | `50:117` | 12: six hues by 24 and 32 px. Option: Initials |
-| Controls / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint). Formerly Grid / Checkbox |
-| Controls / Radio | `137:654` | 8: State (Off, On, Disabled, Focus) by Surface (White, Tint). Added with the [Forms page](library-forms.md) |
+| Controls / Checkbox | `22:416` | 12: State (Off, On, Mixed, Disabled, Focus, Hover) by Surface (White, Tint). Formerly Grid / Checkbox. Hover and the target-size rule came with the audit |
+| Controls / Radio | `137:654` | 10: State (Off, On, Disabled, Focus, Hover) by Surface (White, Tint). Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
 | Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Helper, Helper text |
 | Controls / Field | `51:249` | 24: Type (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
 | Controls / Menu item | `50:146` | 5: Default, Hover, Selected, Disabled, Focus. Options: Label, Leading icon, Icon, Shortcut, Shortcut text |
@@ -85,6 +85,10 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Action |
 | Controls / Banner | `50:240` | 4 tones. Options: Message, Action, Dismiss. The wrapping message and the Dismiss option came with the [Forms page](library-forms.md) |
 | Controls / Dialog | `51:295` | 2: Confirm, Destructive. Options: Title, Body; footer buttons exposed |
+| Controls / Drawer | `217:656` | 4: Width (Narrow 360, Standard 480, Wide 640, Extra-wide 800), each tied to its [drawer width](library-drawer-widths.md). Options: Title, Show footer, Content (swap). Exposed: Footer (Form / Save bar). Added on 11 November 2026 |
+| Controls / Drawer content | `217:578` | One component: the placeholder the Content option swaps out |
+
+The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.
 
 **Review board** `52:126`
 
@@ -121,10 +125,10 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Button states | Hover and Pressed state layers; Focus ring 2 px text/link; Disabled 45%; Loading keeps width | Sales ST01; D1; layer values new |
 | Link | 13 Medium text/link; underline on hover | Sales kit |
 | Status chip | 18 px, 4 px corners, 12 Medium; nine tones | Sales kit `9:193` |
-| Filter chip | 28 px pill; Default and Active | Sales kit `9:271`; Hover and Focus new |
-| Tab | 38 px, 13 Medium; 2 px brand/green-deep marker | Sales kit `9:282`; shell R58; Hover and Focus new |
-| Avatar | 24 and 32 px, six hues | Sales kit `9:249` |
-| Checkbox | 16 px, 4 px corners, 1 px border; Disabled, Focus, tinted-row border | Sales kit `9:260`; Sales and Estimating ST01 |
+| Filter chip | 28 px pill; Default and Active; Disabled at 45% | Sales kit `9:271`; Hover, Focus and Disabled new |
+| Tab | 48 px, 13 Medium; 2 px brand/navy marker; Disabled at 45% | Dean, 11 November 2026, matching the built record tabs. The Sales kit `9:282` and shell R58 draw 38 px with a brand/green-deep marker and align at their next reviewed change |
+| Avatar | 24 and 32 px, six hues; initials 11 Medium at 24 px | Sales kit `9:249`; 10 px text retired |
+| Checkbox and Radio | 16 px, 4 px corners (radio round), 1 px border; Hover, Disabled, Focus, tinted-row border. Target at least 24 px, the whole row with a label, 44 px in Touch | Sales kit `9:260`; Sales and Estimating ST01; WCAG 2.5.8 |
 | Field | Label 12 Medium; input 36 px (Small 32 px), 6 px corners, 1 px line/control, 13 Regular | Sales forms `89:20270` |
 | Field states | Focus 2 px text/link; Error 2 px status/danger with a message; Disabled; Read-only | New; D1 |
 | Menu item | 32 px, 13 Regular; hover surface/hover; selected surface/navy-tint | Shell menus; grid page |
@@ -132,7 +136,8 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Tooltip | brand/navy, 12 Regular white, 4 px corners | Shell R17 |
 | Toast | 360 px, tone bar and icon, one action, dismiss | Shell sheet S; R71 |
 | Banner | 40 px, tone surface and icon, one action, dismiss | Shell sheet S; R71 |
-| Dialog | 400 px, 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70 |
+| Dialog | 400 px, 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70. `dialog/standard` (560) and `dialog/wide` (720) now exist for decisions; the component is not yet resized to them |
+| Drawer | 360, 480, 640 or 800 px by content; 14 Medium title and Close; Form / Save bar footer; Elevation / Dialog; no scrim | Dean, 11 November 2026; shell R98 |
 
 ## 6. Confirmed — 10 November 2026
 
@@ -150,6 +155,9 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 
 - **Page acceptance and publishing.** As for the grid page: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Not yet here.** Switch, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Radio and the date picker were added with the [Forms page](library-forms.md). Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
+- **Audit, 11 November 2026.** The [library audit](library-audit.md) changed this page: tabs, the new Disabled and Hover states, the target-size rule, the retired 10 px style and Controls / Drawer.
+  - The Dialog component is still 400 px; fitting it to the dialog widths is open.
+  - A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit and are not yet fixed.
 - **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 20 the library uses so far, drawn by hand, and is not the shared icon set.
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.
 - **No proof beyond the design.** 32 prototype links (button, link, icon button and checkbox states) were set and read back, not played. Keyboard and screen-reader behaviour needs the browser proof once code exists.
