@@ -25,7 +25,7 @@ after(closeDatabase);
 
 test("M2 authorised sources expose the exact Covered agreement default without requiring project read", async () => {
   const p = await principal("finance");
-  for (const n of [1, 2, 6]) {
+  for (const n of [2]) {
     const r = await financeSources(p, id("90", n));
     assert.deepEqual(r.allocation_defaults, {
       disposition: "NonBillable",
@@ -35,9 +35,9 @@ test("M2 authorised sources expose the exact Covered agreement default without r
   }
 });
 
-test("M2 NotCovered, Disputed, Unknown, NotApplicable and absent coverage receive no default", async () => {
+test("M2 unauthorised Covered, NotCovered, Disputed, Unknown and NotApplicable receive no default", async () => {
   const p = await principal("finance");
-  for (const n of [3, 4, 5, 7, 8])
+  for (const n of [1, 3, 4, 5, 6, 7, 8])
     assert.equal(
       (await financeSources(p, id("90", n))).allocation_defaults,
       null,
@@ -111,64 +111,91 @@ test("M2 project precedence and NonBillable reason persist with original-operati
   assert.equal(recovered.revisions.length, before.revisions.length);
 });
 
-test("M2 defaults follow a native draft coverage revision and never rewrite old assessments", async () => {
-  const { readWorkOrder, saveWorkScope } =
-    await import("../../src/service/work-orders");
-  const owner = await principal();
-  const w = (await readWorkOrder(owner, id("90"))).items[0];
-  const scope = w.scopes.find((s) => s.id === w.scope_revision_id)!;
-  const oldCoverage = scope.coverage.id;
-  const finance = await principal("finance");
-  assert.ok((await financeSources(finance, w.id)).allocation_defaults);
-  await saveWorkScope(owner, w.id, {
-    ...base(),
-    expected_version: w.version,
-    scope: {
-      summary: scope.summary,
-      exclusions: scope.exclusions,
-      diagnostic_limit: scope.diagnostic_limit,
-      pending_account_plan: scope.pending_account_plan,
-      authority_evidence: null,
-      coverage: {
-        status: "Disputed",
-        agreement_reference: null,
-        source_version: null,
-        effective_from: null,
-        effective_to: null,
-        assessment: "SYN exact coverage now disputed",
-        reason: "SYN successor assessment retains uncertainty",
-        charging_route: "FinanceReview",
+for (const n of [2, 8])
+  test(`M2 unapproved Covered successor of authorised work ${n} cannot advertise defaults`, async () => {
+    const { readWorkOrder, saveWorkScope } =
+      await import("../../src/service/work-orders");
+    const owner = await principal();
+    const w = (await readWorkOrder(owner, id("90", n))).items[0];
+    const scope = w.scopes.find(
+      (s) => s.id === w.authorised_scope_revision_id,
+    )!;
+    const oldCoverage = scope.coverage.id;
+    const finance = await principal("finance");
+    assert.equal(
+      Boolean((await financeSources(finance, w.id)).allocation_defaults),
+      n === 2,
+    );
+    await saveWorkScope(
+      owner,
+      w.id,
+      {
+        ...base(),
+        expected_version: w.version,
+        change_reason:
+          w.scope_revision_id === w.authorised_scope_revision_id
+            ? "SYN review defect: unapproved successor"
+            : null,
+        scope: {
+          summary: scope.summary,
+          exclusions: scope.exclusions,
+          diagnostic_limit: scope.diagnostic_limit,
+          pending_account_plan: scope.pending_account_plan,
+          authority_evidence: null,
+          coverage: {
+            status: "Covered",
+            agreement_reference: `SYN-PPO-AGR-${String(n).padStart(6, "0")}`,
+            source_version: null,
+            effective_from: null,
+            effective_to: null,
+            assessment: "SYN unapproved Covered assessment",
+            reason: "SYN successor has not been authorised",
+            charging_route: "FinanceReview",
+          },
+          items: scope.items.map(
+            (i: {
+              task_kind: string;
+              task_description: string;
+              expected_outcome: string;
+              completion_requirements: string[];
+              required_skill_codes: string[];
+              shutdown_condition: string | null;
+              access_condition: string | null;
+            }) => ({
+              task_kind: i.task_kind,
+              task_description: i.task_description,
+              expected_outcome: i.expected_outcome,
+              completion_requirements: i.completion_requirements,
+              required_skill_codes: i.required_skill_codes,
+              shutdown_condition: i.shutdown_condition,
+              access_condition: i.access_condition,
+              assets: [],
+            }),
+          ),
+        },
       },
-      items: scope.items.map(
-        (i: {
-          task_kind: string;
-          task_description: string;
-          expected_outcome: string;
-          completion_requirements: string[];
-          required_skill_codes: string[];
-          shutdown_condition: string | null;
-          access_condition: string | null;
-        }) => ({
-          task_kind: i.task_kind,
-          task_description: i.task_description,
-          expected_outcome: i.expected_outcome,
-          completion_requirements: i.completion_requirements,
-          required_skill_codes: i.required_skill_codes,
-          shutdown_condition: i.shutdown_condition,
-          access_condition: i.access_condition,
-          assets: [],
-        }),
-      ),
-    },
+      w.scope_revision_id === w.authorised_scope_revision_id,
+    );
+    const changed = (await readWorkOrder(owner, w.id)).items[0];
+    assert.equal(
+      changed.authorised_scope_revision_id,
+      w.authorised_scope_revision_id,
+    );
+    assert.notEqual(
+      changed.scope_revision_id,
+      changed.authorised_scope_revision_id,
+    );
+    assert.equal(
+      (await financeSources(finance, w.id)).allocation_defaults,
+      null,
+    );
+    const { rows } = await import("../helpers/finance");
+    assert.equal(
+      (
+        await rows("SELECT status FROM ppo.coverage_assessments WHERE id=$1", [
+          oldCoverage,
+        ])
+      )[0].status,
+      n === 2 ? "Covered" : "Disputed",
+    );
   });
-  assert.equal((await financeSources(finance, w.id)).allocation_defaults, null);
-  const { rows } = await import("../helpers/finance");
-  assert.equal(
-    (
-      await rows("SELECT status FROM ppo.coverage_assessments WHERE id=$1", [
-        oldCoverage,
-      ])
-    )[0].status,
-    "Covered",
-  );
-});

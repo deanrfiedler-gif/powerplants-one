@@ -19,9 +19,10 @@ export async function workAllocationDefaults(
     const coverage = (
       await c.query(
         `SELECT a.status,a.agreement_reference FROM ppo.work_orders w
-         JOIN ppo.scope_revisions s ON (s.workspace_id,s.id)=(w.workspace_id,w.scope_revision_id)
+         JOIN ppo.scope_revisions s ON (s.workspace_id,s.id)=(w.workspace_id,w.authorised_scope_revision_id)
          JOIN ppo.coverage_assessments a ON (a.workspace_id,a.id)=(s.workspace_id,s.coverage_assessment_id)
-         WHERE w.workspace_id=$1 AND w.id=$2`,
+         WHERE w.workspace_id=$1 AND w.id=$2
+           AND w.scope_revision_id=w.authorised_scope_revision_id AND s.approved_at IS NOT NULL`,
         [p.workspace_id, workOrderId],
       )
     ).rows[0];
