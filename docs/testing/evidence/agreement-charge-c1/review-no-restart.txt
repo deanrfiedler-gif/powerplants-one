@@ -1,0 +1,16 @@
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: Restart the actual compiled application
+    at <anonymous> (/workspace/work/agreement-charge-c1/tests/helpers/agreement-charge-restart.ts:201:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: { pid: 16042, started: '103873', build: 'W2hoshdZR_kaM4IleHFs0' },
+  expected: { pid: 16042, started: '103873', build: 'W2hoshdZR_kaM4IleHFs0' },
+  operator: 'notDeepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.21.0

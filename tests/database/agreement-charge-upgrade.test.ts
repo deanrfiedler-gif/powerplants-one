@@ -232,7 +232,7 @@ test("C1-1 populated 0127 upgrade preserves consumed/unknown charges and origina
   );
   assert.equal(
     (await readFinance(f.reconciler, b.id)).handoff.status,
-    "Processed",
+    "Reconciled",
   );
 });
 

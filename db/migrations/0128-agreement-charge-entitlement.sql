@@ -11,7 +11,11 @@ CREATE INDEX agreement_charge_identity ON ppo.agreement_charge_lines(workspace_i
 CREATE OR REPLACE FUNCTION ppo.guard_finance_agreement_allocation() RETURNS trigger LANGUAGE plpgsql AS $$
 DECLARE l ppo.finance_lines; agreement uuid;
 BEGIN
- PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
+ -- A lock alone does not refresh a REPEATABLE READ snapshot. A logical no-op
+ -- write makes an older concurrent snapshot abort with 40001 instead of missing a hold.
+ IF NEW.agreement_revision_id IS NOT NULL THEN
+  UPDATE ppo.workspaces w SET id=w.id WHERE w.id=NEW.workspace_id;
+ END IF;
  SELECT * INTO STRICT l FROM ppo.finance_lines WHERE workspace_id=NEW.workspace_id AND id=NEW.line_id;
  IF NEW.agreement_revision_id IS DISTINCT FROM l.agreement_revision_id OR NEW.agreement_charge_id IS DISTINCT FROM l.agreement_charge_id
  THEN RAISE EXCEPTION 'Exact agreement allocation identity required' USING ERRCODE='23514'; END IF;
@@ -27,7 +31,8 @@ BEGIN
  RETURN NEW;
 END $$;
 CREATE FUNCTION ppo.guard_reserved_agreement_charges() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN
- PERFORM 1 FROM ppo.workspaces WHERE id=NEW.workspace_id FOR UPDATE;
+ -- Keep the native workspace lock and fence older snapshots without changing stored values.
+ UPDATE ppo.workspaces w SET id=w.id WHERE w.id=NEW.workspace_id;
  IF EXISTS (SELECT 1 FROM ppo.finance_allocation_holds h JOIN ppo.agreement_charge_lines l
     ON (l.workspace_id,l.revision_id,l.charge_id)=(h.workspace_id,h.agreement_revision_id,h.agreement_charge_id)
    WHERE h.workspace_id=NEW.workspace_id AND l.agreement_id=NEW.agreement_id AND h.state<>'Released'

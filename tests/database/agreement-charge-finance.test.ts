@@ -502,7 +502,7 @@ for (const scenario of ["Accepted", "AcceptedThenTimeout"])
     }
     assert.equal(
       (await readFinance(f.reconciler, a.id)).handoff.status,
-      "Processed",
+      "Reconciled",
     );
     assert.equal(
       (
@@ -615,8 +615,10 @@ test("C1-1 Returned claim transfers a stable hold to a successor without releasi
   const before = await readFinance(f.preparer, a.id),
     competitor = { ...f.draft(), agreement_revision_id: revision };
   await saveFinance(f.preparer, null, competitor);
+  const { id: omittedId, ...originalCommand } = a.cmd;
+  void omittedId;
   const revise = {
-    ...a.cmd,
+    ...originalCommand,
     ...base(),
     expected_version: before.handoff.version,
     agreement_revision_id: revision,
@@ -626,6 +628,7 @@ test("C1-1 Returned claim transfers a stable hold to a successor without releasi
     saveFinance(f.preparer, a.id, revise),
     submitAgreementClaim(f, competitor.id),
   ]);
+  if (results[0].status === "rejected") throw results[0].reason;
   assert.equal(results[0].status, "fulfilled");
   assert.equal(results[1].status, "rejected");
   if (results[1].status === "rejected")
@@ -690,5 +693,66 @@ test("C1-1 SQL races across two source revisions conserve one agreement charge",
       )
     ).rows[0].n,
     "1",
+  );
+});
+
+test("C1-1 an older repeatable-read snapshot cannot reserve a charge across revisions", async () => {
+  const f = await agreementChargeFixture(),
+    a = await saveAgreementClaim(f),
+    revision = await successor(f);
+  const cmd = { ...f.draft(), agreement_revision_id: revision };
+  await saveFinance(f.preparer, null, cmd);
+  const records = await Promise.all(
+    [a.id, cmd.id].map((id) => readFinance(f.preparer, id)),
+  );
+  const workspace = (
+    await database().query(
+      "SELECT to_jsonb(w) row FROM ppo.workspaces w WHERE id=$1",
+      [f.preparer.workspace_id],
+    )
+  ).rows;
+  const first = await database().connect(),
+    second = await database().connect();
+  const sql = `INSERT INTO ppo.finance_allocation_holds(workspace_id,handoff_id,revision_id,line_id,agreement_revision_id,agreement_charge_id,quantity,state) VALUES($1,$2,$3,$4,$5,$6,1,'Held')`;
+  const values = (r: (typeof records)[number]) => [
+    f.preparer.workspace_id,
+    r.handoff.id,
+    r.handoff.current_revision_id,
+    r.lines[0].id,
+    r.lines[0].agreement_revision_id,
+    f.first,
+  ];
+  try {
+    await first.query("BEGIN ISOLATION LEVEL REPEATABLE READ");
+    await second.query("BEGIN ISOLATION LEVEL REPEATABLE READ");
+    // Both snapshots predate the first reservation; a row lock alone cannot refresh them.
+    await first.query("SELECT count(*) FROM ppo.finance_allocation_holds");
+    await second.query("SELECT count(*) FROM ppo.finance_allocation_holds");
+    await first.query(sql, values(records[0]));
+    await first.query("COMMIT");
+    await assert.rejects(second.query(sql, values(records[1])), code("40001"));
+  } finally {
+    await first.query("ROLLBACK");
+    await second.query("ROLLBACK");
+    first.release();
+    second.release();
+  }
+  assert.equal(
+    (
+      await database().query(
+        "SELECT count(*) n FROM ppo.finance_allocation_holds WHERE agreement_charge_id=$1 AND state<>'Released'",
+        [f.first],
+      )
+    ).rows[0].n,
+    "1",
+  );
+  assert.deepEqual(
+    (
+      await database().query(
+        "SELECT to_jsonb(w) row FROM ppo.workspaces w WHERE id=$1",
+        [f.preparer.workspace_id],
+      )
+    ).rows,
+    workspace,
   );
 });

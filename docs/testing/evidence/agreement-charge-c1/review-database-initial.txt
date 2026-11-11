@@ -1,0 +1,84 @@
+✔ C1 late audit_events failure rolls back whole-charge reservation and permits exact retry (10139.008781ms)
+✔ C1 late operation_receipts failure rolls back whole-charge reservation and permits exact retry (9829.664461ms)
+✔ C1 late outbox_jobs failure rolls back whole-charge reservation and permits exact retry (11559.053034ms)
+✔ C1 accepted target survives local outcome rollback and is recovered only by original lookup (15547.722345ms)
+✔ C1 exact scheduled fee uses the existing review, unknown-result and historical reconciliation pipeline once (23967.695104ms)
+✔ C1 whole charges race once; reasoned cancellation releases and no ProjectClaim identity is allocated (21782.83265ms)
+✔ C1 requires exact independently approved, current and due agreement charge authority (8204.539772ms)
+✔ C1 SQL guards retain exact source amount, disjoint identities and immutable schedule evidence (8313.069589ms)
+✔ C1 source grants govern reads, queues and original-operation receipts after revocation (7346.323551ms)
+✖ C1-1 Accepted charge stays reserved across title-only successors and original recovery (8860.670338ms)
+✖ C1-1 AcceptedThenTimeout charge stays reserved across title-only successors and original recovery (7613.192762ms)
+✔ C1-1 held and consumed charge terms cannot change or disappear; refused revisions leave no effects (7567.515155ms)
+✖ C1-1 Returned claim transfers a stable hold to a successor without releasing it to a competitor (6601.272594ms)
+✔ C1-1 SQL races across two source revisions conserve one agreement charge (12140.224355ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 11
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 164420.889207
+
+✖ failing tests:
+
+test at tests/database/agreement-charge-finance.test.ts:3:3776
+✖ C1-1 Accepted charge stays reserved across title-only successors and original recovery (8860.670338ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Reconciled'
+  - 'Processed'
+  
+      at TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/agreement-charge-finance.test.ts:503:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Reconciled',
+    expected: 'Processed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/database/agreement-charge-finance.test.ts:3:3776
+✖ C1-1 AcceptedThenTimeout charge stays reserved across title-only successors and original recovery (7613.192762ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Reconciled'
+  - 'Processed'
+  
+      at TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/agreement-charge-finance.test.ts:503:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Reconciled',
+    expected: 'Processed',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/database/agreement-charge-finance.test.ts:5:303
+✖ C1-1 Returned claim transfers a stable hold to a successor without releasing it to a competitor (6601.272594ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'rejected'
+  - 'fulfilled'
+  
+      at TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/agreement-charge-finance.test.ts:629:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'rejected',
+    expected: 'fulfilled',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
