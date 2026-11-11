@@ -1,0 +1,48 @@
+(node:1571) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1571) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ M2 authorised sources expose the exact Covered agreement default without requiring project read (5269.004685ms)
+✔ M2 unauthorised Covered, NotCovered, Disputed, Unknown and NotApplicable receive no default (5604.208931ms)
+✔ M2 coverage alone without an agreement does not silently grant free service (8941.474137ms)
+✔ M2 assigned-technician cannot discover protected coverage defaults (8029.280223ms)
+✔ M2 second-company cannot discover protected coverage defaults (9941.193151ms)
+✔ M2 other-workspace cannot discover protected coverage defaults (12186.408712ms)
+✔ M2 project precedence and NonBillable reason persist with original-operation replay (19652.742246ms)
+✔ M2 unapproved Covered successor of authorised work 2 cannot advertise defaults (20618.90403ms)
+✖ M2 unapproved Covered successor of authorised work 8 cannot advertise defaults (20926.125492ms)
+(node:2047) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2047) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B4 refuses Labour at submit and revised Returned Draft; no override by reason (10888.808468ms)
+✔ B4 refuses Consumed part at submit and revised Returned Draft; no override by reason (10461.022811ms)
+✔ B4 backend prefill and changed reason retain NonBillable and reconcile without a target (14097.23898ms)
+✔ B4 current link at submit, including legacy Billable handoffs; Return and Cancel remain safe (14647.755654ms)
+✔ B4 current link at approval, including legacy Billable handoffs; Return and Cancel remain safe (17163.930637ms)
+✔ B4 current link at begin, including legacy Billable handoffs; Return and Cancel remain safe (18630.423005ms)
+✔ B4 removal of current link before submit restores ordinary WorkOrder rules (20359.124707ms)
+✔ B4 removal of current link before approval restores ordinary WorkOrder rules (35191.420771ms)
+✔ B4 removal of current link before begin restores ordinary WorkOrder rules (34802.563466ms)
+✔ B4 Closed project still refuses at submit (37924.788392ms)
+✔ B4 Closed project still refuses at approval (42945.460453ms)
+✔ B4 Closed project still refuses at begin (37991.482193ms)
+✔ B4 Pending and review dispositions cannot pass submission on linked work (45379.089307ms)
+✔ B4 does not alter AwaitingERP dispatch, unknown original lookup or reconciliation (44608.495271ms)
+✔ B4 unlinked F-06 still posts 60 MIN and retains 30 MIN cost evidence (49359.484806ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 23
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 548471.67122
+
+✖ failing tests:
+
+test at tests/database/finance-agreement-defaults.test.ts:1:3004
+✖ M2 unapproved Covered successor of authorised work 8 cannot advertise defaults (20926.125492ms)
+  TypeError: Cannot read properties of null (reading 'id')
+      at TestContext.<anonymous> (/workspace/work/maintenance-m2/tests/database/finance-agreement-defaults.test.ts:121:40)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)
