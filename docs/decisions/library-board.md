@@ -104,7 +104,7 @@ The Read me page and the Foundations board were updated for the new page, variab
   - Where stages are a sequence (deals, estimates) the headers are arrows; boards whose stages are states keep the plain header (B10).
   - A flow header and its lane are one surface, with no gap or line between them. The header's lower edge is as wide as the lane. The arrow point overhangs the stage's right edge into the gap, and the next header's notch receives it.
   - Stages share the page width, from 240 px to 360 px, and cards fill their stage (B11).
-  - The stage a lifted card is over takes status/success-surface on its lane and header as one surface, with the 2 px outline down the sides and along the foot of the lane. A stage that cannot take the card shows the refusal with its reason; it never fades (B8).
+  - The stage a lifted card is over takes status/success-surface on its lane and header as one surface. One 2 px brand/green-deep outline runs around the header's arrow shape and the lane together, with no line between header and lane. A stage that cannot take the card shows the refusal with its reason; it never fades (B8).
   - While a card is lifted a drop bar offers Lost, Won and Move. A drop opens the command's own step and commits nothing alone. A command that cannot take the card says why. Delete and Archive are never in the bar (B9).
   - Every command in the bar is also in the card's menu, the keyboard and touch route.
 - **Board states.** Loading, empty, no matches and a failed read keep the stages and the person's layout in place.
@@ -159,6 +159,8 @@ On 12 November 2026 Dean supplied four screenshots of the built Deals board and 
 
 **Correction, 12 November 2026.** Dean reviewed the first drawing of the flow headers and asked for two changes: the header's background must merge into its column's background, and the header's lower edge must be as long as the top of the column. The first drawing left a 2 px gap between header and lane and drew the arrow point inside the stage's width, which shortened the header's lower edge by 10 px. Both are corrected: header and lane are one surface, and the point overhangs into the gap between stages. On the target stage the outline no longer crosses between header and lane.
 
+**Second correction, 12 November 2026.** Dean then asked for the green outline to go around the header as well, with no horizontal line between the header and the column. The Target variants of the flow header now carry the outline along their top edge, notch and arrow point, and it meets the lane's outline at both sides, so header and lane read as one outlined shape.
+
 Adopted with the same answer, as refinements of the card: the two-line next action, whole dollars on cards and stage totals, and a title of one or two lines with no reserved band.
 
 ## 8. Not done and open
@@ -187,6 +189,7 @@ Adopted with the same answer, as refinements of the card: the two-line next acti
   - the flow headers did not show against a grey stage, so that example sits on white;
   - the Time page's untimed items became two lines, and were put back to one;
   - after Dean's correction, the example board's stage frames clipped the overhanging arrow points, and were set not to clip.
+- **Close-up check.** After the second correction, the join between the target header's outline and the lane's outline was rendered at four times size and is continuous on both sides.
 - **Existing instances.** The fourteen placed stage headers kept their names and totals after the header became a set of variants.
 - **Structural read of the Board page** (2,827 nodes, 619 instances). Outside instances it found no solid fill or stroke without a variable, no text without a text style, no plain corner radius, no default layer name and no component without a status line. The seven scaled cards on card 3 have no effect style (section 8).
 - **Variables read back from the file:** 66 in "PPO colour", 50 in "PPO layout", 11 in "Gantt colour", 3 in "Grid density", 5 in "Control size" and 4 in "Motion" (139).
