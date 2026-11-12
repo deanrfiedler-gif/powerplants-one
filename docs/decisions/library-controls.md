@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-CONTROLS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; the six in section 7, for the controls added on 12 November 2026, await his confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; the six in section 7, for the controls added on 12 November 2026, were confirmed by him that day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Controls in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The six in [section 7](#7-to-confirm--added-12-november-2026) await his confirmation. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The six in [section 7](#7-confirmed--12-november-2026) were confirmed by Dean on 12 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean asked whether pages for other interactions (Gantt charts, board cards, planners and calendars) should be added to `PPO - Library`. The recommendation was to add them in this order: a Controls page, a page of shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file using those shared parts. Controls came first because the [Grid · Table interactions](library-grid-table-interactions.md) page drew its buttons, chips, menus, tooltips and toasts as plain frames, and every later page would otherwise redraw them. Dean answered: "Accept the recommended order and start with the Controls page."
 
@@ -79,7 +79,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Radio | `137:654` | 16: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) by Surface (White, Tint); one State option held all five until 12 November 2026. Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
 | Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Show helper, Helper text |
 | Controls / Field | `51:249` | 24: Kind (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Show helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
-| Controls / Menu item | `50:146` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text |
+| Controls / Menu item | `50:146` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text. Disabled dims the content to 45% since 12 November 2026 (70% before) |
 | Controls / Menu divider | `50:147` | One component |
 | Controls / Tooltip | `50:118` | One component. Options: Label, Show shortcut, Shortcut text |
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Show action |
@@ -97,6 +97,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Switch | `274:1021` | 8: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) |
 | Controls / Switch field | `274:1022` | One component: a label and a switch. Option: Label. Exposed: Switch |
 | Controls / Segment | `274:1037` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Option: Label |
+| Controls / Count | `314:17992` | 2: Tone (Neutral, Navy). Option: Count. Merged on 12 November 2026 from Board / Count `83:56` and Move / Count badge `67:89`, which keep their node IDs as its variants |
 | Controls / Segmented | `274:1059` | 3: two, three or four options. Exposed: each segment |
 
 The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.
@@ -167,13 +168,13 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 
 | ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
-| C1 | Hover and Pressed on buttons | A state layer over the kind's colour: brand/navy at 6% and 12% on the light kinds, brand/white at 12% and 24% on Primary and Danger | Sales ST01 says "hover darkens one step, pressed two"; Estimating ST01 draws 88% and 76% opacity. Neither gives values that work for every kind |
+| C1 | Hover and Pressed on buttons | A state layer over the kind's colour: brand/navy at 6% and 12% on the light kinds, brand/white at 12% and 24% on Primary and Danger. On 12 November 2026 Dean moved Danger, Pressed to 18%, so its label is 4.70:1 where it was 4.12:1 ([library audit](library-audit.md), section 9) | Sales ST01 says "hover darkens one step, pressed two"; Estimating ST01 draws 88% and 76% opacity. Neither gives values that work for every kind |
 | C2 | Chip tone meanings | One merged meaning per tone (section 3, card 2). "Draft" is Neutral | The Sales kit (accepted) has "Draft" as Warning; Estimating has it as Neutral. Tint and Navy are also described differently. The Sales chips that show Draft change when Sales adopts these components |
 | C3 | New states | Field Focus, Error, Disabled and Read-only; Hover and Focus on filter chips and tabs | No accepted source draws them |
 | C4 | Small size | A "Control size" mode: buttons 28 px and fields 32 px in toolbars, popovers and tables | The shell allows 28 px as a minimum (C6); using a variable mode for it is new |
 | C5 | Checkbox | 4 px corners and a 1 px border, as the Sales kit | The grid page first drew 3 px and 1.5 px; this changes every checkbox on that page |
 
-## 7. To confirm — added 12 November 2026
+## 7. Confirmed — 12 November 2026
 
 The [library audit](library-audit.md) listed controls the library lacked and Dean agreed an order for them (B5). On 12 November 2026, asked for the next steps, Claude recommended drawing them while the page acceptances and the shell copy were with Dean. Dean answered: "Proceed based on your recommendations." Eleven parts and four review cards were drawn that day.
 
@@ -183,9 +184,9 @@ A search of the repository found one accepted rule that bears on them and little
 - **Paging:** every register has a footer with the count rule and a pager (Estimating register standard A6).
 - **No accepted source** for a multi-select, a switch, a segmented control, file types and sizes, or the rows-per-page choice.
 
-Each item is drawn as recommended.
+Each item was drawn as recommended. Later on 12 November 2026 Claude listed the six with a recommendation to confirm each as drawn, and Dean answered: "Proceed based on your recommendations." All six are confirmed.
 
-| ID | Item | Recommended | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | C6 | Where a search field goes | Only inside pickers, popovers, drawers and phone sheets; never in page content | The accepted "No second search" rule says so, but about forty built screens have their own search box, with three different Clear wordings. They would align later |
 | C7 | Multi-select | Chips in the field and a ticked list with search; for six or more options | No accepted source draws one. The Forms rules cover one choice only |

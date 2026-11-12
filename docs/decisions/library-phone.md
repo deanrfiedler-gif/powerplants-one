@@ -69,10 +69,10 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Component | Node | Variants and options |
 |---|---|---|
 | Phone / Header | `235:88` | 3: Kind (List, Record, Form) |
-| Phone / Status line | `235:108` | 3: Out of date, Offline, Reconnecting |
+| Phone / Status line | `235:108` | 3: Out of date, Offline, Reconnecting. Since 12 November 2026 the action on Out of date is a Quiet button at Touch size (44 px), not a link; that line is 45 px high |
 | Phone / Tab bar | `235:161` | 2: Five cells, Four cells |
 | Phone / List row | `235:195` | 3: Rest, Selecting, Selected. Options: Title, Meta |
-| Phone / Selection bar | `235:196` | One component |
+| Phone / Selection bar | `235:196` | One component. Since 12 November 2026 Select all is a Ghost button at Touch size (44 px), not a link |
 | Phone / Menu row | `236:139` | 4: Rest, Selected, Destructive, Disabled. Options: Label, Show leading icon, Icon |
 | Phone / Sheet | `236:177` | 2: Bottom, Full screen. Options: Show footer, Show second action, Content (a slot) |
 | Phone / Action bar | `236:213` | 3: One action, Two actions, Selection |

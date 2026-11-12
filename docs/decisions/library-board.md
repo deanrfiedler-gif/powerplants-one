@@ -66,7 +66,7 @@ With `board/stage-max-width`, "PPO layout" holds 50 variables and the library 13
 |---|---|---|
 | Board / Card | `83:287` | 7 states: Rest, Hover, Focus, Selected, Lifted, Saving, Skeleton. Options: Title, Subtitle, Fact, Date, Age; Show subtitle, Show fact row, Show activity, Show state chip, Show signals; Attention (the 3 px marker, B6). Hover and Focus show Preview, Plan activity and Email (B7). Exposed: Activity line, Owner, State chip, Signal 1, Signal 2 |
 | Board / Activity line | `83:55` | 3 tones: Planned, Overdue, None. Two lines since 12 November 2026. Options: Label, Detail, Show detail |
-| Board / Count | `83:56` | One component. Option: Count |
+| Board / Count | `83:56` | Since 12 November 2026 the Neutral tone of Controls / Count `314:17992`, merged with Move / Count badge ([library audit](library-audit.md), section 9). Option: Count |
 | Board / Stage header | `252:12950` | 7 since 12 November 2026: Plain (one line, 36 px; the original component, node `83:288` unchanged), and Flow start, Flow and Flow end (arrow-shaped, two lines, 56 px), each at rest or as the Target of a lifted card (B8, B10). A flow header is the top of its lane: one surface with no gap, and a lower edge as wide as the lane; its arrow point overhangs into the 8 px gap between stages. Options: Name, Total, Show total. Exposed: Count |
 | Board / Stage · Collapsed | `83:300` | One component. Option: Name. Exposed: Count |
 | Board / Drop action | `252:13005` | 9: Warning, Success or Info, each Rest, Over or Unavailable. Options: Label, Hint, Icon. Added 12 November 2026 (B9) |
@@ -126,7 +126,7 @@ The Read me page and the Foundations board were updated for the new page, variab
 | Signals | At most two Controls / Chip, then "+N" | Sales D04 (10 px pills there); new size |
 | Actions | On hover and focus: Preview, Plan activity and Email in the footer and More beside the title (Controls / Icon button, Small); on touch More only, always; their space kept | New; Dean, 12 November 2026 (B7) |
 | Attention | 3 px status/danger marker on the card's left edge (`grid/marker-width`); the reason in words; the card is never tinted | Grid row marker; Dean, 12 November 2026 (B6) |
-| Count | Board / Count: 18 px pill, 1 px line/strong, 11 Medium status/neutral; a dash when not read | Sales D04, X09, S02 |
+| Count | Controls / Count, Neutral (Board / Count until 12 November 2026): 18 px pill, 1 px line/strong, 11 Medium status/neutral; a dash when not read | Sales D04, X09, S02 |
 | Total | 12 Regular text/secondary with its basis | Sales D04; Sales board rules |
 | Page size | 20 cards per stage, then Show more | New |
 | Moving | The Move page parts; the stage-change command; the target stage in status/success-surface with a 2 px outline; Board / Drop bar for Lost, Won and Move; Undo for 6 s | Move page; shell R71; Dean, 12 November 2026 (B8, B9) |

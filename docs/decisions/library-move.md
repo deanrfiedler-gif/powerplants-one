@@ -65,7 +65,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | Move / Drop indicator | `67:83` | 2: Orientation Vertical (`5:110`, the former Grid / Drop indicator with its node unchanged) and Horizontal (`67:79`) |
 | Move / Drop target | `67:87` | 2: Over, Refused. Resized to the container. Option since 12 November 2026: Show tint |
 | Move / Origin slot | `67:88` | One component, resized to the item |
-| Move / Count badge | `67:89` | One component. Option: Count |
+| Move / Count badge | `67:89` | Since 12 November 2026 the Navy tone of Controls / Count `314:17992`, merged with Board / Count ([library audit](library-audit.md), section 9). Option: Count |
 | Move / Reason tag | `67:97` | One component. Option: Label |
 
 **Review board** `69:69`
