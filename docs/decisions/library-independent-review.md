@@ -2,19 +2,19 @@
 document_id: PPO-LIBRARY-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the private Figma file "PPO - Library" on 12 November 2026 at Dean's request, by a session that does not hold the library; findings and recommendations only; the choices in section 5 are Claude's under Dean's instruction to proceed and are not Dean's acceptance of any design; nothing was changed in Figma; no application code, route, migration, permission or deployment
+status: Independent read-only review of the private Figma file "PPO - Library" on 12 November 2026 at Dean's request, by a session that did not hold the library; findings and recommendations only; the choices in section 5 are Claude's under Dean's instruction to proceed and are not Dean's acceptance of any design; the session that holds the library took the findings up on 12 November 2026, and on 13 November 2026 this session confirmed them in the file and re-applied one fill on two variants (section 9); no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # PPO - Library independent review, 12 November 2026
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Nothing is drawn. The session that holds the library decides what to draw, and Dean accepts each page.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. The session that holds the library took them up on 12 November 2026; [section 9](#9-confirmation-and-one-fix--13-november-2026) records this session's confirmation and one fix on 13 November 2026. Dean accepts each page.
 
 ## 1. The request
 
 Dean asked a second Claude session to audit `PPO - Library` "to ensure it looks as professional as possible and aligns with industry best design practices". He supplied a UI/UX conformance audit dated 10 November 2026 as background; that document is not in this repository. When the findings were reported he answered: "Proceed however you believe is the most professional."
 
-The session that draws the library made its own audit on 11 November 2026, recorded as PPO-LIBRARY-AUDIT-DEC in `docs/decisions/library-audit.md` (pull request #915, not yet on `main`). This review was made before reading that record, then checked against it and against each page record. **Where a record already decides something, that decision stands** and section 3 says so.
+The session that draws the library made its own audit on 11 November 2026, recorded as PPO-LIBRARY-AUDIT-DEC in the [library audit](library-audit.md). This review was made before reading that record, then checked against it and against each page record. **Where a record already decides something, that decision stands** and section 3 says so.
 
 ## 2. Basis and limits
 
@@ -136,3 +136,47 @@ In order. Each stays that session's call, and each new or changed part stays `St
 - R6 was measured from a render of the Button set; the 18% figure is calculated, not drawn.
 - The Controls page was read again at the end. A second copy of its component section, seen part-way through, was gone.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
+
+## 9. Confirmation and one fix — 13 November 2026
+
+The session that holds the library recorded the review as taken up and closed ([library audit](library-audit.md), section 9). Dean then told this session again: "Proceed however you believe is the most professional." This session re-read the file to confirm each finding. The re-read changed nothing. One fix followed, below.
+
+| ID | What the file now shows | Result |
+|---|---|---|
+| R1 | The black was gone, but both variants stored and rendered `#f5f7fa` where `surface/hover` is `#f0f2f5` | **Fixed by this session**, below |
+| R2 | Inside components 1,287 padding and gap values use a variable. The 105 that do not are all 1 px offsets. `space/20` and `space/32` exist | Confirmed |
+| R3 | Checkbox, Radio, Check option, Form / Choice, Tab, Filter chip, Menu item and Segment each have two options. Checkbox has 24 variants and Radio 16 | Confirmed |
+| R4 | `Rest` is the resting state wherever a set has one, and no set uses `Default`. `Type` and `Style` are `Kind`. The fourteen renamed options start with "Show"; five that mark a state keep bare names (Required, Filtered, Frozen edge, Attention, Changed) | Confirmed |
+| R5 | Controls / Count replaces the two count badges. The card placeholder and the loading row are built from State / Placeholder. The banner-shaped parts stay separate, which is the holding session's recorded choice | Confirmed |
+| R6 | Danger, Pressed has an 18% white layer. A render gives `#ab5e50`, and the label on it is 4.72:1 | Confirmed from a render |
+| R7 | The Unavailable day has a line through its number | Confirmed from a render |
+| R8 | No variant on any page is larger than its set | Confirmed |
+| R9 | Phone / Status line and Phone / Selection bar hold buttons 44 px high | Confirmed |
+| R10 | `radius/dialog` is 12 and has no CSS name | Unchanged; waits for the reconciliation (B3) |
+| R11 | The copied colour variables are still offered for every fill, stroke and effect | Unchanged; waits for the reconciliation (B3) |
+| R12 | A disabled Menu item dims its label, icon and shortcut to 45% | Confirmed |
+| R13 | Each Time / Band kind starts with its own name | Confirmed |
+
+**The fix.** The holding session's sweep looked for bound colours that store black, so `#f5f7fa` passed it. Both paints were bound to `surface/hover` but drew their stored colour.
+
+- Editable hover `24:538` and Editable focus `42:1862` had their fill re-applied with the variable's own value and the same binding.
+- Both now store, resolve and render `#f0f2f5`, as Locked does. Their four placed instances follow.
+- The cause is still not established.
+- Nothing else in the file was changed.
+
+**The claim.** One session edits the library at a time. The claim in pull request #922 had had no commit for more than seven hours, so it was stale under the contribution rules. This session stated its claim in pull request #924 before the edit, made the one edit, and has released the claim.
+
+**Every bound colour was compared with its variable.** 24,595 fills and outlines on all fourteen pages, the new Play page included. Before the fix two differed: the two above. None differs now.
+
+**Still open.** None of these is a fault.
+
+- R10 and R11 wait for the reconciliation before publishing. 30 of 141 variables have a CSS name.
+- Several sets the review did not name still put content or a choice into `State`, for example Controls / Field, Controls / Search field, Phone / Menu row, Grid / Row, Time / Event and Gantt / Bar.
+- The text on the review boards was not re-read for the old option names. The holding session lists the same limit.
+- The text-contrast scan of 12 November was not run again on the parts drawn since.
+
+**Checks.**
+
+- Every page was read for option names, variant sizes, spacing and bound colours. R6, R7 and the fix were each confirmed from a render, not from the stored values.
+- The fix was read back, rendered, and followed by a second read of the Grid page.
+- Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
