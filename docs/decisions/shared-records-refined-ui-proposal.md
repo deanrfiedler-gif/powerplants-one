@@ -1,6 +1,6 @@
 ---
 document_id: PPO-SHARED-RECORDS-REFINED-FIGMA-PROP
-date: 2026-11-11
+date: 2026-11-12
 owner: Dean Fiedler
 status: Proposal awaiting Dean's acceptance; the full sheet set is drawn in a private Figma file and listed here with node IDs; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: a65ac3f4a9a675f68c47567d8070a098b4f31b3f
@@ -9,7 +9,7 @@ versioning: git
 
 # Customers, sites and equipment refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposal awaiting Dean's acceptance. The claim version of this record (10 November 2026) is superseded by this one; sections 1 to 8 now describe the drawn file and section 9 carries the audit with a recommended order.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal awaiting Dean's acceptance. The claim version of this record (10 November 2026) is superseded by this one; sections 1 to 8 now describe the drawn file and section 9 carries the audit with a recommended order. On 12 November 2026 every sheet that had been checked by script only was rendered and inspected, the defects found were repaired, and the fourteen dialogs and panels the first audit listed as gaps were drawn (sections 3, 6 and 9).
 
 On 10 November 2026 Dean asked for the refined UI pages of the **shared records** to be built in a new private Figma file he created for the purpose, "PPO - Customers, Sites & Equipment module", inside the accepted shell and to at least the standard of the Sales module file, following the Customers, sites and equipment UI pages brief with Addendum A3 (persona and story reconciliation). His standing instruction applies: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The shared records are the records every module reads: Organisations (CS-01), People (CS-02), Stakeholders (CS-03), Sites (CS-04), Facilities and growing areas (CS-05), Access & readiness (CS-06), Account development (CS-07), Site surveys (CS-08) and the nine Equipment scopes (EQ-01 to EQ-09). This record is also the first repository record of the EQ-01, EQ-04 and EQ-09 proposals, whose rules otherwise live only on their notes cards in the reference design file.
 
@@ -60,7 +60,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 
 ## 3. Sheet inventory
 
-184 sheets on 15 pages: 76 desktop, 32 dialogs and panels, 31 states (5 of them on the phone), 16 tablet at 1024 × 768 and 29 phone (4 of them at 320). TB and PH codes run across the file (TB01 to TB16; PH01 to PH20 with their variants). Each page also carries a "Flows and notes" card. The Read me page holds four cards: the header `90:2`, "Sheet index and notes" `90:23`, the audit `90:87` and the page template `90:126`. The "Shell and kit" page holds the copied shell components, the kit, the icons, the chrome, the Call / Control set and the proposed `Shell / Workspace menu · docked · Shared records` set `16:1719`.
+198 sheets on 15 pages: 76 desktop, 46 dialogs and panels, 31 states (5 of them on the phone), 16 tablet at 1024 × 768 and 29 phone (4 of them at 320). Fourteen of the dialogs and panels were added on 12 November 2026 (PE10, PE11, SK08, FA09, FA10, AR10, EQ12, BL07 and X01 to X05 with X03-restricted); no earlier sheet changed its node ID. TB and PH codes run across the file (TB01 to TB16; PH01 to PH20 with their variants). Each page also carries a "Flows and notes" card. The Read me page holds four cards: the header `90:2`, "Sheet index and notes" `90:23`, the audit `90:87` and the page template `90:126`. The "Shell and kit" page holds the copied shell components, the kit, the icons, the chrome, the Call / Control set and the proposed `Shell / Workspace menu · docked · Shared records` set `16:1719`.
 
 **Organisations · CS-01**
 
@@ -93,6 +93,8 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | PE05 | Correct details | Dialogs and panels | `53:2451` |
 | PE06 | Phone numbers editor (proposed UI) | Dialogs and panels | `56:1836` |
 | PE09 | Inactivate an affiliation over the Site contacts view | Dialogs and panels | `56:2288` |
+| PE10 | Add number (proposed UI) | Dialogs and panels | `113:713` |
+| PE11 | Flag number, "Number needs checking" (proposed UI) | Dialogs and panels | `113:1114` |
 | PE07 | Flagged and unreadable numbers on the phone | States | `57:2625` |
 | TB03 | Priya Shah at 1024 | Tablet 1024 | `56:2783` |
 | PH02 | Priya Shah on the phone | Phone 390 and 320 | `57:2754` |
@@ -105,10 +107,11 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 |---|---|---|---|
 | SK01 | Hillview Growers / Stakeholders, People (full length) | Desktop 1440 | `42:8` |
 | SK02 | Site parties | Desktop 1440 | `42:721` |
-| SK03 | Relationship map and its list | Desktop 1440 | `42:1130` |
+| SK03 | Relationship map and its list (full length) | Desktop 1440 | `42:1130` |
 | SK04 | Gaps | Desktop 1440 | `46:954` |
 | SK05 | History | Desktop 1440 | `46:1398` |
 | SK06 | Change primary contact (handover) | Dialogs and panels | `46:1845` |
+| SK08 | Add site party | Dialogs and panels | `113:336` |
 | SK07 | Who to contact, restricted (viewer) | States | `48:1903` |
 | TB04 | Stakeholders at 1024 (full length) | Tablet 1024 | `48:2053` |
 | TB05 | Relationship map at 1024 | Tablet 1024 | `48:2573` |
@@ -164,6 +167,8 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | FA03 | Snapshot over the grid | Dialogs and panels | `63:1380` |
 | FA06 | Correct details, then Review changes side by side | Dialogs and panels | `63:1879` |
 | FA07 | Add growing area with Check before creating | Dialogs and panels | `63:2284` |
+| FA09 | Link equipment to a facility | Dialogs and panels | `113:1481` |
+| FA10 | End a link | Dialogs and panels | `113:1879` |
 | TB08 | Facilities at 1024 | Tablet 1024 | `63:2730` |
 | PH06 | Facilities at Glasshouse 4 on the phone | Phone 390 and 320 | `63:3185` |
 | PH06-bay4 | Bay 4 on the phone | Phone 390 and 320 | `63:3354` |
@@ -175,7 +180,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | SU01 | Site surveys register (full length) | Desktop 1440 | `67:8` |
 | SU02 | SYN-SRV-000031, Survey tab | Desktop 1440 | `67:765` |
 | SU03 | Observations tab | Desktop 1440 | `67:1273` |
-| SU04 | Photos tab | Desktop 1440 | `67:1959` |
+| SU04 | Photos tab (full length) | Desktop 1440 | `67:1959` |
 | SU05 | Review & handover | Dialogs and panels | `68:1305` |
 | SU07 | New survey | Dialogs and panels | `68:2496` |
 | SU05-refused | Owner's review refused | States | `68:1723` |
@@ -198,6 +203,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | AR07 | Acknowledge with a blocker | Dialogs and panels | `28:2339` |
 | AR09 | Edit requirements, revision 5 | Dialogs and panels | `28:2743` |
 | AR09R | Review revision 5 | Dialogs and panels | `28:3213` |
+| AR10 | Review evidence | Dialogs and panels | `113:2255` |
 | AR07A | Acknowledge refused (changed source) | States | `28:3612` |
 | TB09 | Glasshouse 4 readiness at 1024 | Tablet 1024 | `29:3338` |
 | PH07 | Readiness on the phone at 390 | Phone 390 and 320 | `29:3694` |
@@ -219,6 +225,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | EQ09 | Screen drive 4 motor SYN-AST-000219, History | Desktop 1440 | `32:2324` |
 | EQ11 | Installed base, Unresolved and Disputed | Desktop 1440 | `32:2773` |
 | EQ10 | As-built release SYN-CMS-000012 arrives | Dialogs and panels | `32:3133` |
+| EQ12 | Record history on the desktop | Dialogs and panels | `114:2` |
 | EQ08 | Identify, private no-match | States | `32:3485` |
 | TB13 | Installed base at 1024 | Tablet 1024 | `33:3313` |
 | TB14 | CP-4 panel record at 1024 | Tablet 1024 | `33:3697` |
@@ -255,6 +262,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | BL05 | Lifecycle register | Desktop 1440 | `70:1209` |
 | BL03 | Review a candidate | Dialogs and panels | `71:988` |
 | BL06 | Climate controller 02 support record and the aftercare handover | Dialogs and panels | `71:1844` |
+| BL07 | Record support evidence | Dialogs and panels | `114:475` |
 | TB15 | SA-SB-26-014 at 1024 | Tablet 1024 | `71:2263` |
 | PH17 | Bulletin compare-then-review on the phone | Phone 390 and 320 | `71:2600` |
 
@@ -292,6 +300,12 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | ST01-2 | Controls, register rows and the Call control (full length) | Desktop 1440 | `77:515` |
 | ST01-3 | App-wide register standard (full length) | Desktop 1440 | `78:594` |
 | ST01-4 | Keyboard order and the contrast proof (full length) | Desktop 1440 | `78:933` |
+| X01 | Filters | Dialogs and panels | `114:878` |
+| X02 | Columns | Dialogs and panels | `114:1503` |
+| X03 | Export | Dialogs and panels | `114:2061` |
+| X03-restricted | Export for a restricted reader | Dialogs and panels | `114:2598` |
+| X04 | Save view | Dialogs and panels | `114:3129` |
+| X05 | Address lookup | Dialogs and panels | `114:3673` |
 | PS01 | Loading | States | `79:1045` |
 | PS02 | True empty: No equipment at this site | States | `79:1350` |
 | PS03 | True empty: Nothing to review | States | `79:1567` |
@@ -353,24 +367,28 @@ Each item is for Dean's decision. Page-level items are numbered on each page's n
 | A14 | The brief's "Tue 30 Jun 2027" is a Wednesday; drawn as Wed 30 Jun 2027 (A-TI1) | Keep |
 | A15 | Reconciliations carried from Addendum A3.9: SYN-AST-000311 is Hillview's removed M-4 motor and SYN-AST-000308 the Block C dosing unit; serial SYN-SN-250318 (corrected from SYN-SN-250314, SYN-DQF-000047); Noah Patel (not the earlier "Noah Clarke"); Tatura VIC; the Nutrient Room is a facility within Glasshouse 4. Earlier fixtures in the reference file are superseded by these | Keep; align the module files named in section 8 |
 | A16 | The Receiving against Inbound DP-25 serial inconsistency is left visible and unresolved; no sheet here resolves it | Keep visible |
+| A17 | Bay 4 shows four current equipment links (Installed in 2, Serves 2) and one ended. The brief names one installed asset; the second is TS-5 after its recorded location was corrected (MV05B). The Equipment tab count was corrected from 3 to 4 on 12 November | Keep, or remove TS-5 from Bay 4 |
+| A18 | The sheets added on 12 November use fillers: SYN Coolroom Services, HS-5 humidity sensor SYN-AST-000228 (serial SYN-SN-240315), five mobile numbers and recorded roles for Hillview people on the People register, and a Mildura address for Packing shed 3 | Keep; every filler is synthetic |
+| A19 | Filters, Columns, Export and Save view are drawn once, on the People register (X01 to X04), as the pattern for every shared-records register; the Sales file's X07, X23 and X24 remain the reference | Keep |
 
 ## 6. Verification
 
-Run on 11 November 2026 over all 15 pages after the last change:
+Run on 11 November 2026 and again on 12 November 2026 over all 15 pages after the last change:
 
-- **Structural pass.** Nothing loose on any page; the separator pages and Scratch are empty; no section, sheet, label or notes-card overlap; no child outside its sheet; no register cell taller than one line; Roboto is the only font family (mixed runs are Roboto weights); every sheet has exactly one label with its own unique code, aligned 26 px above the sheet and truncated to its width.
+- **Structural pass.** Nothing loose on any page; the separator pages and Scratch are empty; no section, sheet, label or notes-card overlap; no child outside its sheet; no register cell taller than one line; Roboto is the only font family (mixed runs are Roboto weights); every sheet has exactly one label with its own unique code, aligned 26 px above the sheet and truncated to its width; no sheet's content is taller than the sheet.
+- **Rendered inspection.** Every sheet has been rendered at full size and inspected. Sites, Access and readiness, Equipment, Movement, Organisations and the first Stakeholders sheets were inspected as they were built. On 12 November the other 101 sheets were rendered and reviewed sheet by sheet; defects were found on about half of them and repaired (section 9.2). Eight repaired sheets (AD02, AD07, FA04, DV06, SU02, SK03, TI02, TB08) and seven of the fourteen new sheets (SK08, PE11, FA09, EQ12, X02, X03-restricted, X05) were then rendered again and inspected.
+- **Overflow and truncation scan.** A script measured every text against its container on every sheet. After the repairs it finds no text wider than its frame and no truncated value in a fact strip. Three small tables with irregular rows (on AR03, EQ04 and AD08) still shorten a value.
 - **Identity scan.** Every `SYN-` reference and serial on every sheet was extracted (over 200 distinct references) and checked against the brief's dataset, Addendum A3.9 and the fillers ledger. One legacy quotation reference was corrected to the short form. The legacy `SYN-PPO-SITE-000012` appears only beside its short form; `SYN-PPO-AST-000002` and `000003` are the seed fixtures the brief names. Every replacement shows two identities (SYN-AST-000311 and 000219; 000312 and 000221; 000308 and 000216).
-- **Counts.** Register view counts were written from the brief's section 9.9; the Site surveys views were reconciled to 14 (A12); Glasshouse 4's per-facility equipment counts sum to its 23 assets; no total is drawn across sources.
-- **Wording.** The words merged, transferred, score, likelihood and healthy appear only inside rules that forbid them. Gendered pronouns were replaced with names. A weekday check over every dated text in the build scripts found one mislabelled date in the brief (A14) and none in the drawn sheets.
+- **Counts.** Register view counts were written from the brief's section 9.9; the Site surveys views were reconciled to 14 (A12); Glasshouse 4's per-facility equipment counts sum to its 23 assets; no total is drawn across sources. The visual pass corrected two counts that contradicted their own sheet (FA01's footer; Bay 4's Equipment tab, A17).
+- **Wording.** The words merged, transferred, score, likelihood and healthy appear only inside rules that forbid them. Gendered pronouns were replaced with names. A weekday check over every dated text in the build scripts found one mislabelled date in the brief (A14) and none in the drawn sheets; the review passes of 12 November found no wrong weekday on the sheets they read.
 - **Contrast.** Computed on sheet ST01-4 from the "PPO colour" variables (WCAG 2.1 relative luminance): all 14 text pairs pass 4.5:1 (lowest: grey chip 5.14:1; secondary text on chrome 5.29:1); the control edge (3.32:1) and the focus ring (3.57:1) pass 3:1; `line/strong` is 1.3:1 and fails as a control border (audit R1).
-- **Rendered inspection.** Sites, Access and readiness, Equipment, Movement, Organisations and the first Stakeholders sheets were rendered and inspected as they were built. After the build, People (desktop and dialogs), an Account development dialog, Interaction states parts 1 to 3 and sample sheets FA01, BL02 and SU03 were rendered and inspected, and the defects found were fixed (audit C7, C8, C10). The remaining sheets were checked by script only.
 - **Repository checks.** `python3 scripts/build_status.py --check`, `python3 scripts/check_foundation.py` and `python3 scripts/check_naming.py`.
 
-Limits: this is a visual proposal. The Figma tool-call allowance ran out several times during the build, so Configuration backups, Test instruments, Administration, the page states and most of the tablet and phone sheets built on 11 November were verified by script and not rendered and inspected by eye; Facilities, Site surveys and Bulletins and lifecycle were sampled (one sheet each). A structural pass cannot see clipped text, poor wrapping or a wrong component state, so a full visual pass is recommended before acceptance. No prototype links, dark mode, 200 % reflow sheets, screen-reader behaviour or comparison with the built application were done. The EQ-01 and EQ-09 notes cards in the reference file could not be read (A5).
+Limits: this is a visual proposal. After the repairs of 12 November, 15 sheets were rendered again; the other repaired sheets were re-checked by script only, and a script cannot judge whether a wrapped strip or table reads well. The known remaining defects are listed as polish (section 9.7). No prototype links, dark mode, 200 % reflow sheets, screen-reader behaviour or comparison with the built application were done. The EQ-01 and EQ-09 notes cards in the reference file could not be read (A5).
 
 ## 7. Not drawn and open questions
 
-Not drawn (audit G1 to G4): Filters, Columns, Export and Saved view panels (the Sales file's X07, X23 and X24 are the pattern; Export for restricted readers needs its own sheet); Add site party, Record support evidence and a desktop Record history form; Add number, Flag number, Link equipment, End a link and Review evidence as their own dialogs (each is shown inside a larger sheet); tablet sheets for Test instruments and Administration; dark mode.
+Not drawn (audit G3 and G4): tablet sheets for Test instruments and Administration; dark mode, 200 % reflow sheets and prototype links. The dialogs and panels listed as gaps on 11 November (audit G1 and G2) were drawn on 12 November.
 
 Open questions, cited and not resolved here:
 
@@ -386,7 +404,7 @@ Design only. No application code, route, read model, migration, permission, capa
 
 Next steps after acceptance: Dean saves a named version of the file; the design register and page guidance (`docs/design/development/`) are updated in their own change; the Sales file's shared-record sheets are aligned where Addendum A3.9 corrected a name; the Service, Supply, Engineering and Settings files' references are aligned; the Shell file takes the Shared records docked menu as a proposal. Any later design change needs a new named version.
 
-## 9. Audit — 11 November 2026
+## 9. Audit — 11 and 12 November 2026
 
 The audit card on the Read me page (`90:87`) carries the same lists.
 
@@ -407,7 +425,22 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | C11 | The Site surveys docked-menu count for Reviewed was aligned with the register (10) |
 | C12 | The full-length phone sheet PH10 was refitted to its content |
 
-### 9.2 Corrections needing Dean's decision (conflicts inside the brief)
+### 9.2 Corrections from the visual pass of 12 November (fixed in the file)
+
+| ID | Correction |
+|---|---|
+| V1 | The More item of the rail was clipped at 768 high on 15 tablet sheets; the rail's spacing was tightened so every item shows |
+| V2 | Fact, check and context strips that truncated at 1440 with the docked menu shown now wrap to a second row (17 sheets). This closes the earlier polish item P1 |
+| V3 | Small tables whose middle column had collapsed (every Administration editor, and 11 other sheets) were rebalanced, and long values wrap |
+| V4 | Text running out of its card or control was fixed on 12 frames (DV06, PE07, BK03-refused, OR07, AR01, AR02, SI01, EQ01, ST01-1); 54 truncated row sub-lines now wrap |
+| V5 | Counts and words: FA01's footer reads 14 of 96; Bay 4's Equipment tab reads 4 (A17); "1 asset"; a literal "undefined" count was removed from the DV01 docked menu |
+| V6 | The docked menu marks the open view on SK02 to SK05, BK04 and TI03; the view tiles on BK01, BK04 and TI01 no longer show a selection their rows contradict |
+| V7 | The header chip on the two Record stage sheets reads Unverified; the Withdrawn banner uses the danger tone; story-time notes were moved from the UI into the sheet labels (DV07, TI04-withdraw) |
+| V8 | SK03 stacks the relationship map above its list so the connectors and role labels show; the table group bands on SK01, TB04 and FA01 keep their owner or site reference |
+| V9 | The phone header's chevron sits beside the view name (23 sheets); the TI02 validity captions no longer overlap |
+| V10 | The confirming button in 32 dialogs and panels uses the primary style, matching the pages built first; SU04, AR01, AR02, ST01-1, ST01-4 and SK03 were refitted to their content |
+
+### 9.3 Corrections needing Dean's decision (conflicts inside the brief)
 
 | ID | Conflict | Drawn as |
 |---|---|---|
@@ -415,7 +448,7 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | C14 | SYN-BKP-000019 stage dates precede configuration r2's applied date | As given, flagged (A13) |
 | C15 | "Tue 30 Jun 2027" is a Wednesday | Wed 30 Jun 2027 (A14) |
 
-### 9.3 Refinements (R)
+### 9.4 Refinements (R)
 
 | ID | Refinement |
 |---|---|
@@ -425,16 +458,16 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | R4 | Shorten long record sub-lines (BL02, BK02) to kind · reference · state and move the rest to the bar |
 | R5 | Re-read the EQ-01 and EQ-09 notes cards when the reference file can be read, and reconcile |
 
-### 9.4 Gaps to draw (G)
+### 9.5 Gaps (G)
 
-| ID | Gap |
-|---|---|
-| G1 | Filters, Columns, Export and Saved view panels; Export for restricted readers (permitted rows, no channels) |
-| G2 | Add site party, Record support evidence and a desktop Record history form; Add number, Flag number, Link equipment, End a link and Review evidence as their own dialogs |
-| G3 | Tablet sheets for Test instruments and Administration |
-| G4 | Dark mode, 200 % reflow sheets and prototype links |
+| ID | Gap | State |
+|---|---|---|
+| G1 | Filters, Columns, Export and Saved view panels; Export for restricted readers (permitted rows, no channels); Address lookup | Drawn 12 November: X01, X02, X03, X03-restricted, X04, X05 |
+| G2 | Add number, Flag number, Add site party, Link equipment, End a link, Review evidence, a desktop Record history form, Record support evidence | Drawn 12 November: PE10, PE11, SK08, FA09, FA10, AR10, EQ12, BL07 |
+| G3 | Tablet sheets for Test instruments and Administration | Not drawn (the 16 tablet sheets the brief lists are drawn) |
+| G4 | Dark mode, 200 % reflow sheets and prototype links | Not drawn |
 
-### 9.5 Automation candidates (N; rules first, none decides anything)
+### 9.6 Automation candidates (N; rules first, none decides anything)
 
 | ID | Candidate | Where |
 |---|---|---|
@@ -450,20 +483,24 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | N-N12 | Site-name differences from handovers raised as Address to review, never resolved automatically | SI06, SI06A (proposal) |
 | N-N8, N-N9 | Knowledge for this equipment; configuration drift note | Noted only |
 
-### 9.6 Polish (P)
+### 9.7 Polish (P)
 
 | ID | Polish |
 |---|---|
-| P1 | Facts-bar values that truncate at 1440 with the docked menu shown (People, Bulletins, Site surveys) could wrap to two rows as the tablet sheets do |
+| P1 | Closed by V2 |
 | P2 | Side panels with long forms (PE05) scroll; show the scroll affordance |
 | P3 | Register view tiles could show the selected view more strongly |
+| P4 | The page body behind a side panel is not drawn on BK03, TI04, DV09-review and SK06 |
+| P5 | The last column sits under the scroll edge on SU01, SU06, SK04, DV03, BK04 and TI01; the review note on SU06 and "Fixed on" in SK04 deserve to be in view |
+| P6 | PS08 shows skeleton rows under a banner that promises the last complete read; PS09 says entries are kept and shows none |
+| P7 | TB05's second connector starts without a source node; the DV05 commitments table has no date or status column |
+| P8 | The technician tab bar label "My inspections" is tight; three small tables (AR03, EQ04, AD08) still shorten a value |
 
-### 9.7 Recommended order
+### 9.8 Recommended order
 
 1. Dean decides C13 to C15 and the open questions of section 7.
 2. Apply R1 in the shared kit together with the Sales file.
-3. Draw G1 and G2.
-4. R2 to R4 and P1 to P3.
-5. R5 when the reference file is readable.
-6. A full visual pass over the pages checked by script only (section 6, Limits).
-7. Dean accepts and saves a named version; the design register and page guidance follow in their own change.
+3. R2 to R4 and P2 to P8.
+4. R5 when the reference file is readable.
+5. Draw G3 if wanted.
+6. Dean accepts and saves a named version; the design register and page guidance follow in their own change.
