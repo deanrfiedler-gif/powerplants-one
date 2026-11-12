@@ -13,6 +13,7 @@ const exclusive = new Set([
   "project-claims.test.ts",
   "project-claim-finance.test.ts",
   "agreement-charge-finance.test.ts",
+  "claim-finance-evidence.test.ts",
   "finance-project-work.test.ts",
   "project-commercial-ui.test.ts",
   "project-specialist.test.ts",

@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## Claim-specific Finance evidence — 13 November 2026
+
+[PR #932](https://github.com/deanrfiedler-gif/powerplants-one/pull/932), dependent on C1 #905, implements the fixed internal ProjectClaim/AgreementCharge OUT-14 contract through the existing Finance pipeline. [Contract](../contracts/document-issue-distribution.md#claim-specific-out-14--13-november-2026) and [evidence](../testing/evidence/claim-finance-evidence/README.md) separate exact historical claim output, local command/storage proof, compiled HTTP, real PDF and independent review. Claim-authoring UI, full manual TS-01/TS-02, operational policies, real MYOB and deployment remain separate. No new schema or grants.
+
 ## Project billing B2 backend — 10 November 2026
 
 [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the claim-schedule and completion-evidence API slice of the [project billing decision](../decisions/project-delivery-billing.md). See the [B2 contract](../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence). B3 Finance entitlements, B4 field-work billability and maintenance M2/C1 follow in dependency order. Claim-schedule page controls and connected TS-01 acceptance remain open; this does not complete BC-06/07. Verification and review status are recorded in the dated status fragment.

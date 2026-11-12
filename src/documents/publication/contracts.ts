@@ -15,6 +15,7 @@ import { digest } from "../store";
 import * as retained from "./definition";
 import * as retainedRender from "./render";
 import { renderHtml, renderOutput } from "./dk06-out09-2";
+import { supportedClaimDefinition } from "../../finance/claim-evidence-template";
 
 // Renderer contracts for managed (v3+) OUT-09 definitions. DK06-OUT09-1 keeps
 // its own modules (./definition, ./render) byte for byte, because its manifest
@@ -153,6 +154,8 @@ export async function supportedTemplateDefinition(
   version: number,
   text?: string,
 ): Promise<string | null> {
+  if (family === "OUT-14" && version === 3 && text)
+    return supportedClaimDefinition(text);
   if (version < 3 || family !== "OUT-09" || !text)
     return retained.supportedTemplateDefinition(family, version, text);
   let d;

@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "scope": "PostgreSQL restart and separate command processes; no HTTP/browser restart",
+  "process_before": 16744,
+  "process_after": 16990,
+  "postmaster_before": "2026-11-12 21:27:10.369226+00",
+  "postmaster_after": "2026-11-12 21:53:37.985694+00",
+  "originals": [
+    {
+      "kind": "AgreementCharge",
+      "job_id": "3e9f3cbd-b2e0-431c-980c-6591e44c8dcd",
+      "issue_id": "a28b3ee7-d59e-47d8-99cd-c5165d430859",
+      "receipt": {
+        "state": "Reconciled",
+        "task_ids": [
+          "1775f042-cd23-4589-bdbc-bdc5a194b173"
+        ],
+        "warnings": [],
+        "record_id": "3574e4bd-8b00-424d-9d0a-336e1fb2f41c",
+        "receipt_id": "8b94f917-6495-447b-a8ad-883bbb94abab",
+        "accepted_at": "2026-11-12T21:48:28.902Z",
+        "operation_id": "e332b5bc-7fe4-4193-9f99-3b4d675d3cb5",
+        "record_version": 8
+      },
+      "html_hash": "ac718e2e62e931d7a87024ac598e0f8cd887a33c6dcb1bfee2aa8f0e46ac33d6",
+      "pdf_hash": "eb9c3ee042a0f014f5681d072b862f7aa656d10cfb0b971fcd6a98fd0e0ba616",
+      "html_bytes": 804700,
+      "pdf_bytes": 110,
+      "browser_version": "SYNTHETIC-B2-STORED-BYTES-NOT-RENDERED",
+      "renderer_version": "playwright-1.63.0"
+    },
+    {
+      "kind": "ProjectClaim",
+      "job_id": "15f6c7fc-ab37-4702-880f-c599930a9c38",
+      "issue_id": "eb441760-69b0-4e5a-992d-3a9e3f8c5c5f",
+      "receipt": {
+        "state": "Reconciled",
+        "task_ids": [
+          "7a98e380-17f7-499e-92b3-9b2e85f76bf0"
+        ],
+        "warnings": [],
+        "record_id": "ec93966d-74b3-417b-81a3-572e8eb78f2d",
+        "receipt_id": "c44302c4-67a8-484d-bb2b-a65a4d21d1b0",
+        "accepted_at": "2026-11-12T21:48:39.855Z",
+        "operation_id": "a28905a5-2160-4192-a71e-718978a7e6d4",
+        "record_version": 8
+      },
+      "html_hash": "8702722d1ff931cdc696b387b0483f0dbc25c53146850a2b0712cc6bc5ded342",
+      "pdf_hash": "be762598d686d0f87b62142b3ceb3349e17b10068a9dbc7e9949e5cbe4db779d",
+      "html_bytes": 819551,
+      "pdf_bytes": 110,
+      "browser_version": "SYNTHETIC-B2-STORED-BYTES-NOT-RENDERED",
+      "renderer_version": "playwright-1.63.0"
+    }
+  ]
+}

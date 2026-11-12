@@ -35,6 +35,7 @@ import {
   reconcileFinance,
 } from "../../src/finance/service";
 import type { projectFinanceFixture } from "./project-claim-finance";
+import { verifyClaimEvidence } from "./claim-finance-evidence";
 
 // Continuation of the TS-01 Finance component, on the SAME company/customer.
 // Dates are shifted to 2026 so the fee is due at execution; this does not execute
@@ -101,6 +102,7 @@ export async function verifyConnectedMaintenanceBilling(
   assert.equal(billed.targets.length, 1);
   assert.equal(billed.targets[0].kind, "SyntheticAgreementCharge");
   assert.equal(billed.targets[0].lines[0].amount, "4800.00");
+  await verifyClaimEvidence(f.reconciler, fee.id, "AgreementCharge", "4800.00");
 
   const planId = randomUUID();
   await createPlan(f.owner, {

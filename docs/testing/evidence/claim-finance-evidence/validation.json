@@ -1,0 +1,120 @@
+{
+  "recorded_at_utc": "2026-11-12",
+  "owner": "Codex",
+  "pr": 932,
+  "worktree_base": "79df685b2",
+  "c1_parent": "af06b798df8d972b97359e04a6b73d9df639bcac",
+  "main": "707b21cce42393433b90fbfa84a9aa850834db13",
+  "provenance": "Sources below were uncommitted at execution; hashes identify their exact bytes. Documentation/evidence publication commits do not relabel earlier source results.",
+  "node": "24.21.0",
+  "npm": "11.19.0",
+  "postgresql": "16.15",
+  "compiled_build_id": "pvMdbVGclFBV_Qel2CTaP",
+  "source_sha256": {
+    "scripts/http-suite.ts": "2b398e9eaff2dd4b38cd83c2cd476ed4264e95e85f5db43a195b02396d602169",
+    "src/documents/publication/contracts.ts": "33ba7316dd4bf7b145b04da2e6cbc9a02da4c3064e44ee14a0c3afb47f8b5190",
+    "src/finance/claim-evidence-render.ts": "728aa882d3d1918bf3aee76e95c4dfce8ec5c2de029a54bd5633ca6e2d31d71c",
+    "src/finance/claim-evidence-source.ts": "34acc08dc6aea1dac08e2760c28ba9c1b31d3bd80d4b7d907d2216e3bd2669ba",
+    "src/finance/claim-evidence-template.ts": "6a1f91e280da528756a2507e9cbfe0ee0b518503244122546be107bd2474ac52",
+    "src/finance/worker.ts": "385a37f22ad938c479e2c9b35caef8ad81a3c3c894cf62460fe95cf823021c53",
+    "tests/database/claim-finance-evidence.test.ts": "d7a9e5f3f0e4503b41e58f8a9df3f086e863f8246d4274fcf374e48ef7d622f4",
+    "tests/database/finance-project-ts01.test.ts": "948286c185fa9e3f29b3926a755bd3df0600a98eaf4d2bbcfdf355401f8a7867",
+    "tests/helpers/claim-finance-evidence-restart.ts": "93321ba84abe351fa779add4ce3c00e26697e69b78520534d8147f9ae90b574f",
+    "tests/helpers/claim-finance-evidence.ts": "3918cbc265f4d8aecbdc6195767a22a027ab0c3fead4f95de6781f16712cae7c",
+    "tests/helpers/connected-maintenance-billing.ts": "50dd117a438584349ad7335947d0c8d6f23cd5f7913dcab349bba2014d678e9e",
+    "tests/http/claim-finance-evidence.test.ts": "935a848bce82309fb04338457035ba6f46b466a17dc48fcbd59c4baa2fb3b0a4",
+    "tests/unit/claim-finance-evidence.test.ts": "158facd236ed17a0f73d31383326916fc117795c89cb7af04a1abff1cfca1b2d"
+  },
+  "retained_logs": [
+    {
+      "file": "database.txt",
+      "sha256": "f6e2857936f094a203a50faf5b1d5d242bb261b6cefc29ce70e937f57dba9e73",
+      "bytes": 1039
+    },
+    {
+      "file": "connected.txt",
+      "sha256": "d74a174591dc6f8963b2eb92872b306bfd46cf2d28c9529073c4d2bae8b7d0b4",
+      "bytes": 567
+    },
+    {
+      "file": "unmocked-commands.txt",
+      "sha256": "367a2856aa410becaac670b38bee6fe99f62dcc7ce0e8578cb7eb08fdbafe5c8",
+      "bytes": 237
+    },
+    {
+      "file": "compiled-http.txt",
+      "sha256": "e5fb5d44bacc856429de82cc8be625ccba5ee2c8d37d88746a3dec1726de4a46",
+      "bytes": 250
+    },
+    {
+      "file": "legacy-output-regression.txt",
+      "sha256": "8f3944372e615fc91ce54e49a7e9dc6f1ca79578c73090f17cb3c0d499775f9a",
+      "bytes": 1070
+    },
+    {
+      "file": "browser-unavailable.txt",
+      "sha256": "fc7aae6a5434a16a3e9d7484137a2b8854c2c7bc0433e48d8249062d29f48993",
+      "bytes": 669
+    },
+    {
+      "file": "catalogue.txt",
+      "sha256": "ec95513315d00ede9f184029df6f30b1febf56fdad2d6bdcc21de2de98d9559f",
+      "bytes": 552
+    }
+  ],
+  "original_local_log_sha256": {
+    "claim-check-final.log": "a22e26c8f5b64b18706494da311ebc2d7f92ef8b9933c269ff8b33c3818f3d4e",
+    "claim-resumed-static-tail.log": "4552c7cbb6972128305765ad45ffc702db0627260c6a41b29006f9ab22ee830d",
+    "claim-resumed-unit-summary.log": "2aaf38a779e59ca8f7ebb4adffe054eee55005f6e44ce287820e1208824ac198",
+    "claim-build-final.log": "f9aaa3fa19725bf880bb018fbf567cb7d8ea743b7ba30f808f8735006af06d73",
+    "claim-typecheck-final.log": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+    "claim-foundation.log": "e39f204f6cfe846b67cc5d14e5b1a2d92d280f674d7e44996474d183ccd98f57",
+    "claim-prototype.log": "9b7839c713adf06d51e41256fd2e991c6acc00fca36c33caff1ef7e02d55251b",
+    "claim-naming.log": "3baf563c83978e2f240801e2f6b6923ec5e4bcaa0013e4f075b0839d22a72282",
+    "claim-status.log": "61705d9a434cab8517da05d7c49f84773bf0ab3af4f203471c47b20e9ec8599c",
+    "claim-documentation-tests.log": "4605c5cb21755ddefcb55fd6b2fa93d5f680af35069328408a8f01061d6cea75",
+    "claim-migrations.log": "ece745fbfdd81cb88bb664ca6bd0f57a0b1ba5ec75616f3c18362af9a01f3f02"
+  },
+  "results": {
+    "claim_database": {
+      "passed": 5,
+      "failed": 0,
+      "skipped": 0,
+      "renderer": "explicit synthetic-byte helper; no rendered PDF"
+    },
+    "connected_final": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "renderer": "explicit synthetic-byte helper"
+    },
+    "unmocked_commands": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "note": "A rerun of one of the five focused cases, not additional coverage"
+    },
+    "legacy_output_regressions": {
+      "passed_cases": 3,
+      "failed": 0,
+      "note": "The unmatched connected file-level result is not a fourth assertion-bearing case"
+    },
+    "compiled_http_commands": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "renderer_mock": false
+    },
+    "units": {
+      "passed": 1455,
+      "failed": 0,
+      "skipped": 0
+    },
+    "application": "Studio, full lint, typecheck, unit suite and build passed across original and resumed commands; first build interrupted by environment replacement; later test edits received focused lint and final typecheck",
+    "documentation": "Foundation, prototype, naming, numbering, status and 44 documentation tests passed; final committed-scope check recorded in PR",
+    "restart": "Actual changed PostgreSQL postmaster and exited/new command processes; exact two claim outputs/receipts and unchanged Finance snapshots; no HTTP/browser restart",
+    "real_renderer": "Not successfully executed; required Chrome absent",
+    "independent_review": "Pending Claude review",
+    "ci": "Draft runtime suites are skipped; no manual dispatch capability available in connector; CLI authentication invalid"
+  }
+}

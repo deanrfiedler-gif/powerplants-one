@@ -1,0 +1,9 @@
+✔ Claim evidence HTTP preserves exact request receipts and refuses foreign scope, wrong duties and altered commands (2161.424681ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5189.966383
