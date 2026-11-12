@@ -3,14 +3,14 @@ title: My Work refined UI pages proposed in Figma
 date: 2026-11-10
 ---
 
-Dean asked for the refined UI pages of My Work to be built in a new private Figma file. They were drawn on 10 and 11 November 2026 inside the accepted shell, to the Sales module file's standard, so that the queue every module sends work to has one consistent, reviewable design set before any page is built. The file holds 137 sheets and boards across eleven scope pages:
+Dean asked for the refined UI pages of My Work to be built in a new private Figma file. They were drawn on 10 to 12 November 2026 inside the accepted shell, to the Sales module file's standard, so that the queue every module sends work to has one consistent, reviewable design set before any page is built. The file holds 139 sheets and boards across eleven scope pages:
 
 - the Overview, My actions and the Activity window;
 - Reviews & handovers, Blocked & waiting and the Team queue;
 - Notifications and updates, Search, Conversations and Calls to log;
 - interaction states and administration.
 
-There are 27 dialogs and panels, 24 page states, 10 tablet sheets and 26 phone sheets. The Read me cards hold the sheet index and the audit.
+There are 27 dialogs and panels, 24 page states, 11 tablet sheets and 27 phone sheets. The Read me cards hold the sheet index and the audit.
 
 On 11 November 2026 Dean added three requirements, drawn as proposals:
 

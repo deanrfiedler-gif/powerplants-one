@@ -2,14 +2,14 @@
 document_id: PPO-MYWORK-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposal awaiting Dean's acceptance; 137 sheets and boards drawn on 10 and 11 November 2026 in a private Figma file, with three additions Dean asked for on 11 November 2026 (the after-call card, the full-screen phone call log and voice notes); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Proposal awaiting Dean's acceptance; 139 sheets and boards drawn on 10 to 12 November 2026 in a private Figma file, with three additions Dean asked for on 11 November 2026 (the after-call card, the full-screen phone call log and voice notes); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: f03d8618fe32b11153d26c19df7af6983bb65223
 versioning: git
 ---
 
 # My Work refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 (drawn 10 and 11 November 2026) · **Status:** Proposal awaiting Dean's acceptance. Sections 1 to 8 are the proposal record, section 9 the audit and section 10 the three additions Dean asked for while the file was being drawn.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 (drawn 10 and 11 November 2026) · **Status:** Proposal awaiting Dean's acceptance. Sections 1 to 8 are the proposal record, section 9 the audit, section 10 the three additions Dean asked for while the file was being drawn, and section 11 the audit items applied on 12 November 2026.
 
 On 10 November 2026 Dean asked for the refined UI pages of **My Work** to be built in a new private Figma file he created for the purpose ("PPO - My Work module"), inside the accepted shell and to at least the standard of the Sales module file, following the My Work UI pages brief with Addendum A3 (persona and story reconciliation, as amended for My Work in section A3.8). He added: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach", so every question in the brief was taken at its stated default and is recorded here for his decision.
 
@@ -60,7 +60,7 @@ Sheets are 1440 × 900 desktop frames unless their size says otherwise (full-len
 | Flows and notes, one per scope page | OV · AC · RH · BW · TQ · NU · SR · CV · CL · ST · AD | `53:4976` · `62:5933` · `64:3803` · `65:2342` · `66:2258` · `71:4297` · `73:3568` · `75:3910` · `83:3473` · `80:1749` · `82:3760` |
 | Shell and kit | Shell icons · Shell components · Build helpers · Shell · My Work chrome and overlays · Sales kit · Tablet and phone chrome | `3:2` · `3:18` · `11:11` · `14:11` · `40:432` · `44:436` |
 
-Totals: 50 desktop sheets and boards, 27 dialogs and panels, 24 states, 10 tablet sheets and 26 phone sheets (21 at 390 px and 5 at 320 px: PH01-320, PH06-320, PH11-320, PH13-320 and the touch-target board ST01f).
+Totals: 50 desktop sheets and boards, 27 dialogs and panels, 24 states, 11 tablet sheets and 27 phone sheets (21 at 390 px and 6 at 320 px: PH01-320, PH06-320, PH11-320, PH13-320, PH07b-320 and the touch-target board ST01f). TB11 and PH07b-320 were added on 12 November 2026 (section 11).
 
 **My Work overview · SH-01 · SH-02** (19 sheets)
 
@@ -212,7 +212,7 @@ Totals: 50 desktop sheets and boards, 27 dialogs and panels, 24 states, 10 table
 | PH13 | Thread — phone, the ask and Reply; Carl labelled on every message (SH) | `route:/conversations/[id]` | Phone | 390×844 | `75:3798` |
 | PH13-320 | Thread — phone 320, the ask and Reply (SH) | `route:/conversations/[id]` | Phone | 320×844 | `75:3854` |
 
-**Calls to log · SH-02** (13 sheets)
+**Calls to log · SH-02** (15 sheets)
 
 | Code | Sheet | Route or scope | Kind | Size | Node |
 |---|---|---|---|---|---|
@@ -226,9 +226,11 @@ Totals: 50 desktop sheets and boards, 27 dialogs and panels, 24 states, 10 table
 | CL07 | After-call card states — known person and a planned call, minimised, saved, save failed, no match, phone off (SH-02) | Shell layer, any page | State | 1440×900 | `81:2894` |
 | CL08 | Voice note states — idle, recording, recorded, queued on the phone, microphone off, transcript not available (SH-02) | `route:/work` | State | 1440×900 | `83:3271` |
 | TB08 | Log call at 1024 — the desktop dialog, two columns, over the Overview (SH-02) | `route:/work` | Tablet 1024 | 1024×768 | `76:2781` |
+| TB11 | After-call card at 1024 — bottom right over the page (SH-02), added 12 November 2026 | Shell layer, any page | Tablet 1024 | 1024×768 | `100:2918` |
 | PH07 | Log call — Casey Ward's 08:15 call to Jo Marsh about site access; 60 px header, close left, centred title, sticky primary, full length (SH-02) | `route:/work` | Phone | 390×1322 | `76:3131` |
 | PH07b | Log your call — full screen when Casey Ward comes back to PPO at 08:18 after the 08:15 call in the phone app; Who known; duration Not known; full length (SH-02) | Phone, on return to PPO | Phone | 390×1188 | `83:3020` |
 | PH07c | Log your call — recording a voice note; Save waits until the recording stops; full length (rule example) (SH-02) | Phone, on return to PPO | Phone | 390×1330 | `83:3128` |
+| PH07b-320 | Log your call — phone 320, Casey Ward back in PPO at 08:18; fields stack, Later and Save share the sticky bar; full length (SH-02), added 12 November 2026 | Phone, on return to PPO | Phone | 320×1410 | `100:3272` |
 
 **Interaction states · SH** (6 sheets)
 
@@ -353,7 +355,7 @@ On 11 November 2026 a scripted pass read every scope page:
 Limits:
 
 - This is a visual proposal. There are no prototype links and no screen-reader testing.
-- The renders were spot checks of new layouts, not a final render of all 137 sheets.
+- The renders were spot checks of new layouts, not a final render of all 139 sheets.
 - The scan read the strip, menu and pill counts. It did not read every in-page count, such as view tiles and group bands, which were checked by eye as each batch was built.
 
 ## 7. Not drawn and open questions
@@ -413,14 +415,14 @@ Every page was read against the brief's audit framework (first impression, usabi
 | C3 | Radio and checkbox labels overflowed narrow columns | Fixed: the helper truncates them; four sheets refitted |
 | C4 | 27 dialog and state sheets kept their backdrop's full-length body under the clip | Fixed: bodies trimmed |
 | C5 | Casey's call duration had been assumed although the call ran in the phone app | Fixed: Not known, with an optional duration |
-| C6 | White text on brand/green-deep is 3.57:1, below 4.5:1 | Open: keep text off that fill (use brand/navy for text-bearing fills) or darken the token; a kit decision for Dean |
+| C6 | White text on brand/green-deep is 3.57:1, below 4.5:1 | Narrowed on 12 November 2026: no My Work sheet places text on that fill; the only cases are the primary buttons of the accepted Shell record header toolbar, copied unchanged into the kit page. Open against the Shell file: keep text off that fill (brand/navy) or darken the token; Dean's decision |
 
 ### 9.2 Refinements (R)
 
 - R1 one due word across My Work ("Date needed" for activities and "No due date" for reviews are kept per accepted page).
 - R2 confirm the sixteen review source page names; RH03 shows Inspections as its own source page while AD06 uses the working names.
 - R3 bind the hover and pressed shades (A30) to kit tokens.
-- R4 draw tablet and 320 px variants of the after-call card and Log your call.
+- R4 draw tablet and 320 px variants of the after-call card and Log your call. Applied 12 November 2026 (TB11, PH07b-320).
 
 ### 9.3 Gaps (G)
 
@@ -443,19 +445,19 @@ Every page was read against the brief's audit framework (first impression, usabi
 ### 9.5 Polish (P)
 
 - P1 remove the review annotation markers on CL01 and CL06 before acceptance.
-- P2 AD08 is 901 px high; trim to 900.
-- P3 the search dropdown rows keep the Shell's original type icons; match them to the result types.
+- P2 AD08 is 901 px high; trim to 900. Applied 12 November 2026.
+- P3 the search dropdown rows keep the Shell's original type icons; match them to the result types. Applied 12 November 2026.
 
 ### 9.6 Recommended order
 
-1. C6, the contrast decision.
+1. C6, the contrast decision, raised against the Shell file.
 2. Q-CL1, Q-CL4 and Q-CL5: the call-end source, voice-note storage and transcripts.
 3. Accept or amend N1 to N3.
 4. R2, the source page names.
 5. R1, the due words.
-6. R3 and R4.
+6. R3.
 7. The G items, into the next planning round.
-8. The P items, before a named version is accepted.
+8. P1, before a named version is accepted.
 
 ## 10. Additions Dean asked for on 11 November 2026
 
@@ -502,3 +504,19 @@ A voice note is offered wherever notes are taken: the after-call card, Log call,
 States drawn on CL08 are idle, recording, recorded, queued offline, microphone off and transcript not available.
 
 Storage and retention (Q-CL4) and any transcription (Q-CL5) are Dean's to decide. The [boundary](#8-boundary-and-next-steps) is unchanged: none of this authorises an integration, a storage location or a provider.
+
+## 11. Audit items applied — 12 November 2026
+
+After Dean marked the pull request ready for review and asked to continue, the audit items that need no decision of his were applied in the file. Everything that needs his judgement stayed open.
+
+| Item | What changed | Node |
+|---|---|---|
+| R4 | TB11 draws the after-call card at 1024, bottom right over the Overview. PH07b-320 draws Log your call at 320: fields stack one per row, Save call and Later share the sticky bar, and every target stays at least 44 px | `100:2918`, `100:3272` |
+| P2 | AD08 trimmed from 901 to 900 px | `82:3386` |
+| P3 | Search dropdown rows now carry their result type's icon (project, deal, organisation, site, equipment, work order); recent searches show the history icon; the best-match glyphs show the project and the service request | SR01 `73:8`, SR02a `73:451`, SR02b `73:938` |
+| C6 | A scan of every text on every page for white on brand/green-deep found none on a My Work sheet. The five cases are the primary buttons in the local copy of the accepted Shell record header toolbar, which no My Work sheet uses. The finding stays open against the Shell file | Shell and kit page |
+
+The Calls to log notes card and the Read me index and audit cards were updated to match. Both new sheets were rendered and checked. The file now holds 139 sheets and boards.
+
+Still for Dean: C6 against the Shell file; Q-CL1 to Q-CL5; acceptance of N1 to N3; R1 to R3; the G items; P1, the review annotations, which stay until he accepts the file.
+
