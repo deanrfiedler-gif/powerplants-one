@@ -14,9 +14,9 @@
   },
   "note": "Record of the variables in the private PPO - Library file, so a change to them shows in Git review. It is not read by scripts/check_design_tokens.py, which still guards docs/design/figma-variables.json (the frozen PPO - Design file). Variables with status no-code-name have no CSS property yet; the enforced check allows no new variable without one, so pointing it at the library waits for the reconciliation in ADR-0067 stage 5. The library is unpublished and every variable is proposed. See docs/decisions/library-grid-table-interactions.md section 10, docs/decisions/library-controls.md, docs/decisions/library-move.md, docs/decisions/library-board.md, docs/decisions/library-time.md, docs/decisions/library-gantt.md, docs/decisions/library-forms.md, docs/decisions/library-states.md, docs/decisions/library-record.md, docs/decisions/library-drawer-widths.md, docs/decisions/library-audit.md and docs/decisions/library-phone.md.",
   "counts": {
-    "variables": 139,
+    "variables": 141,
     "mapped": 30,
-    "no_code_name": 109
+    "no_code_name": 111
   },
   "variables": [
     {
@@ -473,8 +473,20 @@
     },
     {
       "collection": "PPO layout",
+      "name": "space/20",
+      "value": 20,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
       "name": "space/24",
       "value": 24,
+      "status": "no-code-name"
+    },
+    {
+      "collection": "PPO layout",
+      "name": "space/32",
+      "value": 32,
       "status": "no-code-name"
     },
     {

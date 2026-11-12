@@ -79,7 +79,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Radio | `137:654` | 16: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) by Surface (White, Tint); one State option held all five until 12 November 2026. Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
 | Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Show helper, Helper text |
 | Controls / Field | `51:249` | 24: Kind (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Show helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
-| Controls / Menu item | `50:146` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text |
+| Controls / Menu item | `50:146` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text. Disabled dims the content to 45% since 12 November 2026 (70% before) |
 | Controls / Menu divider | `50:147` | One component |
 | Controls / Tooltip | `50:118` | One component. Options: Label, Show shortcut, Shortcut text |
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Show action |
@@ -97,6 +97,7 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Switch | `274:1021` | 8: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) |
 | Controls / Switch field | `274:1022` | One component: a label and a switch. Option: Label. Exposed: Switch |
 | Controls / Segment | `274:1037` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Option: Label |
+| Controls / Count | `314:17992` | 2: Tone (Neutral, Navy). Option: Count. Merged on 12 November 2026 from Board / Count `83:56` and Move / Count badge `67:89`, which keep their node IDs as its variants |
 | Controls / Segmented | `274:1059` | 3: two, three or four options. Exposed: each segment |
 
 The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.
@@ -167,7 +168,7 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 
 | ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
-| C1 | Hover and Pressed on buttons | A state layer over the kind's colour: brand/navy at 6% and 12% on the light kinds, brand/white at 12% and 24% on Primary and Danger | Sales ST01 says "hover darkens one step, pressed two"; Estimating ST01 draws 88% and 76% opacity. Neither gives values that work for every kind |
+| C1 | Hover and Pressed on buttons | A state layer over the kind's colour: brand/navy at 6% and 12% on the light kinds, brand/white at 12% and 24% on Primary and Danger. On 12 November 2026 Dean moved Danger, Pressed to 18%, so its label is 4.70:1 where it was 4.12:1 ([library audit](library-audit.md), section 9) | Sales ST01 says "hover darkens one step, pressed two"; Estimating ST01 draws 88% and 76% opacity. Neither gives values that work for every kind |
 | C2 | Chip tone meanings | One merged meaning per tone (section 3, card 2). "Draft" is Neutral | The Sales kit (accepted) has "Draft" as Warning; Estimating has it as Neutral. Tint and Navy are also described differently. The Sales chips that show Draft change when Sales adopts these components |
 | C3 | New states | Field Focus, Error, Disabled and Read-only; Hover and Focus on filter chips and tabs | No accepted source draws them |
 | C4 | Small size | A "Control size" mode: buttons 28 px and fields 32 px in toolbars, popovers and tables | The shell allows 28 px as a minimum (C6); using a variable mode for it is new |
