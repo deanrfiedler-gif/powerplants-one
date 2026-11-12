@@ -2,7 +2,7 @@
 document_id: PPO-SHELL-REFINED-FIGMA-DEC
 date: 2026-11-08
 owner: Dean Fiedler
-status: Owner-accepted design (named versions saved 8 and 10 November 2026); the primary action colour change of 12 November 2026 (section 12) awaits Dean's acceptance and a named version; captures and application build separate
+status: Owner-accepted design (named versions saved 8, 10 and 12 November 2026; the 12 November version carries the primary action colour accepted in section 12); captures and application build separate
 source_commit: 1672c062981402037355fb9d813dbedabd87cfbb
 versioning: git
 ---
@@ -220,7 +220,14 @@ Unchanged: the value of brand/green-deep and its marker uses (39 on the shell pa
 
 **Verification.** Read through the Figma connector after the change: all five fills are bound to `action/primary`; renders of the component set and the RH01 toolbar sample `#2d7128` on every primary; no node with text sits on brand/green-deep on the shell page or the toolbar page; brand/green-deep uses on the shell page fell from 44 to 39. Contrast was computed with the WCAG 2.x relative-luminance formula. This session cannot read version history, so the change was not compared with a named version.
 
-**Release grade and acceptance.** Medium under [ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 10: it changes the appearance of an accepted component. It needs Dean's acceptance in words and a new named version, for example "Shell refined concept — accepted · primary action contrast". Until then a build cites "Shell refined concept — accepted · record header toolbar" (section 11), with this section governing the primary colour ([handoff rule 5](figma-named-version-build-handoff.md)).
+**Release grade.** Medium under [ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 10: it changes the appearance of an accepted component, so it needed Dean's acceptance in words and a new named version.
+
+**Acceptance and named version — 12 November 2026.** Dean accepted the change the same day and saved a named version: "I accept the change and have saved the named version". He did not restate its title. This record uses the title this section suggested, "Shell refined concept — accepted · primary action contrast". This session cannot read version history, so the title rests on Dean's word and was not compared with the file. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+
+| Build | Named version it cites |
+|---|---|
+| A build of the record header toolbar, or any build step that starts after 12 November 2026 and uses the shell | "Shell refined concept — accepted · primary action contrast" (12 November 2026) |
+| A build step already started from an earlier version, such as the [S1 build](shell-refined-s1-build.md) | Its own version, unchanged; moving it is its own step (rule 5) |
 
 **Not done.**
 
