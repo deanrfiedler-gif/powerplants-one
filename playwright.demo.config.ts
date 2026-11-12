@@ -6,12 +6,11 @@ export default defineConfig({
   testDir: "tests/demo",
   testMatch: "ui.spec.ts",
   timeout: 120000,
-  // Keep the inherited dependency in its actual directory. The demo testDir
-  // otherwise hides it, leaving the first invited-actor read to compile inside
-  // the ordinary assertion deadline.
+  // Compile the demo's route families before its six invited-actor cases.
+  // The full application's warm-up exceeds this small workflow's setup budget.
   projects: base.projects!.map((project) =>
     project.name === "warm-up"
-      ? { ...project, testDir: "tests/browser" }
+      ? { ...project, testMatch: /warm-up\.setup\.ts$/ }
       : project,
   ),
 });

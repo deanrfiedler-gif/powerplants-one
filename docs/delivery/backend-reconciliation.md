@@ -1,5 +1,10 @@
 # Backend implementation reconciliation
 
+
+## C1 connected billing continuation — 12 November 2026
+
+Current main `a65ac3f4a` contains M2 #904 and project B1–B4. C1 #905 targets main and its writing claim is resumed on Dean's instruction to proceed with the next backend work. Incoming-head Application and compiled-browser CI passed; demo setup still failed while warming all 901 application routes. The bounded demo dependency now warms its 90 relevant routes and retains all six UI cases. The existing Finance component continues through the separate annual agreement charge and covered six-monthly visit; [execution evidence](../testing/evidence/agreement-charge-c1/README.md#connected-billing-assurance-and-bounded-demo-setup--12-november-2026) records actual results and limitations. TS-01/TS-02 fixtures are refreshed to six-monthly service and M1's prepared work order. Full scenarios, real local PDF/browser proof, final-head CI and independent Claude confirmation remain separate; no merge or deployment. Earlier inspection paragraphs below retain their dated historical states.
+
 ## Review correction batch — 11 November 2026
 
 Current main `2d9a8ff24` contains documentation changes since `9926da5fa`; M2 #904 and C1 #905 remain unmerged drafts at inspection. Claude's independent reviews now exist on `9c29ef63a` and `7d0a2254f`: M2-1/M2-2 and C1-1 are actionable. The Contacts rerun on the incoming C1 head succeeded. Existing #897/#904/#905 still occupy the three implemented Codex slots; #897 is untouched. This batch claims and corrects the findings on those two branches, with source/contract regressions and an additive reserved 0128 guard. No C2 or duplicate M1/B1–B4 implementation is justified.

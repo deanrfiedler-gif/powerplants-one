@@ -1,6 +1,6 @@
 # Agreement charge C1 backend evidence
 
-[PPO-MAINTENANCE-TS02-DEC](../../../decisions/maintenance-service-ts02-decisions.md) C, [PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905). One-level stack on M2 #904 sequences Finance source/contract edits; B3 is merged. No merge, deployment or live data action is implied.
+[PPO-MAINTENANCE-TS02-DEC](../../../decisions/maintenance-service-ts02-decisions.md) C, [PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905). Originally stacked on M2 #904; M2 is now merged and C1 targets main. B3 is merged. No merge, deployment or live data action is implied.
 
 ## Scope and provenance
 
@@ -268,3 +268,34 @@ python3 scripts/check_documentation_scope.py --base origin/main --head HEAD
 Local `npm run check` passed Studio, lint, TypeScript, all 1,452 unit tests and the production build. Foundation, prototype, naming, migration and status checks passed, as did all 44 documentation tests. The corrected warm-up-only discovery lists exactly one setup case. Fresh database/HTTP/restart proofs were not repeated because no runtime or migration changed; their executed incoming-head CI and prior local evidence remain separately identified. The final PR handover records documentation-scope and final-head CI state. Publishing the correction supersedes the still-running incoming-head drag retry under existing workflow concurrency; no passing retry result is claimed. The replacement final-head browser-2 run must resolve that signal.
 
 This correction changes only demo test configuration and delivery evidence; application code, migrations, Finance rules and scheduling policy are unchanged. C1-2/C1-3/C1-4 confirmation by Claude remains outstanding. No full TS-01/TS-02, operational acceptance, merge or deployment is claimed.
+
+
+## Connected billing assurance and bounded demo setup — 12 November 2026
+
+Dean instructed proceeding with the next backend work after the delivery recommendation. This continuation uses C1 `7abe8b2cf` on integrated main `a65ac3f4a`. At that incoming head, [Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43139146700) and [compiled browser assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43139146496) have now passed. The earlier ordinary drag failure has not been reproduced on this head; its original cause remains unestablished. Twenty-two of 23 workflow summaries passed. [Demo preparation](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43139146577) failed its restored full-application warm-up at the unchanged 900,000 ms deadline; all six UI cases consequently did not run.
+
+The demo now has its own dependency setup under `tests/demo/`, selecting the planner/appointment, work-order, mailbox/deal/calendar, activity and session route families exercised by those three journeys. The full application's setup is unchanged. The focused regression checks required real routes, excluded unrelated routes and both project dependencies; discovery retains exactly one setup plus all six original desktop/phone cases. No UI assertion, deadline, retry count, workflow or production rule changes. Each warm-up request now logs its path and timing, so a setup timeout retains partial progress.
+
+The local HTTP warm-up reached **90 of 90 routes, zero unreachable, in 209,913 ms**, compared with 901 routes in the full application. [Exact timings and HTTP statuses](connected-demo-warm.json) are a development-server compilation probe, not a browser test or a CI pass. The setup script succeeded with Node 24.21.0, npm 11.19.0 and disposable PostgreSQL 16.15. Its browser summary is unavailable; `npm run browser:check` independently confirms the missing `/opt/google/chrome/chrome`. Browser tests and real rendered PDFs remain for CI under AGENTS.md.
+
+The existing TS-01 Finance component now continues on the same company/customer through an independently approved single AUD 4,800.00 annual agreement charge, a SixMonthly plan, one due occurrence, exact request/work-order creation and receipt replay, reviewed Service result/receiving, issued report, M2 defaults and no-posting Finance reconciliation for 90 MIN and 1 EA. A second fee claim is refused at submission, and there is exactly one Consumed agreement entitlement and one SyntheticAgreementCharge target. Project claim measures remain exactly unchanged at AUD 135,090.00 (129,910.00 base plus 5,180.00 variation); the project-linked work and the covered maintenance visit have no target. The optional cost capture in the existing Maintenance test helper defaults to absent for all existing callers.
+
+The local component uses the existing explicitly enabled synthetic-byte renderer. It proves commands, stored identities, quantities, holds, receipts and reconciliation, **not real PDF output, the manual TS scenarios, customer communications or operational invoicing**. Its agreement dates shift consistently to 12 March 2026–11 March 2027, with one occurrence on 12 September 2026, so the charge is already due without overriding runtime date checks. The manual scenario fixtures retain their future 2027 dates and now use the adopted six-monthly interval, one September occurrence and M1's prepared Draft work order. Step IDs remain unchanged; 16 explicit weekday/date pairs were independently checked. Historical findings and decision questions remain historical.
+
+Two initial connected runs found test-authoring errors, not application defects: [missing required remaining-work basis](connected-initial.txt), then [a hardcoded duplicate-handoff version](connected-second.txt). The fixture now provides that basis and reads the saved version before testing duplicate entitlement refusal. The first type check also identified two untyped entry callbacks; they now use the existing SourceEntry type. The initial route regression caught the appointment page's actual `/service/appointments/` prefix before correction.
+
+Verification commands (source `/workspace/.ppo-tools/env.sh` first):
+
+```sh
+node --env-file=.env.local --import tsx node_modules/@playwright/test/cli.js test --config=playwright.demo.config.ts --list
+PPO_B2_SYNTHETIC_RENDERER=command-proof-only node --env-file=.env.local --experimental-test-module-mocks --import tsx --import ./tests/helpers/project-claims-synthetic-renderer.mjs --test --test-concurrency=1 tests/database/finance-project-ts01.test.ts tests/database/maintenance-service.test.ts
+npm run check
+python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+python3 scripts/build_status.py --check
+python3 scripts/check_migrations.py
+python3 -m unittest discover -s scripts -p 'test_documentation*.py'
+```
+
+**Connected local result:** [all five cases passed](connected-final.txt): the expanded B4/M2/C1 component and all four existing Maintenance/Service regressions, with no skips. This run uses the explicitly labelled synthetic-byte document helper. Local `npm run check` passed Studio, lint, TypeScript, all **1,453 unit tests with no skips**, and the production build. Foundation, prototype, naming, migration and status checks passed, as did all 44 documentation tests. Documentation-scope validation is run against the committed continuation before publication. New-head CI remains pending publication; its observed state is recorded in the PR handover. C1's independent finding confirmation remains outstanding; this continuation does not grant review, merge or deployment authority. UI charge authoring, claim OUT-14 content, full TS-01/TS-02 execution and operational D-017 definitions remain separate boundaries.

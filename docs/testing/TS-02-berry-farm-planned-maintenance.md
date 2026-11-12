@@ -22,11 +22,11 @@ versioning: git
 
 Change record: r01 draft prepared 30 October 2026 at Dean's request, following TS-01's structure, from a reading of main at `fa15714`.
 
-Implementation checkpoint — 11 November 2026: M1 #770 is on main. M2 #904 provides agreement-covered defaults through the Finance API and C1 #905 provides reviewed agreement charges through the existing pipeline; both remain draft, with independent review and final delivery gates separate. The existing UI does not consume M2 defaults or author C1 schedules. These API/component proofs do not execute this scenario. The quarterly dates and manual work-order instructions below retain the original unexecuted fixture; a coordinated six-monthly scenario refresh is still required before its next full run under the adopted maintenance decision. See [current reconciliation](../delivery/backend-reconciliation.md#project--service--finance-continuation--11-november-2026).
+Implementation checkpoint — 12 November 2026: M1 #770 and M2 #904 are merged; C1 #905 implements agreement charges and still requires delivery gates. This specification now uses the adopted six-monthly interval and M1's prepared Draft work order. M2 defaults are available through the API; the existing form still requires explicit allocations. C1 schedule authoring and claims remain API-only. The connected backend component in `tests/database/finance-project-ts01.test.ts` is separate from this full, unexecuted manual scenario. See [maintenance decision](../decisions/maintenance-service-ts02-decisions.md) and [C1 execution evidence](evidence/agreement-charge-c1/README.md).
 
 ## 1. Purpose and scope
 
-TS-02 tests one planned maintenance service from its due date to Finance, and the sales follow-up a field finding creates. It continues TS-01: Bellbird Ridge Berries' maintenance agreement is Active and three quarterly services were generated in TS01-15.05. The first, due 12 June 2027, finds a worn dosing pump.
+TS-02 tests one planned maintenance service from its due date to Finance, and the sales follow-up a field finding creates. It continues TS-01: Bellbird Ridge Berries' maintenance agreement is Active and one six-monthly occurrence was generated in TS01-15.05. The first, due 12 September 2027, finds a worn dosing pump.
 
 **What it tests**
 
@@ -41,7 +41,7 @@ TS-02 tests one planned maintenance service from its due date to Finance, and th
 
 - The replacement visit after the quote is won; that belongs to a later scenario.
 - Warranty claims and supplier recovery (TS-05) and breakdowns (TS-04).
-- Agreement invoicing: the $4,800.00 annual fee has no PPO billing path today (finding F2-05).
+- Agreement-charge UI or real invoicing: C1 supplies an API billing path for the $4,800.00 annual fee; the separate backend component proves it against synthetic Finance outcomes. No charge editor or live MYOB invoice is claimed.
 
 **How to use it**
 
@@ -49,14 +49,14 @@ Use TS-01's method (TS-01 section 1): run stages in order as the named profile, 
 
 ## 2. Scenario narrative
 
-Bellbird's fertigation system has run for three months when its first quarterly service falls due on Saturday 12 June 2027. All people, places and figures are fictional.
+Bellbird's fertigation system has run for six months when its first six-monthly service falls due on Sunday 12 September 2027. All people, places and figures are fictional.
 
-1. On Friday 14 May 2027 the Coordinator works through upcoming maintenance and confirms the service is covered by the agreement. The work is raised on Monday 17 May.
-2. Riley is booked for Tuesday 15 June. Priya confirms site readiness on Thursday 10 June, and the job pack is issued and acknowledged.
+1. On Friday 13 August 2027 the Coordinator works through upcoming maintenance and confirms the service is covered by the agreement. The work is raised on Monday 16 August.
+2. Riley is booked for Tuesday 14 September. Priya confirms site readiness on Thursday 9 September, and the job pack is issued and acknowledged.
 3. On the visit Riley completes the four planned tasks. Channel B's dosing pump delivers only 62% of its rated flow: the diaphragm is worn. He records it as a finding needing follow-up.
 4. The report is reviewed and issued, and Priya accepts it. The service is recorded as completed against the due occurrence.
 5. The worn diaphragm is assessed as not covered: the agreement excludes dosing pump diaphragms and repair kits.
-6. Service hands the finding to Sales through an aftercare review. Sales opens a deal for a pump repair kit, quotes $1,510.00 ex GST, and Priya accepts on Friday 25 June. The deal is Won and handed to Service.
+6. Service hands the finding to Sales through an aftercare review. Sales opens a deal for a pump repair kit, quotes $1,510.00 ex GST, and Priya accepts on Friday 24 September. The deal is Won and handed to Service.
 7. Finance receives the maintenance visit's labour and parts as non-billable, covered by the agreement, and reconciles them. A renewal review is set up for December.
 
 ## 3. Synthetic data set
@@ -68,8 +68,8 @@ Bellbird's fertigation system has run for three months when its first quarterly 
 | Customer and site | Bellbird Ridge Berries — Synthetic; Bellbird Ridge farm — Synthetic |
 | Site contact | Priya Nandakumar (synthetic), primary site contact |
 | Agreement | `SYN-AGR-…` from TS01-15.02, Active, 12 March 2027 to 11 March 2028; exclusions "Wear parts beyond one filter element per visit, including dosing pump diaphragms and repair kits" |
-| Plan | `SYN-MPL-…` from TS01-15.04, Quarterly, anchor 12 March 2027, for the fertigation unit asset |
-| Occurrences | 12 June, 12 September and 12 December 2027, Open |
+| Plan | `SYN-MPL-…` from TS01-15.04, SixMonthly, anchor 12 March 2027, for the fertigation unit asset |
+| Occurrences | 12 September 2027, Open |
 
 **Plan tasks.** The work order's scope task descriptions must match these exactly, or the result cannot be received against the occurrence.
 
@@ -109,18 +109,18 @@ Calculated outside PPO; synthetic, not Powerplants or Priva prices. Totals are a
 
 | Date | Event |
 | --- | --- |
-| Friday 14 May 2027 | Coverage assessed for the 12 June occurrence |
-| Monday 17 May 2027 | Service request raised; work order authorised |
-| Wednesday 19 May 2027 | APT booked for Tuesday 15 June |
-| Thursday 10 June 2027 | Site readiness confirmed |
-| Friday 11 June 2027 | Job pack issued and acknowledged |
-| Tuesday 15 June 2027 | Service visit |
-| Wednesday 16 June 2027 | Report reviewed and issued; Priya accepts it |
-| Thursday 17 June 2027 | Result received on the occurrence; generation replayed; pump coverage assessed |
-| Friday 18 June 2027 | Aftercare handover; deal opened |
-| Monday 21 June 2027 | Quotation issued |
-| Friday 25 June 2027 | Priya accepts; deal Won; handed to Service |
-| Monday 28 June 2027 | Finance handoff for the maintenance visit; renewal review set up |
+| Friday 13 August 2027 | Coverage assessed for the 12 September occurrence |
+| Monday 16 August 2027 | Service request raised; work order authorised |
+| Wednesday 18 August 2027 | APT booked for Tuesday 14 September |
+| Thursday 9 September 2027 | Site readiness confirmed |
+| Friday 10 September 2027 | Job pack issued and acknowledged |
+| Tuesday 14 September 2027 | Service visit |
+| Wednesday 15 September 2027 | Report reviewed and issued; Priya accepts it |
+| Thursday 16 September 2027 | Result received on the occurrence; generation replayed; pump coverage assessed |
+| Friday 17 September 2027 | Aftercare handover; deal opened |
+| Monday 20 September 2027 | Quotation issued |
+| Friday 24 September 2027 | Priya accepts; deal Won; handed to Service |
+| Monday 27 September 2027 | Finance handoff for the maintenance visit; renewal review set up |
 | Monday 13 December 2027 | Renewal review window begins |
 
 Events are recorded at run time with the scenario date in notes (TS-01 section 5, time compression). Planned dates that PPO only stores use the scenario dates.
@@ -141,7 +141,7 @@ Use the TS-01 section 4 profiles. TS-02 adds no profile.
 
 - TS-01 environment (section 5) and TS-01 stage 15 exit criteria met, or the same records created directly through the screens.
 - PR #750 (P4 site readiness) merged. Without it, site readiness cannot be recorded, dispatch stays held and Start work is refused, so stages 4–10 cannot run (TS-01 finding F-08).
-- The three occurrences from TS01-15.05 exist and are Open.
+- The single occurrence from TS01-15.05 exists and is Open.
 
 ## 6. Stage-by-stage steps
 
@@ -158,43 +158,43 @@ flowchart LR
 
 A finding leaves the visit two ways: the occurrence is completed from the reviewed report, and the open finding reaches Sales through aftercare.
 
-### Stage 1 — Coverage assessed for the first occurrence (14 May 2027)
+### Stage 1 — Coverage assessed for the first occurrence (13 August 2027)
 
 **Entry criteria:** preconditions met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS02-01.01 | Coordinator | `/maintenance/due` | Find the 12 June 2027 occurrence for Bellbird | One Open occurrence `SYN-MOC-…` with original due 12 June 2027 and the fertigation unit asset | S2; stop |
+| TS02-01.01 | Coordinator | `/maintenance/due` | Find the 12 September 2027 occurrence for Bellbird | One Open occurrence `SYN-MOC-…` with original due 12 September 2027 and the fertigation unit asset | S2; stop |
 | TS02-01.02 | Coordinator | `/maintenance/due/[id]` | Open Prepare owned Service request before any Bellbird assessment exists; then try choosing another customer's assessment | No Bellbird assessment is offered, so the request cannot be submitted; another customer's assessment is refused with "Use the exact asset, site and customer assessment" | S1 if a request is created |
-| TS02-01.03 | Coordinator | `/maintenance/coverage` | Create assessment: Bellbird, site, fertigation unit, the exact agreement revision, event date 12 June 2027, determination Covered, cause "Planned service under agreement", evidence "Agreement scope: quarterly fertigation and controller service" | Assessment `SYN-ENT-…` Covered, dated to the original due | S2; stop |
+| TS02-01.03 | Coordinator | `/maintenance/coverage` | Create assessment: Bellbird, site, fertigation unit, the exact agreement revision, event date 12 September 2027, determination Covered, cause "Planned service under agreement", evidence "Agreement scope: six-monthly fertigation and controller service" | Assessment `SYN-ENT-…` Covered, dated to the original due | S2; stop |
 
 **Exit criteria:** a Covered assessment exists for the occurrence's original due date.
 
 **Links:** `src/maintenance/assessments.ts`; AT-19. Branch TS02-X01.
 
-### Stage 2 — Service request and work order (17 May 2027)
+### Stage 2 — Service request and work order (16 August 2027)
 
 **Entry criteria:** stage 1 exit met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS02-02.01 | Coordinator | `/maintenance/due/[id]`, Decisions & handovers | Prepare owned Service request, choosing the stage 1 assessment and Coordinator as owner, with a reason | Request `SYN-TKT-…` New, channel PlannedMaintenance, summary "Maintenance request · SYN-MOC-…"; occurrence WorkRequested | S2; stop |
-| TS02-02.02 | Coordinator | `/maintenance/due/[id]` | Try Prepare owned Service request again; then try Defer original occurrence | Both refused: one request per occurrence, and no defer once work is requested | S1 if a second request is created |
+| TS02-02.01 | Coordinator | `/maintenance/due/[id]`, Decisions & handovers | Prepare owned Service request, choosing the stage 1 assessment and Coordinator as owner, with a reason | Request `SYN-TKT-…` New, channel PlannedMaintenance, linked to one prepared Draft work order containing T1–T4; occurrence WorkRequested | S2; stop |
+| TS02-02.02 | Coordinator | `/maintenance/due/[id]` | Try Prepare owned Service request again; then try Defer original occurrence | An exact original-operation replay returns its receipt; a new Prepare is refused and no defer is allowed after work is requested; one request and work order remain | S1 if a second request is created |
 | TS02-02.03 | Coordinator | `/service/tickets/[id]` | Triage the request | Triaged (authorisation is blocked until it is) | S2; stop |
-| TS02-02.04 | Coordinator | `/service/work-orders/new` | Create the work order from the request: summary and exclusions; authority evidence; one scope item per plan task T1–T4 with the exact section 3 text and the fertigation unit bound; a shutdown condition for the Intervention tasks T1 and T4; coverage status Covered, agreement reference exactly the `SYN-AGR-…` reference, source version equal to the agreement's source revision, and the stage 1 assessment | Work order `SYN-WO-…` Draft; coverage shows the agreement and assessment | S2; stop |
+| TS02-02.04 | Coordinator | `/service/work-orders/[id]` | Open the Draft work order already prepared by M1; review its copied tasks and complete its scope: summary and exclusions; authority evidence; one scope item per plan task T1–T4 with the exact section 3 text and the fertigation unit bound; a shutdown condition for the Intervention tasks T1 and T4; coverage status Covered, agreement reference exactly the `SYN-AGR-…` reference, source version equal to the agreement's source revision, and the stage 1 assessment | Work order `SYN-WO-…` Draft; coverage shows the agreement and assessment | S2; stop |
 | TS02-02.05 | Coordinator | `/service/work-orders/[id]` | Authorise | Authorised with no blockers listed | S2; stop |
 
 **Exit criteria:** occurrence WorkRequested; one request; work order Authorised with T1–T4.
 
 **Links:** `src/maintenance/receiving.ts`; PT-04, PT-05. Branches TS02-X02, TS02-X03.
 
-### Stage 3 — Booking, site readiness and job pack (19 May – 11 June 2027)
+### Stage 3 — Booking, site readiness and job pack (18 August – 10 September 2027)
 
 **Entry criteria:** stage 2 exit met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS02-03.01 | Coordinator | `/schedule` | Propose and confirm the visit for Riley on the run date; note "scenario Tuesday 15 June 2027" (TS-01 section 5) | Appointment `SYN-APT-…` Confirmed | S2; stop |
+| TS02-03.01 | Coordinator | `/schedule` | Propose and confirm the visit for Riley on the run date; note "scenario Tuesday 14 September 2027" (TS-01 section 5) | Appointment `SYN-APT-…` Confirmed | S2; stop |
 | TS02-03.02 | Coordinator | `/service/appointments/[id]` | Record customer contact (dates agreed); then Record site readiness with all four checks Confirmed | Dates agreed; Customer site readiness Confirmed | S2; stop |
 | TS02-03.03 | Coordinator | `/service/packs/new` | Prepare, check and issue the job pack with tasks T1–T4 | Pack `SYN-PACK-…` Issued naming Riley | S2; stop |
 | TS02-03.04 | Riley — assigned technician | `/my-jobs/[id]` (phone) | Acknowledge this exact issue | Acknowledged; the appointment shows Ready to dispatch | S2; stop |
@@ -203,7 +203,7 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 **Links:** AT-06, AT-07; PT-06. Branch TS02-X09.
 
-### Stage 4 — Service visit with a finding (15 June 2027)
+### Stage 4 — Service visit with a finding (14 September 2027)
 
 **Entry criteria:** stage 3 exit met; Riley on the phone viewport.
 
@@ -221,7 +221,7 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 **Links:** `src/field/completion.ts`; AT-12, AT-14; PT-13, PT-14. Branch TS02-X10.
 
-### Stage 5 — Report reviewed, issued and accepted (16 June 2027)
+### Stage 5 — Report reviewed, issued and accepted (15 September 2027)
 
 **Entry criteria:** stage 4 exit met.
 
@@ -235,35 +235,35 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 **Links:** AT-13; PT-15, PT-16.
 
-### Stage 6 — Occurrence completed; generation replayed (17 June 2027)
+### Stage 6 — Occurrence completed; generation replayed (16 September 2027)
 
 **Entry criteria:** stage 5 exit met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
 | TS02-06.01 | Coordinator | `/maintenance/due/[id]` | Receive exact reviewed Service result. Copy the original work request and the plan task IDs from the occurrence's Record & sources tab, the scope item IDs from the work order, and the report revision ID from the report; map T1–T4 Complete | Occurrence Completed. A Partial overall visit still completes the occurrence, because every mapped task is Complete. Raw ID entry is logged as S3 usability (F2-08) | S2; stop |
-| TS02-06.02 | Coordinator | `/maintenance/plans/[id]` | Generate bounded due occurrences again for 13 March 2027 to 11 March 2028 | No occurrence created; history lists all three as retained; the June occurrence stays Completed | S1 if duplicated or reopened |
+| TS02-06.02 | Coordinator | `/maintenance/plans/[id]` | Generate bounded due occurrences again for 13 March 2027 to 11 March 2028 | No occurrence created; history lists the single occurrence as retained; the September occurrence stays Completed | S1 if duplicated or reopened |
 | TS02-06.03 | Coordinator | `/maintenance/plans/[id]` | Try to generate 13 December 2027 to 12 March 2028 | Refused because 12 March 2028 falls after the agreement's 11 March 2028 expiry ("An ungenerated date needs current agreement terms…"); nothing is created | S1 if a date past expiry is created |
-| TS02-06.04 | Coordinator | `/maintenance/due` | Check the remaining occurrences | 12 September and 12 December 2027 Open | S2; continue |
+| TS02-06.04 | Coordinator | `/maintenance/due` | Check the remaining occurrences | No Open occurrence remains in the original agreement term; the September occurrence stays Completed | S2; continue |
 
-**Exit criteria:** June occurrence Completed; no duplicates; nothing past the term.
+**Exit criteria:** September occurrence Completed; no duplicates; nothing past the term.
 
 **Links:** AT-19, AT-33. Branch TS02-X04.
 
-### Stage 7 — Coverage of the worn pump (17 June 2027)
+### Stage 7 — Coverage of the worn pump (16 September 2027)
 
 **Entry criteria:** stage 6 exit met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS02-07.01 | Coordinator | `/maintenance/coverage` | Create assessment for the fertigation unit, event date 15 June 2027: determination NotCovered; cause "Diaphragm wear in normal use"; evidence: the agreement exclusion and the issued report | Assessment `SYN-ENT-…` NotCovered, with cause recorded separately from coverage | S2; continue |
-| TS02-07.02 | Coordinator | `/maintenance/coverage` | Open the stage 1 assessment | Still Covered for 12 June; the new assessment does not replace it, because it is for a different event | S1 if the stage 1 assessment changes |
+| TS02-07.01 | Coordinator | `/maintenance/coverage` | Create assessment for the fertigation unit, event date 14 September 2027: determination NotCovered; cause "Diaphragm wear in normal use"; evidence: the agreement exclusion and the issued report | Assessment `SYN-ENT-…` NotCovered, with cause recorded separately from coverage | S2; continue |
+| TS02-07.02 | Coordinator | `/maintenance/coverage` | Open the stage 1 assessment | Still Covered for 12 September; the new assessment does not replace it, because it is for a different event | S1 if the stage 1 assessment changes |
 
 **Exit criteria:** the repair is recorded as not covered, with reason and evidence.
 
 **Links:** AT-19. Branch TS02-X05.
 
-### Stage 8 — Aftercare to a deal (18 June 2027)
+### Stage 8 — Aftercare to a deal (17 September 2027)
 
 **Entry criteria:** stage 7 exit met.
 
@@ -271,7 +271,7 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 | --- | --- | --- | --- | --- | --- |
 | TS02-08.01 | Coordinator | `/sales/aftercare` | Select the issued report; Open aftercare review | Aftercare record Open, owned by Coordinator | S2; stop |
 | TS02-08.02 | Coordinator | `/sales/aftercare/[id]`, Maintenance & renewal | Check the agreement is shown; Prepare commercial discussion: observation and evidence from the report, need "Restore channel B dosing accuracy", assumption "Repair kit, not a new pump", and tick that existing opportunities were reviewed | Discussion saved; the TS-01 deal is listed and the existing-opportunity box is ticked. Occurrences are not shown on this tab (F2-07) | S2; stop |
-| TS02-08.03 | Coordinator | `/work/new`, then `/sales/aftercare/[id]` | Create an owned Activity "Call Priya about the channel B repair", linked to Bellbird, due 21 June 2027. Then Prepare exact handover with summary, context, impact, that Activity as the next contact commitment and the existing-records check; Submit exact handover to receiving owner Coordinator | Handover submitted with time | S2; stop |
+| TS02-08.03 | Coordinator | `/work/new`, then `/sales/aftercare/[id]` | Create an owned Activity "Call Priya about the channel B repair", linked to Bellbird, due 20 September 2027. Then Prepare exact handover with summary, context, impact, that Activity as the next contact commitment and the existing-records check; Submit exact handover to receiving owner Coordinator | Handover submitted with time | S2; stop |
 | TS02-08.04 | Coordinator | `/sales/opportunities/new` | Create deal "Bellbird — channel B dosing pump repair" for the same organisation, site and company | Deal `SYN-OPP-…` at Discovery | S2; stop |
 | TS02-08.05 | Coordinator | `/sales/aftercare/[id]` | Record receiving outcome Accepted, linking the new deal | Accepted; the aftercare record links the deal | S2; stop |
 
@@ -279,7 +279,7 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 **Links:** `src/sales/aftercare-service.ts`; AT-25. Branch TS02-X06.
 
-### Stage 9 — Quotation, acceptance and Won handover (21–25 June 2027)
+### Stage 9 — Quotation, acceptance and Won handover (20–24 September 2027)
 
 **Entry criteria:** stage 8 exit met.
 
@@ -296,13 +296,13 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 **Links:** `docs/contracts/quotation-release.md`; AT-03, AT-05.
 
-### Stage 10 — Finance and renewal set-up (28 June 2027)
+### Stage 10 — Finance and renewal set-up (27 September 2027)
 
 **Entry criteria:** stage 9 exit met.
 
 | Step | Profile | Page | Action | Pass when | If it fails |
 | --- | --- | --- | --- | --- | --- |
-| TS02-10.01 | Finance preparer | `/finance/handoffs/new` | Create the handoff for the maintenance work order from the issued report; mark every time line and the filter element NonBillable, reason "Covered by agreement SYN-AGR-…"; Submit | ReadyForReview; time lines total the reviewed elapsed minutes and material equals 1 EA; nothing becomes NonBillable without the preparer's choice (F2-03) | S1 if a quantity differs |
+| TS02-10.01 | Finance preparer | `/finance/handoffs/new` | Create the handoff for the maintenance work order from the issued report; mark every time line and the filter element NonBillable, reason "Covered by agreement SYN-AGR-…"; Submit | ReadyForReview; time lines total the reviewed elapsed minutes and material equals 1 EA; the UI requires explicit NonBillable selection; the API exposes the M2 default without replacing the preparer's choice (F2-03) | S1 if a quantity differs |
 | TS02-10.02 | Finance reviewer | `/finance/handoffs/[id]` | Approve | Approved | S2; stop |
 | TS02-10.03 | Finance processor | `/finance/handoffs/[id]` | Claim original processing action (any scenario); execute the synthetic action and record the outcome | Outcome NotProcessed, because no line is billable; state ReconciliationRequired | S2; stop |
 | TS02-10.04 | Finance reconciler | `/finance/handoffs/[id]` | Reconcile | Result NoPostingRequired; Reconciled | S2; stop |
@@ -318,7 +318,7 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 
 | ID | Branch from | Trigger | Pass when | Links |
 | --- | --- | --- | --- | --- |
-| TS02-X01 | TS02-01.03 | Create the assessment dated 15 June (the visit date) instead of 12 June (the original due), then Prepare owned Service request | Refused: the assessment must be dated to the occurrence's original due | AT-19 |
+| TS02-X01 | TS02-01.03 | Create the assessment dated 14 September (the visit date) instead of 12 September (the original due), then Prepare owned Service request | Refused: the assessment must be dated to the occurrence's original due | AT-19 |
 | TS02-X02 | TS02-02.01 | Two browser sessions press Prepare owned Service request at the same time | One request; the other attempt is refused or returns the same receipt | AT-05 |
 | TS02-X03 | TS02-02.04 | Word T3 differently on the work order ("Check dosing flow") | Receiving the result in TS02-06.01 is refused for the unmatched task; nothing is completed | AT-14 |
 | TS02-X04 | TS02-06.01 | Before receiving the result, relocate the fertigation unit to another site | Receiving is still allowed, because the obligation keeps its original context; the plan becomes ReviewRequired and Generate is refused until it is reviewed again | AT-33 |
@@ -327,13 +327,13 @@ A finding leaves the visit two ways: the occurrence is completed from the review
 | TS02-X07 | TS02-09.04 | Priya declines the quotation | Response Declined; the deal can be recorded Lost with a reason; the aftercare record keeps its link | AT-25 |
 | TS02-X08 | Any stage 1–2 or 6–7 | Coordinator looks for Approve exact agreement terms; Finance reviewer tries to create a plan or an assessment | The approve action is not offered to Coordinator and a direct API call is refused; Finance reviewer's attempts are refused for a missing duty | AT-01 |
 | TS02-X09 | TS02-03.04 | Morgan — assigned technician (not on this visit) opens the visit at `/my-jobs/[id]` and `/my-jobs/inspections` for its appointment | Refused without leaking details | AT-01, AT-34 |
-| TS02-X10 | TS02-04.06 | Riley records T3 as Partial instead of Complete | The occurrence is received as Partial; no further work request can be prepared from it. Record what PPO offers next (Q5) | AT-14 |
+| TS02-X10 | TS02-04.06 | Riley records T3 as Partial instead of Complete | The occurrence is Partial; prepare one follow-on request carrying only outstanding tasks, preserving the original request and completed task evidence (M-R4) | AT-14 |
 | TS02-X11 | TS02-10.02 | Finance reviewer tries to approve with a line still Pending | Refused until every line is Billable or NonBillable | AT-12 |
-| TS02-X12 | TS02-06.01 | Receive the result a second time on the Completed occurrence | Refused, occurrence unchanged. If PPO accepts it, log S2: the receive command has no state guard | AT-19 |
+| TS02-X12 | TS02-06.01 | Receive the result a second time on the Completed occurrence | An exact original-operation replay returns its original receipt without another result; a new attempt cannot duplicate completion or alter the original obligation | AT-19 |
 
 ## 8. Build coverage and findings
 
-All 10 stages are testable once PR #750 is merged; without it stages 4–10 are blocked at Start work. These findings come from reading main at `fa15714`; they are not test results.
+The following table preserves the 30 October source-reading findings at `fa15714`, not current defect or test-result claims. M1 addresses F2-01 and the interval/partial-follow-on gaps; M2 addresses F2-03 at the API boundary; C1 addresses F2-05 at the API boundary. UI consumption, full scenario execution and independent delivery gates remain separate. Before running, verify site-readiness support and record any remaining UI gaps per step.
 
 | ID | Finding | Effect on TS-02 | Source |
 | --- | --- | --- | --- |
@@ -347,7 +347,7 @@ All 10 stages are testable once PR #750 is merged; without it stages 4–10 are 
 | F2-08 | Receiving a Service result asks for raw record IDs as free text | Error-prone; logged as S3 usability at TS02-06.01 | `src/components/maintenance-forms.tsx` |
 | F2-09 | Field labour is the timer's real elapsed time; it cannot be entered at scenario scale | Labour quantities are whatever the run takes; Finance checks compare to the reviewed report | `src/field/timer.ts` |
 
-TS-01 findings F-10 (no install or warranty dates on the equipment form), F-11 (no creator check on agreements or plans) and F-12 (no six-monthly interval) also apply.
+Historical TS-01 findings F-10, F-11 and F-12 remain traceable there. M1 adds SixMonthly; C1 additionally requires independent Finance review for charged agreements. Do not treat the historical findings as current runtime evidence.
 
 ## 9. Traceability
 
@@ -366,9 +366,9 @@ A TS-02 pass marks no AT or PT case passed.
 
 As TS-01 section 10: same evidence standard, severity scale (S1–S4) and outcome rules. The results log is `docs/testing/evidence/ts-02/TS-02-run-<UTC timestamp>-01.md`, one row per step and branch (46 steps and 12 branches, 58 rows).
 
-## 11. Open questions for Dean
+## 11. Adopted decisions and historical questions
 
-Dean adopted all five recommendations on 30 October 2026 ("Proceed based on your recommendations."); see PR #754, `docs/decisions/maintenance-service-ts02-decisions.md`. TS-01 and TS-02 move back to six-monthly service when build increment M1 lands.
+Dean adopted all five recommendations on 30 October 2026 ("Proceed based on your recommendations."); see PR #754, `docs/decisions/maintenance-service-ts02-decisions.md`. The 12 November fixture refresh applies M1’s six-monthly interval; the questions below retain the original decision context.
 
 | ID | Question | Recommendation |
 | --- | --- | --- |

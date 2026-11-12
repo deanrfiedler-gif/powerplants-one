@@ -18,7 +18,7 @@ Merged [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), 
 
 ## Agreement charges C1 backend — 11 November 2026
 
-[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) adds reviewed exact agreement charge schedules and typed AgreementCharge sources in the existing Finance pipeline. It stacks on M2 solely to sequence shared sources/contracts; B3 is merged. See [contract](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md). Migration 0127 has no seed/grant. UI, OUT-14 wording, full TS-01/02 acceptance, real ERP, D-017 and operational authority remain separate.
+[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) adds reviewed exact agreement charge schedules and typed AgreementCharge sources in the existing Finance pipeline. M2 and B3 are merged; C1 now targets main. See [contract](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md). Migrations 0127/0128 add no seed/grant. The 12 November continuation adds connected project/agreement/covered-visit command proof and refreshes the six-monthly scenario fixtures, with bounded demo setup. [Current reconciliation](backend-reconciliation.md#c1-connected-billing-continuation--12-november-2026) supersedes the historical batch states below. UI, OUT-14 wording, full TS-01/02 acceptance, real ERP, D-017 and operational authority remain separate.
 
 ### Existing batch validation follow-up — 11 November 2026
 

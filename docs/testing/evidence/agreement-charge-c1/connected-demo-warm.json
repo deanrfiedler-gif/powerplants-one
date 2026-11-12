@@ -1,0 +1,639 @@
+{
+  "base_url": "http://127.0.0.1:3000",
+  "started_at": "2026-11-12T03:45:03.217Z",
+  "total_ms": 209913,
+  "routes": 90,
+  "unreachable": 0,
+  "results": [
+    {
+      "path": "/",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 4356,
+      "error": null
+    },
+    {
+      "path": "/calendar",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 3687,
+      "error": null
+    },
+    {
+      "path": "/email",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 569,
+      "error": null
+    },
+    {
+      "path": "/email/00000000-0000-4000-8000-000000000000",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1396,
+      "error": null
+    },
+    {
+      "path": "/email/customer-messages",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 782,
+      "error": null
+    },
+    {
+      "path": "/email/customer-messages/00000000-0000-4000-8000-000000000000",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1165,
+      "error": null
+    },
+    {
+      "path": "/sales/opportunities",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 742,
+      "error": null
+    },
+    {
+      "path": "/sales/opportunities/00000000-0000-4000-8000-000000000000",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1301,
+      "error": null
+    },
+    {
+      "path": "/sales/opportunities/new",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 883,
+      "error": null
+    },
+    {
+      "path": "/schedule",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 957,
+      "error": null
+    },
+    {
+      "path": "/schedule/capacity",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 610,
+      "error": null
+    },
+    {
+      "path": "/schedule/changes",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 610,
+      "error": null
+    },
+    {
+      "path": "/schedule/policy-impact",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 680,
+      "error": null
+    },
+    {
+      "path": "/schedule/travel",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 481,
+      "error": null
+    },
+    {
+      "path": "/service/appointments/00000000-0000-4000-8000-000000000000",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1396,
+      "error": null
+    },
+    {
+      "path": "/service/work-orders",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1125,
+      "error": null
+    },
+    {
+      "path": "/service/work-orders/00000000-0000-4000-8000-000000000000",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 1878,
+      "error": null
+    },
+    {
+      "path": "/service/work-orders/new",
+      "kind": "page",
+      "status": 200,
+      "elapsed_ms": 587,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2441,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2554,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/cancel",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2480,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/complete",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2291,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/history",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2233,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/policy-impacts",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2029,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/sales-followup",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2539,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/sales-followup/review",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2524,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/start",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2285,
+      "error": null
+    },
+    {
+      "path": "/api/v1/activities/00000000-0000-4000-8000-000000000000/update",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2307,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2182,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/booking-policy",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2090,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/cancel",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2162,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/change-requests",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2160,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/completion-draft",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2405,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/confirm",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2228,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/contacts",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2166,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/move",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2086,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/pack",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2034,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/pack-options",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2259,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/start",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2245,
+      "error": null
+    },
+    {
+      "path": "/api/v1/appointments/00000000-0000-4000-8000-000000000000/submit-completion",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2414,
+      "error": null
+    },
+    {
+      "path": "/api/v1/calendar",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 625,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 584,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2133,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/commercial",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2174,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/follow-through",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2374,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/handover-options",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2732,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/information",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2219,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/next-action",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2169,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/outcome",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2813,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/outcome-basis",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3543,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/qualify",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2772,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/scope",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2638,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/stage",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2634,
+      "error": null
+    },
+    {
+      "path": "/api/v1/crm/opportunities/00000000-0000-4000-8000-000000000000/transfer-owner",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3271,
+      "error": null
+    },
+    {
+      "path": "/api/v1/email",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1129,
+      "error": null
+    },
+    {
+      "path": "/api/v1/email/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2349,
+      "error": null
+    },
+    {
+      "path": "/api/v1/email/00000000-0000-4000-8000-000000000000/follow-up",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2782,
+      "error": null
+    },
+    {
+      "path": "/api/v1/email/00000000-0000-4000-8000-000000000000/link",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 14814,
+      "error": null
+    },
+    {
+      "path": "/api/v1/email/00000000-0000-4000-8000-000000000000/options",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 4813,
+      "error": null
+    },
+    {
+      "path": "/api/v1/local-session",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 558,
+      "error": null
+    },
+    {
+      "path": "/api/v1/local-session/sign-out",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 460,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 786,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/capacity",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1164,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/changes",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 715,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/changes/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2565,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/demand",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1204,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-family",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2002,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-holds",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 794,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-impact",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 942,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-impacts/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2944,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-impacts/00000000-0000-4000-8000-000000000000/resolve",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 6150,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-proposals",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2666,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-proposals/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 5082,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-publications",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2033,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-publications/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 4852,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-records",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 1702,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-reviews",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 699,
+      "error": null
+    },
+    {
+      "path": "/api/v1/schedule/policy-reviews/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 3444,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 954,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 4738,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/authorise",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3350,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/project-link",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2604,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/project-unlink",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2178,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/readiness",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 2793,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/record",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2739,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/sales-handovers",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2683,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/save-scope",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 6260,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/successor",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3699,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/00000000-0000-4000-8000-000000000000/visits",
+      "kind": "api",
+      "status": 405,
+      "elapsed_ms": 3063,
+      "error": null
+    },
+    {
+      "path": "/api/v1/service/work-orders/register",
+      "kind": "api",
+      "status": 401,
+      "elapsed_ms": 2175,
+      "error": null
+    }
+  ]
+}
