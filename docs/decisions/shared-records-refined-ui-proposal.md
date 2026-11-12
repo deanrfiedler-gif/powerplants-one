@@ -9,7 +9,7 @@ versioning: git
 
 # Customers, sites and equipment refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Proposal awaiting Dean's acceptance. The claim version of this record (10 November 2026) is superseded by this one; sections 1 to 8 now describe the drawn file and section 9 carries the audit with a recommended order. On 12 November 2026 every sheet that had been checked by script only was rendered and inspected, the defects found were repaired, and the fourteen dialogs and panels the first audit listed as gaps were drawn (sections 3, 6 and 9). On 13 November 2026 the polish items P2 to P8 from that audit were applied and checked by render (sections 6 and 9.3).
+**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Proposal awaiting Dean's acceptance. The claim version of this record (10 November 2026) is superseded by this one; sections 1 to 8 now describe the drawn file and section 9 carries the audit with a recommended order. On 12 November 2026 every sheet that had been checked by script only was rendered and inspected, the defects found were repaired, and the fourteen dialogs and panels the first audit listed as gaps were drawn (sections 3, 6 and 9). On 13 November 2026 the polish items P2 to P8 from that audit were applied and checked by render (sections 6 and 9.3). Later the same day the refinements R1 to R4 and the last polish item were applied, and the two missing tablet sheets were drawn (section 9.3).
 
 On 10 November 2026 Dean asked for the refined UI pages of the **shared records** to be built in a new private Figma file he created for the purpose, "PPO - Customers, Sites & Equipment module", inside the accepted shell and to at least the standard of the Sales module file, following the Customers, sites and equipment UI pages brief with Addendum A3 (persona and story reconciliation). His standing instruction applies: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The shared records are the records every module reads: Organisations (CS-01), People (CS-02), Stakeholders (CS-03), Sites (CS-04), Facilities and growing areas (CS-05), Access & readiness (CS-06), Account development (CS-07), Site surveys (CS-08) and the nine Equipment scopes (EQ-01 to EQ-09). This record is also the first repository record of the EQ-01, EQ-04 and EQ-09 proposals, whose rules otherwise live only on their notes cards in the reference design file.
 
@@ -60,7 +60,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 
 ## 3. Sheet inventory
 
-198 sheets on 15 pages: 76 desktop, 46 dialogs and panels, 31 states (5 of them on the phone), 16 tablet at 1024 × 768 and 29 phone (4 of them at 320). Fourteen of the dialogs and panels were added on 12 November 2026 (PE10, PE11, SK08, FA09, FA10, AR10, EQ12, BL07 and X01 to X05 with X03-restricted); no earlier sheet changed its node ID. TB and PH codes run across the file (TB01 to TB16; PH01 to PH20 with their variants). Each page also carries a "Flows and notes" card. The Read me page holds four cards: the header `90:2`, "Sheet index and notes" `90:23`, the audit `90:87` and the page template `90:126`. The "Shell and kit" page holds the copied shell components, the kit, the icons, the chrome, the Call / Control set and the proposed `Shell / Workspace menu · docked · Shared records` set `16:1719`.
+200 sheets on 15 pages: 76 desktop, 46 dialogs and panels, 31 states (5 of them on the phone), 18 tablet at 1024 × 768 and 29 phone (4 of them at 320). Fourteen of the dialogs and panels were added on 12 November 2026 (PE10, PE11, SK08, FA09, FA10, AR10, EQ12, BL07 and X01 to X05 with X03-restricted); no earlier sheet changed its node ID. TB17 and TB18 were added on 13 November 2026. TB and PH codes run across the file (TB01 to TB18; PH01 to PH20 with their variants). Each page also carries a "Flows and notes" card. The Read me page holds four cards: the header `90:2`, "Sheet index and notes" `90:23`, the audit `90:87` and the page template `90:126`. The "Shell and kit" page holds the copied shell components, the kit, the icons, the chrome, the Call / Control set and the proposed `Shell / Workspace menu · docked · Shared records` set `16:1719`.
 
 **Organisations · CS-01**
 
@@ -290,6 +290,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | TI04-withdraw | Withdraw and Record use link | Dialogs and panels | `75:2069` |
 | TI03 | Expired SYN-FLO-001 | States | `75:1047` |
 | TI03-withdrawn | Withdrawn SYN-TMP-003 | States | `75:1375` |
+| TB17 | Test instruments at 1024 | Tablet 1024 | `140:2` |
 | PH19 | Instrument validity on the phone | Phone 390 and 320 | `75:2412` |
 
 **Interaction states · CS · EQ**
@@ -334,6 +335,7 @@ Fields per scope area (authority stays with the owner named in the outgoing colu
 | AD06 | Equipment change and lifecycle rules | Desktop 1440 | `76:1589` |
 | AD07 | Bulletin, support, backup and calibration policies | Desktop 1440 | `76:1878` |
 | AD08 | Numbering, notifications and nudges | Desktop 1440 | `76:2228` |
+| TB18 | Shared records settings at 1024 | Tablet 1024 | `140:670` |
 
 ## 4. Rules applied
 
@@ -355,7 +357,7 @@ Each item is for Dean's decision. Page-level items are numbered on each page's n
 | A2 | A `Docked · Shared records` menu (Customers, Sites and Equipment groups, nested views per R108, no accent chip per R102) is drawn as a component in this file | Proposal for the Shell file |
 | A3 | The rail shows More, Sales › Contacts or Service › Equipment as the current item by route of arrival; the More and Service rail variants were derived from the accepted rail | Keep; align with the Shell file on publication |
 | A4 | The technician phone tab bar (My jobs, My Work, More) was derived from the accepted Sales phone tab bar | Confirm against the Service file |
-| A5 | The Call / Control set was rebuilt from its rendered states, and the EQ-01 and EQ-09 notes cards could not be read, because the reference file's large pages time out for scripted reads | Re-read when the reference file is lighter; the EQ-01 and EQ-09 rules are taken from the brief, the register and the code |
+| A5 | The Call / Control set was rebuilt from its rendered states, and the EQ-01 and EQ-09 notes cards could not be read, because the reference file's large pages time out for scripted reads (tried again on 13 November: listing its pages timed out after 60 seconds) | Re-read when the reference file is lighter; the EQ-01 and EQ-09 rules are taken from the brief, the register and the code |
 | A6 | Where the story needs a record the brief does not name, a `SYN-` filler is used and listed on the page's notes card | Keep; every filler is synthetic |
 | A7 | Proposed routes `/customers/development` (CS-07 Q6) and `/equipment/changes` (EQ-04) | Keep as proposals |
 | A8 | The phone numbers editor is drawn as a proposed UI (Calling D8; stage 1c not authorised) | Keep as proposal |
@@ -374,25 +376,26 @@ Each item is for Dean's decision. Page-level items are numbered on each page's n
 | A21 | A register table fits its columns to the content when the content fits the page; when it does not, the columns keep their natural width and the table scrolls sideways with a scroll bar. A cell is never ellipsised to avoid a scroll. Small tables inside cards wrap instead | Keep; confirm as the register rule |
 | A22 | The technician phone tab bar uses 10 px labels so its five items fit ("My inspections"); the Sales tab bar keeps 11 px | Confirm against the Service file with A4 |
 | A23 | The content drawn on 13 November behind side panels and on the state sheets PS08 and PS09 uses fillers consistent with the registers: the r6 backup of Climate controller 02, three lifecycle rows on PS08, and the three kept entries on PS09 (the newer version is saved by Sam Patel, since the reader is Sasha Cole) | Keep; every filler is synthetic |
+| A24 | R1 is applied to the controls this file draws itself (choice chips, filter chips, radios, photo placeholders) rather than waiting for the Sales file. The kit's filter-chip component copy (used by no sheet) and the accepted Shell's toolbar secondary buttons still use `line/strong` and are left for the Shell and Sales files, so the two do not drift by an edit made here | Align the Shell and Sales files |
 
 ## 6. Verification
 
 Run on 11, 12 and 13 November 2026 over all 15 pages after the last change:
 
 - **Structural pass.** Nothing loose on any page; the separator pages and Scratch are empty; no section, sheet, label or notes-card overlap; no child outside its sheet; no register cell taller than one line; Roboto is the only font family (mixed runs are Roboto weights); every sheet has exactly one label with its own unique code, aligned 26 px above the sheet and truncated to its width; no sheet's content is taller than the sheet.
-- **Rendered inspection.** Every sheet has been rendered at full size and inspected. Sites, Access and readiness, Equipment, Movement, Organisations and the first Stakeholders sheets were inspected as they were built. On 12 November the other 101 sheets were rendered and reviewed sheet by sheet; defects were found on about half of them and repaired (section 9.2). Eight repaired sheets (AD02, AD07, FA04, DV06, SU02, SK03, TI02, TB08) and seven of the fourteen new sheets (SK08, PE11, FA09, EQ12, X02, X03-restricted, X05) were then rendered again and inspected. On 13 November, after the polish pass, 32 changed sheets were rendered and inspected; that check found a further handful of defects of the same kinds (a blank page behind one more panel, ellipsised cells on other registers, a tile selection contradicted by its rows), which were repaired and rendered again.
-- **Overflow and truncation scan.** A script measured every text against its container on every sheet. After the polish pass it finds no text wider than its frame, no truncated value in a fact strip or a small table, no register table that overflows without a scroll bar, and no sheet whose content is taller than the sheet. Three frozen first-column cells still shorten a name (on SI01, SI04 and EQ01).
+- **Rendered inspection.** Every sheet has been rendered at full size and inspected. Sites, Access and readiness, Equipment, Movement, Organisations and the first Stakeholders sheets were inspected as they were built. On 12 November the other 101 sheets were rendered and reviewed sheet by sheet; defects were found on about half of them and repaired (section 9.2). Eight repaired sheets (AD02, AD07, FA04, DV06, SU02, SK03, TI02, TB08) and seven of the fourteen new sheets (SK08, PE11, FA09, EQ12, X02, X03-restricted, X05) were then rendered again and inspected. On 13 November, after the polish pass, 32 changed sheets were rendered and inspected; that check found a further handful of defects of the same kinds (a blank page behind one more panel, ellipsised cells on other registers, a tile selection contradicted by its rows), which were repaired and rendered again. After the refinements and tablet sheets of 13 November, 13 sheets were rendered and inspected (TB17, TB18, AD01, OR09, BK03-stage, MV04, SI01, SI04, EQ01, PH12 and ST01-4, with BL02 and BK02 rendered before the change to size R4); the findings (the rail on the two new tablet sheets, an area title running out of its card, and one site name wider than its column) were repaired and rendered again.
+- **Overflow and truncation scan.** A script measured every text against its container on every sheet. After the work of 13 November it finds no text wider than its frame, no truncated value in a fact strip, a small table or a frozen first column, no register table that overflows without a scroll bar, and no sheet whose content is taller than the sheet. Cells in a scrolling region can still sit under the scroll edge, as intended (A21).
 - **Identity scan.** Every `SYN-` reference and serial on every sheet was extracted (over 200 distinct references) and checked against the brief's dataset, Addendum A3.9 and the fillers ledger. One legacy quotation reference was corrected to the short form. The legacy `SYN-PPO-SITE-000012` appears only beside its short form; `SYN-PPO-AST-000002` and `000003` are the seed fixtures the brief names. Every replacement shows two identities (SYN-AST-000311 and 000219; 000312 and 000221; 000308 and 000216).
 - **Counts.** Register view counts were written from the brief's section 9.9; the Site surveys views were reconciled to 14 (A12); Glasshouse 4's per-facility equipment counts sum to its 23 assets; no total is drawn across sources. The visual pass corrected two counts that contradicted their own sheet (FA01's footer; Bay 4's Equipment tab, A17).
 - **Wording.** The words merged, transferred, score, likelihood and healthy appear only inside rules that forbid them. Gendered pronouns were replaced with names. A weekday check over every dated text in the build scripts found one mislabelled date in the brief (A14) and none in the drawn sheets; the review passes of 12 November found no wrong weekday on the sheets they read.
 - **Contrast.** Computed on sheet ST01-4 from the "PPO colour" variables (WCAG 2.1 relative luminance): all 14 text pairs pass 4.5:1 (lowest: grey chip 5.14:1; secondary text on chrome 5.29:1); the control edge (3.32:1) and the focus ring (3.57:1) pass 3:1; `line/strong` is 1.3:1 and fails as a control border (audit R1).
 - **Repository checks.** `python3 scripts/build_status.py --check`, `python3 scripts/check_foundation.py` and `python3 scripts/check_naming.py`.
 
-Limits: this is a visual proposal. The table refit and the tile outline of 13 November touched more sheets than were rendered again (32); the others were re-checked by script only, and a script cannot judge whether a table reads well. No prototype links, dark mode, 200 % reflow sheets, screen-reader behaviour or comparison with the built application were done. The EQ-01 and EQ-09 notes cards in the reference file could not be read (A5).
+Limits: this is a visual proposal. The table refit and the tile outline of 13 November touched more sheets than were rendered again (32); the others were re-checked by script only, and a script cannot judge whether a table reads well. No prototype links, dark mode, 200 % reflow sheets, screen-reader behaviour or comparison with the built application were done. The EQ-01 and EQ-09 notes cards in the reference file could not be read (A5), including on a further attempt on 13 November.
 
 ## 7. Not drawn and open questions
 
-Not drawn (audit G3 and G4): tablet sheets for Test instruments and Administration; dark mode, 200 % reflow sheets and prototype links. The dialogs and panels listed as gaps on 11 November (audit G1 and G2) were drawn on 12 November.
+Not drawn (audit G4): dark mode, 200 % reflow sheets and prototype links. The dialogs and panels listed as gaps on 11 November (audit G1 and G2) were drawn on 12 November, and the tablet sheets for Test instruments and Administration (G3) on 13 November.
 
 Open questions, cited and not resolved here:
 
@@ -444,9 +447,9 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | V9 | The phone header's chevron sits beside the view name (23 sheets); the TI02 validity captions no longer overlap |
 | V10 | The confirming button in 32 dialogs and panels uses the primary style, matching the pages built first; SU04, AR01, AR02, ST01-1, ST01-4 and SK03 were refitted to their content |
 
-### 9.3 Corrections from the polish pass of 13 November (fixed in the file)
+### 9.3 Corrections of 13 November: polish, refinements and tablet sheets (fixed in the file)
 
-| ID | Polish item | Correction |
+| ID | Item | Correction |
 |---|---|---|
 | V11 | P2 | Side panels whose form is longer than the panel show a scroll thumb (PE05, SK06) |
 | V12 | P3 | The selected view tile carries a 1 px outline on every register (32 tiles). A selection that its own grouped rows contradicted was cleared on BL01, BL05 and BK04 |
@@ -457,6 +460,12 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | V17 | P8 | The technician tab bar labels are 10 px (A22). The last shortened values in small tables wrap (AR03, EQ04, AD08) |
 | V18 | — | Counts and words found by the render check: the CP-4 Inspections tab reads 4; three pagers agree with the highlighted view (TI04, TI04-withdraw, SU06); SU06 says 3 of 7 observations are shown; AD08 points to AD02 for numbering; a name on SK04 lost stray initials |
 | V19 | — | TB05 is full length; the filler asset on FA09 has its own reference (A18) |
+| V20 | R1 | Unselected choice chips (103), filter chips (28), a radio and the photo placeholders (15) use `line/control` (3.32:1). `line/strong` stays on separators, table rules, badges and panel edges, where 3:1 is not required. ST01-4 says so (A24) |
+| V21 | R2 | The MV04 card is retitled "What stays with each asset"; "transferred" now appears only in the rule that forbids it |
+| V22 | R3 | 22 register footers use one wording: "1 to N of M things" when part of the list is shown, "M things" when all of it is |
+| V23 | R4 | BK02's sub-line no longer repeats the custodian shown in its bar. BL02's sub-line fits at 1440 since V2 and is unchanged. The Stages card on BK02 and TB16 has room between its title and first row |
+| V24 | P9 | The frozen first columns on SI01, SI04 and EQ01 show the whole name; SI04's equipment table keeps its natural column widths and scrolls with a scroll bar. The two Record stage sheets carry a shorter title, so the favourite star is no longer under the panel |
+| V25 | G3 | TB17 Test instruments at 1024 (`140:2`) and TB18 Shared records settings at 1024 (`140:670`) are drawn. AD01's lone last card now matches the others, and long area titles wrap |
 
 ### 9.4 Corrections needing Dean's decision (conflicts inside the brief)
 
@@ -468,13 +477,13 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 
 ### 9.5 Refinements (R)
 
-| ID | Refinement |
-|---|---|
-| R1 | Use `line/control` (3.32:1) rather than `line/strong` (1.3:1) for the borders of unselected radios, choice chips, filter chips and photo placeholders. This touches the shared kit copied from the Sales file, so it is proposed rather than applied |
-| R2 | Movement MV04: retitle the "What transferred" card so the word appears only in the rule |
-| R3 | Give every register footer the same range wording ("1 to 16 of 96") |
-| R4 | Shorten long record sub-lines (BL02, BK02) to kind · reference · state and move the rest to the bar |
-| R5 | Re-read the EQ-01 and EQ-09 notes cards when the reference file can be read, and reconcile |
+| ID | Refinement | State |
+|---|---|---|
+| R1 | Use `line/control` (3.32:1) rather than `line/strong` (1.3:1) for the borders of unselected radios, choice chips, filter chips and photo placeholders | Applied to this file's own controls by V20; the Shell and Sales files to align (A24) |
+| R2 | Movement MV04: retitle the "What transferred" card so the word appears only in the rule | Applied by V21 |
+| R3 | Give every register footer the same range wording | Applied by V22 |
+| R4 | Shorten long record sub-lines (BL02, BK02) | Applied where needed by V23 |
+| R5 | Re-read the EQ-01 and EQ-09 notes cards when the reference file can be read, and reconcile | Blocked: the reference file timed out again on 13 November |
 
 ### 9.6 Gaps (G)
 
@@ -482,7 +491,7 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 |---|---|---|
 | G1 | Filters, Columns, Export and Saved view panels; Export for restricted readers (permitted rows, no channels); Address lookup | Drawn 12 November: X01, X02, X03, X03-restricted, X04, X05 |
 | G2 | Add number, Flag number, Add site party, Link equipment, End a link, Review evidence, a desktop Record history form, Record support evidence | Drawn 12 November: PE10, PE11, SK08, FA09, FA10, AR10, EQ12, BL07 |
-| G3 | Tablet sheets for Test instruments and Administration | Not drawn (the 16 tablet sheets the brief lists are drawn) |
+| G3 | Tablet sheets for Test instruments and Administration | Drawn 13 November: TB17, TB18 |
 | G4 | Dark mode, 200 % reflow sheets and prototype links | Not drawn |
 
 ### 9.7 Automation candidates (N; rules first, none decides anything)
@@ -513,13 +522,12 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 | P6 | PS08 and PS09 promise content they did not show | Closed by V15 |
 | P7 | TB05 connector without a source; DV05 commitments columns | Closed by V16 |
 | P8 | Technician tab bar label; three small tables | Closed by V17 |
-| P9 | Three frozen first-column cells still shorten a name (SI01, SI04, EQ01); a record header star can sit under a side panel's edge | Open, minor |
+| P9 | Three frozen first-column cells shortened a name (SI01, SI04, EQ01); a record header star sat under a side panel's edge | Closed by V24 |
 
 ### 9.9 Recommended order
 
-1. Dean decides C13 to C15 and the open questions of section 7.
-2. Apply R1 in the shared kit together with the Sales file.
-3. R2 to R4 and P9.
-4. R5 when the reference file is readable.
-5. Draw G3 if wanted.
-6. Dean accepts and saves a named version; the design register and page guidance follow in their own change.
+1. Dean decides C13 to C15, the open questions of section 7 and the assumptions A20 to A24.
+2. Align the Shell and Sales files with R1 (A24).
+3. R5 when the reference file is readable.
+4. Draw G4 if wanted.
+5. Dean accepts and saves a named version; the design register and page guidance follow in their own change.
