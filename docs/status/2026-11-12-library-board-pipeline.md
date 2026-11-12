@@ -12,6 +12,7 @@ On 12 November 2026 Dean supplied four screenshots of the built Deals board and 
   - B9: a drop bar with Lost, Won and Move while a card is lifted; Delete stays in the card's menu.
   - B10: arrow-shaped headers for ordered pipelines; the plain header elsewhere.
   - B11: stages share the page width, from 240 px to 360 px.
+- **Correction the same day.** Dean reviewed the first drawing of the arrow headers and asked that each header merge into its column and that its lower edge match the column's width. Both are done: header and lane are one surface, and the arrow point overhangs into the gap between stages.
 - **Card refinements.** A two-line next action, whole dollars, and a title of one or two lines.
 - **Parts.** Board / Stage header now has seven variants (Plain and three flow shapes, each at rest or as a target). Two new `Status: Proposed` parts: Board / Drop action and Board / Drop bar. Board / Card gained an Attention option and hover actions; Board / Activity line gained a second line; Icon / Eye was added.
 - **Review board.** A new card 6, "Pipeline boards", shows a Deals board with a card lifted over a green stage and the drop bar. Cards 6 to 9 became 7 to 10, and the wording of cards 2, 3, 5 and 10 follows the decisions.

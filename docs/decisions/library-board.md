@@ -67,7 +67,7 @@ With `board/stage-max-width`, "PPO layout" holds 50 variables and the library 13
 | Board / Card | `83:287` | 7 states: Rest, Hover, Focus, Selected, Lifted, Saving, Skeleton. Options: Title, Subtitle, Fact, Date, Age; Show subtitle, Show fact row, Show activity, Show state chip, Show signals; Attention (the 3 px marker, B6). Hover and Focus show Preview, Plan activity and Email (B7). Exposed: Activity line, Owner, State chip, Signal 1, Signal 2 |
 | Board / Activity line | `83:55` | 3 tones: Planned, Overdue, None. Two lines since 12 November 2026. Options: Label, Detail, Show detail |
 | Board / Count | `83:56` | One component. Option: Count |
-| Board / Stage header | `252:12950` | 7 since 12 November 2026: Plain (one line, 36 px; the original component, node `83:288` unchanged), and Flow start, Flow and Flow end (arrow-shaped, two lines, 56 px), each at rest or as the Target of a lifted card (B8, B10). Options: Name, Total, Show total. Exposed: Count |
+| Board / Stage header | `252:12950` | 7 since 12 November 2026: Plain (one line, 36 px; the original component, node `83:288` unchanged), and Flow start, Flow and Flow end (arrow-shaped, two lines, 56 px), each at rest or as the Target of a lifted card (B8, B10). A flow header is the top of its lane: one surface with no gap, and a lower edge as wide as the lane; its arrow point overhangs into the 8 px gap between stages. Options: Name, Total, Show total. Exposed: Count |
 | Board / Stage · Collapsed | `83:300` | One component. Option: Name. Exposed: Count |
 | Board / Drop action | `252:13005` | 9: Warning, Success or Info, each Rest, Over or Unavailable. Options: Label, Hint, Icon. Added 12 November 2026 (B9) |
 | Board / Drop bar | `252:13015` | One component holding three drop actions: Lost, Won and Move. Exposed: each action. Added 12 November 2026 (B9) |
@@ -102,8 +102,9 @@ The Read me page and the Foundations board were updated for the new page, variab
 - **Moving cards.** A drop is the stage-change command, the same as Move to stage in the card's menu, with the same permission, dialog, audit and Undo. A stage ordered by a rule shows the outline; only a hand-ordered stage shows the line. Where a board shows Won or Lost as stages, they refuse a drop with a reason; the Deals board offers both in the drop bar. After a move the board keeps its scroll position and focus stays on the card.
 - **Pipeline boards** (12 November 2026).
   - Where stages are a sequence (deals, estimates) the headers are arrows; boards whose stages are states keep the plain header (B10).
+  - A flow header and its lane are one surface, with no gap or line between them. The header's lower edge is as wide as the lane. The arrow point overhangs the stage's right edge into the gap, and the next header's notch receives it.
   - Stages share the page width, from 240 px to 360 px, and cards fill their stage (B11).
-  - The stage a lifted card is over takes status/success-surface on its lane and header, with the 2 px outline. A stage that cannot take the card shows the refusal with its reason; it never fades (B8).
+  - The stage a lifted card is over takes status/success-surface on its lane and header as one surface, with the 2 px outline down the sides and along the foot of the lane. A stage that cannot take the card shows the refusal with its reason; it never fades (B8).
   - While a card is lifted a drop bar offers Lost, Won and Move. A drop opens the command's own step and commits nothing alone. A command that cannot take the card says why. Delete and Archive are never in the bar (B9).
   - Every command in the bar is also in the card's menu, the keyboard and touch route.
 - **Board states.** Loading, empty, no matches and a failed read keep the stages and the person's layout in place.
@@ -156,6 +157,8 @@ On 12 November 2026 Dean supplied four screenshots of the built Deals board and 
 | B10 | Flow headers | Arrow-shaped stage headers for ordered pipelines; the plain header for boards whose stages are states | New |
 | B11 | Stage width | Stages share the page width, from 240 px to 360 px | The 240 px stage becomes the narrowest |
 
+**Correction, 12 November 2026.** Dean reviewed the first drawing of the flow headers and asked for two changes: the header's background must merge into its column's background, and the header's lower edge must be as long as the top of the column. The first drawing left a 2 px gap between header and lane and drew the arrow point inside the stage's width, which shortened the header's lower edge by 10 px. Both are corrected: header and lane are one surface, and the point overhangs into the gap between stages. On the target stage the outline no longer crosses between header and lane.
+
 Adopted with the same answer, as refinements of the card: the two-line next action, whole dollars on cards and stage totals, and a title of one or two lines with no reserved band.
 
 ## 8. Not done and open
@@ -182,7 +185,8 @@ Adopted with the same answer, as refinements of the card: the two-line next acti
   - the new icon first landed on the wrong page;
   - a long activity detail was cut off, so the examples use shorter wording;
   - the flow headers did not show against a grey stage, so that example sits on white;
-  - the Time page's untimed items became two lines, and were put back to one.
+  - the Time page's untimed items became two lines, and were put back to one;
+  - after Dean's correction, the example board's stage frames clipped the overhanging arrow points, and were set not to clip.
 - **Existing instances.** The fourteen placed stage headers kept their names and totals after the header became a set of variants.
 - **Structural read of the Board page** (2,827 nodes, 619 instances). Outside instances it found no solid fill or stroke without a variable, no text without a text style, no plain corner radius, no default layer name and no component without a status line. The seven scaled cards on card 3 have no effect style (section 8).
 - **Variables read back from the file:** 66 in "PPO colour", 50 in "PPO layout", 11 in "Gantt colour", 3 in "Grid density", 5 in "Control size" and 4 in "Motion" (139).
