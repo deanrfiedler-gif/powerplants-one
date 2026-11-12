@@ -2,13 +2,13 @@
 document_id: PPO-ESTIMATING-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Estimating module on 12 November 2026 at Dean's request, by a session that did not draw it; findings and recommendations only; nothing was changed in Figma; no design is accepted or amended by this record; no application code, route, migration, permission or deployment
+status: Independent read-only review of the accepted private Figma file for the Estimating module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided all nine questions on the recommendations the same day (section 9); the review itself changed nothing in Figma; the alignment batch it leads to is a design amendment that needs Dean's acceptance and a new named version; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # PPO - Estimating module independent review, 12 November 2026
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Nothing is drawn. The session that holds the file decides what to draw, Dean decides the questions in section 7, and any change to the accepted file needs a new named version that Dean saves.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Dean decided the questions of section 7 on the recommendations the same day (section 9). The review itself drew nothing; the alignment batch that follows is an amendment to the accepted file and needs his acceptance and a new named version that he saves.
 
 ## 1. The request
 
@@ -188,3 +188,24 @@ Rules first; AI only where marked, grounded in the record, labelled, reviewed be
 ## 8. Boundary
 
 This record changes no design and accepts none. It corrects no other record: the proposal record's Shell version, file name and A17 wording are findings for the change that follows. It authorises no application code, route, migration, permission, integration, customer communication or deployment. Every record, person, value and date in the file is synthetic.
+
+## 9. Decisions — 12 November 2026
+
+Asked for his decisions, Dean asked for a professional recommendation on each, was given them, and answered: "proceed on your recommendations". Those words decide every question in section 7 as recommended there:
+
+| # | Decision |
+|---|---|
+| Q-A | One state-driven primary as Shell rule R117 says, labelled by the person's duties: "Issue & send", "Issue" (then "With Sales to send") or "Send quotation". Issue and Send remain two recorded decisions. This supersedes the "Issue & send" part of A17 in the [proposal record](estimating-module-refined-ui-proposal.md) |
+| Q-B | Sam Jordan replaces Kim Patel as the one engineering owner: rule-set author, calibration proposer and engineering sign-off |
+| Q-C | Two-digit revisions and versions everywhere, briefs and rule sets included; date-based identifiers such as r2026-07 and supplier references such as SQ-2026-114 stay as they are |
+| Q-D | Quotation validity printed as a date, set at issue as the issue date plus 30 days, labelled illustrative until D-010 and D-024 decide; an Expired stage is added |
+| Q-E | The customer quotation page is redrawn as a proposal; selectable options (N-E15) and online acceptance (N-E16) are drawn as proposals that wait on D-024, and an online acceptance creates a response for staff to confirm |
+| Q-F | The menu entries are decided in the Shell file, as recommended; this file makes Settings the current rail item on the Administration sheets |
+| Q-G | Overlay panels move to the Library's widths, 360 or 480 px by content; panels that are part of a workbench layout keep their width |
+| Q-H | A read-only phone 390 summary of the estimate, and tablet 1024 and phone 320 sheets for the customer page |
+| Q-I | Organisations take the SYN-ORG- family with the Sales numbers (Riverbend Growers SYN-ORG-000142) |
+
+The same answer adopts the process recommended with them: the session that wrote this review applies the alignment batch, after claiming the file in a draft pull request; the facts (ER-01 to ER-13) go first; one named version is saved at the end; a different session checks the changed sheets before Dean accepts them; N-E11, N-E12 and N-E13 are drawn as proposals; and the Sales file is the next file to audit.
+
+What is drawn, with node IDs, is recorded in the proposal record when the batch is done. None of it is accepted until Dean says so and saves the named version.
+
