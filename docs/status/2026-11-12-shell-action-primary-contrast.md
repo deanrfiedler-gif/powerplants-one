@@ -11,6 +11,8 @@ Checked: through the Figma connector, all five fills are bound to the new variab
 
 Not checked: the named version's title, which this session cannot read; it rests on Dean's word.
 
+Superseded the same evening: Dean returned the primary action to brand/navy and action/primary was deleted ([status](2026-11-12-shell-primary-action-navy.md), [decision record section 13](../decisions/shell-refined-concept-design.md#13-primary-action-returned-to-navy--12-november-2026)).
+
 Not done:
 
 - The module files' local copies (102 occurrences in AF-001), which change with each file's next reviewed change.

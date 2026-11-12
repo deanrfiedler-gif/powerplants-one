@@ -2,7 +2,7 @@
 document_id: PPO-SHELL-REFINED-FIGMA-DEC
 date: 2026-11-08
 owner: Dean Fiedler
-status: Owner-accepted design (named versions saved 8, 10 and 12 November 2026; the 12 November version carries the primary action colour accepted in section 12); captures and application build separate
+status: Owner-accepted design (named versions saved 8, 10 and 12 November 2026; the 12 November version carries the green primary action accepted in section 12); section 13 returns the primary action to brand/navy and awaits Dean's acceptance and a named version; captures and application build separate
 source_commit: 1672c062981402037355fb9d813dbedabd87cfbb
 versioning: git
 ---
@@ -198,6 +198,8 @@ The module proposal records that cite the 8 November version and Addendum A1 for
 
 ## 12. Primary action colour — 12 November 2026
 
+**Superseded for the primary colour by [section 13](#13-primary-action-returned-to-navy--12-november-2026)**, which returns the primary action to brand/navy the same day. This section remains the record of the green change.
+
 **Instruction.** Dean, in a Claude session on 12 November 2026: "Go ahead and fix the green contrast in the Shell file." The finding is AF-001 of the cross-file Figma alignment audit ([PR #920](https://github.com/deanrfiedler-gif/powerplants-one/pull/920), open and not yet reviewed): white text on brand/green-deep `#3d9a37` measures 3.57:1 on the 14 px primary labels, below the 4.5:1 of WCAG 1.4.3. Claude confirmed it in this file before changing anything: the Draft primary renders at `#3d9a37` with brand/white text, and the WCAG relative-luminance formula gives 3.57:1.
 
 **Cause.** brand/green-deep was added for markers on light surfaces (D24, R58). A marker is non-text, so 3:1 applies (WCAG 1.4.11) and 3.57:1 passes. The record header toolbar (section 10) also used it as the primary button fill behind brand/white text, which R58 had ruled out ("Green is never a fill behind text"). Dean accepted the toolbar as drawn on 9 November 2026, and the later rule governs, so the primary stays green and only its value changes.
@@ -236,3 +238,42 @@ Unchanged: the value of brand/green-deep and its marker uses (39 on the shell pa
 - **Module files.** The module files' local copies of the toolbar and their own primary buttons (AF-001 counts 102 occurrences) keep `#3d9a37` until each owning file's next reviewed change. Sales and Estimating are accepted files, so each needs its own new named version.
 - **Application.** No built page uses the failing pair: `src/app/styles/shell-refined-tokens.css` defines `--ppo-refined-brand-green-deep`, but no rule reads it. `--ppo-refined-action-primary` is added by the pull request that builds the record header toolbar ([ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 2).
 - **Token check.** `docs/design/figma-variables.json` snapshots "PPO - Design", not this file, so `scripts/check_design_tokens.py` is unaffected.
+
+## 13. Primary action returned to navy — 12 November 2026
+
+**Decision.** Dean chose navy for the primary action the same evening. His answer to question Q-B of the independent Shell review ([PR #931, comment 6836829799](https://github.com/deanrfiedler-gif/powerplants-one/pull/931#issuecomment-6836829799)) reads "Q-B: return the primary action to navy": primary buttons use brand/navy, "as D35 already says", and `action/primary` is removed. His [DEAN] comment on this record's pull request ([PR #923, comment 6836836084](https://github.com/deanrfiedler-gif/powerplants-one/pull/923#issuecomment-6836836084)) sets out the change. He confirmed it to Claude in the session before the file was edited. Section 12 stays as the record of the green change. Its quoted acceptance, its named version "Shell refined concept — accepted · primary action contrast" and the file name "PPO - Shell" (section 9) are correct as recorded.
+
+**Why.** Rule D35 (8 November 2026) already keeps "brand/navy … for buttons, avatars and marks", and R58 rules out green behind text. Section 12 weighed navy as a change to the accepted look and missed D35. Two further reasons against the green:
+
+- The independent review found `action/primary` indistinguishable from status/success: `#2d7128` against `#416d33` measures 1.01:1.
+- Under Library C1 the green falls to 3.61:1 when pressed.
+
+**What changed in the file.**
+
+| Item | Before | After |
+|---|---|---|
+| Primary button fill in Shell / Record header · toolbar `170:10178`: `170:9969`, `170:10011`, `170:10052` (disabled at 45%), `170:10092`, `170:10135` | `action/primary` | brand/navy (`VariableID:1:3`) |
+| Variable `action/primary` (`VariableID:273:9983`) | `#2d7128` | Deleted. The PPO colour collection holds 66 variables again, as R15 states |
+| Description of brand/green-deep | "… primary buttons use action/primary (12 November 2026)." | "… primary buttons use brand/navy (D35; 12 November 2026)." |
+
+Everything section 12 lists as unchanged stays unchanged, including the Closed variant and the phone component. The RH01 sheet's instance (`I170:10421;170:10092`) inherits navy.
+
+**Measured values.** White on brand/navy `#242a37` measures 14.37:1 at rest. Under Library C1, which is unchanged, it measures 9.79:1 on hover (`#3e444f`) and 6.59:1 pressed (`#595d67`). The recommendation in section 12 to darken Primary on hover and pressed is withdrawn: navy passes C1 as it stands.
+
+**Verification.** Read through the Figma connector after the change:
+
+- all five fills are bound to brand/navy, and the RH01 instance resolves to it;
+- renders of the component set sample `#242a37` on every primary;
+- no node on any of the three pages is bound to `action/primary`;
+- the file has 66 local colour variables and no `action/` group.
+
+Contrast was computed with the WCAG 2.x relative-luminance formula.
+
+**Acceptance and named version.** Pending. The change is Dean's to accept in words and the named version is his to save; the suggested title is "Shell refined concept — accepted · navy primary action". Until both are recorded here, a build of the record header toolbar takes its primary colour from this section ([handoff rule 5](figma-named-version-build-handoff.md)).
+
+**What this replaces in section 12.**
+
+- **Build citation:** section 12's build-citation table is superseded once the navy version is recorded.
+- **CSS token:** no new token is needed. `--ppo-refined-action-primary` is dropped, because the built S1 stylesheet already defines `--ppo-refined-brand-navy`.
+- **Module files:** their copies of the green primary move to brand/navy in each file's next reviewed change (AF-001 in [PR #925](https://github.com/deanrfiedler-gif/powerplants-one/pull/925)). Sales and Estimating, as accepted files, each need a new named version.
+- **Token check:** unaffected, as section 12 states.
