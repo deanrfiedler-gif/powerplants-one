@@ -55,7 +55,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | Move · Drag and drop | `66:37` | Six parts for moving things and their review board, recorded in [Move · Drag and drop in PPO - Library](library-move.md) |
 | Board · Cards and stages | `82:37` | Seven board parts and their review board, recorded in [Board · Cards and stages in PPO - Library](library-board.md) |
 | Time · Planners and calendars | `97:37` | Nine time parts and their review board, recorded in [Time · Planners and calendars in PPO - Library](library-time.md) |
-| Gantt · Bars and links | `116:37` | Six Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
+| Gantt · Bars and links | `116:37` | Eight Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
 | Forms · Fields and validation | `140:37` | Ten form parts and their review board, recorded in [Forms · Fields and validation in PPO - Library](library-forms.md) |
 | States · Loading, empty and errors | `162:37` | Six state parts and their review board, recorded in [States · Loading, empty and errors in PPO - Library](library-states.md) |
 | Record · Details, tabs and history | `182:37` | Eleven record parts and their review board, recorded in [Record · Details, tabs and history in PPO - Library](library-record.md) |

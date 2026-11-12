@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-GANTT-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean on 11 November 2026; every component is Status Proposed until Dean accepts the page; nothing published from the library; the Projects file and its open pull request are unchanged; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean on 11 November 2026, and item G6 in section 7 was decided by him on 12 November 2026; every component is Status Proposed until Dean accepts the page; nothing published from the library; the Projects file and its open pull request are unchanged; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Gantt · Bars and links in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. G6 in [section 7](#7-decided--12-november-2026) was decided by him on 12 November 2026 and amends the label in G1. The page itself awaits acceptance.
 
 On 10 November 2026 Dean accepted an order for the next pages of `PPO - Library`: Controls, shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart ([Controls record](library-controls.md)). After the [Time page](library-time.md) he answered: "Confirm all five items as recommended and draw the next page". This record covers that page, the last in the accepted order.
 
@@ -38,7 +38,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | Reused components | Time / Band, Hatch, Ghost, Resize handle and Now line; Move / Origin slot; Controls / Chip, Button, Icon button, Field, Menu item, Tooltip and Banner; the Attention and Close icons and the Grabbing cursor. On the board the task list is drawn as a layout at the Grid row height and the links as paths drawn to the Gantt / Dependency specimen; a module page builds the list from the Grid components. New in the library, all `Status: Proposed`: the six parts in section 3 and two new Time / Band kinds |
 | Incoming handover | A module programme view places these components on the Time page's axis |
 | Outgoing handover | The task panel (Details, Actual dates, Links) and its reasoned forecast save, unchanged |
-| Departures | The items in section 6 |
+| Departures | The items in sections 6 and 7 |
 
 ## 3. What was drawn
 
@@ -73,8 +73,10 @@ The nine code names are the custom properties `src/app/projects-gantt.css` alrea
 | Gantt / Milestone | `116:194` | 3: Planned, Complete, Baseline. Options: Label, Show label |
 | Gantt / Phase bar | `116:195` | One component |
 | Gantt / Baseline bar | `116:199` | One component |
-| Gantt / Today line | `116:200` | One component. Option: Label |
+| Gantt / Today line | `116:200` | One component: a 9 px dot and a 1 px line. Its label and Label option were removed on 12 November 2026 (G6) |
 | Gantt / Dependency | `116:215` | 2: Default, Warning. A specimen; the path is drawn to fit the two bars |
+| Gantt / Today cell | `261:13418` | One component: the date cell that holds today. Option: Date. Added 12 November 2026 (G6) |
+| Gantt / Today key | `261:13420` | One component: the violet dot at icon size, for the toolbar's Today button. Added 12 November 2026 (G6) |
 
 **Time / Band** (`97:365`, on the Time page) gains two kinds for the saved calendar's dated exceptions: Working exception `116:1848` (status/success-surface) and Non-working exception `116:1850` (status/warning-surface, labelled with the closure). It now has seven kinds.
 
@@ -104,7 +106,10 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 - **Dependencies.** Finish to start only, thin grey at rest, dashed red with the icon while the check warns. The check runs whenever dates change, lists successors to review with their owners, offers Ask owners to review, and never moves a date (D5, D10). Links are added in the task panel's Links tab (D4).
 - **Baselines.** Baseline bars are a Display option, off by default; a dashed diamond marks where a moved milestone sat (D1). Variance shows calendar days first, then working days by the calendar named in the column header (D2). The latest reason, its date and author are on Baselines (D9) and, new here, in the bar's tooltip.
 - **Calendar and scale.** Shading comes from the project's saved calendar: weekends hatched, a worked day and a closure named in words (D6). A forecast date on a non-working day is underlined in the warning colour and counted as a schedule issue. Week zoom is 120 px a week; Month and Fit shrink the week to 48 px or less, stop shading weekends and move titles to tooltips.
-- **Today.** A 1 px violet line with a dot and a label in the header, because green means complete on a Gantt. Calendars and planners keep the Time page's green-deep Now line.
+- **Today.** A 9 px violet dot on the date row's lower edge with a 1 px violet line below, because green means complete on a Gantt. The chart carries no Today label, so nothing covers the dates (G6).
+  - The date cell that holds today is tinted violet, with its date in violet.
+  - The word "Today" is on the toolbar's Today button, which carries the same dot and scrolls the chart to today, and in the marker's tooltip and accessible name.
+  - Calendars and planners keep the Time page's Now line.
 - **Changing dates.** Moving or stretching a bar shows the Time page's ghost with a readout of the new dates and the change, snapped to whole days. The drop opens the task panel with the new dates, the required reason and the dependency check; nothing is saved until Save, and Cancel puts the bar back. Every change is also in the bar's menu and the task panel; keyboard: Space picks a bar up, Left and Right move it a day, Shift with them a week, Enter opens the panel, Esc cancels. Touch and phones use the menu.
 - **States.** Loading draws the scale and Today first, with placeholder rows and no counts (PS12). A task without dates has no bar and offers Add dates; it is never drawn at today. A source that cannot be read shows a dash, never a guess, and the chart says the list may be incomplete (PS13). Someone who may not change the programme gets no handles and no drag, and the menu says why.
 
@@ -120,7 +125,7 @@ The Read me page and the Foundations board were updated: the page index, rules 2
 | Phase bar | 7 px grey with 12 px end caps | Colour decision; built |
 | Baseline bar | 4 px line/strong under the task bar; Display option | PJ-03 D1 |
 | Dependency | Finish to start; 1.25 px grey; warning 1.5 px dashed red with the icon | Built ProjectsGantt; icon new |
-| Today | 1 px violet line with a dot and a label in the header | Colour decision (G1) |
+| Today | 9 px violet dot on the date row's lower edge and a 1 px line; today's date cell in `gantt/today-surface` with `gantt/today-text`; no label on the chart; "Today" on the toolbar button and in the tooltip | Colour decision (G1); Dean, 12 November 2026 (G6) |
 | Scale | Week zoom 120 px a week (`gantt/week-width`); Month 48 px a week; Fit fills the width | Built ProjectsGantt |
 | Snap | Whole days | New (G4) |
 | Shading | Weekends hatched as not working; working and non-working exceptions named | PJ-03 D6; Time page |
@@ -139,16 +144,34 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 | G4 | Whole-day snap | Moves and stretches snap to days on a Gantt; the Time page's 15-minute step applies where hours show | The Time page set a 15-minute snap for every view (T2) |
 | G5 | A drop opens the task panel | Dragging proposes dates and opens the panel with the reason; it never saves on its own | No source drags a Gantt bar; PJ-03 changes dates in the task panel |
 
-## 7. Not done and open
+## 7. Decided — 12 November 2026
+
+On 12 November 2026 Dean noted that the Today pill covered the dates in its row. He offered three ideas: a taller date row with the pill under the dates, the dot and line alone with a larger dot on the row's lower edge, or a new row for the pill. Claude recommended his second idea with a tinted date cell, and the word "Today" moved to the toolbar and the tooltip. Dean answered: "Proceed based on your recommendations." Cards 1, 5 and 9 and the page header now say so.
+
+| ID | Item | Decided | What it changes |
+|---|---|---|---|
+| G6 | Today without a label | The Today label leaves the chart. Today's date cell is tinted, a 9 px dot sits on the date row's lower edge with the 1 px line below, and the word "Today" is on the toolbar's Today button and in the marker's tooltip and accessible name | Amends the label in G1; the violet colour stands. The built Gantt draws the label and aligns at its next reviewed change |
+
+The dot is 9 px, not the 8 px first suggested, so the 1 px line centres on it. The two ideas that add a row were set aside because each costs every chart about 20 px of height for one marker.
+
+## 8. Not done and open
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Projects file unchanged.** The Projects file and pull request #896 were not touched. Its Schedule and Programme sheets (PG01 to PG13, ST01) switch to these parts once that file is accepted and the library is published.
-- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows and its own bars until a reviewed change aligns it with this page and G1 to G5, which Dean confirmed.- **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
+- **Built Gantt unchanged.** ProjectsGantt keeps 38 px rows, its own bars and the Today label until a reviewed change aligns it with this page and G1 to G5, which Dean confirmed.- **Out of scope or candidates, not drawn.** Critical path, signed lag and automatic rescheduling (PJ-03 Q5); an Overdue status; drawing links by dragging; resource loading under the chart.
 - **No proof beyond the design.** No prototype links were set on the Gantt parts. Dragging, snapping, keyboard, screen-reader and touch behaviour need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The two dependency colours and the three new layout variables have no CSS property yet.
 - **Accepted order complete.** Every page in the accepted order is now drawn. Forms · Fields and validation followed, as the first of the groups the design-to-build standard requires ([its record](library-forms.md)); it changed Controls / Field and Banner, which the task panel on card 6 uses.
 
-## 8. Checks
+## 9. Checks
+
+**12 November 2026**
+- The Today line, the new cell and key, card 1's chart and cards 5 and 9 were rendered and inspected.
+- All seven example charts were updated by script: the marker moved to the date row's lower edge at the same day, and the cell that holds today became a Gantt / Today cell with its date. No other page places the Today line.
+- A structural read of the Gantt page found, outside instances, no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style, no plain corner radius, no default layer name and no component without a status line.
+- Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
+
+**10 and 11 November 2026**
 
 - The components section and every card of the review board were rendered and inspected. Defects found while drawing were fixed: progress fills that overflowed short bars, off-centre milestone diamonds, callouts and the Today pill over labels, clipped labels and banner text, a column that pushed card 6 past its edge, and a source citation in card 6.
 - A structural read of the page (3,652 nodes, 189 instances) found, outside instances, no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style and no layer named as a default. The milestone diamond's plain 2 px corner was bound to the new `radius/milestone`; the section and component-set frames keep Figma's default corners, as on the other pages.
