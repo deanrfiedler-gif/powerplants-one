@@ -72,14 +72,14 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Link | `47:187` | 4: Rest, Hover, Focus, Disabled. Option: Label |
 | Controls / Icon button | `47:206` | 5: Rest, Hover, Pressed, Focus, Disabled. Option: Icon |
 | Controls / Chip | `50:71` | 9 tones: Neutral, Info, Success, Warning, Danger, Tint, Grey, Navy, Accent. Option: Label |
-| Controls / Filter chip | `50:81` | 5: Rest, Hover, Active, Focus, Disabled. Option: Label. Disabled came with the [library audit](library-audit.md) |
-| Controls / Tab | `50:92` | 5: Rest, Hover, Current, Focus, Disabled. Option: Label. 48 px with a navy marker, and Disabled, since the audit |
+| Controls / Filter chip | `50:81` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled); Selected was the Active state until 12 November 2026. Option: Label. Disabled came with the [library audit](library-audit.md) |
+| Controls / Tab | `50:92` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled); Selected was the Current state until 12 November 2026. Option: Label. 48 px with a navy marker, and Disabled, since the audit |
 | Controls / Avatar | `50:117` | 12: six hues by 24 and 32 px. Option: Initials |
-| Controls / Checkbox | `22:416` | 12: State (Off, On, Mixed, Disabled, Focus, Hover) by Surface (White, Tint). Formerly Grid / Checkbox. Hover and the target-size rule came with the audit |
-| Controls / Radio | `137:654` | 10: State (Off, On, Disabled, Focus, Hover) by Surface (White, Tint). Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
+| Controls / Checkbox | `22:416` | 24: Checked (Off, On, Mixed) by State (Rest, Hover, Focus, Disabled) by Surface (White, Tint); one State option held all six until 12 November 2026. Formerly Grid / Checkbox. Hover and the target-size rule came with the audit |
+| Controls / Radio | `137:654` | 16: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) by Surface (White, Tint); one State option held all five until 12 November 2026. Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
 | Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Show helper, Helper text |
 | Controls / Field | `51:249` | 24: Kind (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Show helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
-| Controls / Menu item | `50:146` | 5: Rest, Hover, Selected, Disabled, Focus. Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text |
+| Controls / Menu item | `50:146` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text |
 | Controls / Menu divider | `50:147` | One component |
 | Controls / Tooltip | `50:118` | One component. Options: Label, Show shortcut, Shortcut text |
 | Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Show action |
@@ -89,14 +89,14 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Drawer content | `217:578` | One component: the placeholder the Content option swaps out |
 | Controls / Search field | `274:723` | 4: Empty, Focus, Filled, Disabled. Option: Text. Added 12 November 2026, as are the ten below |
 | Controls / Removable chip | `274:734` | 3: Rest, Focus, Disabled. Option: Label |
-| Controls / Check option | `274:753` | 4: Off, On, Hover, Focus. Option: Label |
+| Controls / Check option | `274:753` | 6: Checked (Off, On) by State (Rest, Hover, Focus). Option: Label |
 | Controls / Multi-select | `274:851` | 5: Empty, Filled, Focus, Error, Disabled. Options: Label, Placeholder |
 | Controls / File drop | `274:877` | 3: Rest, Over, Focus. Option: Hint |
 | Controls / Upload row | `274:918` | 3: Uploading, Failed, Refused. Option: Name |
 | Controls / Pager | `274:994` | 5: Pages at the first, a middle and the last page; Load more with more to load and with all shown. Option: Count |
 | Controls / Switch | `274:1021` | 8: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) |
 | Controls / Switch field | `274:1022` | One component: a label and a switch. Option: Label. Exposed: Switch |
-| Controls / Segment | `274:1037` | 5: Rest, Hover, Selected, Focus, Disabled. Option: Label |
+| Controls / Segment | `274:1037` | 8: Selected (false, true) by State (Rest, Hover, Focus, Disabled). Option: Label |
 | Controls / Segmented | `274:1059` | 3: two, three or four options. Exposed: each segment |
 
 The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.

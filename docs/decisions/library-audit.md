@@ -143,7 +143,7 @@ On 12 November 2026 Dean asked a second session to review the library. Its recor
 | 1 | R1: Grid / Cell · Edit paints black | **Confirmed and fixed.** Both variants held a paint bound to `surface/hover` that stored black. The variable was re-applied; the set and the Playground render the hover surface. The cause was not established |
 | 2 | Correct this record | **Done.** Sections 2, 3 and 7 now say what the file shows |
 | 3 | R8: Form / Save bar set clips a variant. R13: two band labels | **Done.** The set is 1274 × 604 px and clips nothing. Time / Band's Not working and Unavailable each have their own label option, so each starts with its own name; the 33 placed bands kept their labels |
-| 4 | R4: one naming rule for options. R3: separate chosen from pointer state | **Partly done.** The renames below are made. Separating chosen from pointer state is not started |
+| 4 | R4: one naming rule for options. R3: separate chosen from pointer state | **Done for the eight controls the review names.** The renames below are made, and ticked and chosen are now separate from pointer state. Five other sets are listed below and not changed |
 | 5 | R2: bind plain spacing | **Partly done.** 351 values now use a spacing variable. 103 remain, because no variable holds their value |
 | 6 | R5: one base for banners, one count badge, shared placeholders | Not started |
 | 7 | R7: a mark for unavailable days. R9: buttons for lone links on a phone | Not started |
@@ -155,7 +155,23 @@ On 12 November 2026 Dean asked a second session to review the library. Its recor
 - **Controls / Switch:** `State` (Off, On) became `Checked`, and `Interaction` became `State`.
 - **Parts that can be hidden start with "Show".** Fourteen options were renamed: Show leading icon (Button, Menu item, Phone / Menu row), Show shortcut (Menu item, Tooltip), Show action (Toast, Banner), Show dismiss (Banner), Show helper (Field, Checkbox field), Show menu button (Grid / Header cell), Show flag (Grid / Cell), Show second action (Phone / Sheet) and Show withheld note (Record / Working).
 - **Kept as they are:** Required, Filtered, Frozen edge, Attention and Changed. Each says a condition is true; none hides a part.
-- **Still to do with R3:** Checkbox, Radio, Form / Choice and Check option mix ticked with pointer state. Tab (Current), Filter chip (Active), Menu item and Segment (Selected), Form / Option (Highlighted, Selected) and Form / Match card (Default, Chosen) mix chosen with pointer state. Time / Day header, Time / Lane header and Gantt / Dependency use `Default` for the ordinary kind.
+- **Ticked and chosen separated (R3).** Each of the eight controls now has two options in place of one, in the shape Controls / Switch already had. Existing variants were renamed and the missing combinations drawn; no placed instance changed.
+
+  | Control | Options now | Variants | Added |
+  |---|---|---|---|
+  | Controls / Checkbox | Checked (Off, On, Mixed) by State (Rest, Hover, Focus, Disabled) by Surface | 24, from 12 | Ticked and mixed, each with hover, focus and disabled |
+  | Controls / Radio | Checked (Off, On) by State by Surface | 16, from 10 | Chosen with hover, focus and disabled |
+  | Controls / Check option | Checked (Off, On) by State (Rest, Hover, Focus) | 6, from 4 | Ticked with hover and focus |
+  | Form / Choice | Kind by Checked (Off, On) by State | 16, from 10 | Chosen with hover, focus and disabled, as a row and as a card |
+  | Controls / Tab | Selected (false, true) by State | 8, from 5 | The current tab with hover, focus and disabled |
+  | Controls / Filter chip | Selected (false, true) by State | 8, from 5 | An applied filter with hover, focus and disabled |
+  | Controls / Menu item | Selected (false, true) by State | 8, from 5 | The current choice with hover, focus and disabled |
+  | Controls / Segment | Selected (false, true) by State | 8, from 5 | The chosen view with hover, focus and disabled |
+
+  - Hover on a ticked box, a chosen radio and a chosen card darkens to brand/navy-deep or a brand/navy outline. Hover on the current tab, menu item and segment looks the same as rest. An applied filter chip gains a link-blue outline on hover.
+  - Disabled with a tick or a choice is the same drawing at 45%, the accepted rule (Sales ST01).
+  - `Selected` replaces the Current state on Tab and the Active state on Filter chip.
+- **Not changed:** Form / Option (Highlighted is the keyboard position, which is not a choice), Form / Match card (Default, Chosen), and Time / Day header, Time / Lane header and Gantt / Dependency, where `Default` names the ordinary kind. They are for a later pass.
 
 **Spacing bound (item 5).** Inside components, outside nested instances:
 
@@ -181,9 +197,12 @@ The 103 still plain are 39 of 1 px, 4 of 5 px, 14 of 10 px, 16 of 20 px and 30 o
 
 **Checks.**
 - The Grid / Cell · Edit set, the Grid Playground, the Form / Save bar set, the Time / Band set, the Button set and a Play frame were rendered and inspected after the changes.
-- A sweep of every page found four more bound paints that stored black: one text on Controls, two on Board and a scrim on Phone. Each was re-applied with its variable's colour as a precaution; whether any had rendered wrongly was not established.
+- A sweep of every page found four more bound fills that stored black: one text on Controls, two on Board and a scrim on Phone. Each was re-applied with its variable's colour as a precaution; whether any had rendered wrongly was not established.
+- A second sweep, of outlines, found four that stored black, and one was seen rendering black: the tick box on a tinted surface at hover. All four were re-applied (two on Controls / Checkbox, two rows of an example list on the Move page). No bound fill or outline in the file now stores black.
+- After the eight controls were restructured, each set was rendered and inspected, and the 321 placed instances of those sets were read back: every one still points at the same variant.
 - A first attempt at the band labels unlinked the shared label, which reset the labels on the 33 placed bands. It was reversed in the next step: each label was restored from its stored value, and all 33 were read back with no mismatch.
 - After the renames, the options of every set were read back. None still uses `Type`, `Style` or `Interaction`, and `Default` remains only on the four sets listed above.
 - 3,138 instances were recorded before the renames, and each still pointed at the same component afterwards. Renamed show-or-hide options still hold values on placed instances (23 buttons show an icon, 6 banners an action, 3 header cells a menu button, 3 fields a helper). These were not tallied beforehand, so this confirms values survived, not that every one did.
-- **Not checked:** component descriptions and review-board texts were not re-read for the old option names. The Grid review board was not re-rendered beyond the Playground.
+- Component descriptions were searched for the old option names; eight were corrected.
+- **Not checked:** review-board texts were not re-read for the old option names. The Grid review board was not re-rendered beyond the Playground. In the options panel, State on Checkbox, Radio and Form / Choice lists Rest last; the variants themselves are in order and Rest is the default.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.

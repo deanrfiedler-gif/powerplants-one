@@ -67,7 +67,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Form / Error summary | `140:43` | One component. Options: Message, Show item 2. Exposed: Item 1, Item 2 (Controls / Link) |
 | Form / Review row | `140:64` | 3: Value, Unknown, Pending. Options: Label, Value |
 | Form / Match card | `140:94` | 2: Default, Chosen. Options: Reason, Title. Exposed: Open, Use |
-| Form / Choice | `140:155` | 10: Kind (Row, Card) by State (Off, On, Focus, Disabled, Hover). Options: Label, Show description, Description. Hover came with the [library audit](library-audit.md) |
+| Form / Choice | `140:155` | 16: Kind (Row, Card) by Checked (Off, On) by State (Rest, Hover, Focus, Disabled); one State option held all five until 12 November 2026. Options: Label, Show description, Description. Hover came with the [library audit](library-audit.md) |
 | Form / Option | `142:85` | 7: Match (Rest, Highlighted, Selected), Not known (Rest, Highlighted), Create (Rest, Highlighted). Options: Label, Meta, Create label |
 | Form / Option list | `142:142` | 4: Results, Loading, Failed, Empty |
 | Form / Day | `142:155` | 7: Rest, Hover, Today, Selected, Outside, Unavailable, Focus. Option: Day. Focus, for choosing a date by keyboard, came with the audit |
