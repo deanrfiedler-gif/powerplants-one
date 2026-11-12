@@ -1,0 +1,10 @@
+---
+title: Maintenance M2 failed-check diagnosis and residual proof
+date: 2026-11-11
+---
+
+[PR #904](https://github.com/deanrfiedler-gif/powerplants-one/pull/904) follows up the reported failed checks at `e8f9124c`. Four old aggregate failures log cancelled dependency matrices; the replacement Application assurance browser-2 lane has a genuine planner drag-to-dialog timeout. The same test passes in the separate compiled desktop-2 lane at that head. The test now waits for the source tile's existing `draggable=true` state before the native gesture, preserving all conflict/recovery assertions and deadlines. Finance and planner runtime code are unchanged. The unavailable artifact trace prevents attributing that exact failure conclusively; final-head Chrome CI must validate the correction.
+
+The one remaining Claude item is addressed by natively authorising Disputed work with an agreement reference and requiring no Finance default. It passes with production code and fails when only the coverage-status predicate is temporarily removed; the source was restored unchanged. [Evidence](../testing/evidence/maintenance-m2/README.md#ci-failure-follow-up-and-residual-proof--11-november-2026) records commands, results and limits. Main `f03d8618f`, including the merged #897 contribution, is integrated without editing another branch. Required Chrome is still absent locally. Synthetic document fixtures are command/persistence evidence, not rendered output or full TS-01/TS-02. Exact-head CI and Claude's targeted confirmation remain separate from Dean's merge and operational acceptance; C1 remains stacked until M2 merges. No merge or deployment.
+
+Fresh local validation passes: 26/26 connected M2/B4/TS-01 Finance component cases, 1,450 units, Studio/lint/TypeScript/build, focused test lint/formatting, documentation checks and 44 documentation tests. The focused status case and its failing mutation control run without renderer substitution; document-dependent connected cases use the explicitly identified synthetic renderer.
