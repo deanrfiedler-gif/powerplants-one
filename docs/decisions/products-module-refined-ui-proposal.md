@@ -2,14 +2,14 @@
 document_id: PPO-PRODUCTS-REFINED-FIGMA-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Proposal in progress, 12 November 2026 (the sheets are being drawn; sections 3, 7 and 10 are completed when they are); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
+status: Proposal, 12 November 2026, awaiting Dean's acceptance (122 sheets and 7 notes cards on 7 scope pages); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
 source_commit: 1892f7a92784b811bd36f0ef289816cfcfd31d4c
 versioning: git
 ---
 
 # Products module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal in progress, awaiting completion and then Dean's acceptance. Sections 1 to 9 are the proposal record; section 10 holds the audit and section 11 the named version, which is Dean's to save.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal, awaiting Dean's acceptance. Sections 1 to 9 are the proposal record; section 10 holds the audit and section 11 the named version, which is Dean's to save.
 
 On 12 November 2026 Dean supplied the prompt "Design the Products module pages for Powerplants One in Figma" with Addendum A3 (persona and story reconciliation, section A3.13 for Products) and a new, empty Figma file: "Below is the link to the new Figma page file that I have created for this." The prompt carries his standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach."
 
@@ -64,7 +64,198 @@ Ownership outside Products: Estimating owns cost sources, estimates and quotatio
 
 ## 3. Sheet inventory
 
-The sheets are being drawn. This section lists every sheet with its node ID when the build is complete.
+Sheets are listed by page and section, with the frame node ID. Sizes are width × height in pixels; sheets grow past 900 px to hold their content and Build difference card. The full name of each sheet is its label in the file; the "signed in as" part is shown here as Person.
+
+### Catalogue and product record · PD-01
+
+Page `9:4` · `scope:PD-01`, `/products`, `/products/[id]` · 34 sheets · notes card `26:31597`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| CA01 | Catalogue — 50 shown, full length | Sam Jordan | Desktop | 1440×2915 | `14:251` |
+| CA02 | Catalogue — DP-25 selected, snapshot docked | Sam Jordan | Desktop | 1440×1316 | `17:1955` |
+| CA03 | Dosing pump DP-25 — Technical, r04 · T3 Published, full length · later frame 09:50 | Sam Jordan | Desktop | 1440×1861 | `14:3666` |
+| CA04 | Dosing pump DP-25 — Revisions tab, r04 · T3 Submitted, full length | Sam Jordan | Desktop | 1440×1759 | `22:2863` |
+| CA05 | Screen drive SM-120 — opened from asset SYN-AST-000219, read only, full length | Ravi Kumar | Desktop | 1440×1500 | `22:3469` |
+| CA06 | SM-120 motor assembly — Used in tab, with an inset later frame 15:40, full length | Sam Jordan | Desktop | 1440×1432 | `22:3965` |
+| CA07 | Dosing pump DP-12 — Documents tab, r04 · T3 Published, full length | Sam Jordan | Desktop | 1440×1484 | `22:4487` |
+| CA08 | Circulation pump CP-60 — no image, Draft r02 · T1, full length | Sam Jordan | Desktop | 1440×1672 | `25:4300` |
+| CA09 | Circulation pump CP-40 — Pricing, Compatibility and Delivery profiles tabs, full length | Sam Jordan | Desktop | 1440×2036 | `25:4834` |
+| CA10 | Dosing pump DP-25 — read-only viewer, supplier pricing restricted, full length | Lee Nakamura | Desktop | 1440×1747 | `25:5436` |
+| CA11 | Circulation pump CP-40 — Availability and Inventory, read only, full length | Robin Hale | Desktop | 1440×1505 | `25:6018` |
+| CA14 | Products — the Sales view, bounded read | Dean Fiedler | Desktop | 1440×1096 | `25:6579` |
+| CA12 | New catalogue draft — panel over the catalogue | Sam Jordan | Dialog or panel | 1440×1332 | `25:7380` |
+| X01 | New draft revision — dialog on Dosing pump DP-12 | Sam Jordan | Dialog or panel | 1440×991 | `25:8412` |
+| X02 | Link an image — dialog on the draft DP-25 · 25 L/h | Sam Jordan | Dialog or panel | 1440×1057 | `25:8913` |
+| X03 | Add a document reference — dialog on the draft DP-25 · 25 L/h | Sam Jordan | Dialog or panel | 1440×1057 | `25:9462` |
+| X04 | Set an attribute's evidence — dialog, Unresolved with its clarification owner | Sam Jordan | Dialog or panel | 1440×1079 | `25:9974` |
+| X15 | Filters — panel over the catalogue | Sam Jordan | Dialog or panel | 1440×1300 | `26:19820` |
+| X16 | Columns — panel, reorder, show or hide and density | Sam Jordan | Dialog or panel | 1440×1235 | `26:20817` |
+| X17 | Export — dialog, permitted rows only | Sam Jordan | Dialog or panel | 1440×947 | `26:21879` |
+| X18 | Saved view — dialog | Sam Jordan | Dialog or panel | 1440×952 | `26:22827` |
+| X19 | Keyboard shortcuts — dialog | Sam Jordan | Dialog or panel | 1440×1108 | `26:23770` |
+| CA13 | Catalogue states — full length | Sam Jordan | States | 1440×1530 | `27:10459` |
+| PS01 | Catalogue page states — full length | Sam Jordan | States | 1440×1538 | `27:10833` |
+| TB01 | Catalogue — 50 shown, full length, tablet 1024 | Sam Jordan | Tablet | 1024×2358 | `17:2911` |
+| TB02 | Dosing pump DP-25 — Technical, r03 · T2 Published, full length, tablet 1024 | Sam Jordan | Tablet | 1024×1792 | `26:31109` |
+| PH01 | Catalogue list — phone 390 | Sam Jordan | Phone | 390×911 | `17:5064` |
+| PH01-320 | Catalogue list — phone 320 | Sam Jordan | Phone | 320×844 | `27:11666` |
+| PH02 | Dosing pump DP-25 — record, full length, phone 390 | Sam Jordan | Phone | 390×844 | `17:5262` |
+| PH02-320 | Dosing pump DP-25 — record, full length, phone 320 | Sam Jordan | Phone | 320×866 | `27:11801` |
+| PH03 | Dosing pump DP-25 — Technical attributes, phone 390 | Sam Jordan | Phone | 390×844 | `27:11199` |
+| PH04 | Dosing pump DP-25 — Revisions, phone 390 | Sam Jordan | Phone | 390×844 | `27:11330` |
+| PH05 | SM-120 motor assembly — Used in, phone 390 | Sam Jordan | Phone | 390×844 | `27:11451` |
+| PH06 | Circulation pump CP-60 — not linked to Inventory, no image, phone 390 | Sam Jordan | Phone | 390×844 | `27:11556` |
+
+Page assumptions: CA03 is a later frame at 09:50 so its primary can be New draft revision; the record tabs span the full content width. A-CAA1 the Revisions grid on CA04 shows chip, state, author, reviewer, publisher and Open, with dates in the History list under it. A-CAA2 DP-25 r01 and r02 name Casey Quinn as reviewer and Sam Jordan as publisher. A-CAA3 New draft revision is disabled for Sam Jordan on Alex Lee's product (CA06), with the reason. A-CAA4 CA05 opens on Used in with a strip naming the asset it was opened from. A-CAA5 to A-CAA6 the DP-12 document details and CP-60's draft values are illustrative. A-CAA7 CA09's two delivery profiles (`SYN-PROFILE-014@1` Installation, `SYN-PROFILE-015@1` Commissioning) are illustrative: the delivery-profile documents give no CP-40 values. A-CAA8 the read-only viewer keeps Outputs but has no Actions or primary. A-CAA9 CA11 takes the accepted r02 capture's values. A-CAA10 the bounded-read sentence leads CA14's facts strip. A-CAA11 TB02 shows the published basis r03 at 09:00 with the notice, primary "Open r04 in review".
+
+### Publication · PD-02
+
+Page `9:5` · `scope:PD-02`, `/products/publication` · 21 sheets · notes card `35:7333`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| PB01 | Publication queue — 24 shown, grouped by state, full length | Sam Jordan | Desktop | 1440×2165 | `28:16365` |
+| PB02 | Authoring form — DP-25 r04, successor of r03, full length · earlier frame 08:48 | Sam Jordan | Desktop | 1440×2443 | `28:17659` |
+| PB03 | Comparison — DP-25 r04 against the published r03, Submitted | Sam Jordan | Desktop | 1440×1276 | `28:18393` |
+| PB05 | Review a frozen submission — DP-25 r04 · later frame 09:30 | Casey Quinn | Desktop | 1440×1259 | `32:1592` |
+| PB07 | Dosing pump DP-25 — r04 Published, superseding r03 · later frame 09:50 | Sam Jordan | Desktop | 1440×1124 | `32:2112` |
+| PB08 | EC and pH kit ECP-2 — r01 Returned | Priya Nair | Desktop | 1440×1243 | `32:2640` |
+| PB04 | Submit for review — DP-25 r04 · earlier frame 08:50 | Sam Jordan | Dialog or panel | 1440×901 | `32:3122` |
+| PB06 | Publish — DP-25 r04 · later frame 09:45 | Sam Jordan | Dialog or panel | 1440×982 | `32:3587` |
+| PB09 | Withdraw — CC-8 r05, what-if | Alex Lee | Dialog or panel | 1440×900 | `32:4076` |
+| X05 | Return with a reason — ECP-2 r01 · earlier frame Wed 4 Nov 15:00 | Casey Quinn | Dialog or panel | 1440×900 | `32:4473` |
+| X06 | Check publication status — DP-25 r04 · later frame 09:45 | Sam Jordan | Dialog or panel | 1440×900 | `32:4870` |
+| PB10 | Refusals | Sam Jordan | States | 1440×909 | `35:4275` |
+| PB11 | Publication not confirmed — DP-25 r04 · later frame 09:45 | Sam Jordan | States | 1440×900 | `35:4565` |
+| PB12 | New product and draft successor | Sam Jordan | States | 1440×900 | `35:4945` |
+| PS02 | Publication page states | Sam Jordan | States | 1440×1190 | `35:5191` |
+| TB03 | Publication queue — tablet 1024, full length | Sam Jordan | Tablet | 1024×1604 | `35:5499` |
+| TB04 | Review a frozen submission — tablet 1024 · later frame 09:30 | Casey Quinn | Tablet | 1024×1049 | `35:6622` |
+| PH07 | Review and approve — DP-25 r04, phone 390 · later frame 09:30 | Casey Quinn | Phone | 390×844 | `35:6957` |
+| PH07-320 | Review and approve — DP-25 r04, phone 320 · later frame 09:30 | Casey Quinn | Phone | 320×844 | `35:7239` |
+| PH08 | Outcome sheet — Reviewed recorded, phone 390 · later frame 09:30 | Casey Quinn | Phone | 390×844 | `35:7052` |
+| PH09 | Comparison — r04 against r03, phone 390 | Casey Quinn | Phone | 390×844 | `35:7135` |
+
+Page assumptions: A-PB1 PB02 is an earlier frame at 08:48; PB05, TB04 and the phone review are later frames at 09:30; PB06, PB11 and X06 at 09:45; PB07 at 09:50. A-PB2 the author publishes after an independent review (PD-02 Q3); seed 52 gives publish to a separate duty. A-PB3 PB09 Withdraw is a what-if on CC-8 r05. A-PB4 X05 shows Casey Quinn returning ECP-2 r01 as an earlier frame, Wed 4 Nov 2026, 15:00. A-PB5 the comparison hides the 11 unchanged fields behind "Show unchanged".
+
+### Pricing · PD-03
+
+Page `9:6` · `scope:PD-03`, `/products/pricing` · 19 sheets · notes card `38:6132`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| PP01 | Dosing pump DP-25 r03 — pricing, full length | Priya Nair | Desktop | 1440×1539 | `21:2975` |
+| PP06 | Pricing worklist — no product chosen, 3 shown | Priya Nair | Desktop | 1440×1058 | `21:3560` |
+| PP09 | ClimaLogic CX4 r02 — foreign currency as recorded | Priya Nair | Desktop | 1440×1178 | `21:4116` |
+| PP12 | Priva fertigation controller · 4 dosing channels r02 — pricing | Priya Nair | Desktop | 1440×1108 | `21:4626` |
+| PP02 | Dosing pump DP-25 — revision switcher open · later frame 09:50 | Priya Nair | Dialog or panel | 1440×900 | `24:1701` |
+| PP03 | Bind a cost source — equal units, DP-25 r04 · later frame 10:10 | Priya Nair | Dialog or panel | 1440×1095 | `24:2234` |
+| PP04 | Bind a cost source — unit mismatch · earlier frame Tue 3 Nov 2026, 11:05 | Priya Nair | Dialog or panel | 1440×1127 | `24:2699` |
+| PP05 | Affected estimates — DP-25 r03, estimates known to you | Priya Nair | Dialog or panel | 1440×900 | `24:3236` |
+| PP08 | Dosing pump DP-25 r03 — Mapped row menu and History | Priya Nair | Dialog or panel | 1440×1004 | `26:3061` |
+| PP10 | Price check and validity timeline — F1 and F2 | Priya Nair | Dialog or panel | 1440×900 | `26:3605` |
+| X07 | Ask Estimating to review the source — follow-up | Priya Nair | Dialog or panel | 1440×943 | `26:4161` |
+| X08 | Record an Unresolved binding — confirm · earlier frame Tue 3 Nov 2026, 11:05 | Priya Nair | Dialog or panel | 1440×921 | `26:4705` |
+| PP07 | Pricing — restricted | Lee Nakamura | States | 1440×900 | `38:4437` |
+| PP11 | Pricing states | Priya Nair | States | 1440×1056 | `38:4823` |
+| PS03 | Pricing page states | Priya Nair | States | 1440×1019 | `38:5124` |
+| TB05 | Dosing pump DP-25 r03 — pricing, tablet 1024 | Priya Nair | Tablet | 1024×1023 | `38:5421` |
+| PH10 | Pricing summary — DP-25 r03, phone 390, read only | Priya Nair | Phone | 390×844 | `38:5859` |
+| PH11 | Unresolved source — SYN-SRC-000025 r1, phone 390, read only | Priya Nair | Phone | 390×844 | `38:5943` |
+| PH12 | Restricted pricing — phone 390 | Lee Nakamura | Phone | 390×844 | `38:6036` |
+
+Page assumptions: A-PP1 the CX4 FX date reads Tue 3 Nov 2026 (A17). A-PP2 Priya Nair binds, satisfying the seed's author duty and PD-03 Q1. A-PP3 the worklist holds three rows: Unresolved 1, Expired 1, Unknown 1. A-PP4 the binding made at 10:10 to r04 is a labelled later frame.
+
+### Compatibility · PD-04
+
+Page `9:7` · `scope:PD-04`, `/products/compatibility` · 20 sheets · notes card `28:16336`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| PC01 | Compatibility — relationship register, 11 shown, full length | Alex Lee | Desktop | 1440×1371 | `23:296` |
+| PC02 | Compare — DP-12 r04, DP-25 r04 and MD-20 r03 | Sam Jordan | Desktop | 1440×1281 | `23:1029` |
+| PC03 | Relationship SYN-PRL-000014 — DP-25 r03 Alternative to MD-20 r03, Unresolved, full length | Sam Jordan | Desktop | 1440×2133 | `23:1539` |
+| PC05 | Replacement chains — ClimaLogic CX2 → CX4 with IO4-16 | Sam Jordan | Desktop | 1440×1643 | `23:2141` |
+| PC06 | Relationship SYN-PRL-000011 — FV-32 r02 Alternative to FV-20 r02, Needs reassessment | Sam Jordan | Desktop | 1440×1864 | `25:11844` |
+| PC07 | Handovers from Compatibility — EN-06, EQ-07 and EN-07 cards | Sam Jordan | Desktop | 1440×1046 | `25:12407` |
+| PC04 | Review with conditions — SYN-PRL-000017, Contactor 25 A Replaces Contactor 18 A · earlier frame Wed 4 Nov 2026, 11:00 | Alex Morgan | Dialog or panel | 1440×1127 | `26:27485` |
+| PC08 | New relationship — panel over the register, starter criteria for valves | Sam Jordan | Dialog or panel | 1440×1270 | `26:27987` |
+| PC09 | Lifecycle on a product revision — ClimaLogic CX2 r05, Last-time buy, panel | Alex Lee | Dialog or panel | 1440×1148 | `26:28797` |
+| X09 | Record criteria — Flow at the duty point, for a successor of SYN-PRL-000014, dialog | Sam Jordan | Dialog or panel | 1440×977 | `26:29306` |
+| X10 | Hand over to EN-06 — SYN-PRL-000017, evidence only, dialog · earlier frame Wed 4 Nov 2026, 14:00 | Alex Lee | Dialog or panel | 1440×936 | `26:29828` |
+| X11 | Compare — choose two to four exact revisions, dialog | Sam Jordan | Dialog or panel | 1440×990 | `26:30317` |
+| PC10 | Compatibility states — units, evidence, uses, reviewer, compare limit, Conditional | Sam Jordan | States | 1440×950 | `25:12801` |
+| PC11 | A successor that is not a substitute — SYN-PRL-000007, SM-120 r02 Replaces SM-90 r03, Conditional | Alex Lee | States | 1440×1511 | `25:13104` |
+| PS04 | Compatibility page states — loading, empty, failed, denied, view only, conflict, limit, outcome unknown | Sam Jordan | States | 1440×1422 | `25:13626` |
+| TB06 | Compatibility — relationship register, 11 shown, full length, tablet 1024 | Alex Lee | Tablet | 1024×1205 | `28:15031` |
+| TB07 | Replacement chains — ClimaLogic CX2 → CX4 with IO4-16, tablet 1024 | Sam Jordan | Tablet | 1024×1496 | `28:15727` |
+| PH13 | What replaces this product — ClimaLogic CX2, full length, phone 390 | Sam Jordan | Phone | 390×979 | `28:16072` |
+| PH13-320 | What replaces this product — ClimaLogic CX2, full length, phone 320 | Sam Jordan | Phone | 320×1079 | `28:16247` |
+| PH14 | Relationship summary — SYN-PRL-000014, full length, phone 390 | Sam Jordan | Phone | 390×849 | `28:16162` |
+
+Page assumptions: A-PC1 `SYN-PRL-` with the accepted numbers 000006 to 000016. A-PC2 the register opens with the 12 px collapsed strip; records, Compare, chains and handovers open with the docked menu. A-PC3 "Awaiting review" is the display word for a recorded successor before its first review. A-PC4 Needs reassessment is raised when a newer revision of either product is Reviewed; DP-25 r04 is only Submitted at 09:00, so SYN-PRL-000014 stays Unresolved with "Newer revision exists". A-PC5 Compare names each revision's state. A-PC6 DP-12 and MD-20 values, criterion values and some recording times are invented for the drawing. A-PC7 a criterion's values are recorded on the relationship with their own evidence. A-PC8 the EQ-07 handover of SYN-PRL-000007 is drawn as taken up. A-PC9 X10 is at Wed 4 Nov 2026, 14:00. A-PC10 PC06 keeps Reassess… as the owner's primary. A-PC11 PS04 adds two tiles. A-PC12 phone sheets carry no Build difference card. A-PC13 the Last-time buy nudge goes to the product owner, Alex Lee.
+
+### Import · PD-05
+
+Page `9:8` · `scope:PD-05`, `/products/import` · 19 sheets · notes card `39:5296`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| PI01 | Import — history, grouped, no counts | Priya Nair | Desktop | 1440×915 | `24:3792` |
+| PI02 | Import — stage a file | Priya Nair | Desktop | 1440×1041 | `24:4297` |
+| PI03 | Import — map rows, dosetech-2026-11-04.json, full length | Priya Nair | Desktop | 1440×1386 | `28:3277` |
+| PI05 | Import — plan summary, nfs-dosing-2026-10-12.json plan 3 · earlier frame Wed 14 Oct 2026 | Priya Nair | Desktop | 1440×1281 | `24:5252` |
+| PI06 | Import — review, plan 2 returned · earlier frame Tue 13 Oct 2026 | Casey Quinn | Desktop | 1440×1537 | `26:8227` |
+| PI07 | Import — plan 3 submitted and reviewed · earlier frame Wed 14 Oct 2026 | Priya Nair | Desktop | 1440×1545 | `26:8695` |
+| PI09 | Import — applied result, nfs-dosing-2026-10-12.json | Priya Nair | Desktop | 1440×1376 | `26:9206` |
+| PI04 | Import — row detail, row 5 (panel) | Priya Nair | Dialog or panel | 1440×1215 | `28:3830` |
+| PI08 | Import — apply confirmation · earlier frame Thu 15 Oct 2026, 10:08 | Priya Nair | Dialog or panel | 1440×1023 | `28:4478` |
+| X12 | Import — submit a plan for review (dialog) · earlier frame Wed 14 Oct 2026 | Priya Nair | Dialog or panel | 1440×904 | `28:5018` |
+| X13 | Import — review a plan (dialog) · earlier frame Wed 14 Oct 2026 | Casey Quinn | Dialog or panel | 1440×1004 | `28:5461` |
+| X14 | Import — abandon an import (dialog) · earlier frame Fri 9 Oct 2026 | Priya Nair | Dialog or panel | 1440×900 | `28:5913` |
+| PI10 | Import — abandoned, nfs-dosing-2026-10-09.json, read only | Priya Nair | States | 1440×937 | `26:9804` |
+| PI11 | Import — exception states in plain words | Priya Nair | States | 1440×1768 | `26:10218` |
+| PS05 | Import — page states | Priya Nair | States | 1440×1184 | `26:10614` |
+| TB08 | Import — map rows, dosetech-2026-11-04.json, full length, tablet 1024 | Priya Nair | Tablet | 1024×1331 | `28:6302` |
+| PH15 | Import summary and review — Northgate plan 3, phone 390 · earlier frame Wed 14 Oct 2026 | Casey Quinn | Phone | 390×844 | `39:5033` |
+| PH15-320 | Import summary and review — Northgate plan 3, phone 320 · earlier frame Wed 14 Oct 2026 | Casey Quinn | Phone | 320×844 | `39:5214` |
+| PH16 | Mapping is a desktop task — dosetech-2026-11-04.json, phone 390 | Priya Nair | Phone | 390×844 | `39:5116` |
+
+Page assumptions: A-PI1 the Northgate sheets are earlier frames on Tue 13 to Thu 15 Oct 2026. A-PI2 "In review" is the display word for a submitted plan; the build has no such state. A-PI3 counts on a plan are numbers of rows in that plan, never totals of the catalogue.
+
+### Interaction states · PD
+
+Page `9:9` · app-wide states for the Products pages · 3 sheets · notes card `28:10417`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| ST01 | Interaction states — chips, words and Products parts | Sam Jordan | Desktop | 1440×3486 | `28:7580` |
+| ST02 | Interaction states — the register standard | Sam Jordan | Desktop | 1440×2789 | `28:8564` |
+| ST03 | Interaction states — buttons, focus, keyboard and contrast | Sam Jordan | Desktop | 1440×3181 | `28:9346` |
+
+Page assumptions: The prompt's ST01 is drawn as ST01, ST02 and ST03 so each stays readable; the other four sections are intentionally empty.
+
+### Administration · PD
+
+Page `9:10` · proposed Products settings, reached from Settings · 6 sheets · notes card `28:21988`.
+
+| Code | Sheet | Person | View | Size | Node |
+|---|---|---|---|---|---|
+| AD01 | Products settings hub | Dean Fiedler | Desktop | 1440×1998 | `28:19457` |
+| AD02 | Kinds, attributes and evidence words | Dean Fiedler | Desktop | 1440×2188 | `28:19884` |
+| AD03 | Lifecycle, relationship words and starter criteria | Dean Fiedler | Desktop | 1440×1848 | `28:20322` |
+| AD04 | Publication rules | Dean Fiedler | Desktop | 1440×2153 | `28:20745` |
+| AD05 | Pricing rules | Dean Fiedler | Desktop | 1440×1685 | `28:21127` |
+| AD06 | Import format, numbering, notifications and views | Dean Fiedler | Desktop | 1440×2563 | `28:21493` |
+
+Page assumptions: Dean Fiedler administers Products settings (an assumption); purposes, audiences and withdrawal reasons are starting lists while the build stores free text; required attributes are named for Dosing pumps and Sensors only; the people beside each capability are personas, while seed 52 names four duties. The other four sections are intentionally empty.
+
+### Read me and Shell and kit
+
+Read me (page `0:1`): header card `40:293`, page template card `40:297`, sheet index and notes `40:300`, audit `40:336`. Shell and kit (page `9:11`): shell components `9:81`, Sales kit `9:82`, icons `9:83`, tablet and phone chrome `9:84`, Products parts `11:299`; the derived docked Sales menu with Products current `9:1679`, rail with More current `9:1024` and rail with Settings current `19:333`. Hidden build-time helper nodes sit in the kit section and are not part of the design.
+
+In all: 122 sheets and 7 notes cards on seven scope pages.
 
 ## 4. Rules applied
 
@@ -160,7 +351,17 @@ Navigation also differs: `src/shell/navigation.ts` lists Products eleventh on th
 
 ## 7. Verification
 
-Completed with the build.
+Checks were run by script inside the file after the last sheet was drawn, page by page.
+
+- **Structural pass and position audit.** Every scope page was re-gridded and refitted (sections 360 px apart, 60 px padding, labels at y − 26 truncated to the sheet's width). On all seven pages: no sheet outside its section, no child outside its sheet, no overlap between sheets, labels or sections, nothing loose on a page, every sheet labelled with its code and signed-in person, and Roboto the only font family. The pass found six phone sheets whose sticky action bar sat 1 px outside the sheet; they were corrected (section 10.1, C2) and the pass then reported no issue. The separator pages and Scratch are empty.
+- **Evidence scan.** 17,371 text nodes were scanned for earlier fixtures (`SYN-REL-`, `SYN-PRD-`, `SYN-PROD-` aliases, `SYN-PPO-`, Kim Patel, Alex Nguyen, Priya Shah, Jordan Hale and Morgan Lee as product people, "Synthetic Company A", Brisbane time), ISO dates outside file names, gendered pronouns and the forbidden words. Five hits remain, all inside quoted rules or notes that name an earlier fixture: "expiring soon" three times in the rule that forbids it, "Mon 3 Nov" in A-PP1, and `SYN-REL-` in A-PC1. References found: `SYN-PROD-000001` to `000035` and `000041` to `000055`; `SYN-PRL-000006`, `000007` and `000009` to `000017`; `SYN-SRC-000024` to `000029`; `SYN-EST-000144`, `SYN-EST-000312`; `SYN-QUO-000214`; `SYN-AST-000102`, `000214`, `000219`, `000221`; `SYN-ECR-000014`, `SYN-SMT-000011`, `SYN-RCT-000081`, `SYN-ACR-000906`. Each matches the prompt's dataset and Addendum A3.13.
+- **Counts.** The dataset was generated once and asserted before drawing: 50 products (Families 9, Models 35, Variants 6; Published 40, Draft 6, Submitted 1, Reviewed 1, Returned 1, Withdrawn 1; Current 42, Last-time buy 1, Discontinued 2, Unknown 5; 34 with an image), a publication queue of 24, 7 bindings (Mapped 6 after 10:10), 11 relationships (Needs reassessment 1, Unresolved 1, Not reviewed 2, Awaiting review 1, Conditional 4, Rejected 2) and 4 import files. Footers read "N shown · limit 100 · … · no total is claimed"; no menu shows a count.
+- **Build-difference check.** Every desktop, dialog and state sheet carries a Build difference card, as do the tablet sheets except TB01 and TB04, whose differences are those of CA01 and PB05. Phone sheets carry none (the card is 720 px wide); their differences are those of the desktop sheets they follow. Every card item is classed UI change or Contract change and appears in section 6.
+- **Contrast.** ST03 computes 20 colour pairs from the "PPO colour" variables, text pairs against 4.5:1 and interface edges against 3:1. All 20 read Pass.
+- **Renders.** Sheets were rendered and read on every page, among them CA01 to CA03, CA09, the phone and tablet catalogue, PB05, PB06, PC01, PI03 and AD01, and the Read me page.
+- **Repository.** `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py` pass. No Figma link or file key is recorded.
+
+Limits. The sheets were drawn by this session and by seven drawing agents working in parallel from one written brief, one helper library and one generated dataset. All seven agents stopped early when the session's usage credits ran out; this session then drew the 28 sheets and 3 notes cards still missing on the Publication, Pricing and Import pages, and checked every page with the pass above. The four notes cards written by the agents carry their own page assumptions (section 3). Version history and named versions cannot be read with the tools used. The frozen "PPO - Design" file was not opened; its retained captures were read. Addenda A1 and A2 were not supplied as files; their repository sources (shell rules R116 to R125 and the readable-reference decision) were used.
 
 ## 8. Not drawn and open questions
 
@@ -174,9 +375,52 @@ Completed with the build.
 
 Design only: no application code, route, migration, permission or integration. The design register, the Products scope pages and the page guidance follow in their own change (A24). The Sales file's PR01 and TB08, and the product rows of the Estimating, Supply, Engineering and Customers, sites and equipment files, align where Addendum A3.13 corrected them, each in that file's own batch. A named version is Dean's to save; any design change after it needs a new one ([named-version handoff](figma-named-version-build-handoff.md), rule 5).
 
-## 10. Audit
+## 10. Audit — 12 November 2026
 
-Completed with the build.
+Every page was read against first impression, usability, hierarchy, consistency and accessibility, and for Products against five questions: can a reader tell at a glance which exact revision is shown, what is evidence and what is unresolved, who acted, and that nothing here approves an installation, prices saved work or merges records? Corrections of errors were made in the file; the rest waits for Dean.
+
+### 10.1 Corrected in the file (C)
+
+| ID | Correction |
+|---|---|
+| C1 | The SVG import of the icons left a 24 × 24 background shape in 101 icon masters, which drew a solid square in every recoloured instance. The shape was removed from each master |
+| C2 | The phone sticky action bar measured 73 px with its top border inside its layout and sat 1 px outside six phone sheets (PH07, PH08, PH07-320, PH13, PH14, PH13-320). The border was taken out of the layout and the helper corrected |
+| C3 | PH01's phone tab bar marked Deals as current; Products opens from More on the phone, so More is current |
+| C4 | CA02 was rebuilt at 900 px with its Build difference card inside the content, where it had floated over the grid |
+
+### 10.2 Coverage
+
+All 30 scenarios of the prompt have a sheet: S-01 CA01 · S-02 CA02 · S-03 CA03 · S-04 CA04 · S-05 CA06 · S-06 CA08, CA10 · S-07 PB01 · S-08 PB02, PB04 · S-09 PB03, PB05 · S-10 PB06, PB07 · S-11 PB08, X05 · S-12 PB10 · S-13 PB09 · S-14 PB11, X06 · S-15 PP01 · S-16 PP02, PP03 · S-17 PP04 · S-18 PP05 · S-19 PP06, PP09 · S-20 PP07 · S-21 PC01 · S-22 PC02 · S-23 PC03 · S-24 PC04, PC07 · S-25 PC05, PC07 · S-26 PC06 · S-27 PI01 · S-28 PI02, PI03 · S-29 PI05 to PI09 · S-30 CA05, CA11. The prompt's minimums are met: 34 dialogs and panels (24 asked), page-state boards on every scope page, 8 tablet sheets (the eight it names), 16 phone sheets at 390 px and 5 at 320 px, 6 administration sheets, and the interaction states. Product touchpoints of the other modules are shown where the page hands to them: CPQ and quotations (PP12, PB07), cost sources (PP01 to PP05, X07), Inventory (CA02, CA11), EN-06 and EN-07 (PC04, PC07, X10), EQ-07 (PC05, PC07, PC11), Mappings AD-05 (CA11, the N-P12 proposal).
+
+### 10.3 Refinements (R)
+
+| ID | Refinement | Recommendation |
+|---|---|---|
+| R1 | Record sub-lines carry long chains of facts | Cut each to one clause and move the rule text into the information popover, as the Sales file did (its R11) |
+| R2 | Build difference cards make most sheets taller than 900 px | Keep them on a separate layer that can be hidden for stakeholder reviews |
+| R3 | The Sales phone tab bar has no Products entry | More could list recent products |
+| R4 | CA09's delivery profiles are illustrative rows | Replace them with the adopted extension's own CP-40 values when its record gives them |
+| R5 | The queue's "In state" column holds a duration for open revisions and a date for published ones | Split the date into its own column if Dean prefers |
+
+### 10.4 Gaps (G)
+
+G1 dark mode is not drawn. G2 200 % reflow and keyboard-only completion are specified in words on ST02 and ST03, not drawn step by step. G3 offline on the phone is a state tile, not a full sheet. G4 tablet variants exist for the eight sheets the prompt names, not for every desktop sheet.
+
+### 10.5 New features (N)
+
+Integrated as drawn: N-P1 the unit check on every binding, N-P2 duplicate suggestions that ignore case, spaces and hyphens, N-P3 Needs reassessment raised when a revision changes, N-P4 the comparison of a successor against its published basis. Proposed, each with a "Proposed · not accepted" chip: N-P5 an identifier allocator (AD06), N-P6 image renditions (CA03), N-P7 validity alerts (PP06), N-P8 starter criteria per product kind (PC08), N-P9 installed-base impact for a Last-time buy product (PC05), N-P10 price check F3 and worklist F4 (PP06), N-P11 CSV import with the same plan and review (PI02), N-P12 MYOB item mapping status beside Availability (CA11). Not proposed, and recorded so: automatic publication, unit or currency conversion, totals, merging similar records, repricing saved work.
+
+### 10.6 Professional polish (P)
+
+P1 the kit components keep their "Sales / …" names so the module files converge; rename them when PPO - Library is adopted. P2 icons are Lucide stand-ins for Font Awesome Light until publication. P3 some sheet labels are truncated at the sheet's width by design; the frame name holds the full label.
+
+### 10.7 Recommended order
+
+1. Dean reviews the flagship journeys (CA01 to CA03, PB01 to PB07, PP01 to PP04, PC03 to PC07, PI03 to PI09) and accepts or redirects.
+2. Apply R1 and R2.
+3. Dean saves a named version.
+4. Hand section 6 to Codex in order: UI changes first, then the contract changes, each as its own authorised step.
+5. Align the Sales file's PR01 and TB08, and the product rows of the Estimating, Supply, Engineering and Customers, sites and equipment files, in their own batches.
 
 ## 11. Named version
 
