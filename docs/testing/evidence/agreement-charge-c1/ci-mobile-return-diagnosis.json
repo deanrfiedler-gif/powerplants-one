@@ -1,0 +1,270 @@
+{
+  "source_head": "b2b5e125ac20f6f70ec3e2b7f50fb778fe9e8dd7",
+  "workflow_run": 43152130675,
+  "original_job": 130963585619,
+  "attempt": 1,
+  "artifact": {
+    "id": 13916555700,
+    "name": "compiled-application-browser-mobile-2-evidence",
+    "bytes": 72982383,
+    "sha256": "d7cd65464fba19ac3f3e2bcf11f8887d4dd019c2a0aef141c4908e06ddce14a5",
+    "download_verified": "2026-11-12",
+    "archive_members": 1188,
+    "raw_trace_retained": false
+  },
+  "original_result": {
+    "passed": 368,
+    "skipped": 49,
+    "failed": 1,
+    "flaky": 0
+  },
+  "case": {
+    "file": "tests/browser/mobile-crm.spec.ts",
+    "assertion_line": 20,
+    "project": "mobile-chromium",
+    "start_utc": "2026-11-12T04:08:48.946Z",
+    "duration_ms": 120235,
+    "timeout_ms": 120000,
+    "observed_page": "Completed Activity; Return to opportunity and plan follow-up link focused; no Activities tab"
+  },
+  "transport": {
+    "source": "verification-evidence/transport-diagnostics/process-5974.jsonl",
+    "sha256": "567b46b15fc360a37d6da71546a97d2bdaeba7968aa098155e56fa7468a9d475",
+    "window_ms": 120000,
+    "completed_requests": 128,
+    "statuses": {
+      "200": 125,
+      "201": 1,
+      "308": 2
+    },
+    "max_response_ms": 250.75917399999162,
+    "unfinished_requests": 0,
+    "opportunity_detail_reads": [
+      {
+        "at_ms": 1794456529558,
+        "elapsed_ms": 89.85960399999749,
+        "status": 200
+      }
+    ],
+    "api_responses": [
+      {
+        "at_ms": 1794456529042,
+        "path": "/api/v1/local-session",
+        "status": 200,
+        "elapsed_ms": 4.465328999998746
+      },
+      {
+        "at_ms": 1794456529125,
+        "path": "/api/v1/crm/opportunities",
+        "status": 201,
+        "elapsed_ms": 78.04249199999322
+      },
+      {
+        "at_ms": 1794456529387,
+        "path": "/api/v1/local-session",
+        "status": 200,
+        "elapsed_ms": 2.96923699999752
+      },
+      {
+        "at_ms": 1794456529488,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 22.278866000007838
+      },
+      {
+        "at_ms": 1794456529558,
+        "path": "/api/v1/crm/opportunities/:id",
+        "status": 200,
+        "elapsed_ms": 89.85960399999749
+      },
+      {
+        "at_ms": 1794456529593,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 11.719291999994311
+      },
+      {
+        "at_ms": 1794456529596,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 16.669074999997974
+      },
+      {
+        "at_ms": 1794456529605,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 16.0682519999973
+      },
+      {
+        "at_ms": 1794456529673,
+        "path": "/api/v1/crm/:other",
+        "status": 200,
+        "elapsed_ms": 89.08741799999552
+      },
+      {
+        "at_ms": 1794456529755,
+        "path": "/api/v1/work/:other",
+        "status": 200,
+        "elapsed_ms": 7.572390000001178
+      },
+      {
+        "at_ms": 1794456529779,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 37.687615999995614
+      },
+      {
+        "at_ms": 1794456529788,
+        "path": "/api/v1/activities/:id",
+        "status": 200,
+        "elapsed_ms": 43.58182599999418
+      },
+      {
+        "at_ms": 1794456529804,
+        "path": "/api/v1/work/:other",
+        "status": 200,
+        "elapsed_ms": 58.01148299999477
+      },
+      {
+        "at_ms": 1794456529878,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 71.35969199999818
+      },
+      {
+        "at_ms": 1794456529993,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 41.597418000004836
+      },
+      {
+        "at_ms": 1794456530037,
+        "path": "/api/v1/activities/:id",
+        "status": 200,
+        "elapsed_ms": 33.64978599999449
+      },
+      {
+        "at_ms": 1794456530059,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 250.75917399999162
+      },
+      {
+        "at_ms": 1794456530238,
+        "path": "/api/v1/local-session",
+        "status": 200,
+        "elapsed_ms": 17.06055199999537
+      },
+      {
+        "at_ms": 1794456530331,
+        "path": "/api/v1/work/:other",
+        "status": 200,
+        "elapsed_ms": 17.29608200000075
+      },
+      {
+        "at_ms": 1794456530331,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 29.245051999998395
+      },
+      {
+        "at_ms": 1794456530387,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 82.80796600000758
+      },
+      {
+        "at_ms": 1794456530413,
+        "path": "/api/v1/activities/:id",
+        "status": 200,
+        "elapsed_ms": 102.52136699999392
+      },
+      {
+        "at_ms": 1794456530453,
+        "path": "/api/v1/work/:other",
+        "status": 200,
+        "elapsed_ms": 140.84468399999605
+      },
+      {
+        "at_ms": 1794456530490,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 55.7640570000076
+      },
+      {
+        "at_ms": 1794456530657,
+        "path": "/api/v1/:other/:other",
+        "status": 200,
+        "elapsed_ms": 220.01846999999543
+      },
+      {
+        "at_ms": 1794456540400,
+        "path": "/api/v1/:other",
+        "status": 200,
+        "elapsed_ms": 47.624496000004
+      },
+      {
+        "at_ms": 1794456545461,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 25.807260999979917
+      },
+      {
+        "at_ms": 1794456560485,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 48.9390859999985
+      },
+      {
+        "at_ms": 1794456575479,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 43.954226000001654
+      },
+      {
+        "at_ms": 1794456590490,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 54.36630199998035
+      },
+      {
+        "at_ms": 1794456605480,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 45.105710000003455
+      },
+      {
+        "at_ms": 1794456620481,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 45.78916299997945
+      },
+      {
+        "at_ms": 1794456635480,
+        "path": "/api/v1/activities/:id/:other",
+        "status": 200,
+        "elapsed_ms": 44.647071000013966
+      }
+    ]
+  },
+  "retained_files": {
+    "ci-mobile-return-timeout.png": "cbf4c09a7a41f6e7569e60d4dd0e619797710ebcfc3685a4bfb100557249e553",
+    "ci-mobile-return-error-context.md": "1baede49283d48fb89a09f35e2e68d16703deb5be3ed930e82ce44276200805b"
+  },
+  "conclusion": "Return transition did not reach the Deal view. Retained evidence does not identify the browser event sequence or establish a root cause. Layout movement, navigation cancellation and client router failure remain hypotheses. No runtime fix or full scenario acceptance is claimed.",
+  "unchanged_head_retry": {
+    "job": 130989786847,
+    "run": 43152130675,
+    "passed": 369,
+    "skipped": 49,
+    "failed": 0,
+    "suite_minutes": 41.3,
+    "original_case_seconds": 3.3,
+    "result": "success; non-reproduction, not root-cause evidence",
+    "observed_utc": "2026-11-12T06:05:00Z",
+    "incoming_workflow_summaries": {
+      "total": 23,
+      "success": 23
+    }
+  }
+}

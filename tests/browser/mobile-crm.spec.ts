@@ -1,6 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import { CRM, crmCreate } from "../helpers/crm";
 import { estimateInput } from "../helpers/estimating";
+import { crmReturnDiagnostics } from "../helpers/crm-return-diagnostics";
 test.describe.configure({ timeout:120000 });
 async function call(page:Page,path:string,body?:unknown) {
   const r=await page.request.fetch(`/api/v1/${path}`,{method:body===undefined?"GET":"POST",headers:body===undefined?{}:{Origin:new URL(test.info().project.use.baseURL!).origin},data:body});
@@ -15,9 +16,17 @@ test("mobile CRM completion, Brisbane follow-up and record links persist through
   await page.getByLabel("Reason for change",{exact:true}).fill("SYN Customer discussion completed");
   await page.getByRole("button",{name:"Complete with outcome",exact:true}).click();
   await expect(page.getByText("Completed",{exact:true}).first()).toBeVisible();
-  await page.reload();
-  await page.getByRole("link",{name:"Return to opportunity and plan follow-up"}).click();
-  await page.getByRole("tab",{name:"Activities",exact:true}).click();
+  const navigation = await crmReturnDiagnostics(page, info, input.initial_action.id, input.id);
+  try {
+    await page.reload();
+    navigation.mark("before-return-click");
+    await page.getByRole("link",{name:"Return to opportunity and plan follow-up"}).click();
+    navigation.mark("after-return-click");
+    await page.getByRole("tab",{name:"Activities",exact:true}).click();
+    navigation.mark("activities-opened");
+  } finally {
+    await navigation.finish();
+  }
   await expect(page.getByRole("heading",{name:"Next action needed",exact:true})).toBeVisible();
   await page.getByLabel("Action purpose",{exact:true}).fill("SYN Confirm tunnel controller settings");
   await page.getByLabel("Due date needed",{exact:true}).uncheck();
