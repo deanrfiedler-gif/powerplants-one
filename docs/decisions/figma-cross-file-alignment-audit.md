@@ -13,7 +13,7 @@ Thu 12 Nov 2026. Read-only findings; no design is changed and nothing is accepte
 
 All 13 linked module files were read, plus targeted accepted Shell authorities. The register contains 77 deduplicated finding groups: 12 Blocker, 19 Major, 45 Minor, 1 Polish. Shared findings count once globally and can affect several files. This is a bounded audit, not a clean bill of health.
 
-**Second pass, Fri 13 Nov 2026.** A second session ran the same brief and amended this record instead of adding another. Its section, "Second pass — Fri 13 Nov 2026", is at the end. It re-extracted every linked file, verified each finding below (73 confirmed, one changed, one not reproduced, two not re-tested), gives the node IDs, adds 88 findings and decides 457 of the 559 linked-file matrix cells. Where the two passes differ, the second pass is the later reading.
+**Second pass, Fri 13 Nov 2026.** A second session ran the same brief and amended this record instead of adding another. Its section, "Second pass — Fri 13 Nov 2026", is at the end. It re-extracted every linked file, verified each finding below (73 confirmed, one changed, one not reproduced, two not re-tested), gives the node IDs, adds 88 findings and decides 472 of the 559 linked-file matrix cells. Where the two passes differ, the second pass is the later reading.
 
 ## Scope and evidence
 
@@ -2445,8 +2445,8 @@ A second session ran the same audit brief on Fri 13 Nov 2026 (Dean's local date)
 - **Repository.** Main at `98925798` (after pull requests 916, 921 and 922), with the first-pass branch merged. Records read: the 12 refined-UI records on main, including the Customer portal and completed Shared records records that landed during this pass; the Settings completion and the Documents and messages record were read from open pull requests 913 and 918 and are treated as pending, not as authority. No Figma link or file key is in any of the 14,457 files scanned.
 - **Addenda.** A1, A2 and A3 were not supplied to this session either. The fact ledger is built from the brief's own lists, the records' citations of A3, and the files themselves; it finds where files disagree with one another, and where the brief names an earlier fixture. It cannot say which of two values A3 fixes unless the brief or a record quotes it.
 - **Extraction.** One read-only script walked every page: sections, sheets and labels with bounds; every visible text node; the main component of every top-level instance; frames named like shell parts; fills and strokes not bound to a variable; fonts, radii and shadows; chip tones; docked menus; and every local component with a structure signature. Each result was compressed in the script and returned in chunks under the 48,000-byte limit, then decoded and analysed locally. A second small script read which rail item each page marks as current.
-- **Calls.** 160 Figma calls: 15 to open the session and list pages, 126 for extraction, 13 for the rail check, 2 probes, and 4 lost to a first pilot whose chunks could not be joined. No call timed out and no limit was reached.
-- **What this pass adds.** Node IDs for the evidence (the first pass kept them in scratch files); a fresh read of files that changed since (the Shell gained a variable; Documents and messages corrected a date); 88 new findings; and 457 of the 559 linked-file matrix cells decided, against 193 in the first pass.
+- **Calls.** 165 Figma calls: 15 to open the session and list pages, 126 for extraction, 13 for the rail check, 3 to re-read the Read me cards in full (S10), 2 probes, and 6 that failed (4 in a first pilot whose chunks could not be joined, 2 re-tried at once). No call timed out and no limit was reached.
+- **What this pass adds.** Node IDs for the evidence (the first pass kept them in scratch files); a fresh read of files that changed since (the Shell gained a variable; Documents and messages corrected a date); 88 new findings; and 472 of the 559 linked-file matrix cells decided, against 193 in the first pass.
 
 ### S2. Results by file
 
@@ -2455,11 +2455,11 @@ Counts are findings that touch the file; a shared finding counts once in the tot
 | File | Scope pages | Sheets | Notes cards | Blocker | Major | Minor | Polish |
 |---|---|---|---|---|---|---|---|
 | PPO - Sales module (accepted) | 8 | 108 | 14 | 11 | 5 | 6 | 1 |
-| PPO - Estimating module | 15 | 274 | 38 | 3 | 11 | 8 | 1 |
+| PPO - Estimating module | 15 | 274 | 38 | 3 | 11 | 9 | 1 |
 | PPO - Projects module | 14 | 229 | 19 | 1 | 11 | 10 | 2 |
 | PPO - Supply module | 15 | 228 | 20 | 1 | 7 | 12 | 1 |
 | PPO - Engineering module | 12 | 189 | 16 | 1 | 4 | 9 | 3 |
-| PPO - Service module | 17 | 287 | 18 | 1 | 6 | 10 | 2 |
+| PPO - Service module | 17 | 287 | 18 | 1 | 6 | 9 | 2 |
 | PPO - Finance module | 10 | 218 | 13 | 1 | 6 | 10 | 1 |
 | PPO - Reporting module | 11 | 204 | 17 | 1 | 11 | 10 | 1 |
 | PPO - Settings module | 14 | 263 | 18 | 1 | 5 | 9 | 2 |
@@ -2556,6 +2556,8 @@ Each first-pass finding was re-tested against the fresh extraction. Severities a
 | AF-076 | Minor | Confirmed | Header 101:8554 still reads "Proposal · awaiting Dean's acceptance" |
 | AF-077 | Blocker | Confirmed | The record still names no version after the phone tab bar change |
 
+Two second-pass findings are withdrawn (S10): AF-150 (The Read me index is out of date against the file); AF-156 (Seven sheets are missing from the Read me index).
+
 ### S4. New findings
 
 Blockers and Majors are given in full; Minors and Polish are summarised by check. Node IDs are the sheet frames that hold the text.
@@ -2602,9 +2604,9 @@ Expected: One engineering reviewer across files, as the amended A3 names them.
 
 Found: 71 strings on 35 sheets name Kim Patel as the engineering sign-off.
 
-Fix owner: Dean (authority conflict AC-01); then PPO - Estimating module. Action: Dean names the replacement from the amended A3; the Estimating session then changes the name in one batch. A new named version is needed for the accepted file.
+Fix owner: PPO - Estimating module (in the alignment batch claimed in pull request 929). Action: Replace Kim Patel with Sam Jordan as rule-set author, calibration proposer and engineering sign-off. A new named version is needed for the accepted file.
 
-Note: The first pass raised this as question AC-01 without a finding against Estimating.
+Note: Dean decided on 12 November 2026 (Estimating review Q-B, open pull request 929) that Sam Jordan replaces Kim Patel as the one engineering owner. The Estimating batch applies it.
 
 | File / page | Node | Text found |
 |---|---|---|
@@ -2620,9 +2622,9 @@ Expected: The shared record header toolbar with Actions, Outputs and one state-d
 
 Found: No copy of Shell / Record header · toolbar exists in the kit and no sheet instances it; record sheets carry a "Context strip" (52 sheets) and a "Reports" menu.
 
-Fix owner: Dean (authority conflict AC-05); then PPO - Estimating module. Action: Dean decides whether Estimating adopts the shared toolbar or the Shell takes Estimating's header; then one batch in the file that changes. A new named version is needed for the accepted file.
+Fix owner: PPO - Estimating module (in the alignment batch claimed in pull request 929). Action: Dean decides whether Estimating adopts the shared toolbar or the Shell takes Estimating's header; then one batch in the file that changes. A new named version is needed for the accepted file.
 
-Note: Estimating was accepted on 10 November 2026 with this header (its A15 to A17, "to land in the Shell file").
+Note: Dean decided on 12 November 2026 (Estimating review Q-A) to follow Shell rule R117: one state-driven primary. The review raises the "Reports" menu (its ER-14) and the hand-drawn header (ER-15) for the same batch.
 
 | File / page | Node | Text found |
 |---|---|---|
@@ -2636,7 +2638,9 @@ Expected: One menu for the workspace in both accepted files.
 
 Found: Estimating (accepted) names the workspace "Estimating", writes group headings in sentence case and lists Sales briefs; the Shell (accepted) names it "Estimating & quotation", writes headings in capitals and lists Estimating intake. Added here: Estimating, Favourites, Estimates, Sales briefs, Insights. Missing here: Estimating & quotation, FAVOURITES, ESTIMATES, Estimating intake, CONFIGURE & PRICE, QUOTATIONS, INSIGHTS.
 
-Fix owner: Dean; then PPO - Shell (accepted). Action: Decide which wording stands and bring the other accepted file to it under a new named version. A new named version is needed for the accepted file.
+Fix owner: PPO - Shell (accepted), then PPO - Estimating module. Action: Decide which wording stands and bring the other accepted file to it under a new named version. A new named version is needed for the accepted file.
+
+Note: Dean decided on 12 November 2026 (Estimating review Q-F) that the Estimating menu entries are decided in the Shell file.
 
 #### AF-129 · Major · Quotation revisions differ across the Sales, Estimating and Projects handover
 
@@ -2752,7 +2756,7 @@ Fix owner: PPO - Reporting module. Action: Correct the customer on the Reporting
 
 #### AF-136 · Major · Quotation SYN-QUO-000214 r01 has three issue dates and two reference forms
 
-Files: PPO - Estimating module; PPO - Documents & messages module; PPO - Customer portal module. Checks: FA1, HO1, CV6, FA2. Rule: Brief FA1 and HO1: one truth per fact across files.
+Files: PPO - Estimating module; PPO - Documents & messages module; PPO - Customer portal module. Checks: FA1, HO1, CV6, FA2, HO3. Rule: Brief FA1 and HO1: one truth per fact across files.
 
 Expected: The same customer, scope, state and date for the reference in every file.
 
@@ -2863,7 +2867,9 @@ Fix owner: Repository (Finance record). Action: Add the inventory with node IDs 
 | CV4 | Dates carry a weekday that does not match the 2026 calendar (Minor) | Settings AF-104; My Work AF-109 |
 | CV4 | Displayed dates omit the year (Minor) | Sales AF-079; Estimating AF-081; Projects AF-085; Supply AF-088; Reporting AF-099; Settings AF-105; My Work AF-110; Customers, Sites & Equipment AF-113; Documents & messages AF-116 |
 | CV6 | Four-digit references for cost sources, outcome reviews, calibrations and reference cases (Minor) | Estimating AF-126 |
+| CV7 | The retired "Book of record" label remains on Purchasing and Receiving sheets (Minor) | Supply AF-167 |
 | FA2 | Two assets keep catalogue-form references (Minor) | Customers, Sites & Equipment AF-163 |
+| FA3 | Organisations carry SYN-CO- in Estimating and SYN-ORG- everywhere else (Minor) | Estimating AF-166 |
 | FA5 | Events after 09:00 appear on sheets not labelled as later frames (candidates) (Minor) | Estimating AF-084; Projects AF-087; Supply AF-090; Engineering AF-092; Service AF-095; Finance AF-097; Reporting AF-103; Settings AF-108; Customers, Sites & Equipment AF-115; Documents & messages AF-119; Customer portal AF-122 |
 | FA7 | Gendered pronouns describe synthetic people (Minor) | Reporting AF-098 |
 | GV1 | The accepted file is still titled "(proposal)" (Minor) | Estimating AF-128 |
@@ -2881,14 +2887,12 @@ Fix owner: Repository (Finance record). Action: Add the inventory with node IDs 
 | ST2 | Canvas layout drifts from the page template grid (Polish) | Estimating AF-083; Projects AF-086; Engineering AF-091; Service AF-093; Finance AF-096; Settings AF-107; My Work AF-112; Customers, Sites & Equipment AF-114; Documents & messages AF-118; Customer portal AF-121 |
 | ST3 | Canvas layout drifts from the page template grid (Polish) | Supply AF-089; Reporting AF-101 |
 | ST3 | Sheet labels do not follow the adopted label form (Minor) | Sales AF-080; Estimating AF-082; Reporting AF-100; Settings AF-106; My Work AF-111; Documents & messages AF-117; Customer portal AF-120 |
-| ST5 | Seven sheets are missing from the Read me index (Minor) | Supply AF-156 |
-| ST5 | The Read me index is out of date against the file (Minor) | Service AF-150 |
-| ST5 | The Read me index lists under half of the sheets and no page IDs (Minor) | Estimating AF-127 |
+| ST5 | The Read me index lists pages without their node IDs (Minor) | Estimating AF-127 |
 | ST5 | The Read me lists pages without their node IDs (Minor) | Finance AF-151; Reporting AF-152; My Work AF-153; Documents & messages AF-154; Customer portal AF-155 |
 
 ### S5. Alignment matrix after the second pass
 
-P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The scratch CSV gives the reason in every cell. Of 559 cells, 174 are Pass, 246 Fail, 37 Not applicable and 102 Not checked. The two unlinked files are Not checked throughout and are left out of the table.
+P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The scratch CSV gives the reason in every cell. Of 559 cells, 187 are Pass, 248 Fail, 37 Not applicable and 87 Not checked. The two unlinked files are Not checked throughout and are left out of the table.
 
 | Check | Sales | Estimating | Projects | Supply | Engineering | Service | Finance | Reporting | Settings | My Work | Customers, Sites & Equipment | Documents & messages | Customer portal |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|
@@ -2896,7 +2900,7 @@ P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The
 | ST2 | P | F 083 | F 086 | P | F 091 | F 093 | F 096 | P | F 107 | F 112 | F 114 | F 118 | F 121 |
 | ST3 | F 080 | F 082,083 | F 020 | F 027,089 | F 035,091 | F 040,093 | F 045,096 | F 100,101 | F 106,107 | F 111,054,112 | F 059,114 | F 117,118 | F 120,121 |
 | ST4 | P | F 083 | F 086 | F 089 | P | F 093 | P | P | F 107 | F 054,112 | F 114 | F 118 | P |
-| ST5 | P | F 127 | F 018 | F 156 | P | F 150 | F 157,151 | F 152 | P | F 153 | F 060 | F 154 | F 155 |
+| ST5 | P | F 127 | F 018 | P | P | P | F 157,151 | F 152 | P | F 153 | F 060 | F 154 | F 155 |
 | SH1 | P | P | F 017 | P | P | P | F 142 | F 050 | P | P | P | F 061,142 | F 142 |
 | SH2 | P | P | P | P | P | P | P | P | P | P | P | NC | P |
 | SH3 | P | P | P | P | P | P | P | P | P | P | P | P | P |
@@ -2914,19 +2918,19 @@ P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The
 | CV3 | F 003 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
 | CV4 | F 078,079 | F 081 | F 016,085 | F 088 | F 032 | F 038 | F 042 | F 099 | F 104,105 | F 109,110 | F 113 | F 116 | F 068,070 |
 | CV5 | P | P | P | P | P | P | P | P | P | P | P | P | P |
-| CV6 | F 002,004 | F 012,136,126 | P | F 024,025 | F 031 | F 037 | P | F 048 | F 046 | F 051 | F 057,163 | F 136,063 | F 136,067 |
-| CV7 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | F 058 | NC | NC |
+| CV6 | F 002,004 | F 012,136,126,166 | P | F 024,025 | F 031 | F 037 | P | F 048 | F 046 | F 051 | F 057,163 | F 136,063 | F 136,067 |
+| CV7 | P | P | P | F 167 | P | P | P | P | P | P | F 058 | P | P |
 | CV8 | P | P | P | P | P | P | P | P | P | P | P | P | P |
 | FA1 | F 033,074,129 | F 033,123,129,132… | F 014,033,075,129… | F 022 | F 033 | F 134,135 | F 133 | F 033,073,074,130… | NC | F 033,131,132,133… | F 133 | F 075,135,136 | F 075,136 |
 | FA2 | F 005 | F 123,136 | F 014 | F 022,024 | P | P | P | P | F 137 | P | F 163 | F 136 | F 069,136 |
-| FA3 | P | F 141 | P | F 024,141 | F 141 | F 141 | F 043,141 | P | F 137,141 | P | F 141 | P | P |
+| FA3 | P | F 141,166 | P | F 024,141 | F 141 | F 141 | F 043,141 | P | F 137,141 | P | F 141 | P | P |
 | FA4 | F 080 | F 082 | F 020 | F 027 | F 035 | F 040 | F 045 | F 100 | F 106 | F 111 | F 059 | F 117 | F 120 |
 | FA5 | F 011 | F 084 | F 087 | F 090 | F 092 | F 039,095 | F 097 | F 049,103 | F 138,108 | P | F 115 | F 119 | F 122 |
 | FA6 | NC | NC | F 131 | NC | NC | F 134 | NC | F 131 | NC | F 053,131,134 | NC | NC | NC |
 | FA7 | F 006 | F 013 | F 015 | F 023 | F 030 | F 036 | F 041 | F 098 | P | F 052 | P | F 064 | F 066 |
 | HO1 | F 033,074,129 | F 033,129,132,133… | F 033,075,129,130… | NC | F 033 | F 134,135,161 | F 133 | F 033,073,074,130… | NC | F 033,131,132,133… | F 133 | F 075,135,136 | F 075,136 |
 | HO2 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
-| HO3 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| HO3 | NC | F 136 | NC | NC | NC | NC | NC | NC | NC | NC | NC | F 136 | F 136 |
 | RA1 | P | P | P | P | P | P | P | P | P | P | P | P | P |
 | RA2 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 |
 | RA3 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
@@ -2938,13 +2942,13 @@ P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The
 
 ### S6. Authority conflicts and questions for Dean
 
-The first pass's questions AC-01 to AC-20 stand as written above. This pass adds notes to eight of them and raises nine more. Each new question has two readings and a recommendation; none was resolved silently.
+The first pass's questions AC-01 to AC-20 stand as written above. This pass adds notes to eight of them and raises nine more. Each new question has two readings and a recommendation; none was resolved silently. On 12 November 2026 Dean decided the nine questions of the Estimating independent review on its recommendations; the decisions sit in its section 9, in open pull request 929. Four of them settle questions here, for the Estimating file at least, and the table says which.
 
 | ID | Question | Recommendation |
 |---|---|---|
-| AC-01 (note) | Kim Patel persona | Now also a finding against Estimating (AF-123): 71 strings on 25 sheets |
+| AC-01 (note) | Kim Patel persona | **Decided for Estimating** (review Q-B, 12 November 2026): Sam Jordan replaces Kim Patel as the one engineering owner (AF-123). Recommended for Projects and Supply too, checked against the Engineering file (AF-014, AF-022) |
 | AC-02 (note) | Collapsed strip dimensions | The Shell component `29:3119` is 12 px wide and ten files instance it; Projects places a 56 px strip (AF-145); the brief's "80 px" matches no file |
-| AC-05 (note) | Estimating record toolbar | Now a finding (AF-124) |
+| AC-05 (note) | Estimating record toolbar | **Decided** (review Q-A): one state-driven primary as Shell rule R117 has it. The review's ER-14 and ER-15 take the "Reports" menu and the hand-drawn header into the same batch (AF-124) |
 | AC-08 (note) | SYN-OPP-000301 | Six files, five different deals (AF-033) |
 | AC-09 (note) | Unknown send tone | One of 160 state words whose tone differs (AF-140) |
 | AC-12 (note) | Glasshouse 4 Update 4 | Projects also says "Update 4 sent Tue 27 Oct" (AF-075) |
@@ -2952,9 +2956,9 @@ The first pass's questions AC-01 to AC-20 stand as written above. This pass adds
 | AC-16 (note) | Documents and Shared records navigation | The Documents file marks Service, not More, on its rail (AF-061) |
 | AC-21 | The customer's quotation reference and issue date: the brief forbids `SYN-PPO-` and "PPO" on customer sheets; the portal record says A3.11 fixes "SYN-PPO-QUO-000214 issued Fri 31 Oct" | Use `SYN-QUO-000214` on the customer page and Estimating's issue date; correct A3.11 (AF-136, AF-162) |
 | AC-22 | SYN-OPP-000318 at 09:00: won and handed over (Projects) or an open task due Tue 3 Nov (My Work, citing A3.8) | Take A3.8 and give the Projects handover another reference (AF-131) |
-| AC-23 | Which accepted file governs the Estimating menu wording | The Shell owns menus; take Estimating's accepted wording into it under a new named version (AF-125) |
-| AC-24 | The rail item on a module's administration pages | Mark the module, as six files do (AF-143) |
-| AC-25 | One registry for reference families | Fix it once in PPO-STD-001, including one family per instrument kind (AF-141) |
+| AC-23 | Which accepted file governs the Estimating menu wording | **Decided** (review Q-F): the menu entries are decided in the Shell file. The workspace name ("Estimating" against "Estimating & quotation") still needs Dean's word in that change (AF-125) |
+| AC-24 | The rail item on a module's administration pages | **Decided for Estimating** (review Q-F): Settings is the current rail item on its Administration sheets. This reverses the recommendation first made here. Apply the same rule to every module (AF-143) |
+| AC-25 | One registry for reference families | Fix it once in PPO-STD-001, including one family per instrument kind (AF-141). Organisations are **decided** (review Q-I): SYN-ORG- with the Sales numbers (AF-166) |
 | AC-26 | One table for chip tones | Publish it with the Library's Controls record (AF-140) |
 | AC-27 | The year on dates: the brief requires it; about 8,900 strings omit it | Allow the short form in registers and timelines within the story year; require the year on headers, documents and customer sheets |
 | AC-28 | The label form and the accepted files | Apply it to Sales and Estimating only when a named version is cut for another reason (AF-080, AF-082) |
@@ -2977,7 +2981,7 @@ Section 9 defaults as applied: no links arrived (Q1); read-only (Q2); files in p
 | 9 | Confirmed: "Portal" is drawn as a request channel on five Service sheets with no proposal marker (AF-161) |
 | 10 | Partly closed: Settings shows Simulated, "US$0.00 of US$30.00" and SYN-AIF-000002; pilot roles were not found by text, and the Assistant pages file is not linked |
 | 11 | Confirmed: the portal and Documents & messages agree (r2 fixed 08:24, published 09:40); Projects differs (AF-075) |
-| 12 | Closed for these files: `SYN-REL-` names only releases; `SYN-PRL-` occurs nowhere; the Products file is not linked |
+| 12 | Closed for these files: `SYN-REL-` names only releases; `SYN-PRL-` occurs nowhere in them. The Products record (open pull request 928) uses `SYN-PRL-` for relationships and `SYN-PROD-` for products; the Products file itself is not linked |
 | 13 | Confirmed: 68 strings with a gendered pronoun in 11 files; none in Settings or Customers, Sites & Equipment |
 | 14 | Confirmed with conflicts: SYN-QUO-000214 r01 and r02 agree in Sales, Estimating and My Work but not in the portal or Documents & messages (AF-136); other quotation revisions differ (AF-129) |
 | 15 | Confirmed: the workspace-menus header `101:8554` still reads "Proposal · awaiting Dean's acceptance" (AF-076); layer names were not scanned |
@@ -2986,17 +2990,29 @@ Section 9 defaults as applied: no links arrived (Q1); read-only (Q2); files in p
 
 - **Addenda.** A1, A2 and A3 were not supplied. FA1, FA6 and HO1 are tested only as far as the files contradict one another or the brief; a fact that every file states the same wrong way is not caught. With the A3 text the ledger can be rerun on the saved extraction without new Figma calls.
 - **Files.** "PPO - Assistant, Knowledge and Help" and "PPO - Products" have no link. "PPO - Library" was read through its records. "PPO - Design" was not opened.
-- **Checks left Not checked.** CV1 (register standard on ST01), CV2 (one line per cell, second search box), CV3 except the Sales Products sheets, CV7 except one Customers, Sites & Equipment heading, HO2 (one owner per page), HO3 (previews against the portal) and RA3 (targets, focus, alternative text). Each needs rendered sheets or a rule-by-rule reading this pass did not do.
+- **Checks left Not checked.** CV1 (register standard on ST01), CV2 (one line per cell, second search box), CV3 except the Sales Products sheets, HO2 (one owner per page), HO3 except the Estimating customer page against the portal, and RA3 (targets, focus, alternative text). Each needs rendered sheets or a rule-by-rule reading this pass did not do. CV7 was scanned in the follow-up (S10).
 - **No screenshots.** Every finding rests on text and layer properties. Clipping, truncation and overlap inside a sheet are not checked. The rail finding for the portal's staff sheets (AF-144) should be confirmed by eye.
-- **Heuristics.** Chip tones come from Status chip instances and the fill variable of chip-shaped frames (AF-140). The "events after 09:00" findings are candidates filtered by wording, not confirmed sheet by sheet. Text in hidden layers was skipped; a text node longer than 3,000 characters was cut.
+- **Heuristics.** Chip tones come from Status chip instances and the fill variable of chip-shaped frames (AF-140). The "events after 09:00" findings are candidates filtered by wording, not confirmed sheet by sheet. Text in hidden layers was skipped. A text node longer than 3,000 characters was cut: seven nodes, all on Read me cards (S10).
 - **Files in progress.** The files were read between about 05:50 and 06:15 AEST on Fri 13 Nov 2026. Version history is not readable through the tools, so whether a build session was active cannot be shown; a file edited since may differ.
 - **First pass.** One first-pass finding was not reproduced (AF-065, corrected in the file since) and two were not re-tested (AF-010, a text property this pass did not extract; AF-029, non-scope page IDs).
 
+### S10. Follow-up — Fri 13 Nov 2026
+
+After the section above was first pushed, the session re-tested what it could without new extraction and corrected its own errors. This is what changed.
+
+- **Two findings withdrawn.** The extractor cut text nodes at 3,000 characters. Seven nodes were that long, all on Read me cards: two in Estimating, one in Supply and four in Service. A full re-read of those three Read me pages (three Figma calls) shows that each index cites every sheet. AF-150 (Service index out of date) and AF-156 (seven Supply sheets missing from the index) are withdrawn; their IDs are not reused. AF-127 (Estimating) is reduced to the page IDs the index omits. The Service index's unresolved IDs are frames in other files that it cites, not errors. No other file had a node that long, so no other finding rests on a cut text.
+- **Two findings added.** AF-166: Estimating gives organisations `SYN-CO-` (for example Riverbend Growers `SYN-CO-000312`) where every other file uses `SYN-ORG-`; Dean has since decided `SYN-ORG-`. AF-167: Supply keeps the retired "Book of record" heading on 15 Purchasing and Receiving sheets after removing it from the Workshop cards (its correction C6).
+- **CV7 scanned.** Each record's own forbidden labels and words were looked for on every sheet, skipping sentences that state the rule. Apart from AF-058 and AF-167, nothing was found: "Delivered" in Documents & messages always stands beside "Not confirmed" or "Not recorded", and "Average" in Reporting appears only as "Not offered".
+- **HO3 in part.** The Estimating customer quotation page and the portal agree on the quotation total (A$129,500.00 excluding GST) and disagree on the reference form and the dates (AF-136, now also under HO3). The other module previews could not be matched to portal sheets by text.
+- **Decisions taken since.** Dean's decisions of 12 November 2026 on the Estimating review (pull request 929, open) settle AC-01, AC-05, AC-23 and AC-24 for the Estimating file and part of AC-25 (S6). The session that wrote that review now holds the Estimating file for its alignment batch, so this audit's Estimating brief is input to that batch, not a separate one. The recommendation first made on AC-24 (mark the module) is reversed to follow Dean's decision (Settings).
+- **New record, not new evidence.** The Products record (pull request 928, open) confirms the Sales Products sheets as earlier fixtures and gives the expected values for AF-003 and AF-004: "N shown · limit 100 · read live at 09:00 AEDT · no total is claimed", and the `SYN-PROD-` family. The Products file has no link here, so it is still Not checked.
+- **Matrix.** With CV7 and the corrections, the linked-file matrix stands at 187 Pass, 248 Fail, 37 Not applicable and 87 Not checked; the table in S5 is the current one.
+
 ### S9. Next steps
 
-1. **Dean's decisions first.** AC-01, AC-05, AC-08 and AC-21 to AC-26 unblock the largest batches.
+1. **Dean's decisions first.** AC-08, AC-21, AC-22 and AC-25 to AC-27 unblock the largest batches; AC-01, AC-05, AC-23 and AC-24 are settled for Estimating and need only a word on whether they apply to every file.
 2. **Shell.** Record the `action/primary` change on main (open pull request 923), settle `accent/estimating-ink` and `surface/scrim`, correct the workspace-menus header, and save a named version. Every module then recopies the colour collection.
-3. **Accepted files.** Sales needs a new named version after its batch (toolbar adoption, revisions, weekdays, Products sheets, Noah Clarke, pronouns, the phone tab bar pin). Estimating needs one after its batch (revisions, pronouns, Read me index and title) and after AC-01 and AC-05 are decided.
+3. **Accepted files.** Sales needs a new named version after its batch (toolbar adoption, revisions, weekdays, Products sheets, Noah Clarke, pronouns, the phone tab bar pin); the Estimating review names Sales as the next file to audit. Estimating's batch is claimed in pull request 929 and starts from the review's ER-01 to ER-19, which cover AF-012, AF-013, AF-123, AF-124 and AF-166; this audit's other Estimating findings (AF-125 to AF-128, AF-139) can join it before its named version is saved.
 4. **Proposals.** Each file's brief lists its findings most severe first. The shared facts (AF-033, AF-075, AF-129 to AF-136) should be fixed together, since each touches two or more files.
 5. **Repository corrections**, each as its own later change: the Finance record's inventory (AF-157); the Sales record's section IDs (AF-158); the Shell version citations (AF-160, AF-021, AF-028); the merges of pull requests 913 and 918.
 
