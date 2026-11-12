@@ -90,7 +90,7 @@ Severity follows the alignment prompt: **Blocker** an accepted file departs from
 | ID | Sev. | Found |
 |---|---|---|
 | ER-27 | Minor | Revisions and versions in two forms. About 500 texts carry one digit (title chips "r1 · Issued", "r2 · Not approved"; briefs r1 and r2; rule sets v1 to v4; sources r2 and r3; "Template r4 · terms r6") beside about 1,000 with two. Q03 shows "r1 · Issued" in its title and "Revision 01" in its document |
-| ER-28 | Minor | Reference widths. SYN-SRC-0024, SYN-CAL-0003, SYN-EAR-0004 and, on the Outcomes and Administration pages, SYN-REF-00nn have four digits; SYN-REF-000031 has six elsewhere. The namespaces decision makes six a minimum for new references. Organisations use SYN-CO-; the code uses SYN-ORG-. Confirm both against A3 |
+| ER-28 | Major | Organisations use SYN-CO- (Riverbend Growers SYN-CO-000312, Westgate Flowers SYN-CO-000333, SYN Metro Aluminium SYN-CO-000418). The accepted [Sales record](sales-module-refined-ui-proposal.md) gives Riverbend Growers as SYN-ORG-000142, and the Settings record also uses SYN-ORG-. Reference widths: SYN-REF- has four digits on the Outcomes and Administration pages and six elsewhere; SYN-EAR-0004 and SYN-CAL-0003 have four, which the six-digit minimum for new references does not support. SYN-SRC-0024 matches the four-digit format the code implements and stays (Q-I) |
 | ER-29 | Minor | GST wording in three forms in the application ("ex GST", "excluding GST", "excl."). Stage bars mix "30 Oct", "Fri 30 Oct" and "Mon 2 Nov" in one bar, and some chips drop "Not yet". The time zone is stated on three sheets only |
 | ER-30 | Minor | Chip tones differ for one word: Unknown (Warning, Danger, Grey), Allowance (Info, Warning), Manual (Grey, Neutral), Awaiting review (Info, Neutral, Warning), Incomplete (Warning, Grey), Not saved (Grey, Warning) |
 | ER-31 | Minor | Line flags without words. T02 tints rows 3 and 8 with no reason; Q27 colours the same rows amber with an icon and no reason; the T02 chip that explains it truncates to "Ano…" |
@@ -175,14 +175,15 @@ Rules first; AI only where marked, grounded in the record, labelled, reviewed be
 
 | # | Question | Recommendation |
 |---|---|---|
-| Q-A | R117 gives an approved revision one primary, "Issue & send"; the Estimating file and A17 keep Issue and Send as separate primaries | Follow the Shell: one primary that runs the recheck, issues and opens the send composer, with Issue only in Actions. Issue and Send remain two recorded decisions |
-| Q-B | Who replaces Kim Patel as engineering owner and rule-set author? | The name A3 gives; the Engineering record's personas are Sam Jordan and Alex Lee |
+| Q-A | R117 gives an approved revision one primary, "Issue & send"; the Estimating file and A17 keep Issue and Send as separate primaries | Follow the Shell, with the label set by the person's duties: "Issue & send" for someone who may do both, which runs the recheck, records the issue and opens the send composer; "Issue" for an issuer who may not send, after which the record reads "With Sales to send"; "Send quotation" once issued. Closing the composer leaves the revision Issued · not sent. Issue and Send stay two recorded decisions |
+| Q-B | Who replaces Kim Patel as engineering owner and rule-set author? | Sam Jordan, the Engineering file's design engineer and default persona, as the one engineering owner: rule-set author, calibration proposer and engineering sign-off. Confirm against A3 before the batch |
 | Q-C | Two-digit revisions and versions everywhere, including briefs and rule sets? | Yes, with the Sales file's own open item |
 | Q-D | A default quotation validity, printed as a date, so G5 can be computed | 30 days from issue, as an illustrative value until D-010 and D-024 decide |
 | Q-E | Redraw the customer page, and draw options and acceptance as proposals? | Redraw now; N-E15 and N-E16 as proposals that wait on D-024 |
-| Q-F | Menu entries for Pulse, Saved estimates and Insights, and the future of the Priva Fertigation Configurator item | Decide in the Shell file: Pulse first in ESTIMATES; fold the configurator into Specialist configurations when the workbench replaces it |
+| Q-F | Menu entries for Pulse, Saved estimates and Insights, and the future of the Priva Fertigation Configurator item | Decide in the Shell file: Estimating Pulse as the first item, as Sales Pulse is; Saved estimates as an "All estimates" view of Intake & workload, since `/estimating/estimates` has no register route; one Insights item for the Estimating extract of RP-02; keep the built Priva Fertigation Configurator item until the Fertigation workbench replaces it. On the Administration sheets Settings becomes the current rail item |
 | Q-G | Move the 380 and 432 px panels to the Library's widths in this batch? | Yes: 360 or 480 by content, since a new named version is needed anyway |
-| Q-H | Phone 390 for the Estimate record, and tablet and 320 for the customer page? | Yes to both |
+| Q-H | Phone 390 for the Estimate record, and tablet and 320 for the customer page? | Yes to both. The phone estimate is a read-only summary, as PH06 is for a quotation; editing stays on the desktop (A31) |
+| Q-I | Organisations: SYN-ORG-000142 in the accepted Sales record or SYN-CO-000312 in the accepted Estimating file for Riverbend Growers? | SYN-ORG- with the Sales numbers, because the code and two records use that family; check A3 for the other organisations |
 
 ## 8. Boundary
 
