@@ -57,7 +57,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | State / Connection banner | `162:238` | 2: Offline, Back online |
 | State / Inline notice | `163:139` | 5: Unavailable, Could not load, Loading, Not refreshed, Incomplete |
 | State / Empty | `163:167` | 3: No records, No matches, All done |
-| State / Placeholder | `163:172` | 4: Line, Short line, Block, Circle |
+| State / Placeholder | `163:172` | 4: Line, Short line, Block, Circle. Since 12 November 2026 the Board / Card placeholder and the Grid / Row loading row are built from it |
 
 **Review board** `165:115`
 

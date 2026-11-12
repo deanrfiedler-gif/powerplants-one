@@ -63,9 +63,9 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 |---|---|---|
 | Move / Handle | `67:78` | 5: Rest, Hover, Focus, Grabbing, Disabled |
 | Move / Drop indicator | `67:83` | 2: Orientation Vertical (`5:110`, the former Grid / Drop indicator with its node unchanged) and Horizontal (`67:79`) |
-| Move / Drop target | `67:87` | 2: Over, Refused. Resized to the container |
+| Move / Drop target | `67:87` | 2: Over, Refused. Resized to the container. Option since 12 November 2026: Show tint |
 | Move / Origin slot | `67:88` | One component, resized to the item |
-| Move / Count badge | `67:89` | One component. Option: Count |
+| Move / Count badge | `67:89` | Since 12 November 2026 the Navy tone of Controls / Count `314:17992`, merged with Board / Count ([library audit](library-audit.md), section 9). Option: Count |
 | Move / Reason tag | `67:97` | One component. Option: Label |
 
 **Review board** `69:69`
@@ -107,7 +107,7 @@ The example lists, cards and containers on the board are plain frames, not libra
 | Lifted item | surface/canvas, 1 px line/strong, radius/control, Elevation / Popover; follows the pointer from the grab point | Grid D3; shell R44 |
 | Origin slot | surface/hover with a dashed 1 px line/control outline | Grid D3 |
 | Position target | 3 px brand/green-deep line with caps (3.57:1 on white) | Estimating ST01; grid D3 |
-| Container target | 2 px brand/green-deep outline and a 6% tint (3.31:1 on surface/workspace) | New |
+| Container target | 2 px brand/green-deep outline and a 14% tint (3.31:1 on surface/workspace); a board stage takes status/success-surface on its lane and header instead | New; tint raised from 6% on 12 November 2026 ([Board B8](library-board.md#7-decided--12-november-2026)) |
 | Refused target | 2 px dashed status/danger outline (6.4:1 on surface/workspace), the not-allowed cursor and a reason tag | New |
 | Reason tag | brand/navy, 12 Regular white, Blocked icon; 12 px below and to the right of the pointer | New; the look of shell R17 |
 | Several items | A stack with a count badge; lands together in order, or not at all | New |
@@ -132,6 +132,8 @@ On 10 November 2026 Dean confirmed these five items, together with the five on t
 | M3 | Several items at once | A stack with a count; all land together or none do | No module moves a selection today |
 | M4 | Opening a closed container | A collapsed group, stage or tab opens after 600 ms with an item held over it | The behaviour and the 600 ms value are new |
 | M5 | Touch | A handle drags at once; a whole item lifts after 400 ms; phones below 768 px use the Move menu | Grid D7 set the hold and the phone rule for columns; extending them to every item, and the immediate handle drag, is new |
+
+**Amended 12 November 2026.** After reviewing the built Deals board, Dean decided [Board B8](library-board.md#7-decided--12-november-2026). It amends M1: the container tint goes from 6% to 14%, and a board stage turns status/success-surface on its lane and header, keeping the 2 px outline. Move / Drop target gained a Show tint option for containers that change their own fill. The Move board's values card, M1 item and change log say so.
 
 ## 7. Not done and open
 

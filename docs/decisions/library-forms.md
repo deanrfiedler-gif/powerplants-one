@@ -66,18 +66,18 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Form / Section header | `140:40` | One component. Options: Title, Show description, Description |
 | Form / Error summary | `140:43` | One component. Options: Message, Show item 2. Exposed: Item 1, Item 2 (Controls / Link) |
 | Form / Review row | `140:64` | 3: Value, Unknown, Pending. Options: Label, Value |
-| Form / Match card | `140:94` | 2: Default, Chosen. Options: Reason, Title. Exposed: Open, Use |
-| Form / Choice | `140:155` | 8: Style (Row, Card) by State (Off, On, Focus, Disabled). Options: Label, Show description, Description |
-| Form / Option | `142:85` | 7: Match (Rest, Highlighted, Selected), Not known (Rest, Highlighted), Create (Rest, Highlighted). Options: Label, Meta, Create label |
+| Form / Match card | `140:94` | 2: Selected (false, true), which were Default and Chosen until 12 November 2026. Options: Reason, Title. Exposed: Open, Use |
+| Form / Choice | `140:155` | 16: Kind (Row, Card) by Checked (Off, On) by State (Rest, Hover, Focus, Disabled); one State option held all five until 12 November 2026. Options: Label, Show description, Description. Hover came with the [library audit](library-audit.md) |
+| Form / Option | `142:85` | 8: Kind (Match, Not known, Create) by Selected (false, true) by State (Rest, Highlighted). Only a match can be selected; a selected and highlighted match was added on 12 November 2026. Options: Label, Meta, Create label |
 | Form / Option list | `142:142` | 4: Results, Loading, Failed, Empty |
-| Form / Day | `142:155` | 6: Rest, Hover, Today, Selected, Outside, Unavailable. Option: Day |
+| Form / Day | `142:155` | 7: Rest, Hover, Today, Selected, Outside, Unavailable, Focus. Option: Day. Focus, for choosing a date by keyboard, came with the audit. Since 12 November 2026 Unavailable has a 1 px line through the number, so it differs from Outside by more than colour |
 | Form / Date picker | `142:156` | One component |
-| Form / Save bar | `142:353` | 8: Layout (Desktop, Phone) by State (Ready, Disabled, Saving, Uncertain). Exposed: Cancel, Primary. Since 11 November 2026 the Uncertain variants say Outcome unknown and offer Check the outcome and Retry the same action (States S1); on desktop the two buttons wrap together below the sentence in a narrow place |
+| Form / Save bar | `142:353` | 8: Layout (Desktop, Phone) by State (Ready, Disabled, Saving, Uncertain). Exposed: Cancel, Primary. The set was made taller on 12 November 2026 so it no longer clips Phone, Uncertain. Since 11 November 2026 the Uncertain variants say Outcome unknown and offer Check the outcome and Retry the same action (States S1); on desktop the buttons of every state wrap together below the sentence in a narrow place, such as the Narrow drawer |
 
 **Changed on the Controls page** (`46:2031`), all still `Status: Proposed`:
 - **Controls / Field** `51:249` now has 24 variants: a Date type (with the Calendar icon) joins Text, Select and Textarea. The asterisk became the requirement in words, with a new Requirement option ("Required" or "Or say why unknown"). The hint (the Helper option) moved from under the input to under the label. The input grows from `control/field-height` when its value wraps, and its text uses Text / Control. The error message wraps to the field's width.
 - **Controls / Radio** `137:654` is new: 8 variants, State (Off, On, Disabled, Focus) by Surface (White, Tint), matching Controls / Checkbox.
-- **Controls / Banner** `50:240`: the message wraps and the banner grows from 40 px, and a Dismiss option can hide the close button. Single-line banners keep their 40 px.
+- **Controls / Banner** `50:240`: the message wraps and the banner grows from 40 px, and a Show dismiss option (named Dismiss until 12 November 2026) can hide the close button. Single-line banners keep their 40 px.
 - The Controls review board's Field and Banner text, its values table and its "Not yet here" list were updated to match, and the Controls section and review board were re-spaced for the taller Field set.
 
 **Icons page:** Icon / Chevron left `141:37` and Icon / Chevron right `141:39`, for the date picker and phone headers. The library holds 24 icons.
@@ -152,7 +152,7 @@ Asked for a recommendation on each open item, the answer recommended confirming 
 
 - **Page acceptance and publishing.** As for the other library pages: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
 - **Module files unchanged.** The frozen "PPO - Design" file keeps the accepted Create forms page and its local parts (Create / Notice, Match card, Review row). Module pages switch to these parts after acceptance and publishing; the built forms change only through reviewed application work.
-- **Not here.** Address lookup (kept in module files, as the Grid record notes); attachments and uploads; rich text; multi-step wizards such as Create estimate; inline editing in registers (Grid page); a switch, a search field, a segmented control and pagination.
+- **Not here.** Address lookup (kept in module files, as the Grid record notes); attachments and uploads; rich text; multi-step wizards such as Create estimate; inline editing in registers (Grid page); a switch, a search field, a segmented control and pagination, which were added to the [Controls page](library-controls.md) on 12 November 2026 with a multi-select and a file drop.
 - **No proof beyond the design.** No prototype links were set on the Form parts. Focus order, announcements, keyboard behaviour in the picker and the date picker, and touch sizes need the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The five new variables have no CSS property yet; the built app's `--ppo-control-height` (44 px) matches the Touch value, not Medium, which F1 confirms for desktop.
 - **Drawer widths.** On 11 November 2026 Dean set right-hand drawers at 360, 480, 640 and 800 px by content ([drawer widths](library-drawer-widths.md)). Quick add moved from 680 to 640 px and `form/panel-width` became `drawer/wide`. The accepted Create forms page keeps 680 px until it is redrawn from the library.

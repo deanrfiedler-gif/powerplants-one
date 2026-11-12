@@ -48,26 +48,29 @@ The first components and review board were replaced on 10 November 2026 when the
 | Page | Node | Holds |
 |---|---|---|
 | Read me | `0:1` | File cover `36:3`; Read me card `36:114` with purpose, page index, how to use the library, rules and contents |
-| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, thirteen text styles, layout, density and control-size variables, three effect styles |
-| Icons | `46:2030` | 29 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page when the Controls page was drawn (section 12); Chevron left and right came with the [Forms page](library-forms.md); Mail, File, Star, Printer and History came with the [Record page](library-record.md) |
-| Controls | `46:2031` | Sixteen control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
+| Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, thirteen text styles (Text / 10 Medium was retired and Text / 11 Regular added on 11 November 2026), layout, density, control-size and motion variables, three effect styles |
+| Icons | `46:2030` | 35 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page when the Controls page was drawn (section 12); Chevron left and right came with the [Forms page](library-forms.md); Mail, File, Star, Printer and History came with the [Record page](library-record.md); Menu, Chat, Home, Person and Deal came with the [Phone page](library-phone.md); Eye came with the [Board page](library-board.md)'s card actions |
+| Controls | `46:2031` | Thirty-one control families (the count badge joined on 12 November 2026) and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
 | Grid · Table interactions | `4:76` | Components section `22:337`; review board `26:587`; playground frame `32:1736` |
-| Move · Drag and drop | `66:37` | Six parts for moving things and their review board, recorded in [Move · Drag and drop in PPO - Library](library-move.md) |
-| Board · Cards and stages | `82:37` | Five board parts and their review board, recorded in [Board · Cards and stages in PPO - Library](library-board.md) |
+| Move · Drag and drop | `66:37` | Five parts for moving things (its count badge is now Controls / Count) and their review board, recorded in [Move · Drag and drop in PPO - Library](library-move.md) |
+| Board · Cards and stages | `82:37` | Six board parts (its count is now Controls / Count) and their review board, recorded in [Board · Cards and stages in PPO - Library](library-board.md) |
 | Time · Planners and calendars | `97:37` | Nine time parts and their review board, recorded in [Time · Planners and calendars in PPO - Library](library-time.md) |
-| Gantt · Bars and links | `116:37` | Six Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
+| Gantt · Bars and links | `116:37` | Eight Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
 | Forms · Fields and validation | `140:37` | Ten form parts and their review board, recorded in [Forms · Fields and validation in PPO - Library](library-forms.md) |
 | States · Loading, empty and errors | `162:37` | Six state parts and their review board, recorded in [States · Loading, empty and errors in PPO - Library](library-states.md) |
-| Record · Details, tabs and history | `182:37` | Eleven record parts and their review board, recorded in [Record · Details, tabs and history in PPO - Library](library-record.md) |
+| Record · Details, tabs and history | `182:37` | Fifteen record parts and their review board, recorded in [Record · Details, tabs and history in PPO - Library](library-record.md) |
+| Phone · Lists, sheets and bars | `234:61` | Eight phone parts and their review board, recorded in [Phone · Lists, sheets and bars in PPO - Library](library-phone.md) |
+| Play · Three flows | `284:37` | Three playable example flows built from the parts, recorded in [Play · Three flows in PPO - Library](library-play.md) |
 
 **Variables and styles**
 
 | Item | Count | Notes |
 |---|---|---|
 | Collection "PPO colour" | 66, one mode "Value" | Names, values, scopes and descriptions as in PPO - Shell. Web code syntax on the 20 whose value is identical to an existing CSS property in the app |
-| Collection "PPO layout" | 39, one mode "Value" | `space/2` to `space/24`, `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)), and `gantt/bar-height`, `gantt/week-width`, `radius/milestone` ([Gantt record](library-gantt.md)), and `form/check-width`, `form/phone-action` ([Forms record](library-forms.md)), and `state/panel-width` ([States record](library-states.md)), and `record/details-width`, `record/details-folded` ([Record record](library-record.md)), and the drawer widths `drawer/narrow`, `drawer/standard`, `drawer/wide` (formerly `form/panel-width`) and `drawer/extra-wide` ([drawer widths](library-drawer-widths.md)) |
+| Collection "PPO layout" | 52, one mode "Value" | `space/2` to `space/32` (20 and 32 added 12 November 2026), `radius/checkbox`, `radius/chip`, `radius/control` (code name `--radius-control`), `radius/popover`, `radius/dialog`, `radius/pill`, `grid/marker-width`, `grid/divider-hit`, `grid/focus-ring`, `grid/frozen-rule`, and `move/handle-size`, `move/indicator`, `move/target-outline`, `move/scroll-zone` (section 13), and `board/stage-width`, `board/stage-max-width`, `board/stage-collapsed` ([board record](library-board.md)), and `time/hour-height`, `time/hour-width`, `time/gutter`, `time/lane-height` ([time record](library-time.md)), and `gantt/bar-height`, `gantt/week-width`, `radius/milestone` ([Gantt record](library-gantt.md)), and `form/check-width`, `form/phone-action` ([Forms record](library-forms.md)), and `state/panel-width` ([States record](library-states.md)), and `record/details-width`, `record/details-folded` ([Record record](library-record.md)), and the drawer widths `drawer/narrow`, `drawer/standard`, `drawer/wide` (formerly `form/panel-width`) and `drawer/extra-wide` ([drawer widths](library-drawer-widths.md)), and `dialog/standard`, `dialog/wide` and four `breakpoint/` variables ([library audit](library-audit.md)), and `phone/width`, `phone/header-height`, `phone/tab-bar-height`, `phone/row-min-height` ([Phone record](library-phone.md)) |
 | Collection "Gantt colour" | 11, one mode "Value" | The Gantt colours of PPO-GANTT-FIGMA-COLOURS-DEC; nine carry the built Gantt's `--gantt-*` code names ([Gantt record](library-gantt.md)) |
 | Collection "Grid density" | 3, modes "Comfortable" and "Compact" | `grid/row-height` 40 / 32, `grid/header-height` 36 / 32, `grid/cell-padding-x` 12 / 10 |
+| Collection "Motion" | 4, one mode "Value" | `motion/fast` 100, `motion/standard` 200, `motion/slow` 300 and `motion/delay` 300 ms; confirmed by Dean on 12 November 2026, from the [library audit](library-audit.md) |
 | Collection "Control size" | 5, modes "Medium", "Small" and "Touch" | `control/height` 32 / 28 / 44, `control/field-height` 36 / 32 / 44, `control/padding-x` 12 / 10 / 12 (section 12), `control/text-size` 13 / 13 / 16 and `control/line-height` 18 / 18 / 24; Touch and the two text variables came with the [Forms page](library-forms.md) |
 | Text styles | 13 | Text / 20 Medium, 14 Medium, 13 Regular, 13 Medium, 12 Medium, 12 Regular, 11 Medium, 10 Medium; Display / 40 Medium for file covers; Text / Control, whose size follows the Control size mode, and Text / Section label ([Forms record](library-forms.md)); Text / 28 Medium and Text / Reference in Roboto Mono ([States record](library-states.md)) |
 | Effect styles | 3 | Elevation / Card: 0 1 2 at 6% navy (accepted Sales board; [board record](library-board.md)). Elevation / Popover: 0 8 24 at 18% navy (shell R44). Elevation / Dialog: 0 16 48 at 24% navy (shell R70) |
@@ -76,11 +79,11 @@ The first components and review board were replaced on 10 November 2026 when the
 
 | Component | Node | Variants and options |
 |---|---|---|
-| Grid / Header cell | `23:640` | 20 variants: State (Default, Hover, Focus, Lifted, Origin slot), Sort (None, Ascending, Descending), Align (Left, Right). Options: Label, Filtered, Menu button, Frozen edge |
+| Grid / Header cell | `23:640` | 20 variants: State (Rest, Hover, Focus, Lifted, Origin slot), Sort (None, Ascending, Descending), Align (Left, Right). Options: Label, Filtered, Show menu button, Frozen edge |
 | Grid / Header cell · Select | `23:652` | 3: Selection None, Some, All |
-| Grid / Cell | `24:537` | 18: Type (Text, Identity, Numeric, Chip, Checkbox, Row menu) by Row state (Default, Hover, Selected). Options: Value, Flag, Flag icon |
-| Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value |
-| Grid / Row | `24:759` | 8: Default, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
+| Grid / Cell | `24:537` | 18: Kind (Text, Identity, Numeric, Chip, Checkbox, Row menu) by Row state (Rest, Hover, Selected). Options: Value, Show flag, Flag icon |
+| Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value. Editable hover and Editable focus painted black until 12 November 2026, when `surface/hover` was re-applied ([library audit](library-audit.md), section 9) |
+| Grid / Row | `24:759` | 8: Rest, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
 | Grid / Row marker | `22:420` | 3: Previewed, Attention, Overdue |
 | Controls / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint). Formerly Grid / Checkbox; renamed and moved to the Controls page with its node unchanged (section 12) |
 | Grid / Column divider | `5:109` | 4: Rest, Hover, Active, Focus |
@@ -292,7 +295,7 @@ Dean answered the audit with "Accept the recommended order and draw them". The c
 
 | Item | Outcome |
 |---|---|
-| G1, R2 | Grid / Header cell has a three-dot menu button (hover, focus, and a Menu button option for touch) and uses arrows for sort |
+| G1, R2 | Grid / Header cell has a three-dot menu button (hover, focus, and a Show menu button option for touch) and uses arrows for sort |
 | R1 | The grip sits in the left padding; the label is at the same position in every state |
 | G3, G12 | Grid / Checkbox has Disabled and Focus, and a Surface option that darkens the unticked border on tinted rows. The hover sort hint is drawn at full strength |
 | G2 | Grid / Cell added; Grid / Row and every table on the board are built from it |
@@ -363,7 +366,7 @@ Dean accepted the order for the next library pages and asked for the Controls pa
 | Icons | The 14 icons and 5 annotation cursors moved to the new Icons page with their nodes unchanged. Five icons were added there |
 | Plain frames replaced | 60 plain frames on the review board became Controls instances: 29 buttons, 9 chips, 2 tooltips, 3 toasts, 14 menu items and 3 menu dividers. None of those plain frames remain |
 | Toasts | The undo toasts in card 7 now follow the accepted shell toast: a tone bar and icon, the message, the Undo link and a dismiss button |
-| Cell chip | The chip inside Grid / Cell, Type=Chip, was set to 18 px to match Controls / Chip. It stays a local layer so the Value option can set its text |
+| Cell chip | The chip inside Grid / Cell, Kind=Chip (Type=Chip until 12 November 2026), was set to 18 px to match Controls / Chip. It stays a local layer so the Value option can set its text |
 
 Still plain frames on this page: the field boxes inside the quick-edit editors and the Set width… popover (the number editor needs a unit prefix that Controls / Field does not have yet), the bulk bar, the selection banner, the "Modified" bar and the column chooser panel, which are register-specific.
 
