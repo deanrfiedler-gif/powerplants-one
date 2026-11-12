@@ -189,6 +189,7 @@ Adopted with the same answer, as refinements of the card: the two-line next acti
   - the flow headers did not show against a grey stage, so that example sits on white;
   - the Time page's untimed items became two lines, and were put back to one;
   - after Dean's correction, the example board's stage frames clipped the overhanging arrow points, and were set not to clip.
+- **Example deal.** With the [Play page](library-play.md), the lifted deal in card 6 became "Propagation irrigation upgrade" (A$38,500), a Discovery deal, so the stage totals add up when it moves.
 - **Close-up check.** After the second correction, the join between the target header's outline and the lane's outline was rendered at four times size and is continuous on both sides.
 - **Existing instances.** The fourteen placed stage headers kept their names and totals after the header became a set of variants.
 - **Structural read of the Board page** (2,827 nodes, 619 instances). Outside instances it found no solid fill or stroke without a variable, no text without a text style, no plain corner radius, no default layer name and no component without a status line. The seven scaled cards on card 3 have no effect style (section 8).

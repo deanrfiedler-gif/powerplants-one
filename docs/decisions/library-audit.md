@@ -98,7 +98,7 @@ Dean agreed these on 11 November 2026. None is drawn yet.
 | B1 | **Themes.** Light only for now. A high-contrast mode comes before any dark mode |
 | B2 | **Base colour palette.** Deferred until a second theme or brand exists |
 | B3 | **CSS names.** Every variable gets its code name before the library is first published, as one reconciliation against the built application (ADR-0067 stage 5) |
-| B4 | **Prototypes.** After Phone patterns, wire three flows: editing a record section and saving; a save whose outcome is unknown, then Check the outcome; moving a card on a board |
+| B4 | **Prototypes.** After Phone patterns, wire three flows: editing a record section and saving; a save whose outcome is unknown, then Check the outcome; moving a card on a board. Drawn on 12 November 2026 ([Play record](library-play.md)) |
 | B5 | **Missing controls, in order.** Search field and multi-select; file drop zone; pagination; switch and segmented control. Drawn on 12 November 2026 ([Controls record](library-controls.md), section 7) |
 | B6 | **Stat tiles and charts.** After the shell and page template, before any reporting or dashboard design |
 | B7 | **New features.** Draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page. AI features come later, each after a rules-based version |
