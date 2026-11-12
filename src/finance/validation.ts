@@ -109,7 +109,7 @@ export function editCommand(id: string | null, input: unknown) {
       entry_id: uuid(l.entry_id, "entry_id"),
       quantity: q,
       disposition,
-      // Only a linked WorkOrder may supply the server's contract reason later.
+      // Eligible NonBillable work receives its source-derived reason at save.
       reason: l.reason === undefined ? null : basis(l.reason, "line reason"),
       target_group,
     };

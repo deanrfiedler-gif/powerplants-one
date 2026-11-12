@@ -91,6 +91,8 @@ These are the Leads departures from today's page:
 | L9 | The labelled Sales rail. Items: Pulse; Leads (selected, Solid crosshairs icon, count); Deals; Activities; Tasks; Sales Inbox; Estimating handovers; Won-deal receiving; Aftercare & renewal; Contacts; Products; More. Insights is omitted while it is unavailable, as the app hides it | The 232 px rail, labelled "Sales-to-Estimating handovers" |
 | L10 | The Sales phone bar is icons only: My Work, Deals, Activities, Contacts and More. It stays visible on Leads, with no tab current | Four labelled tabs and More; the same current-tab rule |
 
+**Amendment — 10 November 2026.** "Icons only" in L10 is superseded: the Sales phone bar shows a visible label on every tab ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The no-current-tab rule on Leads stands.
+
 ## 5. Not decided
 
 - **Building the page.** Each of these needs its own pull request:

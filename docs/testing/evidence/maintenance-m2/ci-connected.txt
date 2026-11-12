@@ -1,0 +1,43 @@
+(node:19516) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:19516) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ M2 authorised sources expose the exact Covered agreement default without requiring project read (6150.926053ms)
+✔ M2 unauthorised Covered, NotCovered, Disputed, Unknown and NotApplicable receive no default (6603.241098ms)
+✔ M2 authorised approved Disputed coverage with an agreement retains FinanceReview without a default (7288.722097ms)
+✔ M2 coverage alone without an agreement does not silently grant free service (14038.777393ms)
+✔ M2 assigned-technician cannot discover protected coverage defaults (12583.352801ms)
+✔ M2 second-company cannot discover protected coverage defaults (15921.813447ms)
+✔ M2 other-workspace cannot discover protected coverage defaults (16968.651699ms)
+✔ M2 project precedence and NonBillable reason persist with original-operation replay (29580.514298ms)
+✔ M2 unapproved Covered successor of authorised work 2 cannot advertise defaults (30519.58106ms)
+✔ M2 unapproved Covered successor of authorised work 8 cannot advertise defaults (28942.6608ms)
+(node:25794) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25794) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation (37775.736899ms)
+(node:25952) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:25952) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B4 refuses Labour at submit and revised Returned Draft; no override by reason (9863.603592ms)
+✔ B4 refuses Consumed part at submit and revised Returned Draft; no override by reason (11544.323024ms)
+✔ B4 backend prefill and changed reason retain NonBillable and reconcile without a target (13266.416051ms)
+✔ B4 current link at submit, including legacy Billable handoffs; Return and Cancel remain safe (14705.236555ms)
+✔ B4 current link at approval, including legacy Billable handoffs; Return and Cancel remain safe (19791.19056ms)
+✔ B4 current link at begin, including legacy Billable handoffs; Return and Cancel remain safe (23438.509779ms)
+✔ B4 removal of current link before submit restores ordinary WorkOrder rules (26113.757599ms)
+✔ B4 removal of current link before approval restores ordinary WorkOrder rules (27658.400831ms)
+✔ B4 removal of current link before begin restores ordinary WorkOrder rules (30665.124184ms)
+✔ B4 Closed project still refuses at submit (34005.498821ms)
+✔ B4 Closed project still refuses at approval (37773.164278ms)
+✔ B4 Closed project still refuses at begin (38246.614102ms)
+✔ B4 Pending and review dispositions cannot pass submission on linked work (41727.618079ms)
+✔ B4 does not alter AwaitingERP dispatch, unknown original lookup or reconciliation (47670.111924ms)
+✔ B4 unlinked F-06 still posts 60 MIN and retains 30 MIN cost evidence (47909.858741ms)
+ℹ tests 26
+ℹ suites 0
+ℹ pass 26
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 636664.330358

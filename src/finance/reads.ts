@@ -15,10 +15,7 @@ import {
   type FinanceCapability,
 } from "./context";
 import { currentRevision } from "./service";
-import {
-  projectWorkLinked,
-  projectWorkReason,
-} from "./project-work-billability";
+import { workAllocationDefaults } from "./work-allocation-defaults";
 export async function financeOptions(p: Principal, input: unknown = {}) {
   object(input, []);
   const c = database();
@@ -80,13 +77,7 @@ export async function financeSources(
       synthetic: true,
       work_order_id: w.id,
       items,
-      allocation_defaults: (await projectWorkLinked(c, p, w.id))
-        ? {
-            disposition: "NonBillable",
-            reason: projectWorkReason,
-            target_group: null,
-          }
-        : null,
+      allocation_defaults: await workAllocationDefaults(c, p, w.id),
     };
   });
 }

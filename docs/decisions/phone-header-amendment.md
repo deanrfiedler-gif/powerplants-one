@@ -51,6 +51,8 @@ Quoted as written, 19 October 2026:
 
 Unchanged: the phone tab bar (five icon-only tabs), quick add, and the desktop and tablet top bar.
 
+**Amendment — 10 November 2026.** The phone tab bar is no longer icon-only: every tab shows a visible label and the bar takes the desktop rail's colours ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The header rules P1–P9 are unaffected.
+
 ## 4. Design reference
 
 | Reference | Identity |

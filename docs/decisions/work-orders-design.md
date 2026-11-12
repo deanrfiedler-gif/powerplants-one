@@ -100,6 +100,8 @@ The Reviews & approvals departures D1–D9 apply unchanged: the labelled rail, t
 | W8 | The Service phone tab bar has five icon-only tabs: My Work, Service requests, Work orders, Schedule and More, each with a hidden accessible name. Work orders is the current tab | Four labelled tabs: My Work, Service requests, Schedule and More |
 | W9 | Ten icons are copied from Dean's Kit into the private file for the Service rail and tabs (section 2) | Not applicable |
 
+**Amendment — 10 November 2026.** The icon-only tabs and hidden accessible names in W8 are superseded: every phone tab shows a visible label, with Service requests labelled "Requests" ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). The destinations and current tab in W8 stand.
+
 ## 5. Not decided
 
 - **Building the page.** W2 and W3 need list-read additions: the authorisation status and blocker count, the next visit, the linked request count, the Service owner and the last update. Today's list returns the reference, state, customer, site, summary, scope revision and coverage. Reading still needs `service.work_order.read` with the existing record scope checks. No new capability is proposed.

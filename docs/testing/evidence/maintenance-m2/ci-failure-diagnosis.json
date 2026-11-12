@@ -1,0 +1,55 @@
+{
+  "source_head": "e8f9124cdb777a3b7170218c90cd7d811c9c5249",
+  "observed_at_utc": "2026-11-11T02:30:43Z",
+  "superseded_aggregate_failures": [
+    {
+      "job": 130236312524,
+      "workflow": "Estimating E1 assurance",
+      "dependency_result": "PPO_E1_RESULT: cancelled"
+    },
+    {
+      "job": 130236315854,
+      "workflow": "Compiled application browser assurance",
+      "dependency_result": "PPO_SUITE_RESULT: cancelled"
+    },
+    {
+      "job": 130236312907,
+      "workflow": "Quotation Supply follow-up assurance",
+      "dependency_result": "PPO_SUPPLY_RESULT: cancelled"
+    },
+    {
+      "job": 130236313948,
+      "workflow": "Application assurance",
+      "dependency_result": "PPO_SUITE_RESULT: cancelled"
+    }
+  ],
+  "actual_failure": {
+    "run": 42933062654,
+    "job": 130255574399,
+    "suite": "P01–P11 browser-2 proof",
+    "test": "P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once",
+    "file": "tests/browser/planner.spec.ts",
+    "line": 386,
+    "assertion": "getByRole('dialog').toBeVisible()",
+    "timeout_ms": 5000,
+    "preceding_action": "native dragTo"
+  },
+  "same_head_independent_execution": {
+    "run": 42933062564,
+    "job": 130248969293,
+    "result": "success",
+    "test_log": "2026-11-11T01:52:46.6499201Z   ✓  111 [desktop-chromium] › tests/browser/planner.spec.ts:364:1 › P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once (5.0s)"
+  },
+  "artifact": {
+    "id": 13822460193,
+    "name": "P11-retained-browser-2-evidence",
+    "download": "Connector export succeeded, but local download was refused by environment proxy (CONNECT 403); trace and screenshot were not inspected."
+  },
+  "rerun_attempt": {
+    "job": 130255574399,
+    "result": "GitHub 403: The workflow run containing this job is already running"
+  },
+  "diagnosis": "The old aggregate failures are cancelled dependencies, not failing test bodies. The replacement browser failure is genuine. Source inspection identifies a missing test readiness precondition: visible retained tiles may have draggable=false while schedule loading. Same test passed in separate compiled execution at this head. That supports a bounded readiness correction but does not prove the cause of the failed gesture without the trace or rerun.",
+  "correction": "Wait for the exact source tile's draggable=true before the same native drag. No retry, simulated event, removed assertion, timeout increase or runtime change.",
+  "local_browser": "npm run browser:check fails: /opt/google/chrome/chrome absent. New browser correction requires final-head Chrome CI."
+}

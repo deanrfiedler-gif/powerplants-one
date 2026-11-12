@@ -36,11 +36,12 @@ import {
 
 import { saveProjectFinance } from "./project-claims-service";
 import { projectClaimSource } from "./project-claims-source";
+import { requireProjectWorkNonBillable } from "./project-work-billability";
+
 import {
-  projectWorkLinked,
-  projectWorkReason,
-  requireProjectWorkNonBillable,
-} from "./project-work-billability";
+  workAllocationDefaults,
+  workAllocationReason,
+} from "./work-allocation-defaults";
 
 type Context = Awaited<ReturnType<typeof financeContext>>;
 type Mutation = { operation_id: string; reason: string };
@@ -246,7 +247,7 @@ async function revision(
       sources.flatMap((s) => s.entries).map((e) => [e.id, e]),
     ),
     groups = new Map<string, string>();
-  const linked = await projectWorkLinked(c, p, ctx.w.id);
+  const defaults = await workAllocationDefaults(c, p, ctx.w.id);
   for (const l of cmd.lines) {
     const e = entries.get(l.entry_id);
     if (!e) throw unavailable();
@@ -287,9 +288,7 @@ async function revision(
       uom: e.uom,
       direction: e.direction,
       disposition: l.disposition,
-      reason:
-        l.reason ??
-        (linked ? projectWorkReason : basis(undefined, "line reason")),
+      reason: workAllocationReason(defaults, l.disposition, l.reason),
       target_group: l.target_group,
       source_entry_hash: e.source_entry_hash,
     });
