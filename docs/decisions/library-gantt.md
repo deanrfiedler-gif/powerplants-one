@@ -74,7 +74,7 @@ The nine code names are the custom properties `src/app/projects-gantt.css` alrea
 | Gantt / Phase bar | `116:195` | One component |
 | Gantt / Baseline bar | `116:199` | One component |
 | Gantt / Today line | `116:200` | One component: a 9 px dot and a 1 px line. Its label and Label option were removed on 12 November 2026 (G6) |
-| Gantt / Dependency | `116:215` | 2: Default, Warning. A specimen; the path is drawn to fit the two bars |
+| Gantt / Dependency | `116:215` | 2: Tone (Neutral, Warning); the option was State, with Default, until 12 November 2026. A specimen; the path is drawn to fit the two bars |
 | Gantt / Today cell | `261:13418` | One component: the date cell that holds today. Option: Date. Added 12 November 2026 (G6) |
 | Gantt / Today key | `261:13420` | One component: the violet dot at icon size, for the toolbar's Today button. Added 12 November 2026 (G6) |
 
