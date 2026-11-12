@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-CONTROLS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; the six in section 7, for the controls added on 12 November 2026, await his confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; the six in section 7, for the controls added on 12 November 2026, were confirmed by him that day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Controls in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The six in [section 7](#7-to-confirm--added-12-november-2026) await his confirmation. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The six in [section 7](#7-confirmed--12-november-2026) were confirmed by Dean on 12 November 2026. The page itself awaits acceptance.
 
 On 10 November 2026 Dean asked whether pages for other interactions (Gantt charts, board cards, planners and calendars) should be added to `PPO - Library`. The recommendation was to add them in this order: a Controls page, a page of shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file using those shared parts. Controls came first because the [Grid · Table interactions](library-grid-table-interactions.md) page drew its buttons, chips, menus, tooltips and toasts as plain frames, and every later page would otherwise redraw them. Dean answered: "Accept the recommended order and start with the Controls page."
 
@@ -173,7 +173,7 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 | C4 | Small size | A "Control size" mode: buttons 28 px and fields 32 px in toolbars, popovers and tables | The shell allows 28 px as a minimum (C6); using a variable mode for it is new |
 | C5 | Checkbox | 4 px corners and a 1 px border, as the Sales kit | The grid page first drew 3 px and 1.5 px; this changes every checkbox on that page |
 
-## 7. To confirm — added 12 November 2026
+## 7. Confirmed — 12 November 2026
 
 The [library audit](library-audit.md) listed controls the library lacked and Dean agreed an order for them (B5). On 12 November 2026, asked for the next steps, Claude recommended drawing them while the page acceptances and the shell copy were with Dean. Dean answered: "Proceed based on your recommendations." Eleven parts and four review cards were drawn that day.
 
@@ -183,9 +183,9 @@ A search of the repository found one accepted rule that bears on them and little
 - **Paging:** every register has a footer with the count rule and a pager (Estimating register standard A6).
 - **No accepted source** for a multi-select, a switch, a segmented control, file types and sizes, or the rows-per-page choice.
 
-Each item is drawn as recommended.
+Each item was drawn as recommended. Later on 12 November 2026 Claude listed the six with a recommendation to confirm each as drawn, and Dean answered: "Proceed based on your recommendations." All six are confirmed.
 
-| ID | Item | Recommended | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | C6 | Where a search field goes | Only inside pickers, popovers, drawers and phone sheets; never in page content | The accepted "No second search" rule says so, but about forty built screens have their own search box, with three different Clear wordings. They would align later |
 | C7 | Multi-select | Chips in the field and a ticked list with search; for six or more options | No accepted source draws one. The Forms rules cover one choice only |

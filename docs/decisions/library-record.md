@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-RECORD-PROP
 date: 2026-11-11
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; the six items in section 6 were confirmed or decided by Dean on 11 November 2026; two parts were added on 12 November 2026 under audit direction B7, and their five items in section 7 await his confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; the six items in section 6 were confirmed or decided by Dean on 11 November 2026; two parts were added on 12 November 2026 under audit direction B7, and their five items in section 7 were confirmed by him that day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Record · Details, tabs and history in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. The items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The five items in [section 7](#7-to-confirm--added-12-november-2026), added on 12 November 2026, await his confirmation. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. The items in [section 6](#6-confirmed--11-november-2026) were confirmed by Dean on 11 November 2026. The five items in [section 7](#7-confirmed--12-november-2026), added on 12 November 2026, were confirmed by Dean that day. The page itself awaits acceptance.
 
 After the [Gantt, Forms and States items were confirmed](library-states.md#6-confirmed--11-november-2026), Dean answered for the third time: "Proceed however you believe is the most professional." Record came next in the recommended order of the groups that section 5 of the [design-to-build standard](../standards/design-to-build-standard.md) requires and the library did not yet hold. This record covers that page, named "Record · Details, tabs and history".
 
@@ -188,9 +188,9 @@ On 11 November 2026 Dean confirmed five items as drawn: "Confirm R1–R4 and R6"
 | R5 | Edit drawer width | Editing a section opens the 480 px drawer (`drawer/standard`) | Sales A5 drew 432 px. On 11 November 2026 Dean set right-hand drawers at 360, 480, 640 and 800 px by content, with editing a section at 480 ([drawer widths](library-drawer-widths.md)) |
 | R6 | Default tab | Overview opens by default unless a record's own decision sets a first tab by state; the selected tab is kept in the link | Deal Q6 always opens Overview; quotation Q3 chooses the first tab by state |
 
-## 7. To confirm — added 12 November 2026
+## 7. Confirmed — 12 November 2026
 
-The [library audit](library-audit.md) direction B7, agreed by Dean on 11 November 2026, reads: draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page; AI features come later, each after a rules-based version. On 12 November 2026 Dean said: "I confirm that you can proceed however you believe is the most professional." Both parts were drawn that day, rules-based, with no AI. That go-ahead covered the drawing; it did not confirm the five items below.
+The [library audit](library-audit.md) direction B7, agreed by Dean on 11 November 2026, reads: draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page; AI features come later, each after a rules-based version. On 12 November 2026 Dean said: "I confirm that you can proceed however you believe is the most professional." Both parts were drawn that day, rules-based, with no AI. That go-ahead covered the drawing; it did not confirm the five items below. Later that day Claude listed them with a recommendation to confirm each as drawn, and Dean answered: "Proceed based on your recommendations." All five are confirmed.
 
 **Sources.** No accepted decision sets either part. These were used:
 
@@ -238,9 +238,9 @@ Card 10, "Worked-out values and what changed" `292:1223`, shows them in three st
 - **Words, not colour.** The marker is link blue, as unread markers are in the shell, and always sits with a count or the word Changed.
 - **Not a notification.** My Work Updates stays the inbox. The strip marks no update read and is never the only signal for something that needs action.
 
-**Items to confirm.** Each is drawn as recommended.
+**Items confirmed.** Each stands as drawn.
 
-| ID | Item | Recommended, as drawn | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | R7 | Name and how it opens | The panel is called "How this was worked out". It opens from the Worked out marker on a fact: a 360 px popover on a desktop, a bottom sheet on a phone | The fact's marker already says "Worked out"; the built fertigation trace is titled "How this is calculated" and opens in a drawer. It would align at its next reviewed change |
 | R8 | What an explanation shows | The result, the rule as a sentence, each input with its source and when it was read, and what is missing. It never works the value out again; a proposed rule is labelled; withheld inputs are left out and the panel says so | No shared rule exists. Saying that inputs are withheld tells the person something exists; the alternative is to hide the whole value from them |
