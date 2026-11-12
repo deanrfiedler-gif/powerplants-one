@@ -57,8 +57,8 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Component | Node | Variants and options |
 |---|---|---|
 | Time / Event | `98:353` | 18: Kind (Activity, Meeting, Visit, Attention, Tentative, Busy) by State (Rest, Focus, Selected). Options: Title, Meta, Show meta |
-| Time / Day header | `98:372` | 3: Default, Today, Warning. Options: Day, Note, Show note |
-| Time / Lane header | `98:386` | 2: Default, Away. Options: Name, Role, Total. Exposed: Avatar |
+| Time / Day header | `98:372` | 3: Kind (Day, Today, Warning); the option was State, with Default, until 12 November 2026. Options: Day, Note, Show note |
+| Time / Lane header | `98:386` | 2: Status (Available, Away); the option was State, with Default, until 12 November 2026. Options: Name, Role, Total. Exposed: Avatar |
 | Time / Band | `97:365` | 7: Extended hours, Not working, Unavailable, Past, Today, Working exception, Non-working exception. Options: Label (on Extended hours), Not working label, Unavailable label. The last two were added on 12 November 2026 so each kind starts with its own name |
 | Time / Now line | `97:152` | 2: Horizontal, Vertical. Option: Time |
 | Time / Ghost | `97:369` | One component. Exposed: Readout |

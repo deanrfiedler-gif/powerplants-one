@@ -144,9 +144,9 @@ On 12 November 2026 Dean asked a second session to review the library. Its recor
 | 2 | Correct this record | **Done.** Sections 2, 3 and 7 now say what the file shows |
 | 3 | R8: Form / Save bar set clips a variant. R13: two band labels | **Done.** The set is 1274 × 604 px and clips nothing. Time / Band's Not working and Unavailable each have their own label option, so each starts with its own name; the 33 placed bands kept their labels |
 | 4 | R4: one naming rule for options. R3: separate chosen from pointer state | **Done for the eight controls the review names.** The renames below are made, and ticked and chosen are now separate from pointer state. Five other sets are listed below and not changed |
-| 5 | R2: bind plain spacing | **Partly done.** 351 values now use a spacing variable. 103 remain, because no variable holds their value |
-| 6 | R5: one base for banners, one count badge, shared placeholders | Not started |
-| 7 | R7: a mark for unavailable days. R9: buttons for lone links on a phone | Not started |
+| 5 | R2: bind plain spacing | **Done.** 351 values were bound first. After Dean's decision below, the rest were bound or moved to a step; only 1 px offsets remain plain |
+| 6 | R5: one base for banners, one count badge, shared placeholders | **Done in part, by choice.** One count badge and shared placeholders are made. The seven banner-shaped parts stay separate, for the reason below |
+| 7 | R7: a mark for unavailable days. R9: buttons for lone links on a phone | **Done** |
 | 8 | R10 and R11 join the B3 reconciliation | **Noted** in direction B3 |
 
 **Option names changed (item 4).** No variant changed its look, and every placed instance kept its variant.
@@ -171,7 +171,12 @@ On 12 November 2026 Dean asked a second session to review the library. Its recor
   - Hover on a ticked box, a chosen radio and a chosen card darkens to brand/navy-deep or a brand/navy outline. Hover on the current tab, menu item and segment looks the same as rest. An applied filter chip gains a link-blue outline on hover.
   - Disabled with a tick or a choice is the same drawing at 45%, the accepted rule (Sales ST01).
   - `Selected` replaces the Current state on Tab and the Active state on Filter chip.
-- **Not changed:** Form / Option (Highlighted is the keyboard position, which is not a choice), Form / Match card (Default, Chosen), and Time / Day header, Time / Lane header and Gantt / Dependency, where `Default` names the ordinary kind. They are for a later pass.
+- **Five more sets, renamed later the same day.** No placed instance changed (39 read back).
+  - Form / Match card: Selected (false, true), in place of Default and Chosen.
+  - Form / Option: Selected (the chosen match) by State (Rest, Highlighted). Highlighted is the keyboard position, so it stays a state. One variant was added: a chosen match that is also highlighted.
+  - Time / Day header: Kind (Day, Today, Warning).
+  - Time / Lane header: Status (Available, Away).
+  - Gantt / Dependency: Tone (Neutral, Warning).
 
 **Spacing bound (item 5).** Inside components, outside nested instances:
 
@@ -188,12 +193,25 @@ On 12 November 2026 Dean asked a second session to review the library. Its recor
 | Record | 2 | 244 | 0 |
 | Phone | 2 | 166 | 0 |
 
-The 103 still plain are 39 of 1 px, 4 of 5 px, 14 of 10 px, 16 of 20 px and 30 of 32 px. The spacing variables are 2, 4, 6, 8, 12, 16 and 24.
+After that pass, 103 were still plain: 39 of 1 px, 4 of 5 px, 14 of 10 px, 16 of 20 px and 30 of 32 px. The spacing variables were then 2, 4, 6, 8, 12, 16 and 24. The table shows that first pass; the decision below dealt with the rest.
 
-**For Dean.**
-- **Spacing steps.** Recommended: add `space/20` and `space/32`, and move the 5 and 10 px values to the nearest step case by case. Not done: a new step is a foundations decision.
-- **R6.** The Danger button's Pressed label is 4.13:1. An 18% white layer, in place of the 24% he confirmed in Controls C1, gives 4.72:1.
-- **R12.** Menu item dims to 70% when disabled, against the accepted 45%; at 45% a Tab label is 1.94:1. Not handed over and not changed.
+**Decided by Dean — 12 November 2026.** Claude recommended three changes, and Dean answered: "Proceed based on your recommendations." All three are drawn.
+
+| Decision | Done in the library |
+|---|---|
+| Add spacing steps of 20 and 32 px | `space/20` and `space/32` in "PPO layout", which now holds 52 variables (141 in the library). 16 values of 20 px and 30 of 32 px on the States parts use them. The Foundations table lists both |
+| Move the 5 and 10 px values to the nearest step | <ul><li>12 px: the gap in Controls / Toast and Banner; the left padding of the plain Board / Stage header</li><li>8 px: the gap in Controls / Checkbox field, the Board / Card placeholder, Board / Stage · Collapsed and Time / Lane header</li><li>4 px: the side padding of the Time / Now line pill</li></ul>Each sat halfway between two steps; the choice was made case by case |
+| Danger, Pressed: an 18% white layer in place of 24% | The label on it measures 4.70:1 (4.12:1 before). Primary keeps 24%. This amends Controls C1 for Danger only |
+| Disabled Menu item at 45% | The row's content dims to 45%, the accepted rule (Sales ST01), in place of a 70% label |
+
+Inside components, 1,813 padding and gap values now use a variable. The 45 that do not are all 1 px offsets.
+
+**The last three review items (6 and 7).**
+- **One count badge.** Board / Count and Move / Count badge are now one set, Controls / Count `314:17992`, with Tone (Neutral, Navy). All 58 placed badges kept their numbers.
+- **Shared placeholders.** The Board / Card placeholder and the Grid / Row loading row are built from State / Placeholder (11 shapes replaced).
+- **Banners stay separate.** The seven banner-shaped parts were read side by side. They share an anatomy (a status surface, a 14 px icon, the message in 13 px text/ink, any action at the end) but hold different content: one line, a heading with a body and buttons, a title with a detail, a checklist, a list of links. One structural base would drop the text set on about fifty placed parts and force slots most of them do not use. The description of Controls / Banner now names the seven and their shared anatomy. This is Claude's choice under Dean's instruction to proceed; Dean reverses it by saying so.
+- **Unavailable days (R7).** Form / Day, Unavailable is in text/secondary with a 1 px line through the number, so it differs from Outside by more than colour.
+- **Phone links (R9).** The action on Phone / Status line, Out of date is a Quiet button at Touch size, and Select all on Phone / Selection bar is a Ghost button at Touch size. Both are 44 px high. The Out of date line is 45 px, from 35 px.
 
 **Checks.**
 - The Grid / Cell · Edit set, the Grid Playground, the Form / Save bar set, the Time / Band set, the Button set and a Play frame were rendered and inspected after the changes.
@@ -204,5 +222,7 @@ The 103 still plain are 39 of 1 px, 4 of 5 px, 14 of 10 px, 16 of 20 px and 30 o
 - After the renames, the options of every set were read back. None still uses `Type`, `Style` or `Interaction`, and `Default` remains only on the four sets listed above.
 - 3,138 instances were recorded before the renames, and each still pointed at the same component afterwards. Renamed show-or-hide options still hold values on placed instances (23 buttons show an icon, 6 banners an action, 3 header cells a menu button, 3 fields a helper). These were not tallied beforehand, so this confirms values survived, not that every one did.
 - Component descriptions were searched for the old option names; eight were corrected.
+- A first attempt at the unavailable-day mark used a text strike-through. Because the day number is one shared option, the strike-through spread to six of the seven variants. It was removed in the next step and replaced by a line layer on the one variant. A deep read of every page then found no struck text, and the date picker was rendered.
+- After the decision of 12 November 2026: the Button, Menu item, Form / Day, Form / Option, Phone / Status line, Phone / Selection bar, card placeholder, loading row and Controls / Count sets were rendered and inspected. Variables were read back: 66, 52, 3, 5, 11 and 4 (141). A read of every page found no solid fill or outline without a variable outside the section frames Figma draws, no text without a text style, no bound colour that stores black and no component without a status line. Default layer names remain inside icons on the Icons page (21) and the Grid page (199); they predate this work.
 - **Not checked:** review-board texts were not re-read for the old option names. The Grid review board was not re-rendered beyond the Playground. In the options panel, State on Checkbox, Radio and Form / Choice lists Rest last; the variants themselves are in order and Rest is the default.
 - Repository checks for this change: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.

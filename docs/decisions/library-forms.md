@@ -66,11 +66,11 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Form / Section header | `140:40` | One component. Options: Title, Show description, Description |
 | Form / Error summary | `140:43` | One component. Options: Message, Show item 2. Exposed: Item 1, Item 2 (Controls / Link) |
 | Form / Review row | `140:64` | 3: Value, Unknown, Pending. Options: Label, Value |
-| Form / Match card | `140:94` | 2: Default, Chosen. Options: Reason, Title. Exposed: Open, Use |
+| Form / Match card | `140:94` | 2: Selected (false, true), which were Default and Chosen until 12 November 2026. Options: Reason, Title. Exposed: Open, Use |
 | Form / Choice | `140:155` | 16: Kind (Row, Card) by Checked (Off, On) by State (Rest, Hover, Focus, Disabled); one State option held all five until 12 November 2026. Options: Label, Show description, Description. Hover came with the [library audit](library-audit.md) |
-| Form / Option | `142:85` | 7: Match (Rest, Highlighted, Selected), Not known (Rest, Highlighted), Create (Rest, Highlighted). Options: Label, Meta, Create label |
+| Form / Option | `142:85` | 8: Kind (Match, Not known, Create) by Selected (false, true) by State (Rest, Highlighted). Only a match can be selected; a selected and highlighted match was added on 12 November 2026. Options: Label, Meta, Create label |
 | Form / Option list | `142:142` | 4: Results, Loading, Failed, Empty |
-| Form / Day | `142:155` | 7: Rest, Hover, Today, Selected, Outside, Unavailable, Focus. Option: Day. Focus, for choosing a date by keyboard, came with the audit |
+| Form / Day | `142:155` | 7: Rest, Hover, Today, Selected, Outside, Unavailable, Focus. Option: Day. Focus, for choosing a date by keyboard, came with the audit. Since 12 November 2026 Unavailable has a 1 px line through the number, so it differs from Outside by more than colour |
 | Form / Date picker | `142:156` | One component |
 | Form / Save bar | `142:353` | 8: Layout (Desktop, Phone) by State (Ready, Disabled, Saving, Uncertain). Exposed: Cancel, Primary. The set was made taller on 12 November 2026 so it no longer clips Phone, Uncertain. Since 11 November 2026 the Uncertain variants say Outcome unknown and offer Check the outcome and Retry the same action (States S1); on desktop the buttons of every state wrap together below the sentence in a narrow place, such as the Narrow drawer |
 
