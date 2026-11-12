@@ -1,0 +1,9 @@
+Listing tests:
+  [warm-up] › ../browser/warm-up.setup.ts:10:1 › warm every route once before the browser projects
+  [desktop-chromium] › ui.spec.ts:59:1 › invited actor: schedule lanes, demand and appointment links load with booking controls
+  [desktop-chromium] › ui.spec.ts:103:1 › invited actor: mailbox to refined deal, follow-up, calendar and another browser
+  [desktop-chromium] › ui.spec.ts:242:1 › invited actor books and reschedules a prepared visit through the UI and reloads saved crew
+  [mobile-chromium] › ui.spec.ts:59:1 › invited actor: schedule lanes, demand and appointment links load with booking controls
+  [mobile-chromium] › ui.spec.ts:103:1 › invited actor: mailbox to refined deal, follow-up, calendar and another browser
+  [mobile-chromium] › ui.spec.ts:242:1 › invited actor books and reschedules a prepared visit through the UI and reloads saved crew
+Total: 7 tests in 2 files

@@ -1,0 +1,61 @@
+{
+  "source_head": "330b76292cf5ce2daa72393328d6eebfcc95140f",
+  "observed_date": "2026-11-12",
+  "application": {
+    "run": 42961817026,
+    "failed_job": 130330921253,
+    "passed": 401,
+    "skipped": 16,
+    "failed": 1,
+    "failure": "tests/browser/planner.spec.ts:388 — dialog absent after dragTo; cause unconfirmed",
+    "retry_requested": true
+  },
+  "demo": {
+    "run": 42961817024,
+    "failed_job": 130329878074,
+    "passed": 5,
+    "failed": 1,
+    "failure": "tests/demo/ui.spec.ts:63 — Week resource planner absent within 5000 ms; retained failure screenshot shows loaded planner",
+    "discovery_before": "6 UI cases, 0 warm-up cases",
+    "discovery_after": "6 UI cases and inherited warm-up dependency"
+  },
+  "compiled_browser": {
+    "run": 42961816733,
+    "executed_proofs": [
+      {
+        "job": 130331039242,
+        "lines": [
+          "2026-11-11T05:23:34.6378818Z   410 passed (20.2m)"
+        ]
+      },
+      {
+        "job": 130331039247,
+        "lines": [
+          "2026-11-11T05:11:21.1231479Z   354 passed (12.4m)"
+        ]
+      },
+      {
+        "job": 130331039266,
+        "lines": [
+          "2026-11-11T05:02:03.6249062Z   ✓   19 [desktop-chromium] › tests/browser/maintenance.spec.ts:248:1 › C1-2 charge-bearing agreements explicitly withhold the lossy successor form (1.6s)",
+          "2026-11-11T05:08:41.6969097Z   ✓  112 [desktop-chromium] › tests/browser/planner.spec.ts:364:1 › P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once (4.2s)",
+          "2026-11-11T05:36:18.9172125Z   402 passed (35.5m)"
+        ]
+      },
+      {
+        "job": 130331039284,
+        "lines": [
+          "2026-11-11T05:03:31.8933610Z   ✓   19 [mobile-chromium] › tests/browser/maintenance.spec.ts:248:1 › C1-2 charge-bearing agreements explicitly withhold the lossy successor form (1.4s)",
+          "2026-11-11T05:09:43.7776227Z   ✓  112 [mobile-chromium] › tests/browser/planner.spec.ts:364:1 › P05 controlled move conflict keeps original position; uncertain accepted result retries unchanged once (3.1s)",
+          "2026-11-11T05:34:42.7042157Z   369 passed (32.3m)"
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Historical-head CI, not final-head validation",
+    "C1-2 desktop/mobile actually executed; no full TS-01/TS-02 claim",
+    "Drag retry is evidence gathering, not a root-cause fix",
+    "Local required Chrome absent; browser execution left to CI"
+  ]
+}

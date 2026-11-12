@@ -240,3 +240,31 @@ PPO_RESTART_SERVER_PID=35333 node --env-file=.env.local --import tsx tests/helpe
 ```
 
 The [no-restart control](remaining-review-no-restart.txt) and [decoy control](remaining-review-decoy.txt) both fail at their intended assertions before recovery mutations. The genuine cycle passes after source supersession and withdrawal: six inert original receipts, exactly five fresh Accepted Session audit rows, two replay-safe recovery commands, one AUD 4,800.00 target, one processing attempt, one Consumed hold and Matched reconciliation. The same build spans different actual listener PIDs and different postmaster times; the old PID is absent. All owned servers are stopped. Final-head CI and Claude's confirmation of C1-2/C1-3/C1-4 remain outstanding at handover; no merge, deployment or operational acceptance.
+
+## CI follow-up — 12 November 2026
+
+At `330b76292cf5ce2daa72393328d6eebfcc95140f`, 21 of the 23 PR workflow summaries succeeded. Two failed: [Application assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42961817026) and [Azure demo preparation](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42961817024). The [claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6812133136) and [disposition](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6812215937) bound this continuation. Main remains `a65ac3f4a9a675f68c47567d8070a098b4f31b3f`; other active workstreams are untouched.
+
+- Application's ordinary desktop browser-2 job passed 401 cases, skipped 16 and failed the planner controlled-move case at `planner.spec.ts:388`: no dialog after `dragTo`. Its aggregate failed because that job failed. All database shards, HTTP and Finance jobs passed. The same controlled-move case passed in the compiled desktop and mobile jobs. This does not establish the original failure's cause. A failed-jobs retry was requested at the unchanged head; no planner code or assertion was changed.
+- Azure demo passed five cases and failed its first desktop planner assertion at `ui.spec.ts:63`. The [retained failure screenshot](ci-demo-timeout.png) shows the week planner rendered after the assertion timed out. Configuration inspection independently reproduced a missing dependency: `playwright.demo.config.ts` inherits `warm-up`, but its `testDir: tests/demo` hides `tests/browser/warm-up.setup.ts`. Before the correction, discovery listed only six UI cases and selecting warm-up reported no tests. Pinning that dependency's directory restores the existing route-compilation warm-up before both browser projects. All six UI cases, their assertions and deadlines remain unchanged. The exact timeout cause still needs a successful corrected CI execution; the configuration defect is directly demonstrated.
+- [Compiled browser assurance](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/42961816733) actually executed all four browser groups. In particular, C1-2 passed on desktop and mobile; this supersedes the earlier lack of executed C1-2 browser evidence at that historical head. The retained group's separate broad-browser step was skipped because the four groups own it, not because the PR was a draft. [Selected job log lines and failure disposition](ci-failure-triage.json) retain the distinction.
+
+Local commands source `/workspace/.ppo-tools/env.sh`. An initial discovery without the local environment file refused synthetic identity, as intended; the corrected command below established the six-case baseline and then the [seven-case discovery](ci-demo-discovery.txt). Fresh `npm run browser:check` still refuses because `/opt/google/chrome/chrome` is absent. Local browser execution is left to CI under the repository cloud-setup rule; no alternative browser, synthetic rendering or increased timeout is used.
+
+```sh
+node --env-file=.env.local node_modules/playwright/cli.js test --config=playwright.demo.config.ts --list
+node --env-file=.env.local node_modules/playwright/cli.js test --config=playwright.demo.config.ts --project=warm-up --list
+npm run browser:check
+npm run check
+python3 scripts/check_foundation.py
+python3 scripts/check_prototype.py
+python3 scripts/check_naming.py
+python3 scripts/check_migrations.py
+python3 scripts/build_status.py --check
+python3 -m unittest discover -s scripts -p 'test_documentation*.py'
+python3 scripts/check_documentation_scope.py --base origin/main --head HEAD
+```
+
+Local `npm run check` passed Studio, lint, TypeScript, all 1,452 unit tests and the production build. Foundation, prototype, naming, migration and status checks passed, as did all 44 documentation tests. The corrected warm-up-only discovery lists exactly one setup case. Fresh database/HTTP/restart proofs were not repeated because no runtime or migration changed; their executed incoming-head CI and prior local evidence remain separately identified. The final PR handover records documentation-scope and final-head CI state. Publishing the correction supersedes the still-running incoming-head drag retry under existing workflow concurrency; no passing retry result is claimed. The replacement final-head browser-2 run must resolve that signal.
+
+This correction changes only demo test configuration and delivery evidence; application code, migrations, Finance rules and scheduling policy are unchanged. C1-2/C1-3/C1-4 confirmation by Claude remains outstanding. No full TS-01/TS-02, operational acceptance, merge or deployment is claimed.
