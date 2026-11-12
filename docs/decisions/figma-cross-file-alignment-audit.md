@@ -2478,7 +2478,7 @@ Each first-pass finding was re-tested against the fresh extraction. Severities a
 
 | ID | Severity | Second pass | Note |
 |---|---|---|---|
-| AF-001 | Blocker | Changed since | Fixed in the Shell file (action/primary #2D7128, 5.99:1); still open in all 13 module copies |
+| AF-001 | Blocker | Changed since | The Shell added action/primary (#2D7128) after the first pass; Dean has since decided on brand/navy (Q-B, pull request 931). All 13 module copies still use the 3.57:1 pair |
 | AF-002 | Blocker | Confirmed | 232 strings on 59 sheets in this pass |
 | AF-003 | Blocker | Confirmed | PR01 and TB08 still show totals |
 | AF-004 | Blocker | Confirmed | 12 catalogue-form product references on PR01 |
@@ -2806,11 +2806,11 @@ Fix owner: PPO - Settings module. Action: Label the sheets as the 09:40 frame, o
 
 Files: PPO - Sales module (accepted); PPO - Estimating module; PPO - Projects module; PPO - Supply module; PPO - Engineering module; PPO - Service module; PPO - Finance module; PPO - Reporting module; PPO - Settings module; PPO - My Work module; PPO - Customers, Sites & Equipment module; PPO - Documents & messages module; PPO - Customer portal module. Checks: CT1, CT2. Rule: Brief CT1 and CT2: one "PPO colour" collection, copied from the accepted Shell.
 
-Expected: The same 67 variables with the same values in every file.
+Expected: The same 66 variables with the same values in every file (Dean, Q-B on pull request 931: action/primary is removed).
 
-Found: Three variables differ. action/primary (#2D7128) exists only in the Shell. accent/estimating-ink is #156E64 in Estimating and #1F8A7E in the Shell and the other 12 files. surface/scrim (#242A37 at 32 %) exists only in Estimating; the other files paint scrims with a literal colour. The other 65 variables agree everywhere.
+Found: When read, three variables differed. action/primary (#2D7128) existed only in the Shell; Dean has since decided to remove it. accent/estimating-ink is #156E64 in Estimating and #1F8A7E in the Shell and the other 12 files. surface/scrim (#242A37 at 32 %) exists only in Estimating; the other files paint scrims with a literal colour. The other 65 variables agree everywhere.
 
-Fix owner: PPO - Shell (accepted) for accent/estimating-ink and surface/scrim; each module file for action/primary. Action: Settle the three values in the Shell, name the version, then copy the collection to every file. A new named version is needed for the accepted file.
+Fix owner: PPO - Shell (accepted): remove action/primary (pull request 923) and settle accent/estimating-ink and surface/scrim. Action: Remove action/primary, settle the two Estimating values in the Shell, name the version, then copy the 66-variable collection to every file. A new named version is needed for the accepted file.
 
 #### AF-140 · Major · The same state word carries different chip tones in different files
 
@@ -2942,7 +2942,7 @@ P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The
 
 ### S6. Authority conflicts and questions for Dean
 
-The first pass's questions AC-01 to AC-20 stand as written above. This pass adds notes to eight of them and raises nine more. Each new question has two readings and a recommendation; none was resolved silently. On 12 November 2026 Dean decided the nine questions of the Estimating independent review on its recommendations; the decisions sit in its section 9, in open pull request 929. Four of them settle questions here, for the Estimating file at least, and the table says which.
+The first pass's questions AC-01 to AC-20 stand as written above. This pass adds notes to eight of them and raises nine more. Each new question has two readings and a recommendation; none was resolved silently. On 12 November 2026 Dean decided the nine questions of the Estimating independent review on its recommendations; the decisions sit in its section 9, in open pull request 929. Four of them settle questions here, for the Estimating file at least, and the table says which. Dean has also decided AC-13 (on pull request 931) and AC-29 (on this pull request).
 
 | ID | Question | Recommendation |
 |---|---|---|
@@ -2952,7 +2952,7 @@ The first pass's questions AC-01 to AC-20 stand as written above. This pass adds
 | AC-08 (note) | SYN-OPP-000301 | Six files, five different deals (AF-033) |
 | AC-09 (note) | Unknown send tone | One of 160 state words whose tone differs (AF-140) |
 | AC-12 (note) | Glasshouse 4 Update 4 | Projects also says "Update 4 sent Tue 27 Oct" (AF-075) |
-| AC-13 (note) | Primary-action contrast | The Shell file now has `action/primary` #2D7128; no module file has it (AF-001, AF-139) |
+| AC-13 (note) | Primary-action contrast | **Decided** (Dean, Q-B on pull request 931, 12 November 2026): primary buttons return to `brand/navy` (white on it 14.37:1) and `action/primary` is removed, so the shared collection stays at 66 variables. AF-001 and AF-139 resolve to `brand/navy`; the Shell change is made under pull request 923 |
 | AC-16 (note) | Documents and Shared records navigation | The Documents file marks Service, not More, on its rail (AF-061) |
 | AC-21 | The customer's quotation reference and issue date: the brief forbids `SYN-PPO-` and "PPO" on customer sheets; the portal record says A3.11 fixes "SYN-PPO-QUO-000214 issued Fri 31 Oct" | Use `SYN-QUO-000214` on the customer page and Estimating's issue date; correct A3.11 (AF-136, AF-162) |
 | AC-22 | SYN-OPP-000318 at 09:00: won and handed over (Projects) or an open task due Tue 3 Nov (My Work, citing A3.8) | Take A3.8 and give the Projects handover another reference (AF-131) |
@@ -2962,7 +2962,7 @@ The first pass's questions AC-01 to AC-20 stand as written above. This pass adds
 | AC-26 | One table for chip tones | Publish it with the Library's Controls record (AF-140) |
 | AC-27 | The year on dates: the brief requires it; about 8,900 strings omit it | Allow the short form in registers and timelines within the story year; require the year on headers, documents and customer sheets |
 | AC-28 | The label form and the accepted files | Apply it to Sales and Estimating only when a named version is cut for another reason (AF-080, AF-082) |
-| AC-29 | How this record is filed: one record amended in place, or two | One record, as filed |
+| AC-29 | How this record is filed: one record amended in place, or two | **Decided** (Dean, comment on pull request 925, 12 November 2026): one record, amended in place, as filed. Pull request 920 is closed in favour of 925 |
 
 Section 9 defaults as applied: no links arrived (Q1); read-only (Q2); files in progress included (Q3); the Library record's own transition settles the drawer widths (Q4); the Sales Products totals are a finding (Q5); briefs carry all severities (Q6).
 
@@ -3011,7 +3011,7 @@ After the section above was first pushed, the session re-tested what it could wi
 ### S9. Next steps
 
 1. **Dean's decisions first.** AC-08, AC-21, AC-22 and AC-25 to AC-27 unblock the largest batches; AC-01, AC-05, AC-23 and AC-24 are settled for Estimating and need only a word on whether they apply to every file.
-2. **Shell.** Record the `action/primary` change on main (open pull request 923), settle `accent/estimating-ink` and `surface/scrim`, correct the workspace-menus header, and save a named version. Every module then recopies the colour collection.
+2. **Shell.** Return the primary to `brand/navy` and remove `action/primary` (Dean's Q-B on pull request 931; the Figma change is made under pull request 923), settle `accent/estimating-ink` and `surface/scrim`, correct the workspace-menus header, and save a named version. Every module then rebinds its primary buttons to `brand/navy` and recopies the 66-variable collection.
 3. **Accepted files.** Sales needs a new named version after its batch (toolbar adoption, revisions, weekdays, Products sheets, Noah Clarke, pronouns, the phone tab bar pin); the Estimating review names Sales as the next file to audit. Estimating's batch is claimed in pull request 929 and starts from the review's ER-01 to ER-19, which cover AF-012, AF-013, AF-123, AF-124 and AF-166; this audit's other Estimating findings (AF-125 to AF-128, AF-139) can join it before its named version is saved.
 4. **Proposals.** Each file's brief lists its findings most severe first. The shared facts (AF-033, AF-075, AF-129 to AF-136) should be fixed together, since each touches two or more files.
 5. **Repository corrections**, each as its own later change: the Finance record's inventory (AF-157); the Sales record's section IDs (AF-158); the Shell version citations (AF-160, AF-021, AF-028); the merges of pull requests 913 and 918.
