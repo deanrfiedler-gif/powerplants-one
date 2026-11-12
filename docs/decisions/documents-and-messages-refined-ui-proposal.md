@@ -2,18 +2,18 @@
 document_id: PPO-DOCS-MESSAGES-REFINED-FIGMA-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Proposal, 12 November 2026; the build is in progress; design acceptance is Dean's and has not been given; no named version is saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, SharePoint, Microsoft 365, Graph, mail or SMS integration, customer communication or deployment; every record, hash, message and mailbox shown is synthetic
+status: Proposal incomplete, 12 November 2026; continuation awaits the private file and source handoff; design acceptance is Dean's and has not been given; no named version is saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, SharePoint, Microsoft 365, Graph, mail or SMS integration, customer communication or deployment; every record, hash, message and mailbox shown is synthetic
 source_commit: a65ac3f4a9a675f68c47567d8070a098b4f31b3f
 versioning: git
 ---
 
 # Documents and messages refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal, build in progress. Sections 1 to 8 are the proposal record. Later sections will record the audit, Dean's acceptance, any further batches and the named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal incomplete; not ready for review. Sections 1 to 8 retain the design proposal; section 9 records the 12 November continuation audit and its limits. No completion, acceptance or named version is claimed.
 
 On 11 November 2026 Dean asked for the refined UI pages of Documents and messages to be built in Figma from a written brief with Addendum A1 (shared record toolbar, accepted 9 November 2026) and Addendum A3 (persona and story reconciliation, as amended for documents and messages in its section A3.10), inside the accepted shell, organised with the page template adopted for the Sales file and to at least the standard of that file. The target is the new private Figma file Dean created on 10 November 2026, "PPO - Documents & messages module". The pages are the Document library, Outputs and Templates (reached from More › Shared records › Documents & outputs) and Email, Calendar and Customer messages (the Email workspace). His standing instruction applies: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The brief's questions Q2 to Q10 were therefore answered by their stated defaults; each is recorded in section 5 and can be reversed.
 
-This record is a **proposal**. It describes what is being drawn, the rules applied, the assumptions made and the questions that remain. It changes no code, test, migration, seed, permission or route, and it authorises no business transaction, integration or customer communication. Four statements stay separate throughout: code delivery (none), design acceptance (Dean's, not given), production readiness (not inferred) and integration with SharePoint, Microsoft 365, Graph, any mail or SMS provider or any customer (none exists beyond the synthetic channel, none authorised).
+This record is a **proposal**. It records the planned compositions, rules, assumptions and remaining questions. Statements about drawn content in sections 2 to 5 come from the original owning session and have not been reverified against the file in this continuation. It changes no code, test, migration, seed, permission or route, and it authorises no business transaction, integration or customer communication. Four statements stay separate throughout: code delivery (none), design acceptance (Dean's, not given), production readiness (not inferred) and integration with SharePoint, Microsoft 365, Graph, any mail or SMS provider or any customer (none exists beyond the synthetic channel, none authorised).
 
 ## 1. Sources
 
@@ -61,7 +61,7 @@ Across every scope: SharePoint keeps every business file and PPO keeps exact evi
 
 ## 3. Sheet inventory
 
-The build is in progress. Each scope has one page in the file: Document library · DK-01 · DK-02, Outputs · DK-03, Templates · DK-06, Email · EC-01 · EC-02, Calendar · EC-03, Customer messages · EC-04, Interaction states · DK · EC and Administration · DK · EC, with Read me, the two separator pages, Shell and kit and Scratch. Every scope page sits under "— Proposals —". The full inventory, with every sheet's code, view, page type and node ID, is recorded here when the build is complete.
+The inventory is incomplete. The original owning session reported these pages in the file: Document library · DK-01 · DK-02, Outputs · DK-03, Templates · DK-06, Email · EC-01 · EC-02, Calendar · EC-03, Customer messages · EC-04, Interaction states · DK · EC and Administration · DK · EC, with Read me, the two separator pages, Shell and kit and Scratch. Every scope page sits under "— Proposals —". The full inventory, with every sheet's code, view, page type and node ID, is recorded here when the build is complete.
 
 ## 4. Rules applied
 
@@ -75,7 +75,7 @@ The build is in progress. Each scope has one page in the file: Document library 
 
 ## 5. Assumptions and proposed departures
 
-Each item is for Dean's decision. The list is completed with the builders' page-level assumptions when the build is complete.
+Each proposal remains for Dean's decision. Page-level assumptions still need reconciliation against the original brief and the live sheets; section 9 distinguishes later repository evidence from the original session's account.
 
 | ID | Assumption or departure | Recommendation |
 |---|---|---|
@@ -84,10 +84,10 @@ Each item is for Dean's decision. The list is completed with the builders' page-
 | A3 | Two docked menus are proposed for the Shell file: Documents (Document library, Outputs, Templates, each nesting its accepted views while current) and Email (Mailbox, Customer messages, Calendar, with the mailbox status card at the foot). They are compositions of the accepted docked-menu items, with a neutral accent because neither is a department. A My workspace column is proposed for the More panel, matching the code's More menu | Adopt in the Shell file (Q2 default) |
 | A4 | The rail keeps the signed-in person's department as current with nothing selected on Documents and Email pages (DK-01 R2); the rail label "Email" outside Sales stays EC-01 Q2 | Keep until EC-01 Q2 is decided |
 | A5 | Jordan Kim is signed in for the file; Robin Hale and Jess Wong on the Customer messages flagship sheets; other people only on sheets that name them (Q3 default) | Keep |
-| A6 | The shell, kit, icons and chrome are local components rebuilt from the accepted files' serialised measurements under the same names, because the Plugin API cannot copy nodes between files; node counts match the sources. Three adaptations: the record header's sub-line fills the header width so the header can sit at 1300 and 1032 px (identical at 1312); the Files-tab drawer is a local component made from the Shell's sheet AK; a technician phone tab bar is derived from the Sales phone bar | Swap to the published library components by name when PPO - Library exists |
+| A6 | The shell, kit, icons and chrome are local components rebuilt from the accepted files' serialised measurements under the same names, because the Plugin API cannot copy nodes between files; node counts match the sources. Three adaptations: the record header's sub-line fills the header width so the header can sit at 1300 and 1032 px (identical at 1312); the Files-tab drawer is a local component made from the Shell's sheet AK; a technician phone tab bar is derived from the Sales phone bar | PPO - Library now exists but is unpublished; assess replacement only through its separate reviewed handoff after publication, preserving accepted names and verifying component identity |
 | A7 | Outputs draws the two built families (OUT-09 job pack, OUT-10 service report); OUT-06, OUT-11, OUT-12, OUT-13 and OUT-14 are a labelled proposal sheet (Q4 default) | Keep until each family joins the register |
 | A8 | Customer message classes M5 to M10 are drawn as proposals awaiting an extension of D-025 (Q5 default) | Dean extends D-025 or strikes the classes |
-| A9 | The customer email templates are a proposed fourth family, CUS-EMAIL, in Templates (Q6 default) | Decide with the D-025 stages |
+| A9 | Showing CUS-EMAIL as a fourth family in the Templates UI is proposed (Q6 default); the synthetic CUS-EMAIL backend already exists under S2, in sibling tables with its own publication rules | Decide with the D-025 stages |
 | A10 | The personal mailbox connection stays in My account; this file draws only the mailbox status card and the states that send a person there (Q7 default). EC-02 has no page and no decision record | EC-02's own design remains open |
 | A11 | The composer is drawn under ADR-0059 option C: correspondence from the person's own mailbox after a send-as consent recorded in My account (Q8 default) | Keep |
 | A12 | Times are Melbourne (AEDT), stated once per list (Q9 default). The accepted pages and the code use Brisbane (AEST), an earlier fixture | Keep, as the My Work file decided |
@@ -99,18 +99,67 @@ Each item is for Dean's decision. The list is completed with the builders' page-
 | A18 | Hashes are set in Roboto in the short form with Copy; the kit carries no mono face | Keep |
 | A19 | The accepted Files tab reads "Upload file" and "Drop files anywhere on this record to attach them here". On documents sheets the tab and the drop overlay register a SharePoint link through the record's own command and never store a file in PPO (the brief's D2; R93) | Decide the Files tab wording in the Shell file before it is built |
 | A20 | The tablet sheets keep the Calendar action in the accepted 1024 top bar, as the Sales file drew it; R87 moves it to the rail below 1024 | Keep |
-| A21 | The design register's notes for these scopes are stale (EC-02 unbuilt with no image; routes "Needs review"; `/email/connections` not drawn) | Fix in the register's own reviewed change, not here |
+| A21 | Register source/location notes need reconciliation in the documented separate handoff; EC-02 and `/email/connections` are outside this drawing scope. "Needs review" is an honest visual-review status and must remain until an actual review | Fix in the register's own reviewed change, not here |
 
 ## 6. Verification
 
-To be completed with the build: renders read for every sheet, the structural pass and position audit on every page, the evidence scan against the dataset, the counts scan, the contrast table computed from the PPO colour variables, the story, capability and authority scans, and the repository checks.
+Design verification is outstanding: renders inspected for every required sheet, structural and position audits on every page, dataset/evidence reconciliation, counts, story, capability and authority scans, and contrast computed from the actual bound colours and backgrounds. Section 9 records exactly what this continuation could verify. Prior structural evidence does not establish visual coverage.
 
 ## 7. Not drawn and open questions
 
 Not drawn: SharePoint itself; native CAD and the Engineering controlled-document register EN-03; the Sales file's Sales Inbox, Activities week, Deal Correspondence and Documents tabs and Notification preferences (reused by reference); My account with the mailbox connection, consent and removal; Knowledge, Knowledge authoring and the Help Centre; the source pages that prepare what these pages issue or send (SV-05, SV-06, FN-01, ES-05, PJ-08, EN-08, SC-06, SC-07, MA-06, EQ-06, FN-02); People; Conversations; the customer portal; Teams, SMS and any live mail provider; dark mode; prototype links.
 
-Open questions, cited and not resolved: D-012 (SharePoint retention and deletion); D-024 (customer acceptance and signature); D-025 stages S4 to S6 and its extension to further classes; DK-01 Q3 (review requests and assignees) and Q4 (inline PDF viewer, needs an ADR); DK-03 G2 to G5 (Outputs read gaps); DK-06 G5 (renderer manifest drift); EC-01 Q2 (the rail label "Email" outside Sales); EC-03 Q1 (team availability permission) and Q2 (`Calendars.ReadWrite`); ADR-0059 E9 (team mailboxes); EC-02's own design; the SharePoint pilot N0 to N6.
+Open questions, cited and not resolved: D-012 (SharePoint retention and deletion); D-024 (customer acceptance and signature); D-025 stages S4 to S6 and its extension to further classes; any newly proposed reopening of DK-01 Q3/Q4 (both were decided "not now" in the accepted page); residual DK-03 read gaps after the exact revision/acknowledgement additions; retained-definition support under DK-06 G5 after its rendering-only contract correction; EC-01 Q2 (the rail label "Email" outside Sales); EC-03 Q1 (team availability permission) and Q2 (`Calendars.ReadWrite`); ADR-0059 E9 (team mailboxes); EC-02's own design; the SharePoint pilot N0 to N6.
 
 ## 8. Boundary and next steps
 
 This record authorises nothing in the application: no code, route, read model, migration, permission, capability, grant, seed, integration or deployment. The next steps are: the build is completed and the inventory, verification and audit are recorded here; Dean reviews the proposal and decides the A-list; Dean saves a named Figma version, and any later design change needs a new one; the design register and the per-route page guidance follow in their own reviewed change; the two docked menus and the More panel column go to the Shell file as proposals; and the Service, Supply, Projects and Finance files align the rows Addendum A3.10 corrected.
+
+
+## 9. Continuation audit — 12 November 2026
+
+**Result: incomplete, blocked on private source handoff; PR #918 stays draft.** Dean asked Codex to continue the existing work. The repository claim identifies the owning Claude session, but this Codex environment has neither that session's resume notes nor a callable way to resume it. The private Figma file key/link and connection identity, original brief (including D1–D13, S-01–S-30 and the dataset), and full Addenda A1/A3 are not present in the checkout or PR discussion. They have been requested privately. The file title alone cannot identify the target for the available Figma tools. No replacement file was created and no Figma write was attempted.
+
+### 9.1 Sources, findings and stale guidance
+
+The proposal and six accepted page decisions, BP-01 section 16, Shell R116–R125, named-version handoff, design-to-build standard, naming convention, current status and repository contribution rules were inspected. This is repository evidence, not direct inspection of the private source designs.
+
+| Finding | Evidence and disposition |
+|---|---|
+| Original brief and full addenda unavailable in this continuation | Section 1's references are the original session's account, not recovered source bytes. Required sheet codes, counts and scenario completeness cannot be derived safely from it. Obtain the private handoff before drawing |
+| Addendum A2 still unavailable | Keep A17 and the [readable reference convention](readable-reference-namespaces.md). New synthetic references use `SYN-`; already assigned references and retained snapshots stay exact. Do not manufacture A2 or claim its validation. Assumption A2 in section 5 is the strip-width question, not the missing addendum |
+| DK-01 Q3/Q4 are not unanswered decisions | [Accepted page section 1](document-library-figma-design.md#1-decisions-and-evidence) resolved both as "not now". Any review-assignee or inline-viewer expansion is a new explicit proposal |
+| DK-03 G3 was subsequently addressed | [Exact revision and acknowledgement facts](output-register-facts.md) records exact revision numbers and visibility-scoped recipient/acknowledgement summaries. Do not repeat G2–G5 as one undifferentiated missing-backend claim; reconcile remaining gaps individually |
+| DK-06 G5 has a correction | [Rendering-only manifest](template-renderer-manifest.md) records Dean's decision and DK06-OUT09-2. Retained DK06-OUT09-1 evidence and its support failures remain distinct; the old design's open-gap text is historical |
+| CUS-EMAIL is not an unbuilt backend family | [S2](customer-communications-core-s2.md) and the [communications contract](../contracts/customer-communications.md) already define synthetic proposals/publications in sibling tables. A9 proposes its Templates presentation, not a new backend or a live integration |
+| Local-library guidance is dated | [12 November independent library review](library-independent-review.md) establishes that PPO - Library exists and remains unpublished. Its findings are not proof of defects in this module's copies. A6 does not authorise publishing or an unverified swap |
+| Review status is not stale merely because a proposal exists | Preserve "Needs review" and existing fingerprints. The separate register handoff must name file title, scope, sheet/node inventory, actual review evidence and any later Dean-approved named version; do not infer acceptance from source presence |
+
+### 9.2 Coverage and remaining gates
+
+| Check | This continuation's evidence | Remaining gate |
+|---|---|---|
+| Live file/page/sheet inventory | 0 Figma pages inspected; 0 sheet codes, dimensions or IDs read back | Inspect the existing six scope pages plus Interaction states and Administration; enumerate every required sheet and reconcile with the brief |
+| Structural and position audits | Not run on the target file | Descendant types/counts, instances, fonts, tokens, image-filled nodes, clipping, overlap, containment, labels and section positions; record intentional scrolling/ellipsis separately |
+| Visual review | 0 target sheets rendered or visually inspected | Render and inspect every required sheet at legible scale; identify code/node, viewport, defect, fix and post-fix evidence. Structural scans are not visual proof |
+| Dataset and story | Original dataset/A3.10 unavailable; A5/A14–A16 retained as unverified source summaries | Reconcile identities, revisions, hashes, actors, dates, recipients, held copies, withdrawn updates and cross-module handoffs, scenario by scenario |
+| Counts and capabilities | Rules reviewed; no rendered content scanned | Complete versus bounded/hidden counts, the 200-message window, absence of invented totals, per-person duties and independent reviewer/sender restrictions |
+| Authority | Repository boundaries reviewed; no sheet-level pass claimed | Separate generated/approved/issued/sent/delivered/acknowledged, exact bytes and native source ownership; explicit email links/shares; no implicit Outlook write or resend |
+| Computed contrast | Not run; actual target-file paints, backgrounds and opacity are unavailable | Compute resolved text/background and meaningful control ratios, classify thresholds/exceptions and inspect fixes; no blanket WCAG claim |
+| Repository validation | Status (413 fragments), foundation (78 parents, no errors), naming and prototype checks passed; all 44 documentation-control tests passed | Documentation scope checked again on the committed head; these checks prove documentation consistency only |
+| Final-head readiness | Original head `bcdebbb5c50c6cffe195da124fa191c8d0a1c114` had 14 returned PR workflow runs, all successful, and no review threads when inspected | Read final pushed-head CI and current main; source/drawing/audit completeness still blocks ready-for-review irrespective of green CI |
+
+No application, device, keyboard, screen-reader, zoom, prototype-navigation or operational evidence was produced. No application code, integration, library publication, merge or deployment is authorised by this continuation. The earlier session's limited Outputs render claim is retained as history, not enlarged into fresh verification.
+
+Current main `eeac965493a2d856d7e8fdc27ab4ef35acf15188` was integrated without conflict. Local checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_foundation.py`, `python3 scripts/check_naming.py`, `python3 scripts/check_prototype.py`, `python3 -m unittest discover -s scripts -p 'test_documentation*.py'` and `python3 scripts/check_documentation_scope.py --base origin/main --head HEAD`. No application code, token or live design-register mutation was made, so application suites, Studio and token/baseline checks were not rerun for this documentation checkpoint. Final pushed-head CI is reported in PR #918 rather than inferred from the original head.
+
+### 9.3 Recommended review order and handoff
+
+1. Recover the original brief/addenda, persona matrix and dataset; inspect the live file and reconcile its inventory before changes. Keep missing Addendum A2 explicit.
+2. Review Read me and the nine-field declaration; settle the 12 px strip, proposed menus, Files-tab wording and synthetic time/persona conventions as proposals.
+3. Review Document library → Outputs → Templates: exact revisions and hashes, issue/distribution boundaries, review independence, publication and site use, then all dialogs and recovery states.
+4. Review Email → Calendar → Customer messages: privacy/linking, mailbox handoff, read-only meetings, named-sender confirmation and unknown-outcome recovery; distinguish proposed families/classes from built synthetic capability.
+5. Review tablet 1024 and phones 390/320 for every required journey, then Interaction states and Administration. Reconcile scans with actual renders and record uncovered sheets explicitly.
+6. Complete the proposal audit and dated completion fragment, inspect final-head CI and readiness gates, and only then mark ready. Dean decides acceptance and named-version approval separately. The register/per-route and Shell proposals follow their documented separate reviewed handoffs.
+
+Dean's eventual decisions remain: accept or amend the completed design and A-list; approve a named version after acceptance; decide expanded output families, M5–M10 and CUS-EMAIL presentation; decide proposed workspace/Files wording and team-availability permission. These are not being requested as approvals for unfinished work. The immediate blocker is access to the existing private file and owning-session sources.
