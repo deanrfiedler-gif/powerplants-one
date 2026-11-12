@@ -91,7 +91,7 @@ With these the library held 134 variables in six collections (138 since the [Pho
 
 ## 5. Directions for later work
 
-Dean agreed these on 11 November 2026. None is drawn yet.
+Dean agreed these on 11 November 2026. B4, B5 and B7 have since been drawn, as their rows say; the others are not.
 
 | # | Direction |
 |---|---|
@@ -101,7 +101,7 @@ Dean agreed these on 11 November 2026. None is drawn yet.
 | B4 | **Prototypes.** After Phone patterns, wire three flows: editing a record section and saving; a save whose outcome is unknown, then Check the outcome; moving a card on a board. Drawn on 12 November 2026 ([Play record](library-play.md)) |
 | B5 | **Missing controls, in order.** Search field and multi-select; file drop zone; pagination; switch and segmented control. Drawn on 12 November 2026 ([Controls record](library-controls.md), section 7) |
 | B6 | **Stat tiles and charts.** After the shell and page template, before any reporting or dashboard design |
-| B7 | **New features.** Draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page. AI features come later, each after a rules-based version |
+| B7 | **New features.** Draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page. AI features come later, each after a rules-based version. Drawn on 12 November 2026, rules-based, with five items to confirm ([Record record](library-record.md), section 7) |
 | B8 | **Publishing.** After the shell move and page template and Dean's first page acceptances; then the standard's pilot on a copy of one module file |
 
 Order of work: Phone patterns (drawn on 11 November 2026, [Phone record](library-phone.md)), then the shell and page template (which needs Dean's desktop copy of the shell components), then B5 to B7.

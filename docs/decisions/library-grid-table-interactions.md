@@ -58,7 +58,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | Gantt · Bars and links | `116:37` | Eight Gantt parts and their review board, recorded in [Gantt · Bars and links in PPO - Library](library-gantt.md) |
 | Forms · Fields and validation | `140:37` | Ten form parts and their review board, recorded in [Forms · Fields and validation in PPO - Library](library-forms.md) |
 | States · Loading, empty and errors | `162:37` | Six state parts and their review board, recorded in [States · Loading, empty and errors in PPO - Library](library-states.md) |
-| Record · Details, tabs and history | `182:37` | Eleven record parts and their review board, recorded in [Record · Details, tabs and history in PPO - Library](library-record.md) |
+| Record · Details, tabs and history | `182:37` | Fifteen record parts and their review board, recorded in [Record · Details, tabs and history in PPO - Library](library-record.md) |
 | Phone · Lists, sheets and bars | `234:61` | Eight phone parts and their review board, recorded in [Phone · Lists, sheets and bars in PPO - Library](library-phone.md) |
 | Play · Three flows | `284:37` | Three playable example flows built from the parts, recorded in [Play · Three flows in PPO - Library](library-play.md) |
 
