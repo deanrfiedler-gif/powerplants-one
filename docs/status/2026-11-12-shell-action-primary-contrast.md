@@ -3,7 +3,7 @@ title: Shell primary action colour raised to pass contrast, accepted and saved a
 date: 2026-11-12
 ---
 
-At Dean's instruction, the private Figma file "PPO - Shell (accepted)" has a new colour variable, action/primary (`#2d7128`, CSS name `--ppo-refined-action-primary`). The five primary button fills in Shell / Record header · toolbar now use it in place of brand/green-deep. White on the old fill measured 3.57:1, below the 4.5:1 of WCAG 1.4.3 (audit finding AF-001, PR #920). The new pair measures 5.99:1. brand/green-deep keeps its value and its marker role, and its description now says it is never a fill behind text.
+At Dean's instruction, the private Figma file "PPO - Shell" (recorded earlier as "PPO - Shell (accepted)") has a new colour variable, action/primary (`#2d7128`, CSS name `--ppo-refined-action-primary`). The five primary button fills in Shell / Record header · toolbar now use it in place of brand/green-deep. White on the old fill measured 3.57:1, below the 4.5:1 of WCAG 1.4.3 (audit finding AF-001, PR #920). The new pair measures 5.99:1. brand/green-deep keeps its value and its marker role, and its description now says it is never a fill behind text.
 
 Dean accepted the change the same day and saved the named version, recorded as "Shell refined concept — accepted · primary action contrast". Builds that use the shell and start after 12 November 2026 cite it. The [shell decision record section 12](../decisions/shell-refined-concept-design.md#12-primary-action-colour--12-november-2026) records the nodes changed, the alternatives weighed, the acceptance and the follow-ups, and the [rules export](../design/development/systems/shell-refined-concept-rules.md) notes the change. The file's link and key are not recorded (ADR-0050, ADR-0053).
 
