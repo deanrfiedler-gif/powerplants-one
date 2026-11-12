@@ -2,19 +2,19 @@
 document_id: PPO-LIBRARY-PHONE-PROP
 date: 2026-11-11
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; the seven items in section 6 await Dean's confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 11 November 2026 at Dean's request; the seven items in section 6 were confirmed by Dean on 12 November 2026; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Phone · Lists, sheets and bars in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. The items in [section 6](#6-to-confirm) await Dean's confirmation, and the page awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Proposed. The items in [section 6](#6-confirmed--12-november-2026) were confirmed by Dean on 12 November 2026. The page itself awaits acceptance.
 
 After the [library audit](library-audit.md), Dean said on 11 November 2026: "Go ahead with the Phone patterns page". Phone patterns were the fourth of the groups that section 5 of the [design-to-build standard](../standards/design-to-build-standard.md) requires and the library did not yet hold. This record covers that page, named "Phone · Lists, sheets and bars".
 
 The page holds the parts and rules every page shares below 768 px: the header row, the status line, the tab bar, list rows, selection, sheets and the bars at the foot. The phone record is on the [Record page](library-record.md) (card 9) and the phone form on the [Forms page](library-forms.md) (card 8); this page holds what is around them.
 
-Almost every rule here is already accepted: the page gathers three owner decisions and the shell's phone rules into library parts. Where no accepted record speaks, the page proposes a rule and lists it in section 6.
+Almost every rule here is already accepted: the page gathers three owner decisions and the shell's phone rules into library parts. Where no accepted record speaks, the page proposed a rule and listed it in section 6; Dean has since confirmed each.
 
 This record is a **proposal**. Drawing the page does not accept it, publish it or change any module file.
 
@@ -43,7 +43,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | Reused components | Controls / Button, Icon button, Chip, Checkbox and Field; Form / Save bar; Record / Fact; existing icons. New in the library, all `Status: Proposed`: the eight Phone parts in section 3, five icons and one text style |
 | Incoming handover | A page supplies its title, views, count, rows, actions and destinations; the parts read them |
 | Outgoing handover | The record, the phone menu, the page's Choose view and Filter sheets, and each action's own confirmation |
-| Departures | The items in section 6 |
+| Departures | The items in section 6, confirmed |
 
 ## 3. What was drawn
 
@@ -56,7 +56,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 | `phone/width` | 390 | The width phone pages are drawn at; layouts must also work at 320 |
 | `phone/header-height` | 56 | Header row (P1) |
 | `phone/tab-bar-height` | 64 | Tab bar (T4) |
-| `phone/row-min-height` | 56 | Smallest list row; proposed (Ph2) |
+| `phone/row-min-height` | 56 | Smallest list row (Ph2) |
 
 "PPO layout" now holds 49 variables and the library 138; [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
 
@@ -91,7 +91,7 @@ Five `_Example /` components hold the board's example sheet content. The leading
 | 5 · Sheets | `240:718` | An actions sheet, a confirmation, a full-screen sheet, and a long sheet on a 320 × 568 px phone; rules |
 | 6 · Action bars | `240:934` | One action, two actions, selection and the form's save bar; rules |
 | 7 · Do and Don't | `241:850` | Ten pairs |
-| 8 · Values, sources and items to confirm | `241:887` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
+| 8 · Values, sources and confirmed items | `241:887` | The table in section 5, the items in section 6, where the page is used, what is not here, change log |
 
 **Changed elsewhere in the library**
 - **Read me:** the page index, rules 2 and 4, the variable, style, component and icon counts, the items awaiting confirmation and the next steps.
@@ -126,7 +126,7 @@ Five `_Example /` components hold the board's example sheet content. The leading
 | `phone/width` | 390 px | The width phone pages are drawn at; also checked at 320 px (P7, T5) |
 | `phone/header-height` | 56 px | P1 |
 | `phone/tab-bar-height` | 64 px | T4 |
-| `phone/row-min-height` | 56 px | Proposed here (Ph2); no accepted source sets a list row's height |
+| `phone/row-min-height` | 56 px | Proposed here and confirmed by Dean on 12 November 2026 (Ph2) |
 | `form/phone-action` | 48 px | Dean, 19 October 2026; also the menu row's height |
 | Touch target | 44 px | P8, PR5, PR12; the Touch mode of "Control size" |
 | `breakpoint/tablet` | 768 px | Phone pages are below it (P1; R87) |
@@ -135,11 +135,14 @@ Five `_Example /` components hold the board's example sheet content. The leading
 | Long press | 550 ms; moving 10 px cancels | PR2, PR13 |
 | Sheet height | Screen less 56 px | PR14; the shortest phone drawn is 320 × 568 px |
 
-## 6. To confirm
+## 6. Confirmed — 12 November 2026
 
-Each item is drawn as recommended.
+On 12 November 2026 Dean confirmed all seven items as drawn: "Confirm Ph1–Ph7 as recommended and the motion timings". Card 8, the page header and the rules on cards 5 and 6 now say so.
+- **Ph3** leaves the Service field dock at 56 px as the one exception to 48 px bars.
+- **Ph6** means the built application's 780 px switch aligns with 768 px at its next reviewed change.
+- **Ph7** means the built application's More dropdown on a phone record becomes a bottom sheet at its next reviewed change.
 
-| ID | Item | Recommended | Why it needs a decision |
+| ID | Item | Confirmed as drawn | Why it needed a decision |
 |---|---|---|---|
 | Ph1 | Closing a sheet | Close, the sheet's buttons, a tap on the dimmed page or a downward swipe; never a swipe alone; a handle on bottom sheets only | No accepted record covers how a sheet closes or whether it has a handle |
 | Ph2 | List rows | At least 56 px; a title of up to two lines, one line of facts, then the state and next step | No accepted record sets a list row's height or general contents |
@@ -166,7 +169,7 @@ Each item is drawn as recommended.
 
 ## 8. Checks
 
-- **Rendered and inspected.** Every component and every card of the review board, the short-phone example on its own, and the tab bar at double size.
+- **Rendered and inspected.** Every component and every card of the review board, the short-phone example on its own, and the tab bar at double size. Card 8 was rendered again after the items were marked confirmed.
 - **Defects fixed while drawing:**
   - the list header's page-action icon was white on a white header;
   - the dimmed page behind the short-phone sheet drew as solid navy;

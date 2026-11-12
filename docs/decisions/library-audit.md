@@ -2,7 +2,7 @@
 document_id: PPO-LIBRARY-AUDIT-DEC
 date: 2026-11-11
 owner: Dean Fiedler
-status: Audit of the private Figma file "PPO - Library" carried out on 11 November 2026 at Dean's request, with Dean's decisions of the same day; the fixes in section 4 are drawn in the library, the motion timings are proposed, and the directions in section 5 guide later work; the library is not published; no application code, route, migration, permission or deployment
+status: Audit of the private Figma file "PPO - Library" carried out on 11 November 2026 at Dean's request, with Dean's decisions of the same day; the fixes in section 4 are drawn in the library, the motion timings were confirmed by Dean on 12 November 2026, and the directions in section 5 guide later work; the library is not published; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
@@ -83,7 +83,7 @@ All decisions are Dean's, on 11 November 2026.
 | A6 | One Drawer component, on the Controls page | Controls / Drawer in the four [drawer widths](library-drawer-widths.md), with a title and Close, a content slot and a Form / Save bar footer; a Drawer card on the Controls board. Form / Save bar's desktop buttons now wrap together below the sentence, so the bar fits the Narrow drawer |
 | A7 | Dialog widths of 560 and 720 px | `dialog/standard` and `dialog/wide`. Controls / Dialog has a Width option: Standard 560 px and Wide 720 px, tied to them |
 | A8 | Breakpoints | `breakpoint/tablet` 768, `breakpoint/laptop` 1024, `breakpoint/desktop` 1280 and `breakpoint/wide` 1440, from shell R94 and R75, the drawer rule and the shell sheets |
-| A9 | Motion timings, as proposed values | A "Motion" collection: `motion/fast` 100 ms, `motion/standard` 200 ms, `motion/slow` 300 ms and `motion/delay` 300 ms. With reduced motion nothing slides and fades are 100 ms or less. The delay is already decided (States S2; shell R93); the other three await confirmation once they can be judged in a prototype |
+| A9 | Motion timings; proposed on 11 November and confirmed by Dean on 12 November 2026 | A "Motion" collection: `motion/fast` 100 ms, `motion/standard` 200 ms, `motion/slow` 300 ms and `motion/delay` 300 ms. With reduced motion nothing slides and fades are 100 ms or less. The delay is already decided (States S2; shell R93); Dean confirmed the other three on 12 November 2026; they are still to be judged in a prototype |
 
 Dean also confirmed the Record page's items R1 to R4 and R6 ([Record record](library-record.md), section 6).
 
@@ -121,7 +121,7 @@ None of these is changed by this record.
 - **Closed with the Phone page.** Two items first listed here were done when the [Phone page](library-phone.md) was drawn, also on 11 November 2026: Controls / Dialog was fitted to the dialog widths, and the Record page's card 7 now places Controls / Drawer.
 - **Controls page leftovers.** A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit.
 - **Not addressed.** The Board page's scaled thumbnails with text below 11 px; the Grid hover reading in section 2.
-- **Motion.** The three proposed timings are not confirmed.
+- **Motion.** Dean confirmed the three timings on 12 November 2026: "Confirm Ph1–Ph7 as recommended and the motion timings". They have not been judged in a prototype or in code.
 - **Proof.** No prototype links were added. Keyboard, focus and reduced-motion behaviour need the browser proof once code exists.
 - **Code.** No application code, binding, register or page guide changed. The new variables have no CSS property.
 
