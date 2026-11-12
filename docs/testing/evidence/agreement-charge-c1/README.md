@@ -2,6 +2,16 @@
 
 [PPO-MAINTENANCE-TS02-DEC](../../../decisions/maintenance-service-ts02-decisions.md) C, [PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905). Originally stacked on M2 #904; M2 is now merged and C1 targets main. B3 is merged. No merge, deployment or live data action is implied.
 
+## Current delivery checkpoint — 12 November 2026
+
+Diagnostic source `38adc923cbf93ef32ed5c5f4d73b74910035fd8b` integrates main `eeac965493a2d856d7e8fdc27ab4ef35acf15188` and preserves the original return action, assertions, deadlines and retries. It adds only bounded content-free diagnostics, retained original evidence and the TS-02 register correction. No application correction is supported by the available failure evidence. The original Activity-page stall remains causally unresolved; the passing retry is non-reproduction, not a fix.
+
+The refreshed **23/23 successful workflow summaries belong to `b2b5e125ac20f6f70ec3e2b7f50fb778fe9e8dd7`**. At that exact source, demo job [130963539910](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43152130621/job/130963539910) executed the 1.6-minute setup and all six desktop/mobile cases; Finance job [130963597656](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43152130551/job/130963597656) executed the connected B4/M2/C1 component with the CI renderer in 41,099 ms; compiled retry job [130989786847](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43152130675/job/130989786847) passed 369 cases with 49 skips. These are retained source-bound results, never validation of a later commit. The [PR validation section](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) records actual final-head jobs after publication.
+
+M2 is merged and C1 targets main. Claude confirmed C1-1/0128 at `c58b2c94e63a1b1b9c8f3a125739060b008a4f38`; **C1-2/C1-3/C1-4 confirmation remains outstanding**, including review of the changed historical Finance authorization behavior under the one-review exception. The [existing handover](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6815415692) also includes connected billing tests, demo warm-up, scenario reconciliation and return-navigation diagnostics. It does not reopen unaffected history. Full manual TS-01/TS-02 acceptance, operational financial rules, charge authoring and real ERP are not claimed. Nothing is merged or deployed by this continuation.
+
+The chronological sections below preserve what was observed at each source. Earlier references to a draft, an M2 dependency, pending publication or absent executed browser evidence describe that checkpoint, not current PR status.
+
 ## Scope and provenance
 
 Migration 0127 was reserved and pushed before writing it. The normal reservation command could not enumerate open PRs because shell `gh` GraphQL returned Forbidden. The GitHub connector enumerated all four open PRs (897, 902, 904, 905) and every changed filename; none claimed a migration. The existing reservation module then ran with that observed empty remote-claim set, creating `db/reservations/0127.md`. The implementation removes its reservation. The tracked reservation/checker scripts were not changed to bypass a check.
@@ -26,7 +36,7 @@ The first broader upgrade run passed the new populated-0126 case, the existing p
 
 The first compiled build could not resolve Next.js through a shared `node_modules` symlink outside Turbopack's root. Installing the unchanged lockfile into this worktree fixed the environment; the production build then passed. One premature repeat was refused by Next's build lock while that build was still running; no lock was removed. The final sequential build passed on the final application source. Lint, TypeScript, Studio coverage and all 1,452 unit tests passed; this is not reported as a single green initial `npm run check`, whose first build attempt failed on the symlink.
 
-## Final local results
+## Initial implementation local results (historical)
 
 - Studio, lint, final TypeScript and **1,452 unit tests passed**; final production build passed with local installed dependencies.
 - **20 selected database cases passed**: five new C1 lifecycle/authority/SQL cases, one new populated-0126 upgrade, eight existing B3 cases, one existing populated-0125 upgrade, three P11 quality upgrades and two corrected late-Maintenance cases. The historical source/output fixtures use the explicit synthetic renderer boundary above; the two final late-Maintenance cases run unmocked without rendering.
@@ -36,7 +46,7 @@ The first compiled build could not resolve Next.js through a shared `node_module
 
 Full real-renderer database/browser suites remain unrun locally because Chrome is absent. The existing rendered late-Maintenance proof fails its unchanged >1,000-byte PDF assertion under the explicitly short synthetic renderer helper. The independent unmodified-main control is recorded below. This failure is not counted as a passing rendered suite or as evidence against business behavior.
 
-Independent Claude review and full final-head/merged-tree CI are outstanding. C1 must retarget to main after M2 merges; agents do not merge. No full TS-01/02, device/visual, operational financial policy, real MYOB or SharePoint acceptance is claimed.
+At the initial implementation handover, independent Claude review and final-head/merged-tree CI were outstanding, and retargeting depended on M2 merging. M2 has since merged and C1 now targets main; the current checkpoint above supersedes those status statements. Agents do not merge. No full TS-01/02, device/visual, operational financial policy, real MYOB or SharePoint acceptance is claimed.
 
 Unmodified-main control: detached clean main `9926da5fa9a3b60fbc22843d25ddea1af4830bf5` reproduced the same `assert.ok(bytes.pdf.length > 1000)` failure with the same optional synthetic renderer. The C1 branch reaches that same unchanged assertion after its reconstructed-history fix. The separate unmocked command-only late-installation proof passes and does not claim to verify PDF size or layout. No assertion or renderer bytes were relaxed.
 
@@ -100,7 +110,7 @@ The first actual-restart attempt recovered all six receipts but failed the whole
 
 ### Delivery gates
 
-At the incoming C1 head, Application assurance's workflow summary was successful but its database/HTTP/runtime jobs were **skipped because the PR is draft**. This is not full CI validation. Contacts was the attributable failing job; other workflow results are observed separately on GitHub. Updated-head CI and Claude's one independent defect review remain separate gates. C1 stays on M2 until Dean merges M2, then needs retargeting and current-main validation. Complete TS-01/02, real rendered suites, customer output, operating pricing/tax/accounting authority and deployment remain unclaimed.
+At the incoming C1 head, Application assurance's workflow summary was successful but its database/HTTP/runtime jobs were **skipped because the PR is draft**. This is not full CI validation. Contacts was the attributable failing job; other workflow results are observed separately on GitHub. At that historical handover, updated-head CI and Claude's independent defect review were separate gates, and C1 remained stacked on M2 pending its merge. The current checkpoint above records the subsequent main-based state. Complete TS-01/02, real rendered suites, customer output, operating pricing/tax/accounting authority and deployment remain unclaimed.
 
 ## C1-1 independent review correction — 11 November 2026
 
@@ -320,4 +330,4 @@ python3 scripts/check_migrations.py
 python3 -m unittest discover -s scripts -p 'test_documentation*.py'
 ```
 
-**Connected local result:** [all five cases passed](connected-final.txt): the expanded B4/M2/C1 component and all four existing Maintenance/Service regressions, with no skips. This run uses the explicitly labelled synthetic-byte document helper. Local `npm run check` passed Studio, lint, TypeScript, all **1,453 unit tests with no skips**, and the production build. Foundation, prototype, naming, migration and status checks passed, as did all 44 documentation tests. Documentation-scope validation is run against the committed continuation before publication. New-head CI remains pending publication; its observed state is recorded in the PR handover. C1's independent finding confirmation remains outstanding; this continuation does not grant review, merge or deployment authority. UI charge authoring, claim OUT-14 content, full TS-01/TS-02 execution and operational D-017 definitions remain separate boundaries.
+**Connected local result:** [all five cases passed](connected-final.txt): the expanded B4/M2/C1 component and all four existing Maintenance/Service regressions, with no skips. This run uses the explicitly labelled synthetic-byte document helper. Local `npm run check` passed Studio, lint, TypeScript, all **1,453 unit tests with no skips**, and the production build. Foundation, prototype, naming, migration and status checks passed, as did all 44 documentation tests. Documentation-scope validation is run against the committed continuation before publication. At that local handover, new-head CI was pending publication. The subsequently executed demo and connected Finance results at `b2b5e125ac20f6f70ec3e2b7f50fb778fe9e8dd7` are recorded in the current checkpoint above; later-head results remain separate. C1's independent finding confirmation remains outstanding; this continuation does not grant review, merge or deployment authority. UI charge authoring, claim OUT-14 content, full TS-01/TS-02 execution and operational D-017 definitions remain separate boundaries.
