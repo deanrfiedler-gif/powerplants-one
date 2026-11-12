@@ -1,0 +1,114 @@
+---
+document_id: PPO-SHELL-REVIEW-PROP
+date: 2026-11-12
+owner: Dean Fiedler
+status: Independent read-only review of the accepted private Figma file for the shell on 12 November 2026 at Dean's request, by a session that did not draw it; findings and recommendations only; nothing was changed in Figma; no design is accepted or amended by this record; no application code, route, migration, permission or deployment
+versioning: git
+---
+
+# PPO - Shell independent review, 12 November 2026
+
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Nothing is drawn. The session that next holds the Shell file decides how to draw the fixes, Dean decides the questions in section 7, and any change to the accepted file needs a new named version that Dean saves.
+
+## 1. The request
+
+Dean asked for an audit of the Shell UI in Figma and supplied two documents as aids, neither of which is in this repository: the cross-file Figma alignment audit prompt, whose checks ST, SH, CT, CV, FA, RA and GV are applied here to this one file, and the UI/UX conformance audit of 10 November 2026 against the candidate Version 3.0 blueprint. The alignment prompt treats the Shell as an authority that module files are checked against; this review checks the authority itself, against its own rules, its records and the accepted module records that read from it.
+
+The file is the one the [decision record](shell-refined-concept-design.md) (PPO-SHELL-REFINED-FIGMA-DEC) calls "PPO - Shell (accepted)", accepted on 8 November 2026 (named version "Shell refined concept — accepted") and extended by the record header toolbar on 9 November 2026 (named version "Shell refined concept — accepted · record header toolbar", 10 November 2026). **Where that record decides something (R1 to R125, D1 to D41, Q1 to Q22), the decision stands** and is not reopened; the findings below are places where the drawing, its notes or its records depart from those decisions, or where another accepted record now disagrees with them.
+
+## 2. Basis and limits
+
+- **Read-only.** Every call through the Figma connector was a read. No node, variable, style, comment or version was created or changed.
+- **Scan.** All three pages: the 40 shell sheets A to AN, the notes card, the sheet index and the page header; the 38 components and component sets and the four reference frames in the Components section; the 25 sheets of the Workspace menus page and its header; and the record header toolbar page (header, navigation states, RH01 and the rules card). About 13,800 nodes on the shell page, the Components section and the toolbar page, every node of the 25 menu sheets, and about 3,800 texts in all were walked for instances and their main components, detached frames, children outside bounds, colour bindings, fonts and sizes, contrast of each text against its nearest solid background, and the text itself (dates and weekdays, references, people, counts, copy). The 67 variables were read with their values, descriptions, scopes and code syntax.
+- **Renders.** One sheet was rendered to confirm a finding: T, the demo tenant (SR-01).
+- **Authorities.** The decision record and the [rules export](../design/development/systems/shell-refined-concept-rules.md); [Build from the named Figma version](figma-named-version-build-handoff.md); the [drawer widths decision](library-drawer-widths.md); [readable reference namespaces](readable-reference-namespaces.md); the accepted [Sales](sales-module-refined-ui-proposal.md) and [Estimating](estimating-module-refined-ui-proposal.md) records and the [My Work](my-work-refined-ui-proposal.md) and [Reporting](reporting-module-refined-ui-proposal.md) records for shared facts; `src/shell/navigation.ts` and `src/app/styles/shell-refined-tokens.css`.
+- **Not available.** Addenda A1, A2 and A3 were not supplied; where a check needs A3 it uses the alignment prompt's summary and the accepted module records, and says so. The connector cannot read version history, so whether the file changed after either named version is not established. The Library, Sales and Estimating files were not opened. The file's name could not be read through the connector (section 4.2, SR-20).
+- **Limits.** Contrast was computed against the nearest solid fill beneath each text; annotation markers (R86) and the disabled primary of the preparer variant are exempt and were set aside. Prototype flows, keyboard order, focus, hover timing and hit areas cannot be proved in a static file.
+
+## 3. What holds
+
+| Check | Result |
+|---|---|
+| Layout (ST3, ST4) | 40 shell sheets on a 1,540 × 1,032 grid with a label above each, 25 menu sheets on the same grid. No child outside any sheet or component, and no overlap among sheets, labels and section children |
+| Bar and strip (SH2, SH3) | Seven top-bar actions in the C5 order, no Help button (the Help centre sits in the Account menu, R11). Six strip tabs in the R66 order. The drawer is a 432 px panel plus the 48 px tab column, 480 px in all (R45, R98, R112), which is the Library's `drawer/standard`: no conflict with the drawer widths decision |
+| Instances (SH1, in part) | Sheets A to V, X to AB, AD to AG, AM and RH01 place the bar, rail, strip and every popover, drawer, dialog and banner as instances of the Components section |
+| Menus (SH4, in part) | The page totals the record gives (Sales 14, Estimating 14, Engineering 9, Projects 11, Service 16, Supply 11, Finance 9, Reporting 7, Knowledge 7, Customer portal 6, Administration 14, Assistant 8, My Work 6) match the rows drawn. Products sits in the Sales REGISTERS group; the Knowledge DOCUMENTS group holds Document register, Outputs and Templates; Recurring checks sits in the Assistant REVIEW group |
+| Record header toolbar (SH6) | Six State variants with the R117 primaries; Outputs with the printer glyph; "n of N in view"; no Undo, New, first or last; the phone component's sticky bar reads "Issue on desktop" (R124). Its weekdays and the validity end (Sat 5 Dec 2026) are right, and RH01's GST is 10 % of the total excluding GST |
+| Type family (CT3, in part) | Roboto only, Regular and Medium |
+| Colour (CT2, in part) | Outside instances every solid fill and stroke is bound to a "PPO colour" variable, except the translucent whites R15 allows and the four literals of SR-21 |
+| Content | No retired fixture or reference family from the alignment prompt's list; no forbidden word; Australian spelling; amounts in A$ with the GST basis stated; Carl "answers and drafts only" |
+| Records (GV2, GV4) | No Figma link or file key in `docs/decisions`, `docs/status` or the design system pages. Every node ID the decision record cites for sheets, menus, the Components section, the notes card and the toolbar page resolves; the six variant IDs of the toolbar set were not checked one by one |
+
+## 4. Findings
+
+Severity follows the alignment prompt: **Blocker** an accepted file departs from a decided rule or shows a wrong fact; **Major** a shared rule, component, token, reference family or persona differs, or a shell part exists only as a redrawn frame; **Minor** a convention drifts; **Polish** tidiness. The fix owner is the Shell file's next drawing session unless the row says otherwise; every Shell fix needs a new named version.
+
+### 4.1 Blockers and Majors
+
+| ID | Sev. | Where | Found | Expected |
+|---|---|---|---|---|
+| SR-01 | Blocker | Sheet T `64:4428`: the bar's tenant chip | The demo chip is filled with `status/warning` (#80530e) under `brand/navy` text: **2.16 : 1**. R59 and R85 state that every text pairing passes 4.5 : 1, and the variable `status/warning-surface` is described as the "demo tenant chip" fill. The demo signal is not built yet (`src` has no demo chip style), so this is caught before the build | `status/warning-surface` (#fff2d9) under navy text, 12.97 : 1, with the 3 px `status/warning` stripe kept (R72) |
+| SR-02 | Blocker | Account menu `4:501` and sheet I; drawer sheets AI `110:8595` and AJ `110:8813` | Five wrong weekdays: "Last sign-in Sat 8 Nov 2026" (a Sunday), "Expected close Fri 28 Nov 2026" (a Saturday), "Call · Thu 13 Nov, 10:00" (a Friday), "Due Fri 14 Nov" (a Saturday), "Fri 31 Oct" (a Saturday). The Account menu is a component, so the error travels into every module file that copies it | True weekdays, with the last sign-in before the story clock (for example Wed 4 Nov 2026, 16:04) |
+| SR-03 | Blocker | Global search `36:3526` and sheets F, L; Incoming call `71:6644` and X; Offline queue `64:4379` and U; drawer sheets AI to AL | The Riverbend story contradicts the one truth the owner-accepted Sales record fixed (C1) and the Shell's own RH01 and toolbar: the deal reads "Riverbend Growers — fertigation upgrade" and "Fertigation upgrade"; the organisation "Mornington VIC" and the site "Mornington glasshouse"; Mei Tran "Grower manager" | "Glasshouse fertigation upgrade"; "Riverbend glasshouse · Lindenow VIC"; Mei Tran, Operations manager |
+| SR-04 | Major | Sheet Z `71:7120`; Banner `66:6188`; Notifications `6:582`; Conversations peek `64:4058`; AJ, AL; the Service and Administration flyout Recent rows | Priya Nair is signed in as the Service technician, authorises work order SYN-WO-000041, completes the site survey and confirms the pump specification. The accepted Estimating file makes Priya Nair the estimator, the Reporting record keeps that ("Priya Nair stays the estimator"), and the My Work record's technician is Casey Ward | The cast A3 gives for each role. Dean to confirm (Q-E) |
+| SR-05 | Major | Top bar `3:194`, both rails, Right drawer · open, Assistant and Page guide drawers, Keyboard shortcuts, Customise my rail, the Snapshot drawer (AI); Incoming call `71:6644`; RH01 | Text at 10 px (tenant initials, bar and rail count pills, drawer tab counts, and the section eyebrows of the drawers and dialogs) and at 15 px (the caller's name, two RH01 headings), outside C6's 11/12/13/14/16/20; R35 sets eyebrows at 11 px and the menus use 11. Builds read the frames, not the export (handoff rule 1), so the build would ship 10 px; the Estimating review counted about 1,300 texts at 10 px, four-fifths inside Shell copies | Eyebrows at 11 px; badge numerals and avatar initials either at 11 px or named in C6 as the one 10 px exception (Q-C) |
+| SR-06 | Major | Variable `action/primary` (#2d7128), bound five times in Shell / Record header · toolbar `170:10178` | A 67th variable, recorded nowhere: R15, R59 and the decision record count 66 and say the toolbar "need[s] no new token". It is a green fill behind text, against R58 ("Green is never a fill behind text"), and it measures **1.01 : 1** against `status/success` (#416d33, lightness 30 % against 31 %), against R58's "the status success colour is a separate dark green" and R102's "status colours stay exclusive to status". Its code syntax names `var(--ppo-refined-action-primary)`, a property `shell-refined-tokens.css` does not define | A primary-action colour recorded in R15, R58 and R59, kept apart from success by role and form, or a navy primary (Q-B) |
+| SR-07 | Major | Workspace menus page: 23 of 25 sheets | Only the Sales flyout (`4:286`) and docked menu (`4:358`) are components. The other eleven flyouts, eleven docked menus and the My Work docked menu are detached frames, so a module file cannot place its workspace's accepted menu and redraws it; the Service record redrew its flyout (A55) and the Estimating review found its docked menu out of step (ER-19) | Component sets "Shell / Workspace flyout" and "Shell / Workspace menu · docked" with a Workspace property (twelve workspaces and My Work) |
+| SR-08 | Major | Sheets AI to AL; Top bar · 1920 px `66:6735`; the 1280 and 1024 bars in `19:2965`; W `66:6462`; AC `79:7381`; AN `110:10173` | The record-context drawer tabs (R112), the bar at 1920, 1280, 1024 and 834 px (R19, R75, R76, R87) and the twelve-workspace expanded rail (R113) exist only as detached frames. Module record pages and tablet sheets must redraw them | A Tab property on Right drawer · open, a Width property on Top bar, a twelve-workspace variant of Rail · expanded |
+| SR-09 | Major | Notes card `5:686`; Rules · record header toolbar `170:10581`; the rules export | The rules text differs between the drawn cards, which the named versions pin and builds read, and the export, which says it reproduces them "as written". The export adds notes to C2, R1, R5, R11, R26, R45, R48 and R59, rewrites R27 (the card still says "proposal, Q3") and R53 (the card cites R54–R55, never written), and differs on D22, D24 and D28. R116 to R125 edit the toolbar card: "Copy to another deal" is "copy to another record", "My Work favourites" is "the Favourites rail page", "(issue)" is "(issue, close project)", and R117 adds the named actor and the dated "Read only". The toolbar card numbers its rules R1 to R10, which collide with the shell's R1 to R10 | One rules text in Figma and in Git (Q-A) |
+| SR-10 | Major | Variable `accent/estimating-ink` | The Shell holds #1f8a7e (3.65 : 1 on its surface); the accepted Estimating file darkened the same variable to #156e64 (5.29 : 1, A26) and asked for the other accents to be checked the same way | One value per variable across files (Q-F) |
+| SR-11 | Major | Recent rows of the Engineering, Supply, Finance, Customer portal and Administration flyouts; the Sales flyout `4:286`; AK | Ten references outside the short form: PO-000318, SH-0091, RA-0007, FH-0042, CL-0011, DRW-0421, TQ-0087, CH-0012, PR-0019 and AR-0007; a file named "Riverbend fertigation layout r2.pdf"; and "Quotation SYN-QUO-000214" as a Recent title where R114 drops the kind word. Module files copy these rows | `SYN-` short forms in the families A3 fixes; "r02"; the record name first and "SYN-QUO-000214 · 1 h" second |
+
+### 4.2 Minor and Polish
+
+| ID | Sev. | Found | Expected |
+|---|---|---|---|
+| SR-12 | Minor | The Service menu labels `103:14097` and `103:14658` read "17 pages"; the rows, the footer, the More panel and the record give 16 | "16 pages" |
+| SR-13 | Minor | Stale descriptions and labels: Top bar "400 px global search … (x = 520–920)"; Rail · collapsed "72 × 852, brand/navy … x = 36"; Rail · expanded "brand/navy"; Right rail · collapsed names four tabs; Workspace menu · docked "an optional PINNED group"; labels "Shell / Rail · collapsed · 72" and "Icon/* · 100" (101 icons); `brand/navy` described as the rail's colour, which R105 moved to `surface/rail` | The accepted values (R99, R22, R105, R66, D25) |
+| SR-14 | Minor | Global search · open, State = Typing, and sheet L: "Pages 0" and "Help 0" at 70 % `text/secondary` (#8b95a1 on white), 3.04 : 1 | Zero-count filters drawn as disabled and stated so in R41, or in `text/secondary` (5.77 : 1) |
+| SR-15 | Minor | Stale status text: the notes card opens "Proposal, drawn for Dean's review … no named version exists", keeps "Refinements proposed in this concept", "for Dean's decision" and "Open questions", and its status paragraph says batch 2 both is and is not drawn; the Workspace menus header reads "Proposal · awaiting Dean's acceptance · Figma only · no repository record"; RH01's label ends "[proposal]"; the page header names only the 8 November version; the sheet index is titled A–AN but lists A–AH | Accepted wording, both named versions, a complete index |
+| SR-16 | Minor | The sample story disagrees with itself: the search's best match reads "3 open deals · A$129,500 pipeline" while the Assistant names two deals of A$129,500 and A$48,000; the next call is "Thu 5 Nov" on L and "Thu 13 Nov, 10:00" on AI; the last sign-in falls after the story clock of Thu 5 Nov 2026, 09:00; the toolbar's Closed variant closes revision 02 on Fri 30 Oct 2026, before it was prepared on Wed 4 Nov | One story at the story clock |
+| SR-17 | Minor | Copy: "hand-overs", "Hand-over readiness" and "Hand-offs" beside "Handovers" and "Finance handoffs"; "Sales pulse" beside the rail label "Sales Pulse"; the search placeholder with and without "…"; the maintenance banner's "Sunday 15 November, 06:00–07:00 AEDT" | "handover", "Sales Pulse", one placeholder, "Sun 15 Nov 2026, 06:00–07:00 AEDT" |
+| SR-18 | Minor | Banner, Tone = Neutral: "Changes are made in her name." | "in their name" |
+| SR-19 | Minor | The 29 core variables can be picked for any fill, stroke or effect; the mode is "Mode 1"; one of 67 variables carries a CSS name, though 66 have the same values as `--ppo-refined-*` properties | Role scopes and CSS names, as the Library review (R11) asks of the Library's copies |
+| SR-20 | Minor · Repository | The decision record says 66 variables and no new token for the toolbar; the rules export says it reproduces the cards "as written"; `systems/shell.md` says S1 adds "the 66 PPO colour variables" and that the accepted concept "proposes". Dean's link of 12 November names the file "PPO - Shell" where the records say "PPO - Shell (accepted)" (to confirm; the connector cannot read the name) | Corrected in the change that records the next named version |
+| SR-21 | Polish | Unbound literal paints R15 does not list: the dialog scrim (`brand/navy` at 32 %) on R, V and AF; the collapsed-strip handle at 40 %; the file-drop overlay at 92 %; search text at 70 % | R15 names every deliberate plain paint |
+| SR-22 | Polish | Shell / Tooltip's default shortcut reads "Alt N", which neither the R48 map nor the shortcuts dialog lists | A default from the map, such as "New · N" |
+
+## 5. Against the Version 3.0 conformance audit
+
+The conformance audit of 10 November 2026 is a repository audit; the parts that touch the Shell read as follows. None is a conformance claim, since the blueprint is a candidate.
+
+| Audit item | Reading for the Shell |
+|---|---|
+| UXA-01, UXA-07: `REQ-SHELL-001` names eight modules in another order | The Shell draws the seven departments in the order of `src/shell/navigation.ts`, filtered to the role (Q5), with Settings in the rail footer and Reporting, Knowledge, Customer portal, Administration and Assistant under More (Q22). It is a coherent PPO adaptation, not a defect; recording it as such is Dean's decision (Q-I) |
+| UXA-10: design acceptance separate from component presence | Holds: the Shell is accepted as a design, and SR-05 to SR-08 show that parts a build reads are not yet components or not yet consistent with their rules |
+| UXA-12: accessibility not verified | The Shell states its focus order, ring, layers and touch rules (R85, R87, R96) and its contrast claim (R59); SR-01 and SR-14 show the claim needs a proof table like the module files' ST01, and the WCAG evidence remains the build's |
+| UXA-14: find versus act | Drawn: one search card with prefixes for actions, pages and help (R12, R41, R93); no separate palette |
+| UXA-24: density, dark mode, command launcher | Not drawn, and none is needed for acceptance; density belongs with the register standard in the module files |
+
+## 6. Recommended order
+
+1. **Facts and contrast** (SR-01 to SR-03, SR-16, SR-18) in the components first, so that every module copy inherits the fix.
+2. **Questions Q-A to Q-F**, then SR-04, SR-05, SR-06, SR-09 and SR-10 as Dean decides them.
+3. **Components** (SR-07, SR-08): the workspace menu sets, the drawer Tab property, the bar Width property and the twelve-workspace rail, keeping the node IDs of the existing Sales components.
+4. **References and copy** (SR-11, SR-12, SR-17, SR-22) and **labels** (SR-13, SR-15, SR-21), with the variable scopes and CSS names (SR-19).
+5. Dean saves a new named version, and the same change corrects the repository (SR-20): the variable count, the export's header and text, the shell system page and the file's name. Module files move to the new version under handoff rule 5, each in its own step.
+
+## 7. Questions for Dean
+
+| # | Question | Recommendation |
+|---|---|---|
+| Q-A | Where the drawn rules cards and the repository export differ (SR-09), which text governs? | The export, which is later and decides more; copy it to both cards word for word in the next named version, number the toolbar card R116 to R125, and mark the export's editorial notes as notes |
+| Q-B | Keep the green primary action (`action/primary`) or return the primary to navy? | Keep the green, since Dean accepted the toolbar as drawn and it is on brand. Two dark greens that both carry white text cannot also differ from each other by 3 : 1, so separate them by role and form instead: amend R58 to name `action/primary` as the one solid green fill, used only for the state-driven primary button; amend R102 so that `status/success` is never a solid fill (text, glyphs and tints only); count the variable in R15 and R59; and add `--ppo-refined-action-primary` in the build step that builds the toolbar. Choose navy only if Dean prefers R58 unchanged |
+| Q-C | May badge numerals and avatar initials stay at 10 px? | Yes, as the one named exception in C6, at Medium weight; every eyebrow and label moves to 11 px |
+| Q-D | The demo chip: light amber with navy text, or dark amber with white text? | Light amber (`status/warning-surface`) with navy text and the dark amber stripe, which is what the variable roles already say |
+| Q-E | Who is the Shell's Service technician, and who authorises work orders? | The technician A3 names, which the My Work record gives as Casey Ward; the work-order authoriser A3's Service coordinator, which the alignment prompt gives as Ravi Kumar; Priya Nair stays the estimator. Confirm against A3 before the batch |
+| Q-F | One value for `accent/estimating-ink`? | #156e64 in the Shell, and the other eleven accents checked against text use the same way |
+| Q-G | Build the per-workspace menus as components in the Shell now, or wait for the Library? | In the Shell now: the menus are the Shell's accepted content, module files are being drawn against them, and the Library can take a copy when it is published |
+| Q-H | The More panel lists "Documents & outputs" under Shared records while the Knowledge workspace owns Document register, Outputs and Templates. Keep both? | Point the Shared records entry at the Knowledge Document register and name it "Documents", so one page owns documents |
+| Q-I | Record the Shell's seven departments, Settings and More as the PPO adaptation of `REQ-SHELL-001`? | Yes, "Adapt for PPO", as the conformance audit's UXA-01 suggests |
+
+## 8. Boundary
+
+This record changes no design and accepts none. It corrects no other record: the decision record, the rules export and the shell system page are findings for the change that follows (SR-20). It authorises no application code, route, migration, permission, integration or deployment. Every record, person, value and date in the file is synthetic.
