@@ -6,12 +6,14 @@
 |---|---|
 | ID | PPO-FIGMA-ALIGNMENT-AUDIT |
 | Date | Thu 12 Nov 2026 |
-| Status | Audit findings, 2026-11-12; no design is changed and nothing is accepted by this record |
+| Status | Audit findings, 2026-11-12, with a second pass on 2026-11-13; no design is changed and nothing is accepted by this record |
 | Decision owner | Dean Fiedler |
 
 Thu 12 Nov 2026. Read-only findings; no design is changed and nothing is accepted by this report.
 
 All 13 linked module files were read, plus targeted accepted Shell authorities. The register contains 77 deduplicated finding groups: 12 Blocker, 19 Major, 45 Minor, 1 Polish. Shared findings count once globally and can affect several files. This is a bounded audit, not a clean bill of health.
+
+**Second pass, Fri 13 Nov 2026.** A second session ran the same brief and amended this record instead of adding another. Its section, "Second pass — Fri 13 Nov 2026", is at the end. It re-extracted every linked file, verified each finding below (73 confirmed, one changed, one not reproduced, two not re-tested), gives the node IDs, adds 88 findings and decides 457 of the 559 linked-file matrix cells. Where the two passes differ, the second pass is the later reading.
 
 ## Scope and evidence
 
@@ -2432,3 +2434,572 @@ Resolve authority conflicts first. The full scratch brief retains every node occ
 - **AF-076 (Minor):** Update the stale header and its source statement in the Shell owner’s next reviewed batch, then save and record a new named version. Expected: Accepted status and repository-backed source wording matching the accepted page and record. Verify: re-extract GV1 and compare all affected variants/counterparts against the agreed expected value.
 
 Resolve authority conflicts first. The full scratch brief retains every node occurrence. Accepted files need Dean’s newly saved named version after the batch; verify history first for the Sales pin gap.
+
+## Second pass — Fri 13 Nov 2026
+
+A second session ran the same audit brief on Fri 13 Nov 2026 (Dean's local date). It found the first pass above as open pull request 920 and, rather than add a competing record, amended this one. Everything above this heading is the first pass as written; nothing in it was edited except the status line. This section is the second pass: its own extraction, its verification of each first-pass finding, the findings it adds, and the matrix as it now stands. It changes no design and accepts nothing.
+
+### S1. Scope, sources and method
+
+- **Files read.** All 13 linked module files and "PPO - Shell (accepted)", in one Figma session, read-only: 2724 sheets and 234 notes cards on 159 scope pages, about 1.19 million nodes. "PPO - Library" was read through its records only. "PPO - Assistant, Knowledge and Help" and "PPO - Products" have no link and are not checked. "PPO - Design" was not opened.
+- **Repository.** Main at `98925798` (after pull requests 916, 921 and 922), with the first-pass branch merged. Records read: the 12 refined-UI records on main, including the Customer portal and completed Shared records records that landed during this pass; the Settings completion and the Documents and messages record were read from open pull requests 913 and 918 and are treated as pending, not as authority. No Figma link or file key is in any of the 14,457 files scanned.
+- **Addenda.** A1, A2 and A3 were not supplied to this session either. The fact ledger is built from the brief's own lists, the records' citations of A3, and the files themselves; it finds where files disagree with one another, and where the brief names an earlier fixture. It cannot say which of two values A3 fixes unless the brief or a record quotes it.
+- **Extraction.** One read-only script walked every page: sections, sheets and labels with bounds; every visible text node; the main component of every top-level instance; frames named like shell parts; fills and strokes not bound to a variable; fonts, radii and shadows; chip tones; docked menus; and every local component with a structure signature. Each result was compressed in the script and returned in chunks under the 48,000-byte limit, then decoded and analysed locally. A second small script read which rail item each page marks as current.
+- **Calls.** 160 Figma calls: 15 to open the session and list pages, 126 for extraction, 13 for the rail check, 2 probes, and 4 lost to a first pilot whose chunks could not be joined. No call timed out and no limit was reached.
+- **What this pass adds.** Node IDs for the evidence (the first pass kept them in scratch files); a fresh read of files that changed since (the Shell gained a variable; Documents and messages corrected a date); 88 new findings; and 457 of the 559 linked-file matrix cells decided, against 193 in the first pass.
+
+### S2. Results by file
+
+Counts are findings that touch the file; a shared finding counts once in the total and once in each file it touches.
+
+| File | Scope pages | Sheets | Notes cards | Blocker | Major | Minor | Polish |
+|---|---|---|---|---|---|---|---|
+| PPO - Sales module (accepted) | 8 | 108 | 14 | 11 | 5 | 6 | 1 |
+| PPO - Estimating module | 15 | 274 | 38 | 3 | 11 | 8 | 1 |
+| PPO - Projects module | 14 | 229 | 19 | 1 | 11 | 10 | 2 |
+| PPO - Supply module | 15 | 228 | 20 | 1 | 7 | 12 | 1 |
+| PPO - Engineering module | 12 | 189 | 16 | 1 | 4 | 9 | 3 |
+| PPO - Service module | 17 | 287 | 18 | 1 | 6 | 10 | 2 |
+| PPO - Finance module | 10 | 218 | 13 | 1 | 6 | 10 | 1 |
+| PPO - Reporting module | 11 | 204 | 17 | 1 | 11 | 10 | 1 |
+| PPO - Settings module | 14 | 263 | 18 | 1 | 5 | 9 | 2 |
+| PPO - My Work module | 11 | 136 | 21 | 1 | 8 | 9 | 3 |
+| PPO - Customers, Sites & Equipment module | 15 | 194 | 19 | 1 | 4 | 11 | 1 |
+| PPO - Documents & messages module | 8 | 211 | 10 | 1 | 6 | 10 | 2 |
+| PPO - Customer portal module | 9 | 183 | 11 | 2 | 5 | 11 | 2 |
+| PPO - Shell (accepted) | 3 pages | 40 + 25 sheets | — | 1 | 1 | 1 | 0 |
+| **All findings** | | | | **14** | **36** | **97** | **15** |
+
+The register holds 162 findings: 74 carry a first-pass ID and 88 are new (2 Blocker, 17 Major, 55 Minor, 14 Polish). Of the 77 first-pass findings, 69 confirmed; 4 confirmed and wider; 1 changed since; 1 not re-checked; 1 not re-tested; 1 not reproduced.
+
+### S3. First-pass findings verified
+
+Each first-pass finding was re-tested against the fresh extraction. Severities are the first pass's unless the note says otherwise.
+
+| ID | Severity | Second pass | Note |
+|---|---|---|---|
+| AF-001 | Blocker | Changed since | Fixed in the Shell file (action/primary #2D7128, 5.99:1); still open in all 13 module copies |
+| AF-002 | Blocker | Confirmed | 232 strings on 59 sheets in this pass |
+| AF-003 | Blocker | Confirmed | PR01 and TB08 still show totals |
+| AF-004 | Blocker | Confirmed | 12 catalogue-form product references on PR01 |
+| AF-005 | Blocker | Confirmed | 10 occurrences |
+| AF-006 | Blocker | Confirmed | 3 strings on 3 sheets or cards |
+| AF-007 | Minor | Confirmed | Read me header still says 52 sheets await a named version |
+| AF-008 | Blocker | Confirmed | 0 toolbar instances; 38 sheets with a drawn record header |
+| AF-009 | Blocker | Confirmed | 51 literal paints outside instances |
+| AF-010 | Minor | Not re-checked | The truncation property was not extracted in this pass; by geometry, no Sales label is wider than its sheet |
+| AF-011 | Blocker | Confirmed | 9 copies on 9 sheets |
+| AF-012 | Blocker | Confirmed | 221 strings on 111 sheets in this pass |
+| AF-013 | Blocker | Confirmed | 3 strings on 3 sheets or cards |
+| AF-014 | Major | Confirmed | 69 strings on 52 sheets |
+| AF-015 | Minor | Confirmed | 2 strings on 2 sheets or cards |
+| AF-016 | Minor | Confirmed | 27 strings on 11 sheets; wider than first reported |
+| AF-017 | Major | Confirmed | No toolbar component or instance in the Projects file |
+| AF-018 | Minor | Confirmed | X33 is still missing from the Read me index |
+| AF-019 | Major | Confirmed | 809 literal paints outside instances |
+| AF-020 | Minor | Confirmed | 234 sheet labels do not name the signed-in person; 1 carry no scope ID in brackets |
+| AF-021 | Major | Confirmed | Record cites no Shell named version |
+| AF-022 | Major | Confirmed | 31 strings on 21 sheets |
+| AF-023 | Minor | Confirmed | 9 strings on 4 sheets or cards |
+| AF-024 | Major | Confirmed | 50 strings; Finance uses the same family for project progress claims |
+| AF-025 | Minor | Confirmed | 27 strings on 14 sheets in this pass |
+| AF-026 | Minor | Confirmed | 17 literal paints outside instances |
+| AF-027 | Minor | Confirmed | 229 sheet labels do not name the signed-in person; 37 carry no scope ID in brackets |
+| AF-028 | Major | Confirmed | Record still cites the 8 November version and calls the toolbar a proposal |
+| AF-029 | Minor | Not re-tested | All 15 scope page IDs are in the Read me; the four non-scope page IDs were not re-tested |
+| AF-030 | Minor | Confirmed | 15 strings on 11 sheets or cards |
+| AF-031 | Minor | Confirmed | 21 strings on 4 sheets in this pass |
+| AF-032 | Minor | Confirmed | 350 strings on 96 sheets |
+| AF-033 | Major | Confirmed and wider | The clash spans six files, not only Engineering and Sales |
+| AF-034 | Minor | Confirmed | 18 literal paints outside instances |
+| AF-035 | Minor | Confirmed | 193 sheet labels do not name the signed-in person; 17 carry no scope ID in brackets |
+| AF-036 | Minor | Confirmed | 10 strings on 7 sheets or cards |
+| AF-037 | Minor | Confirmed | 123 strings on 50 sheets in this pass |
+| AF-038 | Minor | Confirmed | 744 strings on 221 sheets |
+| AF-039 | Major | Confirmed | IS02 still shows the 09:06 query as done |
+| AF-040 | Minor | Confirmed | 288 sheet labels do not name the signed-in person; 3 carry no scope ID in brackets |
+| AF-041 | Minor | Confirmed | 16 strings on 15 sheets or cards |
+| AF-042 | Minor | Confirmed | 658 strings on 190 sheets |
+| AF-043 | Major | Confirmed | 37 strings; Settings repeats the same reference |
+| AF-044 | Minor | Confirmed | 28 literal paints outside instances |
+| AF-045 | Minor | Confirmed | 221 sheet labels do not name the signed-in person; 2 carry no scope ID in brackets; 42 do not start "CODE · " |
+| AF-046 | Minor | Confirmed | 47 strings on 20 sheets in this pass |
+| AF-047 | Minor | Confirmed | 19 literal paints outside instances |
+| AF-048 | Minor | Confirmed | 92 strings on 13 sheets in this pass |
+| AF-049 | Major | Confirmed | 5 strings on 4 sheets; Settings shows the same publication as done |
+| AF-050 | Major | Confirmed | Also true of Finance, Documents & messages and Customer portal |
+| AF-051 | Minor | Confirmed | 69 strings on 29 sheets in this pass |
+| AF-052 | Minor | Confirmed | 6 strings on 3 sheets or cards |
+| AF-053 | Major | Confirmed | No "Owen Dunne" text in the My Work file |
+| AF-054 | Polish | Confirmed | 4 overlaps found by bounding box |
+| AF-055 | Minor | Confirmed | 123 literal paints outside instances |
+| AF-056 | Minor | Confirmed | 21 literal paints outside instances |
+| AF-057 | Minor | Confirmed | 169 strings on 63 sheets in this pass |
+| AF-058 | Minor | Confirmed | MV04 still reads "What transferred" |
+| AF-059 | Minor | Confirmed | 198 sheet labels do not name the signed-in person; 1 carry no scope ID in brackets; 28 do not start "CODE · " |
+| AF-060 | Minor | Confirmed | Page IDs still absent from the Read me |
+| AF-061 | Major | Confirmed and wider | Own Documents menu, and the rail marks Service rather than More |
+| AF-062 | Minor | Confirmed | 55 literal paints outside instances |
+| AF-063 | Minor | Confirmed | 166 strings on 46 sheets in this pass |
+| AF-064 | Minor | Confirmed | 2 strings on 2 sheets or cards |
+| AF-065 | Minor | Not reproduced | OU12 now reads "Issued Sat 31 Oct 2026, 16:20"; corrected since the first pass |
+| AF-066 | Minor | Confirmed | 1 strings on 1 sheets or cards |
+| AF-067 | Minor | Confirmed | 16 strings on 9 sheets in this pass |
+| AF-068 | Minor | Confirmed | 194 strings on 51 sheets |
+| AF-069 | Major | Confirmed | 22 strings; see also the customer-exposure finding |
+| AF-070 | Minor | Confirmed | 16 strings on 6 sheets; wider than first reported |
+| AF-071 | Minor | Confirmed | 49 literal paints outside instances |
+| AF-072 | Major | Confirmed and wider | One of 160 state words whose tone differs between files |
+| AF-073 | Major | Confirmed | Reporting counts T06 in the Q3 cohort; Customers, Sites & Equipment dates it Thu 15 Oct |
+| AF-074 | Major | Confirmed | Sales 9/8/11/6/4 against Reporting 9/11/10/5/3 on 14 sheets |
+| AF-075 | Major | Confirmed and wider | Projects also says Update 4 was sent on Tue 27 Oct |
+| AF-076 | Minor | Confirmed | Header 101:8554 still reads "Proposal · awaiting Dean's acceptance" |
+| AF-077 | Blocker | Confirmed | The record still names no version after the phone tab bar change |
+
+### S4. New findings
+
+Blockers and Majors are given in full; Minors and Polish are summarised by check. Node IDs are the sheet frames that hold the text.
+
+#### AF-078 · Blocker · Dates carry a weekday that does not match the 2026 calendar
+
+Files: PPO - Sales module (accepted). Checks: CV4. Rule: Brief CV4 (dates read "Thu 5 Nov 2026"); the story year is 2026.
+
+Expected: The weekday that the 2026 calendar gives for each date.
+
+Found: 146 strings on 32 sheets; for example "Fri 31 Oct" is a Sat; "Fri 24 Oct 2026" is a Sat; "Mon 3 Nov" is a Tue; "Fri 24 Oct" is a Sat. 102 of them match the 2025 calendar, so the dates were probably laid out on last year's calendar.
+
+Fix owner: PPO - Sales module (accepted). Action: Correct each weekday against the 2026 calendar (or the date, where the weekday is the fixed fact), in every file that repeats the string. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Deal record · CR-01 | `16:2456` | R01 · …12 · Deal · Owner Dean Fiedler · Opened Fri 24 Oct 2026 from lead SYN-LEAD-000208 · Version 7 ·… |
+| Deal record · CR-01 | `16:2456` | R01 · Email · Fri 31 Oct · 5 d ago |
+| Deal record · CR-01 | `16:2456` | R01 · Fri 24 Oct 2026 · 12 days in Scoping |
+
+#### AF-162 · Blocker · Customer sheets show a reference that contains "PPO"
+
+Files: PPO - Customer portal module. Checks: EX1. Rule: Brief EX1: no internal word (PPO, Powerplants One) on a customer sheet.
+
+Expected: A customer-facing quotation reference without "PPO".
+
+Found: 22 strings on 10 customer sheets (QA03, QA04 and their tablet and phone forms) read "SYN-PPO-QUO-000214". No other entry of the exposure list was found on a customer sheet.
+
+Fix owner: Dean; then PPO - Customer portal module. Action: Use SYN-QUO-000214 on the customer page once Dean confirms it against A3.11.
+
+Note: The portal record says the reference follows the brief and Addendum A3.11; that conflict is question AC-21.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Read me | `73:9256` | … [customer · Mei Tran] / 28:1514   QA03 · SYN-PPO-QUO-000214 r01 — exact quotation, full length (CP-… |
+| Read me | `76:1195` | …s files) The weekday in the dataset for SYN-PPO-QUO-000214: "issued Fri 31 Oct 16:20, valid to Sun… |
+| Quotations and account · CP-06 | `28:1358` | QA02 · SYN-PPO-QUO-000214 r01 |
+
+#### AF-123 · Major · Kim Patel remains in the accepted Estimating file
+
+Files: PPO - Estimating module. Checks: FA2, FA1. Rule: Brief FA2 (Kim Patel does not exist); the Estimating acceptance of 10 November 2026 keeps Kim Patel (its A23).
+
+Expected: One engineering reviewer across files, as the amended A3 names them.
+
+Found: 71 strings on 35 sheets name Kim Patel as the engineering sign-off.
+
+Fix owner: Dean (authority conflict AC-01); then PPO - Estimating module. Action: Dean names the replacement from the amended A3; the Estimating session then changes the name in one batch. A new named version is needed for the accepted file.
+
+Note: The first pass raised this as question AC-01 without a finding against Estimating.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Workload and Pulse · ES-01 | `24:1954` | E05 · Kim Patel → Sam Whitfield · v3 blocked by findings F1 and F2 and the failing case "Pinion drive, tw… |
+| Workload and Pulse · ES-01 | `24:1954` | E05 · Riverbend v03, Glasshouse Valley Farms v06 · engineering sign-off pending (Kim Patel) |
+| Workbenches · ES-08 · ES-02 | `40:23026` | C00 · Owner Kim Patel |
+
+#### AF-124 · Major · Estimating record pages keep their own header and a Reports menu
+
+Files: PPO - Estimating module. Checks: SH6. Rule: Shell R116 to R125 (accepted 9 November 2026): one record header on every record page; R119: the menu is named Outputs, not Reports.
+
+Expected: The shared record header toolbar with Actions, Outputs and one state-driven primary.
+
+Found: No copy of Shell / Record header · toolbar exists in the kit and no sheet instances it; record sheets carry a "Context strip" (52 sheets) and a "Reports" menu.
+
+Fix owner: Dean (authority conflict AC-05); then PPO - Estimating module. Action: Dean decides whether Estimating adopts the shared toolbar or the Shell takes Estimating's header; then one batch in the file that changes. A new named version is needed for the accepted file.
+
+Note: Estimating was accepted on 10 November 2026 with this header (its A15 to A17, "to land in the Shell file").
+
+| File / page | Node | Text found |
+|---|---|---|
+| Estimate record · ES-01 | `55:28879` | T01 · Reports |
+
+#### AF-125 · Major · The Estimating docked menu differs from the accepted Shell menu for the same workspace
+
+Files: PPO - Estimating module; PPO - Shell (accepted). Checks: SH4. Rule: Shell page "Workspace menus · flyout and docked (accepted 8 November 2026)", Docked · Estimating & quotation.
+
+Expected: One menu for the workspace in both accepted files.
+
+Found: Estimating (accepted) names the workspace "Estimating", writes group headings in sentence case and lists Sales briefs; the Shell (accepted) names it "Estimating & quotation", writes headings in capitals and lists Estimating intake. Added here: Estimating, Favourites, Estimates, Sales briefs, Insights. Missing here: Estimating & quotation, FAVOURITES, ESTIMATES, Estimating intake, CONFIGURE & PRICE, QUOTATIONS, INSIGHTS.
+
+Fix owner: Dean; then PPO - Shell (accepted). Action: Decide which wording stands and bring the other accepted file to it under a new named version. A new named version is needed for the accepted file.
+
+#### AF-129 · Major · Quotation revisions differ across the Sales, Estimating and Projects handover
+
+Files: PPO - Sales module (accepted); PPO - Estimating module; PPO - Projects module. Checks: FA1, HO1. Rule: Brief FA1 and HO1: the same record carries the same revision in every file.
+
+Expected: One revision per quotation at the story clock.
+
+Found: SYN-QUO-000181 is r3 (signed) in Sales but r01 in Estimating, Projects and Reporting. SYN-QUO-000188 is r3 in Sales but r02 awaiting approval in Estimating. SYN-QUO-000170 is Revision 01 in Estimating but r02 in Projects.
+
+Fix owner: Dean; then the files that differ from Estimating, which owns quotations. Action: Take Estimating's revision as the source and correct the other files, or record why they differ. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Sales module (accepted) / Handovers and aftercare · CR-02 · CR-03 · CR-05 | `32:4480` | W01 · Signed quotation · SYN-QUO-000181 r3 |
+| PPO - Sales module (accepted) / Contacts, customers, products and insights · CS-01 · CS-02 · CS-03 · CS-04 · PD-01 · CR-04 · RP-02 | `45:7068` | IN02 · SYN-QUO-000188 r3 |
+| PPO - Estimating module / Workload and Pulse · ES-01 | `22:241` | E01 · SYN-QUO-000188 r02 · Awaiting approval |
+
+#### AF-130 · Major · SYN-OPP-000326 is a Woodhaven potting machine in Projects and a Peninsula Flowers study in Reporting
+
+Files: PPO - Projects module; PPO - Reporting module. Checks: FA1, HO1. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Projects: "SYN-OPP-000326 · Potting machine and take-off", A$81,200.00, Won Thu 15 Oct (Woodhaven). Reporting: "SYN-OPP-000326 · Peninsula Flowers — Bench heating study".
+
+Fix owner: Dean; then PPO - Reporting module. Action: Give the Reporting row its own reference, or change it to the Woodhaven deal.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Projects module / Initiation · PJ-01 | `39:913` | IN04 · Handover r01 · SYN-OPP-000326 · A$81,200.00 · Won Thu 15 Oct · submitted Tue 20 Oct 09:32 by Dean Fiedler · fingerprint 7c1e…a94d |
+| PPO - Projects module / Initiation · PJ-01 | `39:913` | IN04 · SYN-OPP-000326 · Potting machine and take-off |
+| PPO - Reporting module / Sales performance · RP-02 | `50:9373` | SP03 · SYN-OPP-000326 · Peninsula Flowers — Bench heating study |
+
+#### AF-131 · Major · SYN-OPP-000318 is won and handed over in Projects but still an open proposal task in My Work
+
+Files: PPO - Projects module; PPO - My Work module; PPO - Reporting module. Checks: FA1, HO1, FA6. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Projects IN03: "Handover r01 · SYN-OPP-000318 · A$97,600.00 · Won Mon 2 Nov · submitted Wed 4 Nov 11:05 by Sasha Clarke". My Work (51 sheets): "Send revised proposal · stage 2 lighting · SYN-OPP-000318 Sunline Hydroponics LED propagation lighting", which its own record lists as an earlier fixture.
+
+Fix owner: Dean; then PPO - Projects module and PPO - My Work module. Action: Fix the deal's state at 09:00 from the amended A3.8, then correct the file that disagrees.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Projects module / Initiation · PJ-01 | `38:1058` | IN03 · Handover r01 · SYN-OPP-000318 · A$97,600.00 · Won Mon 2 Nov · submitted Wed 4 Nov 11:05 by Sasha Clarke · fingerprint 7c1e…a94d |
+| PPO - My Work module / My Work overview · SH-01 · SH-02 | `49:8` | OV01 · Send revised proposal · stage 2 lighting  ·  SYN-OPP-000318 Sunline Hydroponics LED propagation lighting |
+| PPO - My Work module / My Work overview · SH-01 · SH-02 | `49:796` | OV03 · Send revised proposal · stage 2 lighting  ·  SYN-OPP-000318 Sunline Hydroponics |
+
+#### AF-132 · Major · SYN-QUO-000221 belongs to two customers
+
+Files: PPO - Estimating module; PPO - My Work module. Checks: FA1, HO1. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Estimating: "Glasshouse Valley Farms · SYN-QUO-000221 r01", in Negotiation. My Work RH03: "SYN-QUO-000221 r01 · Westgate Flowers".
+
+Fix owner: PPO - My Work module. Action: Use the Estimating customer on RH03, or another quotation reference. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Estimating module / Workload and Pulse · ES-01 | `22:241` | E01 · SYN-QUO-000221 r01 · Negotiation |
+| PPO - Estimating module / Workload and Pulse · ES-01 | `24:1954` | E05 · SYN-QUO-000221 r01 · Negotiation hold since Wed 4 Nov 14:05 · rule: a hold without a successor is a focus item |
+| PPO - My Work module / Reviews and handovers · SH-06 | `64:1385` | RH03 · SYN-QUO-000221 r01 · Westgate Flowers |
+
+#### AF-133 · Major · SYN-PRJ-000014 has three different scopes
+
+Files: PPO - Finance module; PPO - Estimating module; PPO - My Work module; PPO - Customers, Sites & Equipment module. Checks: FA1, HO1. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Estimating and Finance: Glasshouse 4 screen controls (Hillview). My Work: "Glasshouse 4 irrigation stage 1". Customers, Sites & Equipment OR03: "Main nursery irrigation upgrade".
+
+Fix owner: Dean; then PPO - My Work module and PPO - Customers, Sites & Equipment module. Action: Name the project once and repeat that name. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Finance module / Measure definitions and reconciliation · FN-06 | `33:34765` | MD07 · Glasshouse 4 screen controls · SYN-PRJ-000014 |
+| PPO - Estimating module / Rules studio · ES-02 · ES-03 | `78:57572` | TB12 · Expected values from the Hillview job SYN-PRJ-000014 (screen controls) · compared line by line |
+| PPO - My Work module / Search · SH-04 | `73:1389` | SR03 · SYN-PRJ-000014 · Glasshouse 4 irrigation stage 1 |
+
+#### AF-134 · Major · SYN-MOC-000118 is a Mallee Fresh occurrence in Service and a Block C check in My Work
+
+Files: PPO - Service module; PPO - My Work module. Checks: FA1, HO1, FA6. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Service: "SYN-MOC-000118 · Mallee Fresh climate computer, Glasshouse 2". My Work OV07 (Ravi Kumar's queue): "SYN-MOC-000118 · Northbank Farm Block C quarterly check".
+
+Fix owner: PPO - My Work module. Action: Use the Service file's occurrence on OV07 and TB09.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Service module / Maintenance · MA-03 · MA-04 | `95:2067` | MP03a · SYN-MOC-000118 · Mallee Fresh climate computer, Glasshouse 2 |
+| PPO - Service module / Maintenance · MA-03 · MA-04 | `97:5962` | MP12a · SYN-MOC-000118 · Mallee Fresh |
+| PPO - My Work module / My Work overview · SH-01 · SH-02 | `50:805` | OV07 · Prepare work for the overdue maintenance occurrence  ·  SYN-MOC-000118 · Northbank Farm Block C quarterly check |
+
+#### AF-135 · Major · SYN-APT-000078 is a Glasshouse Valley visit in two files and a Lakeside Orchids visit in Reporting
+
+Files: PPO - Documents & messages module; PPO - Reporting module; PPO - Service module. Checks: FA1, HO1. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Documents & messages: "Service report — Glasshouse Valley visit SYN-APT-000078" (SYN-RPT-000039). Reporting phone sheet: "SYN-APT-000078 · SYN Lakeside Orchids".
+
+Fix owner: PPO - Reporting module. Action: Correct the customer on the Reporting phone sheet.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Documents & messages module / Outputs · DK-03 | `26:6551` | OU10 · SYN-RPT-000039 · Service report — Glasshouse Valley visit SYN-APT-000078 |
+| PPO - Reporting module / Service performance · RP-04 | `57:42243` | SYN-APT-000078 · SYN Lakeside Orchids |
+| PPO - Service module / Service review · SV-06 · FI-07 · SV-07 · SV-08 | `78:3226` | RV07 · SYN-APT-000078 Tue 27 Oct · Kim Taylor · SYN-WO-000057 · returned Thu 29 Oct 11:40 by Riley Tran |
+
+#### AF-136 · Major · Quotation SYN-QUO-000214 r01 has three issue dates and two reference forms
+
+Files: PPO - Estimating module; PPO - Documents & messages module; PPO - Customer portal module. Checks: FA1, HO1, CV6, FA2. Rule: Brief FA1 and HO1: one truth per fact across files.
+
+Expected: The same customer, scope, state and date for the reference in every file.
+
+Found: Estimating: "SYN-QUO-000214 r01 issued Fri 30 Oct 2026". Documents & messages OU12: "SYN-PPO-QUO-000214 r01 … Issued Sat 31 Oct 2026, 16:20". Portal: "SYN-PPO-QUO-000214 … issued Fri 31 Oct 16:20, valid to Sun 30 Nov" (31 October 2026 is a Saturday and 30 November a Monday). The Shell, Sales, Estimating and My Work use the short form; the portal and Documents & messages use the catalogue form.
+
+Fix owner: Dean (the portal record says its date follows the brief and A3.11); then PPO - Customer portal module and PPO - Documents & messages module. Action: Dean fixes the issue date and the reference form; the two receiving files follow Estimating. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| PPO - Estimating module / Estimate record · ES-01 | `55:28879` | T01 · …ry r02 · configuration SYN-CPQ-000312 evaluation 2 adopted · owner Priya Nair · quotation SYN-QUO-000214 r01 issued Fri 30 Oct 2026, r2 awaiting review |
+| PPO - Documents & messages module / Outputs · DK-03 | `26:7463` | OU12 · SYN-PPO-QUO-000214 r01 |
+| PPO - Documents & messages module / Outputs · DK-03 | `26:7463` | OU12 · Issued Sat 31 Oct 2026, 16:20 |
+
+#### AF-137 · Major · A Finance dispute carries the dispatch family SYN-DSP-
+
+Files: PPO - Settings module. Checks: FA3, FA2. Rule: Brief FA2 and FA3: SYN-DPT- for a Finance dispute; SYN-DSP- is the Supply dispatch family (used so in Supply, Documents & messages, the portal and Customers, Sites & Equipment).
+
+Expected: SYN-DPT-000003 for the Goulburn disputed invoice.
+
+Found: 4 strings name SYN-DSP-000003 as the Goulburn disputed invoice, as the Finance file does.
+
+Fix owner: PPO - Settings module, with PPO - Finance module (AF-043). Action: Renumber to SYN-DPT- together with Finance.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Retention · AD-08 | `88:1522` | RT04 · SYN-DSP-000003 records · 14 rows |
+| Retention · AD-08 | `93:3226` | RT08c · Binds the records of SYN-DSP-000003 · Goulburn disputed invoice |
+| Retention · AD-08 | `93:3226` | RT08c · Records linked to SYN-DSP-000003 · 14 rows |
+
+#### AF-138 · Major · Settings shows the 09:40 policy publication as done
+
+Files: PPO - Settings module. Checks: FA5. Rule: Brief FA5: the story stands at Thu 5 Nov 2026, 09:00 AEDT; later events are labelled later frames.
+
+Expected: The publication shown as pending at 09:00, or the sheets labelled as a later frame.
+
+Found: 9 strings on 6 sheets (SH06, SH08, SH13, SH17, SH18) read "Published by Jordan Kim Thu 5 Nov 2026, 09:40" or "superseded Thu 5 Nov 09:40"; Reporting repeats it (AF-049).
+
+Fix owner: PPO - Settings module. Action: Label the sheets as the 09:40 frame, or move the publication before the clock; then align Reporting.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Settings hub and Business policies · AD-02 | `26:2463` | SH07 · Published by Jordan Kim Thu 5 Nov 2026, 09:40 · version 1 superseded · reviewed by Sam Patel Tue 3 Nov 09:30 |
+| Settings hub and Business policies · AD-02 | `27:3202` | SH13 · Published by Jordan Kim Thu 5 Nov 2026, 09:40 · version 1 superseded |
+| Settings hub and Business policies · AD-02 | `27:3202` | SH13 · Jordan Kim · Thu 5 Nov 09:40 |
+
+#### AF-139 · Major · Local colour collections have drifted from the Shell and from one another
+
+Files: PPO - Sales module (accepted); PPO - Estimating module; PPO - Projects module; PPO - Supply module; PPO - Engineering module; PPO - Service module; PPO - Finance module; PPO - Reporting module; PPO - Settings module; PPO - My Work module; PPO - Customers, Sites & Equipment module; PPO - Documents & messages module; PPO - Customer portal module. Checks: CT1, CT2. Rule: Brief CT1 and CT2: one "PPO colour" collection, copied from the accepted Shell.
+
+Expected: The same 67 variables with the same values in every file.
+
+Found: Three variables differ. action/primary (#2D7128) exists only in the Shell. accent/estimating-ink is #156E64 in Estimating and #1F8A7E in the Shell and the other 12 files. surface/scrim (#242A37 at 32 %) exists only in Estimating; the other files paint scrims with a literal colour. The other 65 variables agree everywhere.
+
+Fix owner: PPO - Shell (accepted) for accent/estimating-ink and surface/scrim; each module file for action/primary. Action: Settle the three values in the Shell, name the version, then copy the collection to every file. A new named version is needed for the accepted file.
+
+#### AF-140 · Major · The same state word carries different chip tones in different files
+
+Files: PPO - Sales module (accepted); PPO - Estimating module; PPO - Projects module; PPO - Supply module; PPO - Engineering module; PPO - Service module; PPO - Finance module; PPO - Reporting module; PPO - Settings module; PPO - My Work module; PPO - Customers, Sites & Equipment module; PPO - Documents & messages module; PPO - Customer portal module. Checks: CT4. Rule: Brief CT4: one tone per chip meaning across files.
+
+Expected: One tone per state word, held in one table.
+
+Found: 160 state words resolve to different dominant tones between files (Grey and Neutral counted as one). For example Sent is Success in four files, Info in four, Neutral in two and Warning in one.
+
+Fix owner: Dean and the Library owner for the tone table; then every module file. Action: Publish one state-to-tone table (the Library is the intended home) and re-tone each file against it. A new named version is needed for the accepted file.
+
+Note: Tones were read from Status chip instances and from the fill variable of chip-shaped frames; treat the count as indicative.
+
+| File / page | Node | Text found |
+|---|---|---|
+|  |  | Closed · Neutral: Customers, Sites & Equipment, Documents & messages, Engineering, Finance, My Work, Customer portal, Projects, Service; Success: Estimating |
+|  |  | Proposed · Info: Customers, Sites & Equipment, Engineering, Estimating, My Work, Projects, Service, Settings; Warning: Finance, Supply; Success: Reporting |
+|  |  | In review · Info: Customers, Sites & Equipment, Engineering, Estimating, Finance, Reporting, Settings; Neutral: My Work; Warning: Projects |
+
+#### AF-141 · Major · Reference families clash or split between files
+
+Files: PPO - Supply module; PPO - Finance module; PPO - Settings module; PPO - Estimating module; PPO - Customers, Sites & Equipment module; PPO - Engineering module; PPO - Service module. Checks: FA3. Rule: Brief FA3: one family per kind across all files.
+
+Expected: One family per kind and one kind per family.
+
+Found: SYN-DSP- is a dispatch in Supply, Documents & messages, the portal and Customers, Sites & Equipment, and a Finance dispute in Finance and Settings. SYN-CLM- is a project progress claim in Finance and a supplier claim in Supply. SYN-EAR- is an outcome review in Estimating and an earth tester in Customers, Sites & Equipment. SYN-CAL- is a calibration proposal in Estimating and an instrument in Engineering. Pressure gauges are SYN-PRS- in Service and Customers, Sites & Equipment but SYN-PG- in Supply; flow meters are SYN-FLO- there but SYN-FLM- in Supply; insulation testers are SYN-MEG- in Supply and Service but SYN-INS- in Engineering.
+
+Fix owner: Dean (the family registry); then the files named. Action: Fix the registry once (PPO-STD-001 holds the namespaces), then renumber. A new named version is needed for the accepted file.
+
+| File / page | Node | Text found |
+|---|---|---|
+| Test instruments and calibration · EQ-09 | `75:8` | TI01 · SYN-EAR-001 |
+| Outcomes and reference cases · ES-09 · ES-10 | `66:40994` | O02 · Outcome review SYN-EAR-0004 · project SYN-PRJ-000168 closed Fri 25 Sep 2026 · concluded Fri 23 Oct 2026 by … |
+| Commissioning and as-built · EN-08 | `49:1367` | CM03 · SYN-CAL-002 |
+
+#### AF-157 · Major · The Finance record lists its sheets without node IDs
+
+Files: PPO - Finance module. Checks: GV4, ST5. Rule: Named-version build handoff rule 2: the lock-in gives the node IDs of the accepted frames; brief GV4.
+
+Expected: A sheet inventory with a node ID per sheet, as the other records carry.
+
+Found: The record on main cites 5 node IDs, none of them a Finance sheet; 218 sheets in the file have no recorded ID.
+
+Fix owner: Repository (Finance record). Action: Add the inventory with node IDs in the record's own next change.
+
+**New Minor and Polish findings by check.**
+
+| Check | Finding | Files and IDs |
+|---|---|---|
+| CT1 | Icon sets have grown locally (Minor) | Supply, Engineering, Customers, Sites & Equipment, My Work, Customer portal AF-148 |
+| CT1 | Local toolbar copies rename the Shell component's layers (Polish) | Engineering, Service, Settings, Documents & messages AF-147 |
+| CT2 | Fills and strokes outside shell copies are literal colours (Minor) | Service AF-094; Reporting AF-102 |
+| CT3 | A few text sizes fall outside the Shell's scale (Minor) | Projects, Settings, Reporting, Documents & messages, Supply AF-149 |
+| CV4 | Dates carry a weekday that does not match the 2026 calendar (Minor) | Settings AF-104; My Work AF-109 |
+| CV4 | Displayed dates omit the year (Minor) | Sales AF-079; Estimating AF-081; Projects AF-085; Supply AF-088; Reporting AF-099; Settings AF-105; My Work AF-110; Customers, Sites & Equipment AF-113; Documents & messages AF-116 |
+| CV6 | Four-digit references for cost sources, outcome reviews, calibrations and reference cases (Minor) | Estimating AF-126 |
+| FA2 | Two assets keep catalogue-form references (Minor) | Customers, Sites & Equipment AF-163 |
+| FA5 | Events after 09:00 appear on sheets not labelled as later frames (candidates) (Minor) | Estimating AF-084; Projects AF-087; Supply AF-090; Engineering AF-092; Service AF-095; Finance AF-097; Reporting AF-103; Settings AF-108; Customers, Sites & Equipment AF-115; Documents & messages AF-119; Customer portal AF-122 |
+| FA7 | Gendered pronouns describe synthetic people (Minor) | Reporting AF-098 |
+| GV1 | The accepted file is still titled "(proposal)" (Minor) | Estimating AF-128 |
+| GV4 | The Sales record still cites section nodes the restructure removed (Minor) | Sales AF-158 |
+| GV4 | The Settings record on main is behind the file (Minor) | Settings AF-159 |
+| HO1 | The Portal request channel is drawn without a proposal marker (Minor) | Service AF-161 |
+| SH1 | Docked workspace menus are drawn as frames, not component instances (Minor) | Finance, Documents & messages, Customer portal AF-142 |
+| SH4 | Administration pages mark different rail items as current (Minor) | Supply, Documents & messages, Sales, Estimating, Projects, Engineering… AF-143 |
+| SH4 | Docked menus carry proposed entries the accepted Shell menu does not have (Minor) | Projects, Supply, Service, Reporting, Customers, Sites & Equipment AF-165 |
+| SH4 | Staff workspace sheets mark no rail item as current (Minor) | Customer portal AF-144 |
+| SH5 | Projects draws a 56 px collapsed menu strip where the other files use the Shell's 12 px strip (Minor) | Projects AF-145 |
+| SH6 | Phone record sheets draw their own header instead of the phone toolbar component (Minor) | Supply, Finance AF-146 |
+| SH7 | Records cite the earlier Shell version or none (Minor) | Estimating, Engineering, Finance, Settings, Reporting, My Work… AF-160 |
+| ST1 | Page names vary from the adopted names (Polish) | Sales, Projects, Engineering, My Work, Customer portal AF-164 |
+| ST2 | Canvas layout drifts from the page template grid (Polish) | Estimating AF-083; Projects AF-086; Engineering AF-091; Service AF-093; Finance AF-096; Settings AF-107; My Work AF-112; Customers, Sites & Equipment AF-114; Documents & messages AF-118; Customer portal AF-121 |
+| ST3 | Canvas layout drifts from the page template grid (Polish) | Supply AF-089; Reporting AF-101 |
+| ST3 | Sheet labels do not follow the adopted label form (Minor) | Sales AF-080; Estimating AF-082; Reporting AF-100; Settings AF-106; My Work AF-111; Documents & messages AF-117; Customer portal AF-120 |
+| ST5 | Seven sheets are missing from the Read me index (Minor) | Supply AF-156 |
+| ST5 | The Read me index is out of date against the file (Minor) | Service AF-150 |
+| ST5 | The Read me index lists under half of the sheets and no page IDs (Minor) | Estimating AF-127 |
+| ST5 | The Read me lists pages without their node IDs (Minor) | Finance AF-151; Reporting AF-152; My Work AF-153; Documents & messages AF-154; Customer portal AF-155 |
+
+### S5. Alignment matrix after the second pass
+
+P = Pass; F = Fail with finding IDs; N/A = Not applicable; NC = Not checked. The scratch CSV gives the reason in every cell. Of 559 cells, 174 are Pass, 246 Fail, 37 Not applicable and 102 Not checked. The two unlinked files are Not checked throughout and are left out of the table.
+
+| Check | Sales | Estimating | Projects | Supply | Engineering | Service | Finance | Reporting | Settings | My Work | Customers, Sites & Equipment | Documents & messages | Customer portal |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| ST1 | F 164 | P | F 164 | P | F 164 | P | P | P | P | F 164 | P | P | F 164 |
+| ST2 | P | F 083 | F 086 | P | F 091 | F 093 | F 096 | P | F 107 | F 112 | F 114 | F 118 | F 121 |
+| ST3 | F 080 | F 082,083 | F 020 | F 027,089 | F 035,091 | F 040,093 | F 045,096 | F 100,101 | F 106,107 | F 111,054,112 | F 059,114 | F 117,118 | F 120,121 |
+| ST4 | P | F 083 | F 086 | F 089 | P | F 093 | P | P | F 107 | F 054,112 | F 114 | F 118 | P |
+| ST5 | P | F 127 | F 018 | F 156 | P | F 150 | F 157,151 | F 152 | P | F 153 | F 060 | F 154 | F 155 |
+| SH1 | P | P | F 017 | P | P | P | F 142 | F 050 | P | P | P | F 061,142 | F 142 |
+| SH2 | P | P | P | P | P | P | P | P | P | P | P | NC | P |
+| SH3 | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| SH4 | F 143 | F 125,143 | F 143,165 | F 143,165 | F 143 | F 143,165 | F 143 | F 165 | P | P | F 165 | F 061,143 | F 144 |
+| SH5 | N/A | P | F 145 | P | P | P | P | P | P | P | P | P | P |
+| SH6 | F 008 | F 124 | F 017 | F 146 | P | P | F 146 | P | P | P | P | P | P |
+| SH7 | F 160 | F 160 | F 021 | F 028 | F 160 | P | F 160 | F 160 | F 160 | F 160 | F 160 | P | P |
+| CT1 | F 139 | F 139 | F 139 | F 139,148 | F 139,148,147 | F 139,147 | F 139 | F 139 | F 139,147 | F 139,148 | F 139,148 | F 139,147 | F 139,148 |
+| CT2 | F 009,139 | F 139 | F 019,139 | F 139,026 | F 139,034 | F 139,094 | F 139,044 | F 139,102 | F 139,047 | F 139,055 | F 139,056 | F 139,062 | F 139,071 |
+| CT3 | P | P | F 149 | F 149 | P | P | P | F 149 | F 149 | P | P | F 149 | P |
+| CT4 | F 140 | F 140 | F 140 | F 072,140 | F 140 | F 140 | F 140 | F 072,140 | F 140 | F 140 | F 140 | F 140 | F 140 |
+| CT5 | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| CV1 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| CV2 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| CV3 | F 003 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| CV4 | F 078,079 | F 081 | F 016,085 | F 088 | F 032 | F 038 | F 042 | F 099 | F 104,105 | F 109,110 | F 113 | F 116 | F 068,070 |
+| CV5 | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| CV6 | F 002,004 | F 012,136,126 | P | F 024,025 | F 031 | F 037 | P | F 048 | F 046 | F 051 | F 057,163 | F 136,063 | F 136,067 |
+| CV7 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | F 058 | NC | NC |
+| CV8 | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| FA1 | F 033,074,129 | F 033,123,129,132… | F 014,033,075,129… | F 022 | F 033 | F 134,135 | F 133 | F 033,073,074,130… | NC | F 033,131,132,133… | F 133 | F 075,135,136 | F 075,136 |
+| FA2 | F 005 | F 123,136 | F 014 | F 022,024 | P | P | P | P | F 137 | P | F 163 | F 136 | F 069,136 |
+| FA3 | P | F 141 | P | F 024,141 | F 141 | F 141 | F 043,141 | P | F 137,141 | P | F 141 | P | P |
+| FA4 | F 080 | F 082 | F 020 | F 027 | F 035 | F 040 | F 045 | F 100 | F 106 | F 111 | F 059 | F 117 | F 120 |
+| FA5 | F 011 | F 084 | F 087 | F 090 | F 092 | F 039,095 | F 097 | F 049,103 | F 138,108 | P | F 115 | F 119 | F 122 |
+| FA6 | NC | NC | F 131 | NC | NC | F 134 | NC | F 131 | NC | F 053,131,134 | NC | NC | NC |
+| FA7 | F 006 | F 013 | F 015 | F 023 | F 030 | F 036 | F 041 | F 098 | P | F 052 | P | F 064 | F 066 |
+| HO1 | F 033,074,129 | F 033,129,132,133… | F 033,075,129,130… | NC | F 033 | F 134,135,161 | F 133 | F 033,073,074,130… | NC | F 033,131,132,133… | F 133 | F 075,135,136 | F 075,136 |
+| HO2 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| HO3 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| RA1 | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| RA2 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 | F 001 |
+| RA3 | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC | NC |
+| GV1 | F 007 | F 128 | P | P | P | P | P | P | P | P | P | P | P |
+| GV2 | P | P | P | P | P | P | P | P | P | P | P | P | P |
+| GV3 | F 077 | P | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
+| GV4 | F 158 | P | P | P | P | P | F 157 | P | F 159 | P | P | P | P |
+| EX1 | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | N/A | F 162 |
+
+### S6. Authority conflicts and questions for Dean
+
+The first pass's questions AC-01 to AC-20 stand as written above. This pass adds notes to eight of them and raises nine more. Each new question has two readings and a recommendation; none was resolved silently.
+
+| ID | Question | Recommendation |
+|---|---|---|
+| AC-01 (note) | Kim Patel persona | Now also a finding against Estimating (AF-123): 71 strings on 25 sheets |
+| AC-02 (note) | Collapsed strip dimensions | The Shell component `29:3119` is 12 px wide and ten files instance it; Projects places a 56 px strip (AF-145); the brief's "80 px" matches no file |
+| AC-05 (note) | Estimating record toolbar | Now a finding (AF-124) |
+| AC-08 (note) | SYN-OPP-000301 | Six files, five different deals (AF-033) |
+| AC-09 (note) | Unknown send tone | One of 160 state words whose tone differs (AF-140) |
+| AC-12 (note) | Glasshouse 4 Update 4 | Projects also says "Update 4 sent Tue 27 Oct" (AF-075) |
+| AC-13 (note) | Primary-action contrast | The Shell file now has `action/primary` #2D7128; no module file has it (AF-001, AF-139) |
+| AC-16 (note) | Documents and Shared records navigation | The Documents file marks Service, not More, on its rail (AF-061) |
+| AC-21 | The customer's quotation reference and issue date: the brief forbids `SYN-PPO-` and "PPO" on customer sheets; the portal record says A3.11 fixes "SYN-PPO-QUO-000214 issued Fri 31 Oct" | Use `SYN-QUO-000214` on the customer page and Estimating's issue date; correct A3.11 (AF-136, AF-162) |
+| AC-22 | SYN-OPP-000318 at 09:00: won and handed over (Projects) or an open task due Tue 3 Nov (My Work, citing A3.8) | Take A3.8 and give the Projects handover another reference (AF-131) |
+| AC-23 | Which accepted file governs the Estimating menu wording | The Shell owns menus; take Estimating's accepted wording into it under a new named version (AF-125) |
+| AC-24 | The rail item on a module's administration pages | Mark the module, as six files do (AF-143) |
+| AC-25 | One registry for reference families | Fix it once in PPO-STD-001, including one family per instrument kind (AF-141) |
+| AC-26 | One table for chip tones | Publish it with the Library's Controls record (AF-140) |
+| AC-27 | The year on dates: the brief requires it; about 8,900 strings omit it | Allow the short form in registers and timelines within the story year; require the year on headers, documents and customer sheets |
+| AC-28 | The label form and the accepted files | Apply it to Sales and Estimating only when a named version is cut for another reason (AF-080, AF-082) |
+| AC-29 | How this record is filed: one record amended in place, or two | One record, as filed |
+
+Section 9 defaults as applied: no links arrived (Q1); read-only (Q2); files in progress included (Q3); the Library record's own transition settles the drawer widths (Q4); the Sales Products totals are a finding (Q5); briefs carry all severities (Q6).
+
+### S7. Known items, second pass
+
+| Item | Second-pass disposition |
+|---|---|
+| 1 | Confirmed: no toolbar copy or instance in Sales; 38 sheets draw their own record header (AF-008) |
+| 2 | Confirmed: 232 single-digit revision strings on 59 Sales sheets (AF-002) |
+| 3 | Confirmed: PR01 and TB08 totals and 12 catalogue-form product references (AF-003, AF-004) |
+| 4 | Confirmed: the Documents file draws its own docked Documents menu on 80 sheets (AF-061) |
+| 5 | Confirmed as a recorded proposal: a docked Shared records menu where the Shell has a More-panel column (AF-165) |
+| 6 | Closed: "Recurring checks" is not in the My Work file; it appears in the Shell's Assistant menu and on Settings sheets AS01 and AS04 |
+| 7 | Closed: the Library record keeps the Shell drawer at 480 px and moves 432 px panels at their next reviewed change |
+| 8 | Confirmed: "Owen Dunne" does not occur in the My Work file (AF-053) |
+| 9 | Confirmed: "Portal" is drawn as a request channel on five Service sheets with no proposal marker (AF-161) |
+| 10 | Partly closed: Settings shows Simulated, "US$0.00 of US$30.00" and SYN-AIF-000002; pilot roles were not found by text, and the Assistant pages file is not linked |
+| 11 | Confirmed: the portal and Documents & messages agree (r2 fixed 08:24, published 09:40); Projects differs (AF-075) |
+| 12 | Closed for these files: `SYN-REL-` names only releases; `SYN-PRL-` occurs nowhere; the Products file is not linked |
+| 13 | Confirmed: 68 strings with a gendered pronoun in 11 files; none in Settings or Customers, Sites & Equipment |
+| 14 | Confirmed with conflicts: SYN-QUO-000214 r01 and r02 agree in Sales, Estimating and My Work but not in the portal or Documents & messages (AF-136); other quotation revisions differ (AF-129) |
+| 15 | Confirmed: the workspace-menus header `101:8554` still reads "Proposal · awaiting Dean's acceptance" (AF-076); layer names were not scanned |
+
+### S8. Not checked and limits
+
+- **Addenda.** A1, A2 and A3 were not supplied. FA1, FA6 and HO1 are tested only as far as the files contradict one another or the brief; a fact that every file states the same wrong way is not caught. With the A3 text the ledger can be rerun on the saved extraction without new Figma calls.
+- **Files.** "PPO - Assistant, Knowledge and Help" and "PPO - Products" have no link. "PPO - Library" was read through its records. "PPO - Design" was not opened.
+- **Checks left Not checked.** CV1 (register standard on ST01), CV2 (one line per cell, second search box), CV3 except the Sales Products sheets, CV7 except one Customers, Sites & Equipment heading, HO2 (one owner per page), HO3 (previews against the portal) and RA3 (targets, focus, alternative text). Each needs rendered sheets or a rule-by-rule reading this pass did not do.
+- **No screenshots.** Every finding rests on text and layer properties. Clipping, truncation and overlap inside a sheet are not checked. The rail finding for the portal's staff sheets (AF-144) should be confirmed by eye.
+- **Heuristics.** Chip tones come from Status chip instances and the fill variable of chip-shaped frames (AF-140). The "events after 09:00" findings are candidates filtered by wording, not confirmed sheet by sheet. Text in hidden layers was skipped; a text node longer than 3,000 characters was cut.
+- **Files in progress.** The files were read between about 05:50 and 06:15 AEST on Fri 13 Nov 2026. Version history is not readable through the tools, so whether a build session was active cannot be shown; a file edited since may differ.
+- **First pass.** One first-pass finding was not reproduced (AF-065, corrected in the file since) and two were not re-tested (AF-010, a text property this pass did not extract; AF-029, non-scope page IDs).
+
+### S9. Next steps
+
+1. **Dean's decisions first.** AC-01, AC-05, AC-08 and AC-21 to AC-26 unblock the largest batches.
+2. **Shell.** Record the `action/primary` change on main (open pull request 923), settle `accent/estimating-ink` and `surface/scrim`, correct the workspace-menus header, and save a named version. Every module then recopies the colour collection.
+3. **Accepted files.** Sales needs a new named version after its batch (toolbar adoption, revisions, weekdays, Products sheets, Noah Clarke, pronouns, the phone tab bar pin). Estimating needs one after its batch (revisions, pronouns, Read me index and title) and after AC-01 and AC-05 are decided.
+4. **Proposals.** Each file's brief lists its findings most severe first. The shared facts (AF-033, AF-075, AF-129 to AF-136) should be fixed together, since each touches two or more files.
+5. **Repository corrections**, each as its own later change: the Finance record's inventory (AF-157); the Sales record's section IDs (AF-158); the Shell version citations (AF-160, AF-021, AF-028); the merges of pull requests 913 and 918.
+
+Per-file alignment briefs, the findings CSV (one row per evidence occurrence, with node IDs), the full matrix CSV with a reason in every cell, the fact ledger difference and the questions file are in the session scratchpad and were sent to Dean with the report. They are not committed. The first pass's appendix of briefs above is superseded by the second-pass briefs where they differ.
+
+The second pass changed no Figma file, no application code, migration, permission or design register, and no record other than this one. All 78 parent requirement IDs remain.
