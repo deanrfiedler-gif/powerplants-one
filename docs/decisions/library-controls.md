@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-CONTROLS-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
+status: Proposed design drawn in the private Figma file "PPO - Library" on 10 November 2026 at Dean's request; the five items in section 6 were confirmed by Dean the same day; the six in section 7, for the controls added on 12 November 2026, await his confirmation; every component is Status Proposed until Dean accepts the page; nothing published from the library; no application code, route, migration, permission or deployment; every record shown is synthetic
 versioning: git
 ---
 
 # Controls in PPO - Library — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The page itself awaits acceptance.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026 · **Status:** Proposed. The five items in [section 6](#6-confirmed--10-november-2026) were confirmed by Dean on 10 November 2026. The six in [section 7](#7-to-confirm--added-12-november-2026) await his confirmation. The page itself awaits acceptance.
 
 On 10 November 2026 Dean asked whether pages for other interactions (Gantt charts, board cards, planners and calendars) should be added to `PPO - Library`. The recommendation was to add them in this order: a Controls page, a page of shared rules for moving things, board cards, planners and calendars with a shared time axis, and the Gantt chart kept in the Projects file using those shared parts. Controls came first because the [Grid · Table interactions](library-grid-table-interactions.md) page drew its buttons, chips, menus, tooltips and toasts as plain frames, and every later page would otherwise redraw them. Dean answered: "Accept the recommended order and start with the Controls page."
 
@@ -40,7 +40,7 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053).
 | Reused components | The Sales kit and the shell sheets are the references. New in the library, all `Status: Proposed`: the sixteen families in section 3 |
 | Incoming handover | A module page places these components from the library |
 | Outgoing handover | None |
-| Departures | The items in section 6, confirmed by Dean on 10 November 2026 |
+| Departures | The items in section 6, confirmed by Dean on 10 November 2026, and the items in section 7, to confirm |
 
 ## 3. What was drawn
 
@@ -87,6 +87,17 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 | Controls / Dialog | `51:295` | 4: Confirm or Destructive, each Standard (560 px) or Wide (720 px). Options: Title, Body; footer buttons exposed |
 | Controls / Drawer | `217:656` | 4: Width (Narrow 360, Standard 480, Wide 640, Extra-wide 800), each tied to its [drawer width](library-drawer-widths.md). Options: Title, Show footer, Content (swap). Exposed: Footer (Form / Save bar). Added on 11 November 2026 |
 | Controls / Drawer content | `217:578` | One component: the placeholder the Content option swaps out |
+| Controls / Search field | `274:723` | 4: Empty, Focus, Filled, Disabled. Option: Text. Added 12 November 2026, as are the ten below |
+| Controls / Removable chip | `274:734` | 3: Default, Focus, Disabled. Option: Label |
+| Controls / Check option | `274:753` | 4: Off, On, Hover, Focus. Option: Label |
+| Controls / Multi-select | `274:851` | 5: Empty, Filled, Focus, Error, Disabled. Options: Label, Placeholder |
+| Controls / File drop | `274:877` | 3: Rest, Over, Focus. Option: Hint |
+| Controls / Upload row | `274:918` | 3: Uploading, Failed, Refused. Option: Name |
+| Controls / Pager | `274:994` | 5: Pages at the first, a middle and the last page; Load more with more to load and with all shown. Option: Count |
+| Controls / Switch | `274:1021` | 8: Off or On, each Rest, Hover, Focus, Disabled |
+| Controls / Switch field | `274:1022` | One component: a label and a switch. Option: Label. Exposed: Switch |
+| Controls / Segment | `274:1037` | 5: Default, Hover, Selected, Focus, Disabled. Option: Label |
+| Controls / Segmented | `274:1059` | 3: two, three or four options. Exposed: each segment |
 
 The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.
 
@@ -103,6 +114,10 @@ The review board gained a Drawer card `220:615` and a Drawer row in card 9's val
 | 6 · Menus and tooltips | `53:523` | A composed menu; tooltips; rules for menus, popovers and tooltips |
 | 7 · Toasts and banners | `53:602` | Four tones of each; rules |
 | 8 · Dialogs | `53:709` | Destructive over a scrim; Confirm; rules. Laid out again on 11 November 2026 for the dialog widths |
+| Search and multi-select | `277:1104` | Added 12 November 2026: the search field's states; a multi-select with its list open; nothing matches; the other states; rules |
+| Files | `277:1299` | Added 12 November 2026: the drop zone at rest and with files held over it; files on their way in; a page that names what it takes; rules |
+| Paging | `277:1410` | Added 12 November 2026: pages at the first, a middle and the last page; Load more; rules |
+| Switch and segmented | `277:1532` | Added 12 November 2026: switches with labels and their states; two, three and four segments; a Gantt toolbar; rules |
 | 9 · Values, sources and confirmed items | `53:773` | The table in section 5, the items in section 6, what is not yet here, change log |
 
 Every solid fill and stroke on the components and the board is bound to a PPO colour variable, every text node uses a library text style, every shadow uses an effect style, and no layer has a default name. Sizes, paddings and most corner radii are bound to variables; 24 layers in the components and 3 on the board (focus rings, state layers, tone bars) still have a plain radius.
@@ -138,6 +153,13 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Banner | 40 px, tone surface and icon, one action, dismiss | Shell sheet S; R71 |
 | Dialog | 560 px (`dialog/standard`) or 720 px (`dialog/wide`), 12 px corners, Elevation / Dialog, 32% brand/navy scrim | Shell sheets R and AF; R70; [library audit](library-audit.md) A7. The shell sheets drew 400 px |
 | Drawer | 360, 480, 640 or 800 px by content; 14 Medium title and Close; Form / Save bar footer; Elevation / Dialog; no scrim | Dean, 11 November 2026; shell R98 |
+| Search field | Controls / Field's box with the Search icon and Clear; 36 px, 32 Small, 44 Touch; results about 200 ms after typing stops | Shell Find fields R21, R39; built registers; new (C6) |
+| Multi-select | Controls / Field with Removable chips (20 px, `radius/chip`, surface/navy-tint) that wrap; a list of Check options at `control/height` with a search field, a count and Clear | Forms option rules; new (C7) |
+| File drop | 104 px area, dashed 1 px line/strong; over: status/success-surface with a 2 px brand/green-deep outline; hint in 12 Regular | Lead R10; Sales R06; shell R93; new (C8) |
+| Upload row | File icon, name in 13 Medium, status in 12 Regular; 4 px progress bar in brand/navy; Cancel, Try again or Remove | New; States wording |
+| Pager | Count rule in 12 Regular; Rows per page 25, 50 or 100; Previous and Next as Secondary buttons, disabled at the ends; Load more for lists read in order | Estimating A6; built directory; new (C9) |
+| Switch | 32 by 18 px track, 14 px knob; on brand/navy, off line/control; 2 px text/link focus ring | Built conversations switch; new (C10) |
+| Segmented | `control/height` (32, 28, 44); track surface/hover with 1 px line/strong; chosen segment surface/canvas with Elevation / Card and an ink label | Built view switch; ES08 proposal; new (C11) |
 
 ## 6. Confirmed — 10 November 2026
 
@@ -151,20 +173,63 @@ Five things on this page had no single accepted source. On 10 November 2026 Dean
 | C4 | Small size | A "Control size" mode: buttons 28 px and fields 32 px in toolbars, popovers and tables | The shell allows 28 px as a minimum (C6); using a variable mode for it is new |
 | C5 | Checkbox | 4 px corners and a 1 px border, as the Sales kit | The grid page first drew 3 px and 1.5 px; this changes every checkbox on that page |
 
-## 7. Not done and open
+## 7. To confirm — added 12 November 2026
+
+The [library audit](library-audit.md) listed controls the library lacked and Dean agreed an order for them (B5). On 12 November 2026, asked for the next steps, Claude recommended drawing them while the page acceptances and the shell copy were with Dean. Dean answered: "Proceed based on your recommendations." Eleven parts and four review cards were drawn that day.
+
+A search of the repository found one accepted rule that bears on them and little else:
+- **"No second search"** (Sales refined file, 9 November 2026; Estimating refined file, 10 November 2026): "No search box appears in the content area of any page." The search field is therefore drawn for pickers, popovers, drawers and phone sheets only (C6).
+- **Files:** SharePoint stores the file and PPO keeps the link (lead record R10; Sales R06); a record page takes dropped files into Files (shell R93).
+- **Paging:** every register has a footer with the count rule and a pager (Estimating register standard A6).
+- **No accepted source** for a multi-select, a switch, a segmented control, file types and sizes, or the rows-per-page choice.
+
+Each item is drawn as recommended.
+
+| ID | Item | Recommended | Why it needs a decision |
+|---|---|---|---|
+| C6 | Where a search field goes | Only inside pickers, popovers, drawers and phone sheets; never in page content | The accepted "No second search" rule says so, but about forty built screens have their own search box, with three different Clear wordings. They would align later |
+| C7 | Multi-select | Chips in the field and a ticked list with search; for six or more options | No accepted source draws one. The Forms rules cover one choice only |
+| C8 | File types and size | The library sets none; each page's hint names what it takes | No accepted record sets a limit or a list of types |
+| C9 | Rows per page | 25, 50 or 100, starting at 25 | The built directory offers this; it has no design source |
+| C10 | Switch | Only for settings that act at once; on is brand/navy, like a ticked box | The built conversations switch uses the link colour. No accepted rule exists |
+| C11 | Segmented control | A white chosen segment on a grey track, at the Control size heights | The built view switch is 30 px; the ES08 proposal drew navy at 44 and 32 px |
+
+**Rules drawn with them**
+- **Search field.** It names what is searched in its placeholder and carries the same accessible name. The list narrows about 200 ms after typing stops. Esc clears the text, then closes. Nothing matches says what was searched and offers Clear search.
+- **Multi-select.** Chosen values are chips that wrap; none is hidden behind a count. The list stays open while choosing, lists only what the person may choose, ticks the chosen rows and says how many are chosen.
+- **Files.** Two ways in: drop, or "choose files". One row a file, with how much is done in words and as a bar. A failure says nothing was saved; a file the page does not take says what the page does take. Never a disabled drop zone.
+- **Paging.** The count rule in words on the left, the pager on the right. A button that cannot be used is disabled, not hidden. Load more is for lists read in order. Changing page keeps the filters.
+- **Switch.** For a setting that takes effect at once; in a saved form, yes or no is a tick box. If the change cannot be saved, the switch returns to its last state and the page says why.
+- **Segmented control.** Two to five views of the same content, one always chosen. Not for page sections (tabs), filters (filter chips) or more than five options (a select).
+
+The Gantt page's toolbar example now uses the segmented control for Week, Month and Fit.
+
+## 8. Not done and open
 
 - **Page acceptance and publishing.** As for the grid page: the components stay `Status: Proposed` until Dean accepts the page, and the library is not published.
-- **Not yet here.** Switch, search field, segmented control, pagination, breadcrumb, progress and empty-state parts, because no accepted page draws them yet. Radio and the date picker were added with the [Forms page](library-forms.md). Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
+- **Not yet here.** Breadcrumb, progress bar, date range and empty-state parts, because no accepted page draws them yet. Switch, search field, segmented control and pagination were added on 12 November 2026 (section 7). Radio and the date picker were added with the [Forms page](library-forms.md). Accent chips for workspaces other than Sales. A field with a unit prefix, which the grid page's number editor needs.
 - **Audit, 11 November 2026.** The [library audit](library-audit.md) changed this page: tabs, the new Disabled and Hover states, the target-size rule, the retired 10 px style and Controls / Drawer.
   - The Dialog component was fitted to the dialog widths with the [Phone page](library-phone.md): Standard 560 px and Wide 720 px. On a phone a dialog becomes a bottom sheet (Phone / Sheet).
-  - A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit and are not yet fixed.
+  - A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit. The layer names were fixed on 12 November 2026; the fourteen plain radii remain.
 - **Icons.** PPO - Shell holds 101 icons. The Icons page holds the 20 the library uses so far, drawn by hand, and is not the shared icon set.
 - **Module files unchanged.** The Sales kit and every module's local copies are untouched. After publishing, modules swap them for these components.
 - **No proof beyond the design.** 32 prototype links (button, link, icon button and checkbox states) were set and read back, not played. Keyboard and screen-reader behaviour needs the browser proof once code exists.
 - **Code.** No application code, component binding, register or page guide changed. The Control size variables and the new layout variables have no CSS property yet.
 - **Next pages in the accepted order.** Move · Drag and drop (the shared rules for moving things) was drawn on 10 November 2026 and has [its own record](library-move.md). Board · Cards and stages followed the same day ([its record](library-board.md)). Time · Planners and calendars followed ([its record](library-time.md)). At Dean's choice the Gantt parts were drawn on a library page, Gantt · Bars and links, instead of in the Projects file ([its record](library-gantt.md)); every page in the accepted order is now drawn. Forms · Fields and validation followed ([its record](library-forms.md)) and changed Controls / Field and Controls / Banner and added Controls / Radio, as the rows above now say.
 
-## 8. Checks
+## 9. Checks
+
+**12 November 2026**
+- **Rendered and inspected.** Each of the eleven new parts, the four new cards and card 9.
+- **Defects fixed while drawing:**
+  - the removable chip was 100 px tall, which stretched the multi-select;
+  - the multi-select's box kept its height after the chips shrank;
+  - the focused check option showed two focus rings;
+  - a preview step left a stray copy of the whole components section on the page. Nothing used it, and it was removed.
+- **Structural read of the Controls page** (2,716 nodes, 526 instances, 30 families). Outside instances it found no solid fill or stroke without a variable, no text without a text style, no default layer name and no component without a status line. Fourteen plain corner radii remain on older focus rings and example frames. The four Drawer examples are scaled, so their shadows carry no effect style.
+- **Repository checks for this change:** `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py`, `python3 scripts/check_foundation.py` and `python3 scripts/check_design_tokens.py`.
+
+**10 and 11 November 2026**
 
 - The components section and every card of the review board were rendered and inspected. Defects found while drawing were fixed: a misshapen spinner arc, a link focus ring that was too tight, fixed-width buttons that clipped long labels in the dialog footer, and example frames that clipped focus rings.
 - A structural read of the Controls page (457 component nodes, 626 board nodes) found no solid fill or stroke without a variable, no text without a text style, no shadow without an effect style, no default layer name and no component without a status line.

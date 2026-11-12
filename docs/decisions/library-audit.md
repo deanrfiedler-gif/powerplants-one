@@ -99,7 +99,7 @@ Dean agreed these on 11 November 2026. None is drawn yet.
 | B2 | **Base colour palette.** Deferred until a second theme or brand exists |
 | B3 | **CSS names.** Every variable gets its code name before the library is first published, as one reconciliation against the built application (ADR-0067 stage 5) |
 | B4 | **Prototypes.** After Phone patterns, wire three flows: editing a record section and saving; a save whose outcome is unknown, then Check the outcome; moving a card on a board |
-| B5 | **Missing controls, in order.** Search field and multi-select; file drop zone; pagination; switch and segmented control |
+| B5 | **Missing controls, in order.** Search field and multi-select; file drop zone; pagination; switch and segmented control. Drawn on 12 November 2026 ([Controls record](library-controls.md), section 7) |
 | B6 | **Stat tiles and charts.** After the shell and page template, before any reporting or dashboard design |
 | B7 | **New features.** Draw "How this was worked out" and "Changed since you last looked" as Proposed parts on the Record page. AI features come later, each after a rules-based version |
 | B8 | **Publishing.** After the shell move and page template and Dean's first page acceptances; then the standard's pilot on a copy of one module file |
@@ -119,7 +119,7 @@ None of these is changed by this record.
 ## 7. Not done and open
 
 - **Closed with the Phone page.** Two items first listed here were done when the [Phone page](library-phone.md) was drawn, also on 11 November 2026: Controls / Dialog was fitted to the dialog widths, and the Record page's card 7 now places Controls / Drawer.
-- **Controls page leftovers.** A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit.
+- **Controls page leftovers.** A structural read after the changes found the focus rings' corner radii are plain numbers and two layers are named "Text". Both predate the audit. The layer names were fixed on 12 November 2026.
 - **Not addressed.** The Board page's scaled thumbnails with text below 11 px; the Grid hover reading in section 2.
 - **Motion.** Dean confirmed the three timings on 12 November 2026: "Confirm Ph1–Ph7 as recommended and the motion timings". They have not been judged in a prototype or in code.
 - **Proof.** No prototype links were added. Keyboard, focus and reduced-motion behaviour need the browser proof once code exists.

@@ -50,7 +50,7 @@ The first components and review board were replaced on 10 November 2026 when the
 | Read me | `0:1` | File cover `36:3`; Read me card `36:114` with purpose, page index, how to use the library, rules and contents |
 | Foundations | `34:2` | Specimen board `34:3`: 66 colour swatches, 11 Gantt colour swatches, thirteen text styles (Text / 10 Medium was retired and Text / 11 Regular added on 11 November 2026), layout, density, control-size and motion variables, three effect styles |
 | Icons | `46:2030` | 35 icons and 5 annotation cursors. Fourteen icons and the cursors moved from the Grid page when the Controls page was drawn (section 12); Chevron left and right came with the [Forms page](library-forms.md); Mail, File, Star, Printer and History came with the [Record page](library-record.md); Menu, Chat, Home, Person and Deal came with the [Phone page](library-phone.md); Eye came with the [Board page](library-board.md)'s card actions |
-| Controls | `46:2031` | Sixteen control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
+| Controls | `46:2031` | Thirty control families and their review board, recorded in [Controls in PPO - Library](library-controls.md) |
 | Grid · Table interactions | `4:76` | Components section `22:337`; review board `26:587`; playground frame `32:1736` |
 | Move · Drag and drop | `66:37` | Six parts for moving things and their review board, recorded in [Move · Drag and drop in PPO - Library](library-move.md) |
 | Board · Cards and stages | `82:37` | Seven board parts and their review board, recorded in [Board · Cards and stages in PPO - Library](library-board.md) |
