@@ -2,14 +2,14 @@
 document_id: PPO-ESTIMATING-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Accepted by Dean Fiedler on 10 November 2026 on the recommendations recorded in section 12 (A1–A24 and Q1–Q12 decided); re-aligned 9 and 10 November 2026 to his prompt version 4 and addendum A2 (section 11); two directions he gave on 9 November are recorded in section 10; Design ready check run by an independent session and its corrections made, the lock-in done except the named version, and the accepted audit batch drawn (section 12); the named version "PPO - Estimating module (accepted)" saved by Dean Fiedler on 10 November 2026; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Accepted by Dean Fiedler on 10 November 2026 on the recommendations recorded in section 12 (A1–A24 and Q1–Q12 decided); re-aligned 9 and 10 November 2026 to his prompt version 4 and addendum A2 (section 11); two directions he gave on 9 November are recorded in section 10; Design ready check run by an independent session and its corrections made, the lock-in done except the named version, and the accepted audit batch drawn (section 12); the named version "PPO - Estimating module (accepted)" saved by Dean Fiedler on 10 November 2026; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic; an alignment batch from the independent review of 12 November 2026 (PPO-ESTIMATING-REVIEW-PROP) was drawn the same day and is recorded in section 13; it is an amendment that needs Dean's acceptance and a new named version, so the build source stays "PPO - Estimating module (accepted)" until then
 source_commit: 900daa9d0929c12251226c4a7ff02cce247ad9f9
 versioning: git
 ---
 
 # Estimating module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Accepted on 10 November 2026 (section 12); checked, corrected and locked in the same day; the named version "PPO - Estimating module (accepted)" was saved by Dean Fiedler on 10 November 2026. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2; section 12 records his acceptance, the decisions adopted, the Design ready check, the lock-in and the audit batch drawn from it. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026, re-aligned 10 November 2026 · **Status:** Accepted on 10 November 2026 (section 12); checked, corrected and locked in the same day; the named version "PPO - Estimating module (accepted)" was saved by Dean Fiedler on 10 November 2026. Sections 1 to 8 are the proposal record as it stands after the re-alignment; section 9 holds the audit made before the first hand-back; section 10 records the two directions Dean gave on 9 November 2026 and what was drawn from them; section 11 records the re-alignment to his prompt version 4 and addendum A2; section 12 records his acceptance, the decisions adopted, the Design ready check, the lock-in and the audit batch drawn from it. Later sections will record acceptance, drawn batches and named versions as the [Sales record](sales-module-refined-ui-proposal.md) does. Section 13 records the alignment batch of 12 November 2026, which awaits acceptance and a new named version.
 
 On 9 November 2026 Dean asked for the complete refined UI page set of the Estimating module to be drawn in a brand-new private Figma file, "PPO - Estimating module (proposal)", inside the accepted shell and to at least the standard of the Sales module file, using the accepted "PPO - Shell" file as the source of truth for the chrome and the Design file's Estimating pages as content reference only. His brief fixed ten decisions: the module is named Estimating; quotations are an output of Estimating and exist in Sales as simple quotations; four specialised workbenches (Screens, Fertigation, Automation, Control) share a generic template; Excel estimates import to lines and keep the workbook as evidence; review and approval gates are rule-based and explained; customer e-mail and page tracking are built in; customisation publishes from drafts with impact shown; one register standard applies to the whole application (reorder, resize, inline edit with a change reason, address lookup); the docked workspace menu can collapse; and the synthetic story stands at Thursday 5 November 2026, 09:00, signed in as Priya Nair, estimator. He gave the same four rules as for Sales: one line of data per register cell even if the table scrolls sideways, no second search bar in the content area, pages as professional as the shell, and otherwise full creative control, with everything undecided decided by the designer and recorded for him.
 
@@ -694,3 +694,60 @@ The fifteen scope pages moved above the — Proposals — separator with their n
 The sheet count is 297 (285 plus these twelve); the Read me index lists every sheet with its node. G2's phone variants of the approve and record-response dialogs already existed as PH05 and PH07. G1 and the other Sales items wait for a Sales-file prompt; G4, G7 and G8 wait for their contracts; N-E6 and N-E10 are deferred (12.1).
 
 **Verification after the batch.** Position audit on all fifteen pages: no loose node, no sheet outside its section, no sheet overlap, no section overlap, no unlabelled sheet; the only children beyond a sheet's bounds are the QP03, QP04 and PH11 page columns, clipped to the first screen by design. Renders re-read: E01, T01, C00, TB01, Q29, PH13, PS12, K16, R17, V12, X45, AD01, QP01, QP03, X35, TB17 and the ST01 chip card; three follow-up trims came from them (the C00 toolbar, the Q29 title, the K16 state column). Not re-run: the full weekday and story scans (the new sheets' dates were written from the dataset), the overflow guard (the pass touched text widths, not sheet bounds), and the contrast table beyond the two changed rows.
+
+## 13. Alignment batch — 12 November 2026
+
+The [independent review](estimating-module-independent-review.md) (PPO-ESTIMATING-REVIEW-PROP) found 36 items, ER-01 to ER-36, and asked nine questions. Dean decided them on its recommendations ("proceed on your recommendations"; review section 9). The session that wrote the review drew the batch the same day in the file, now named "PPO - Estimating module", after claiming it in a draft pull request. **The batch is an amendment to the accepted design:** nothing in it is accepted until Dean accepts it, and the build keeps reading the named version "PPO - Estimating module (accepted)" until he saves a new one.
+
+### 13.1 What changed
+
+| Area | Change |
+|---|---|
+| Facts (ER-01 to ER-13) | Riverbend estimate v03 reads Reviewed on T01 to T06, T08, T16, TB13 and the dialog hosts, with cost A$94,270, margin 27.2 %, markup 37.4 %, ten lines and none Unknown, checks 4 of 5 with "10 of 10 · 2 provisional"; the issued r01 document on Q08 matches Q03 (fingerprint 9a30…2c1e, an Options row added); revision 01 offers Option 1 and revision 02 adds Option 2 (dataset 9.14 and Q20); payment 30 days from invoice; site Lindenow VIC; Q27 carries no Unknown lines; O04 reads +A$3,850 · +7.0 %; TB01, PH02 and PH12 rebuilt from E01's nine estimates in four groups; X19 sits on the Riverbend r02 quotation signed in as Jordan Blake; Kim Patel replaced by Sam Jordan (82 texts, Q-B); pronouns removed; the Sales briefs badge reads 3 and V01's "Waiting for me" reads 0 for Priya Nair; ST01's accent row reads #156e64, AA text |
+| Record header (ER-14 to ER-17) | 119 record headers restructured in the order of Shell rules R116 to R125: breadcrumb; title with one state chip and the star; sub-line; a toolbar row with previous and next "n of N in view", secondary chips, Actions, Outputs and one state-driven primary last. "Reports" renamed Outputs on 34 records, and Q03's open menu holds Download PDF, Print, Issued document, Customer page and Export lines. Catch me up leaves the title row (the T01 strip stays). Primaries follow Q-A and R117: "Issue & send r01" on Q07, Q09 and X21; "Record response" on issued quotations, with Prepare revision and Plan follow-up moved into Actions; on Q27 the preparer sees "Approve…" unavailable with "You prepared this revision, so you cannot approve it. Jordan Blake can."; X19 shows Return and Approve… to Jordan Blake; V07 has Return and Approve r02 in its toolbar |
+| Widths and layout (ER-18, ER-20, ER-21) | Thirteen overlay drawers widened from 432 to 480 px (Q-G); docked workbench and summary panels keep their width. Cell widths re-balanced on 46 tables so that only the longest columns truncate, with an ellipsis; clipped single-line texts end in an ellipsis; the V07 to V10 gate sentences shortened; AD02's redundant Published column removed; T10's Lines read rows realigned to their headers (synthetic workbook keys M-2, GB-1, DS-58 added) and the H-02 flag removed; Map to Variant and Mark One-off moved to the unmapped-parts notice |
+| Accessibility and finish (ER-22 to ER-26, ER-31 to ER-36) | Phone buttons 44 px; 21 phone input texts 16 px; CS03's primary label and selected span pass contrast; W02's unavailable-option reasons readable; due dates no longer use colour alone; 24 px avatar initials and CS03's dimensions 11 px; the KPI tile value uses PPO/Page title 20 Medium; T02 and Q27 name the flagged rows; E05's focus lines drop the inline rule text; duplicate controls removed (Q08, Q20, AD02, the wizard stepper beside an open step menu); 21 labelled Columns buttons removed beside the column icon; designer notes removed from O04 and the customer page sheets (QP02 keeps its legend); the Read me and kit no longer say "proposal", and 13 kit components carry a Status line |
+| Conventions (ER-27 to ER-30) | 563 revisions and versions in two digits (Q-C; r2026-07 and supplier references unchanged); organisations SYN-ORG- with Riverbend Growers SYN-ORG-000142 (Q-I); SYN-REF-, SYN-CAL- and SYN-EAR- in six digits (SYN-SRC- keeps the four digits the code uses); "ex GST" on staff pages; AEDT on 14 register footers; 47 stage bars with day-and-month dates and "Not yet" on future stages; one chip tone per word for Unknown, Allowance, Manual, Awaiting review, Incomplete and Not saved |
+| Validity (Q-D) | Issued r01 documents read "Valid until Sun 29 Nov 2026"; unissued documents "set at issue · 30 days"; AD04 shows 30 days from issue as illustrative until D-010 and D-024; ST01 adds Expired |
+
+### 13.2 New sheets
+
+| Sheet | Node | Page · section | Status |
+|---|---|---|---|
+| QP09 Customer quotation page redrawn as a document: summary, numbered scope, options, pricing with totals and GST, exclusions and assumptions, terms, supplier footer, and a summary aside with the total, validity, download and what happens next; "What changed since revision 01" (N-E13) | `306:76` | Customer quotation page · Desktop | Proposed (Q-E) |
+| QP13 QP09 with options to choose and written acceptance that creates a response for staff to confirm (N-E15, N-E16) | `307:82` | Customer quotation page · Desktop | Proposed; waits on D-024 |
+| QP10 Customer page, tablet 1024 | `308:94` | Customer quotation page · Tablet | Proposed (Q-H) |
+| QP11 Customer page, phone 390, first screen with the fixed download bar | `308:317` | Customer quotation page · Phone | Proposed (Q-H) |
+| QP12 Customer page, phone 320 | `308:555` | Customer quotation page · Phone | Proposed (Q-H) |
+| PH14 Estimate summary, phone 390, read only, sticky Actions and Open quotation r02 | `311:4557` | Estimate record · Phone | Proposed (Q-H) |
+| CO07 Source change watch on SQ-2026-114 (N-E11) | `312:1499` | Cost sources · Desktop | Proposed |
+| W17 Similar delivered jobs in the evidence panel, preview only (N-E12) | `312:6870` | Estimation wizard and discovery · Desktop | Proposed |
+
+The sheet count is 305. The Read me cards list the new sheets with their nodes and summarise the batch.
+
+### 13.3 Assumptions added
+
+| ID | Assumption | Recommendation |
+|---|---|---|
+| A34 | The record header is drawn as local frames in the order of R116 to R125, not as instances of the Shell's Shell / Record header · toolbar, which is not published as a library; the swap follows the library publication with the other shell copies (A8) | Keep until the library publishes |
+| A35 | Customer documents use the new text styles "PPO/Document 14 · Proposed" and "PPO/Document 14 Medium · Proposed" (Roboto 14/22), because the staff ramp's Body 13 is small for a customer document | Move to PPO - Library if accepted |
+| A36 | The Shell's record toolbar draws its primary in green while this file keeps one navy primary per view; the Shell file's own primary colour decision, in review elsewhere, decides whether record primaries change colour | Keep navy until the Shell decides |
+| A37 | The 30-day validity and the Expired stage are illustrative until D-010 and D-024 decide the policy | Keep |
+
+A17 is superseded where it kept Issue and Send as separate primaries (Q-A); Issue and Send remain two recorded decisions. A10's 480 px side panels now match the library's drawer widths.
+
+### 13.4 Carried forward, outside this file
+
+- **Shell file:** the Estimating menu entries for Pulse, Saved estimates and Insights (Q-F); the tablet rail rule (A27); the 56 px collapsed strip (A2); the record primary colour (A36).
+- **Sales file:** two-digit brief revisions (Q-C) and SYN-ORG- organisation references (Q-I), with its open record-header batch.
+- **PPO - Library:** the proposed document text styles (A35); the kit components named "Sales / …"; applying the text styles (A29); the drawer component.
+- **Elsewhere:** the print layout of the quotation document (DK-06); D-024 for QP13.
+
+### 13.5 Verification and limits
+
+Checked: every scope page walked after the batch (305 sheets, 30,363 texts): no loose node, no sheet or section overlap, every sheet labelled, Roboto only, no unbound paint outside instances, every weekday true to the 2026 calendar, and no Kim Patel, one-digit revision, "Reports" button, SYN-CO- reference, gendered pronoun or retired figure left. Renders read after the change: T01, T02, T10, Q03, Q27, V07, X19, K07, AD02, W04, CS03, E04, CO07, W17, PH14, QP09 to QP13.
+
+Not done: a Design ready check of the changed sheets by a session other than this one; most of the sheets touched by the scripted passes were not re-read by eye; the prototype flows are not extended to the new sheets; Ready for dev marks cannot be set through the plugin API; the per-route page guidance in `docs/design/development/pages/`. Partly done: ER-26 (the 10 px texts inside the Shell copies belong to the Shell file), ER-32 (some KPI captions still truncate) and ER-34 (register tables still stop short of the page foot).
+
+Next: the independent Design ready check, then Dean's acceptance and the new named version, after which this record names that version as the build source.
+

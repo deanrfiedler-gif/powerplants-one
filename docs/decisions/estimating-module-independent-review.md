@@ -209,3 +209,21 @@ The same answer adopts the process recommended with them: the session that wrote
 
 What is drawn, with node IDs, is recorded in the proposal record when the batch is done. None of it is accepted until Dean says so and saves the named version.
 
+## 10. Outcome of the alignment batch — 12 November 2026
+
+The batch was drawn the same day; section 13 of the [proposal record](estimating-module-refined-ui-proposal.md) lists every change and new sheet with its node. Status of each finding:
+
+| Findings | Status |
+|---|---|
+| ER-01 to ER-14, ER-16, ER-17, ER-21, ER-27 to ER-31, ER-33, ER-35, ER-36 | Fixed in the file |
+| ER-15 | Fixed in layout and order; drawn as local frames rather than instances of the Shell component (A34) |
+| ER-18 | Fixed for the thirteen overlay drawers; docked panels keep their width (Q-G) |
+| ER-19 | Carried to the Shell file (Q-F) |
+| ER-20 | Fixed: 46 tables re-balanced, clipped texts end in an ellipsis, gate sentences shortened |
+| ER-22 to ER-25 | Fixed |
+| ER-26 | Partly: the file's own small text fixed; the 10 px texts inside the Shell copies belong to the Shell file |
+| ER-32 | Partly: E05's focus lines fixed; some KPI captions still truncate |
+| ER-34 | Partly: duplicate Columns buttons removed; register tables still stop short of the page foot |
+
+New sheets: QP09 to QP13 (Q-E, Q-H, N-E13, N-E15, N-E16), PH14 (Q-H), CO07 (N-E11) and W17 (N-E12), all proposed. A Design ready check by a session other than the one that drew the batch is still to run before Dean accepts it and saves a new named version.
+
