@@ -2,18 +2,18 @@
 document_id: PPO-PRODUCTS-REFINED-FIGMA-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Proposal, 12 November 2026, awaiting Dean's acceptance (122 sheets and 7 notes cards on 7 scope pages); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
+status: Owner-accepted design, 12 November 2026 ("accept"), covering 122 sheets and 7 notes cards on 7 scope pages; refinements R1 and R2 applied after the acceptance (section 12); named version not yet saved (section 13); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
 source_commit: 1892f7a92784b811bd36f0ef289816cfcfd31d4c
 versioning: git
 ---
 
 # Products module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Proposal, awaiting Dean's acceptance. Sections 1 to 9 are the proposal record; section 10 holds the audit and section 11 the named version, which is Dean's to save.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, and section 13 the named version, which is Dean's to save.
 
 On 12 November 2026 Dean supplied the prompt "Design the Products module pages for Powerplants One in Figma" with Addendum A3 (persona and story reconciliation, section A3.13 for Products) and a new, empty Figma file: "Below is the link to the new Figma page file that I have created for this." The prompt carries his standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach."
 
-This record is a **proposal**. It describes what is drawn, the rules applied, the assumptions made and the places where the native build differs from the accepted designs. It changes no code, test, migration, seed, permission or route. Products has five owner-accepted page designs (15 October to 1 November 2026) that the code has not reached: the built pages are still the native composition of 7 October 2026 ([ADR-0048](ADR-0048-products-native-catalogue.md)). The file therefore redraws the accepted designs inside the refined shell as the target, and marks every sheet where the build or its data contract differs with a **Build difference** card. Section 6 is the union of those cards, ordered for a later build step. It is a list of design findings, not authorised work.
+This record began as a **proposal**; section 11 records Dean's acceptance. It describes what is drawn, the rules applied, the assumptions made and the places where the native build differs from the accepted designs. It changes no code, test, migration, seed, permission or route. Products has five owner-accepted page designs (15 October to 1 November 2026) that the code has not reached: the built pages are still the native composition of 7 October 2026 ([ADR-0048](ADR-0048-products-native-catalogue.md)). The file therefore redraws the accepted designs inside the refined shell as the target, and marks every sheet where the build or its data contract differs with a **Build difference** card. Section 6 is the union of those cards, ordered for a later build step. It is a list of design findings, not authorised work.
 
 Four statements stay separate. **Code delivery:** the native catalogue was built on 7 October 2026 and nothing here changes it. **Design acceptance:** Dean's, and not given by this record. **Production readiness:** not inferred. **Integration:** no MYOB item mapping, supplier feed, SharePoint image rendition or price-book service exists or is authorised; every product, supplier, price and file in the file is a synthetic placeholder.
 
@@ -396,8 +396,8 @@ All 30 scenarios of the prompt have a sheet: S-01 CA01 · S-02 CA02 · S-03 CA03
 
 | ID | Refinement | Recommendation |
 |---|---|---|
-| R1 | Record sub-lines carry long chains of facts | Cut each to one clause and move the rule text into the information popover, as the Sales file did (its R11) |
-| R2 | Build difference cards make most sheets taller than 900 px | Keep them on a separate layer that can be hidden for stakeholder reviews |
+| R1 | Record sub-lines carry long chains of facts | Cut each to one clause, as the Sales file did (its R11). Applied after the acceptance (section 12) |
+| R2 | Build difference cards make most sheets taller than 900 px | Let them be hidden for stakeholder reviews. Applied after the acceptance (section 12) |
 | R3 | The Sales phone tab bar has no Products entry | More could list recent products |
 | R4 | CA09's delivery profiles are illustrative rows | Replace them with the adopted extension's own CP-40 values when its record gives them |
 | R5 | The queue's "In state" column holds a duration for open revisions and a date for published ones | Split the date into its own column if Dean prefers |
@@ -422,6 +422,31 @@ P1 the kit components keep their "Sales / …" names so the module files converg
 4. Hand section 6 to Codex in order: UI changes first, then the contract changes, each as its own authorised step.
 5. Align the Sales file's PR01 and TB08, and the product rows of the Estimating, Supply, Engineering and Customers, sites and equipment files, in their own batches.
 
-## 11. Named version
+## 11. Acceptance — 12 November 2026
 
-None yet. The file is a proposal; Dean saves the named version on acceptance and this section then records its name and date.
+Asked for the next step, with the recommendation to review the flagship sheets and "reply 'accept' or with changes", Dean answered: "accept".
+
+The acceptance covers the design as drawn: the 122 sheets and 7 notes cards of section 3, the rules of section 4, the assumptions and departures A1 to A24 of section 5 and each page's own assumptions, and the audit with its recommended order (section 10.7), whose next step was to apply R1 and R2.
+
+It does not cover:
+
+- **The build.** The differences of section 6 remain design findings. Each needs its own go-ahead and pull request, and the contract changes need their migrations reserved first.
+- **The proposed automation candidates.** N-P5 to N-P12 stay proposals; each carries a "Proposed · not accepted" chip on the sheet that draws it.
+- **The design register and the scope pages.** These still carry pre-design text (A24) and are corrected in their own change.
+- **Production readiness.** Nothing here makes it so.
+
+The administration sheets (A22) are accepted as the place where Products rules are shown. Who administers Products settings stays open.
+
+On acceptance the seven scope pages were moved above the "— Proposals —" separator, between it and "— Accepted —", with every node ID unchanged. The Read me cards and the Administration sheets' header chips now read as accepted ("Accepted design · not built").
+
+## 12. Applied after the acceptance — 12 November 2026
+
+- **R1, record sub-lines.** 53 record header sub-lines on the Catalogue (13), Publication (8), Pricing (13), Compatibility (7) and Import (12) pages were cut to one line. Each cut drops whole trailing segments until the line is at most 100 characters, and never drops the reference, the alias, the exact revision or a plan number. The facts removed were the company, a reviewer and date, or a published basis that the same sheet states in its details column, banner or comparison. The rule cut the import batch records too deep, so their twelve sub-lines were rewritten to keep the provider, stager, date, rows, content hash and plan, for example "Northgate Fluid Systems · SYN-NFS · staged Mon 12 Oct 2026 by Priya Nair · 18 rows · SHA-256 9c41e7a0 … 1b6e2d90 · plan 3". PB02's sub-line stays at 124 characters, because its remaining segments name revisions; it fits one line at 1440 px.
+- **R2, Build difference cards.** A variable collection "PPO review" with the modes Design review and Presentation holds one boolean, "review/show build differences" (shown in Design review, hidden in Presentation). The visibility of all 99 Build difference cards (Catalogue 25, Publication 16, Pricing 16, Compatibility 17, Import 16, Interaction states 3, Administration 6) is bound to it. Setting a page's, section's or sheet's "PPO review" mode to Presentation hides every card in it at once; the cards are not deleted and their items do not change.
+- **Verification.** The structural pass reports no issue on any of the seven pages after both changes, and every rewritten import sub-line fits one 18 px line.
+
+R3 to R5, G1 to G4 and P1 to P3 stay open as section 10 lists them.
+
+## 13. Named version
+
+None yet. Dean saves the named version in Figma; this section then records its name and date. Until it is saved, a later change to the file is not pinned, and under the [named-version handoff](figma-named-version-build-handoff.md) the build basis is the named version, not the file's current state. The suggested name, matching the Sales file, is "PPO - Products module (accepted)".
