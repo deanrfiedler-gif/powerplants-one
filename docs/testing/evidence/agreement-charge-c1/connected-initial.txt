@@ -1,0 +1,32 @@
+(node:2622) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2622) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✖ B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation (87372.231247ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 92616.453301
+
+✖ failing tests:
+
+test at tests/database/finance-project-ts01.test.ts:1:1316
+✖ B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation (87372.231247ms)
+  Error: Check the highlighted details.
+      at invalid (/workspace/work/agreement-charge-c1/src/platform/validation.ts:3:9)
+      at narrative (/workspace/work/agreement-charge-c1/src/shared/validation.ts:91:5)
+      at basis (/workspace/work/agreement-charge-c1/src/finance/validation.ts:25:13)
+      at editCommand (/workspace/work/agreement-charge-c1/src/finance/validation.ts:129:27)
+      at saveFinance (/workspace/work/agreement-charge-c1/src/finance/service.ts:336:15)
+      at verifyConnectedMaintenanceBilling (/workspace/work/agreement-charge-c1/tests/helpers/connected-maintenance-billing.ts:258:23)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/finance-project-ts01.test.ts:183:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    status: 422,
+    code: 'InvalidData',
+    field_errors: [ { field: 'remaining_work_basis', message: 'Enter 1–4000 characters; line breaks and tabs are allowed.' } ]
+  }

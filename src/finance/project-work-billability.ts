@@ -29,7 +29,7 @@ export async function requireProjectWorkNonBillable(
     current_revision_id: string;
   },
 ) {
-  if (handoff.source_kind === "ProjectClaim") return;
+  if (handoff.source_kind && handoff.source_kind !== "WorkOrder") return;
   if (!(await projectWorkLinked(c, p, handoff.work_order_id))) return;
   const invalid = await c.query(
     "SELECT 1 FROM ppo.finance_lines WHERE workspace_id=$1 AND revision_id=$2 AND disposition<>'NonBillable' LIMIT 1",

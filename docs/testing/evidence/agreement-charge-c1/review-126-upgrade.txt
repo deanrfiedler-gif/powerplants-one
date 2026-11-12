@@ -1,0 +1,12 @@
+(node:16459) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:16459) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ C1 populated 0126 upgrade retains exact agreement bytes, ProjectClaim holds, receipts and grants (15304.587019ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18558.931985

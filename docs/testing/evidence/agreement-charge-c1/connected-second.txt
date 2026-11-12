@@ -1,0 +1,43 @@
+(node:3162) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3162) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✖ B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing (72734.608603ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 77794.784008
+
+✖ failing tests:
+
+test at tests/database/finance-project-ts01.test.ts:1:1316
+✖ B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing (72734.608603ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+
+  Caught error:
+
+  Error: This record changed. Keep your proposal and review the saved version.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async verifyConnectedMaintenanceBilling (/workspace/work/agreement-charge-c1/tests/helpers/connected-maintenance-billing.ts:275:3)
+      at async TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/finance-project-ts01.test.ts:183:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: This record changed. Keep your proposal and review the saved version.
+        at sameVersion (/workspace/work/agreement-charge-c1/src/scheduling/validation.ts:116:11)
+        at <anonymous> (/workspace/work/agreement-charge-c1/src/finance/service.ts:422:7)
+        at <anonymous> (/workspace/work/agreement-charge-c1/src/platform/operations.ts:200:28)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async transaction (/workspace/work/agreement-charge-c1/src/platform/database.ts:46:20)
+        at async sharedOperation (/workspace/work/agreement-charge-c1/src/platform/operations.ts:165:12)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async verifyConnectedMaintenanceBilling (/workspace/work/agreement-charge-c1/tests/helpers/connected-maintenance-billing.ts:275:3)
+        at async TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/finance-project-ts01.test.ts:183:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }

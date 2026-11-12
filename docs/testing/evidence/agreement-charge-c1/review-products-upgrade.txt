@@ -1,0 +1,10 @@
+✔ PD upgrade from 127 preserves originals and exact new duties; repeat migration/seed is inert (6181.786554ms)
+✔ PD upgrade from 128 preserves originals and exact new duties; repeat migration/seed is inert (6324.244385ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13590.009874

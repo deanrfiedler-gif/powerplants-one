@@ -1,0 +1,12 @@
+---
+title: C1 original mobile return evidence and diagnostic continuation
+date: 2026-11-12
+---
+
+[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) remains open at incoming head `b2b5e125a`. The updated running policy permits the original 72,982,383-byte artifact download; its SHA-256 matches the earlier record. [Original screenshot, error context and transport analysis](../testing/evidence/agreement-charge-c1/README.md#compiled-mobile-return-diagnosis--12-november-2026) show the browser remained on the completed Activity after the return-link click. No request remained unfinished and no second opportunity-detail GET followed the initial visit. The original browser event sequence is unavailable because raw traces were excluded. A root cause is not established.
+
+The existing CRM journey now retains bounded request, pointer, geometry and cancellation diagnostics without changing assertions, deadlines or runtime. This is investigation instrumentation, not a claimed fix. The scenario register’s stale quarterly TS-02 summary now matches the adopted six-monthly fixture; its drafted-status metadata includes TS-02. Application assurance including database-7 passed at the incoming head. Demo setup and all six cases, and the connected Finance component with the CI renderer, also passed. The unchanged-head compiled retry passed 369 cases with 49 skips; the original CRM case passed in 3.3 seconds. All 23 incoming-head workflow summaries passed. This non-reproduction does not establish the original cause; final published-head checks remain separate.
+
+Local `npm run check` passed, including 1,453 units with no skips and the production build; documentation checks and 44 documentation tests passed. Fresh setup and browser probe confirm required Chrome remains absent locally. Claude's existing C1-2/C1-3/C1-4 and added-scope confirmation remains outstanding. Full TS-01/TS-02 is unrun; claim OUT-14 definitions, UI authoring, D-017 and real ERP remain separate. No merge or deployment.
+
+The resumed owner continuation recovered published diagnostic source `38adc923cbf93ef32ed5c5f4d73b74910035fd8b`, already including main `eeac965493a2d856d7e8fdc27ab4ef35acf15188`. The existing evidence chapter now separates its current delivery checkpoint from historical M2/draft/CI observations. Final-head CI and the exact review gate are maintained in the PR and existing Claude handover; prior `b2b5e125ac20f6f70ec3e2b7f50fb778fe9e8dd7` results are not relabelled as fresh. No further application behavior was changed.

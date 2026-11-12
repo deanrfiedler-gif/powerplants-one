@@ -1,3 +1,5 @@
+import { saveAgreementFinance } from "./agreement-charge-service";
+import { agreementChargeSource } from "./agreement-charge-source";
 import { randomUUID } from "node:crypto";
 import type { PoolClient } from "pg";
 import type { Principal } from "../platform/identity";
@@ -95,7 +97,7 @@ export async function currentRevision(
   p: Principal,
   ctx: Context,
   checkSource = true,
-  historicalProjectClaim = false,
+  historicalClaim = false,
 ) {
   const v = (
     await c.query(
@@ -117,6 +119,23 @@ export async function currentRevision(
         "Re-review the exact current Finance policy and definition.",
       );
     await accountCurrent(c, p, ctx.a);
+    if (ctx.h.source_kind === "AgreementCharge") {
+      const original = v.source_snapshot.agreement_charge;
+      const current = await agreementChargeSource(
+        c,
+        p,
+        ctx.h.agreement_id,
+        original.revision_id,
+        original.charges.map((e: { id: string }) => e.id),
+        !historicalClaim,
+      );
+      if (
+        hash({ ...v.source_snapshot, agreement_charge: current }) !==
+        v.source_hash
+      )
+        blocked("SourceChanged", "The exact agreement charge source changed.");
+      return v;
+    }
     if (ctx.h.source_kind === "ProjectClaim") {
       const original = v.source_snapshot.project_claim;
       const current = await projectClaimSource(
@@ -125,7 +144,7 @@ export async function currentRevision(
         ctx.h.project_id,
         original.basis_id,
         original.claims.map((e: { event_version: number }) => e.event_version),
-        !historicalProjectClaim,
+        !historicalClaim,
       );
       if (
         hash({ ...v.source_snapshot, project_claim: current }) !== v.source_hash
@@ -304,6 +323,13 @@ export async function saveFinance(
     input &&
     typeof input === "object" &&
     "source_kind" in input &&
+    input.source_kind === "AgreementCharge"
+  )
+    return saveAgreementFinance(p, id, input);
+  if (
+    input &&
+    typeof input === "object" &&
+    "source_kind" in input &&
     input.source_kind === "ProjectClaim"
   )
     return saveProjectFinance(p, id, input);
@@ -423,6 +449,19 @@ export async function submitFinance(p: Principal, id: string, input: unknown) {
         )
           continue;
         if (
+          l.source_kind === "AgreementCharge" &&
+          (
+            await c.query(
+              "SELECT 1 FROM ppo.finance_allocation_holds h JOIN ppo.agreement_charge_lines c ON (c.workspace_id,c.revision_id,c.charge_id)=(h.workspace_id,h.agreement_revision_id,h.agreement_charge_id) WHERE h.workspace_id=$1 AND c.agreement_id=$2 AND h.agreement_charge_id=$3 AND h.state<>'Released'",
+              [p.workspace_id, ctx.h.agreement_id, l.agreement_charge_id],
+            )
+          ).rowCount
+        )
+          blocked(
+            "ClaimEntitlementUnavailable",
+            "This whole entitlement is already held or consumed by a Finance claim.",
+          );
+        if (
           l.source_kind === "ProjectClaim" &&
           (
             await c.query(
@@ -446,6 +485,12 @@ export async function submitFinance(p: Principal, id: string, input: unknown) {
           revision_id: v.id,
           line_id: l.id,
           root_entry_id: l.root_entry_id,
+          ...(l.source_kind === "AgreementCharge"
+            ? {
+                agreement_revision_id: l.agreement_revision_id,
+                agreement_charge_id: l.agreement_charge_id,
+              }
+            : {}),
           ...(l.source_kind === "ProjectClaim"
             ? {
                 claim_basis_id: l.claim_basis_id,
@@ -607,7 +652,7 @@ function targetLines(
         uom: l.uom,
         direction: l.direction,
         source_allocations: [],
-        ...(l.source_kind === "ProjectClaim"
+        ...(["ProjectClaim", "AgreementCharge"].includes(l.source_kind)
           ? {
               amount: l.claim_amount,
               currency: l.claim_currency,
@@ -683,9 +728,11 @@ export async function beginFinanceProcessing(
           currency: ctx.h.currency,
           correlation_id: ctx.h.correlation_id,
           kind:
-            ctx.h.source_kind === "ProjectClaim"
-              ? "SyntheticProjectClaim"
-              : "SyntheticServiceCharge",
+            ctx.h.source_kind === "AgreementCharge"
+              ? "SyntheticAgreementCharge"
+              : ctx.h.source_kind === "ProjectClaim"
+                ? "SyntheticProjectClaim"
+                : "SyntheticServiceCharge",
           lines: targetLines(await financeLines(c, p, r.id)),
         },
         a = await insert(c, "finance_processing_attempts", {
@@ -782,9 +829,11 @@ async function simulator(
           input_hash: a.input_hash,
           attempt_id: a.id,
           kind:
-            ctx.h.source_kind === "ProjectClaim"
-              ? "SyntheticProjectClaim"
-              : "SyntheticServiceCharge",
+            ctx.h.source_kind === "AgreementCharge"
+              ? "SyntheticAgreementCharge"
+              : ctx.h.source_kind === "ProjectClaim"
+                ? "SyntheticProjectClaim"
+                : "SyntheticServiceCharge",
           status: a.scenario === "Partial" ? "Partial" : "Accepted",
           lines: JSON.stringify(lines),
         });
@@ -991,14 +1040,14 @@ export async function reconcileFinance(
           "FinanceStateChanged",
           "A separate reconciler must compare the recorded outcome.",
         );
-      // Post-effect ProjectClaim reconciliation uses historical evidence, while
+      // Post-effect ProjectClaim/AgreementCharge reconciliation uses historical evidence, while
       // retaining needs-review, policy, account and exact target checks.
       await currentRevision(
         c,
         p,
         ctx,
         true,
-        ctx.h.source_kind === "ProjectClaim",
+        ["ProjectClaim", "AgreementCharge"].includes(ctx.h.source_kind),
       );
       const o = (
         await c.query(

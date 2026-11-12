@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "original_receipts": 6,
+  "new_session_audit_rows": 5,
+  "recovery_receipts": 2,
+  "graph_before": "093cf9f85c87c2aa1dc89d18edfa458eae2e2103fa155c7142b57a08dc7710a8",
+  "graph_after": "e0b5fccf6907aa8042ae33093abf59f9a56d610c89c62877de28a3acc5e957ca",
+  "application_before": {
+    "pid": 9966,
+    "started": "122126",
+    "build": "P473gRRXG7MNwRS9PV-JI"
+  },
+  "application_after": {
+    "pid": 10431,
+    "started": "136975",
+    "build": "P473gRRXG7MNwRS9PV-JI"
+  },
+  "postmaster_before": "2026-11-11 00:04:38.583309+00",
+  "postmaster_after": "2026-11-11 00:06:39.12954+00",
+  "target_count": 1,
+  "attempts": 1,
+  "amount": "4800.00",
+  "currency": "AUD",
+  "hold": "Consumed",
+  "result": "Matched"
+}
