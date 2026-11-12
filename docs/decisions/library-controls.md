@@ -68,35 +68,35 @@ A paint bound to a colour variable loses its opacity in this Figma environment, 
 
 | Component | Node | Variants and options |
 |---|---|---|
-| Controls / Button | `47:177` | 30: Kind (Primary, Secondary, Quiet, Ghost, Danger) by State (Default, Hover, Pressed, Focus, Disabled, Loading). Options: Label, Leading icon, Icon |
-| Controls / Link | `47:187` | 4: Default, Hover, Focus, Disabled. Option: Label |
-| Controls / Icon button | `47:206` | 5: Default, Hover, Pressed, Focus, Disabled. Option: Icon |
+| Controls / Button | `47:177` | 30: Kind (Primary, Secondary, Quiet, Ghost, Danger) by State (Rest, Hover, Pressed, Focus, Disabled, Loading). Options: Label, Show leading icon, Icon |
+| Controls / Link | `47:187` | 4: Rest, Hover, Focus, Disabled. Option: Label |
+| Controls / Icon button | `47:206` | 5: Rest, Hover, Pressed, Focus, Disabled. Option: Icon |
 | Controls / Chip | `50:71` | 9 tones: Neutral, Info, Success, Warning, Danger, Tint, Grey, Navy, Accent. Option: Label |
-| Controls / Filter chip | `50:81` | 5: Default, Hover, Active, Focus, Disabled. Option: Label. Disabled came with the [library audit](library-audit.md) |
-| Controls / Tab | `50:92` | 5: Default, Hover, Current, Focus, Disabled. Option: Label. 48 px with a navy marker, and Disabled, since the audit |
+| Controls / Filter chip | `50:81` | 5: Rest, Hover, Active, Focus, Disabled. Option: Label. Disabled came with the [library audit](library-audit.md) |
+| Controls / Tab | `50:92` | 5: Rest, Hover, Current, Focus, Disabled. Option: Label. 48 px with a navy marker, and Disabled, since the audit |
 | Controls / Avatar | `50:117` | 12: six hues by 24 and 32 px. Option: Initials |
 | Controls / Checkbox | `22:416` | 12: State (Off, On, Mixed, Disabled, Focus, Hover) by Surface (White, Tint). Formerly Grid / Checkbox. Hover and the target-size rule came with the audit |
 | Controls / Radio | `137:654` | 10: State (Off, On, Disabled, Focus, Hover) by Surface (White, Tint). Added with the [Forms page](library-forms.md); Hover and the target-size rule came with the audit |
-| Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Helper, Helper text |
-| Controls / Field | `51:249` | 24: Type (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
-| Controls / Menu item | `50:146` | 5: Default, Hover, Selected, Disabled, Focus. Options: Label, Leading icon, Icon, Shortcut, Shortcut text |
+| Controls / Checkbox field | `51:250` | Checkbox with label and helper. Options: Label, Show helper, Helper text |
+| Controls / Field | `51:249` | 24: Kind (Text, Select, Date, Textarea) by State (Rest, Placeholder, Focus, Error, Disabled, Read-only). Options: Label, Show label, Required, Requirement, Value, Show helper, Helper text, Error text. The Date type, the requirement in words, the hint under the label and wrapping values came with the [Forms page](library-forms.md) |
+| Controls / Menu item | `50:146` | 5: Rest, Hover, Selected, Disabled, Focus. Options: Label, Show leading icon, Icon, Show shortcut, Shortcut text |
 | Controls / Menu divider | `50:147` | One component |
-| Controls / Tooltip | `50:118` | One component. Options: Label, Shortcut, Shortcut text |
-| Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Action |
-| Controls / Banner | `50:240` | 4 tones. Options: Message, Action, Dismiss. The wrapping message and the Dismiss option came with the [Forms page](library-forms.md) |
+| Controls / Tooltip | `50:118` | One component. Options: Label, Show shortcut, Shortcut text |
+| Controls / Toast | `50:196` | 4 tones: Info, Success, Warning, Danger. Options: Message, Show action |
+| Controls / Banner | `50:240` | 4 tones. Options: Message, Show action, Show dismiss. The wrapping message and the Show dismiss option came with the [Forms page](library-forms.md) |
 | Controls / Dialog | `51:295` | 4: Confirm or Destructive, each Standard (560 px) or Wide (720 px). Options: Title, Body; footer buttons exposed |
 | Controls / Drawer | `217:656` | 4: Width (Narrow 360, Standard 480, Wide 640, Extra-wide 800), each tied to its [drawer width](library-drawer-widths.md). Options: Title, Show footer, Content (swap). Exposed: Footer (Form / Save bar). Added on 11 November 2026 |
 | Controls / Drawer content | `217:578` | One component: the placeholder the Content option swaps out |
 | Controls / Search field | `274:723` | 4: Empty, Focus, Filled, Disabled. Option: Text. Added 12 November 2026, as are the ten below |
-| Controls / Removable chip | `274:734` | 3: Default, Focus, Disabled. Option: Label |
+| Controls / Removable chip | `274:734` | 3: Rest, Focus, Disabled. Option: Label |
 | Controls / Check option | `274:753` | 4: Off, On, Hover, Focus. Option: Label |
 | Controls / Multi-select | `274:851` | 5: Empty, Filled, Focus, Error, Disabled. Options: Label, Placeholder |
 | Controls / File drop | `274:877` | 3: Rest, Over, Focus. Option: Hint |
 | Controls / Upload row | `274:918` | 3: Uploading, Failed, Refused. Option: Name |
 | Controls / Pager | `274:994` | 5: Pages at the first, a middle and the last page; Load more with more to load and with all shown. Option: Count |
-| Controls / Switch | `274:1021` | 8: Off or On, each Rest, Hover, Focus, Disabled |
+| Controls / Switch | `274:1021` | 8: Checked (Off, On) by State (Rest, Hover, Focus, Disabled) |
 | Controls / Switch field | `274:1022` | One component: a label and a switch. Option: Label. Exposed: Switch |
-| Controls / Segment | `274:1037` | 5: Default, Hover, Selected, Focus, Disabled. Option: Label |
+| Controls / Segment | `274:1037` | 5: Rest, Hover, Selected, Focus, Disabled. Option: Label |
 | Controls / Segmented | `274:1059` | 3: two, three or four options. Exposed: each segment |
 
 The review board gained a Drawer card `220:615` and a Drawer row in card 9's values.
@@ -140,7 +140,7 @@ Every solid fill and stroke on the components and the board is bound to a PPO co
 | Button states | Hover and Pressed state layers; Focus ring 2 px text/link; Disabled 45%; Loading keeps width | Sales ST01; D1; layer values new |
 | Link | 13 Medium text/link; underline on hover | Sales kit |
 | Status chip | 18 px, 4 px corners, 12 Medium; nine tones | Sales kit `9:193` |
-| Filter chip | 28 px pill; Default and Active; Disabled at 45% | Sales kit `9:271`; Hover, Focus and Disabled new |
+| Filter chip | 28 px pill; Rest and Active; Disabled at 45% | Sales kit `9:271`; Hover, Focus and Disabled new |
 | Tab | 48 px, 13 Medium; 2 px brand/navy marker; Disabled at 45% | Dean, 11 November 2026, matching the built record tabs. The Sales kit `9:282` and shell R58 draw 38 px with a brand/green-deep marker and align at their next reviewed change |
 | Avatar | 24 and 32 px, six hues; initials 11 Medium at 24 px | Sales kit `9:249`; 10 px text retired |
 | Checkbox and Radio | 16 px, 4 px corners (radio round), 1 px border; Hover, Disabled, Focus, tinted-row border. Target at least 24 px, the whole row with a label, 44 px in Touch | Sales kit `9:260`; Sales and Estimating ST01; WCAG 2.5.8 |

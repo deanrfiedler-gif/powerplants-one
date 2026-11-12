@@ -210,7 +210,7 @@ The [library audit](library-audit.md) direction B7, agreed by Dean on 11 Novembe
 | Component | Node | Variants and options |
 |---|---|---|
 | Record / Working input | `289:1177` | 3: Known, Missing, Not read. Options: Label, Value, Source |
-| Record / Working | `289:1380` | 3: Complete, Incomplete, Proposed. Options: Fact name, Withheld note. 360 px wide (`drawer/narrow`) |
+| Record / Working | `289:1380` | 3: Complete, Incomplete, Proposed. Options: Fact name, Show withheld note. 360 px wide (`drawer/narrow`) |
 | Record / Changes strip | `289:1499` | 2: Collapsed, Expanded. Options: Summary, Since |
 | Record / History marker | `289:1644` | One component. Option: Label |
 | Record / Fact | `182:71` | New option: Changed (a "Changed" chip beside the value) |

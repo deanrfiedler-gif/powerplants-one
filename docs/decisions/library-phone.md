@@ -68,13 +68,13 @@ File links and keys stay outside this public repository (ADR-0050, ADR-0053). Th
 
 | Component | Node | Variants and options |
 |---|---|---|
-| Phone / Header | `235:88` | 3: List, Record, Form |
+| Phone / Header | `235:88` | 3: Kind (List, Record, Form) |
 | Phone / Status line | `235:108` | 3: Out of date, Offline, Reconnecting |
 | Phone / Tab bar | `235:161` | 2: Five cells, Four cells |
 | Phone / List row | `235:195` | 3: Rest, Selecting, Selected. Options: Title, Meta |
 | Phone / Selection bar | `235:196` | One component |
-| Phone / Menu row | `236:139` | 4: Default, Selected, Destructive, Disabled. Options: Label, Leading icon, Icon |
-| Phone / Sheet | `236:177` | 2: Bottom, Full screen. Options: Show footer, Second action, Content (a slot) |
+| Phone / Menu row | `236:139` | 4: Rest, Selected, Destructive, Disabled. Options: Label, Show leading icon, Icon |
+| Phone / Sheet | `236:177` | 2: Bottom, Full screen. Options: Show footer, Show second action, Content (a slot) |
 | Phone / Action bar | `236:213` | 3: One action, Two actions, Selection |
 
 Five `_Example /` components hold the board's example sheet content. The leading underscore keeps them out of the published library.

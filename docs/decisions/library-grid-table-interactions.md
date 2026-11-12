@@ -79,11 +79,11 @@ The first components and review board were replaced on 10 November 2026 when the
 
 | Component | Node | Variants and options |
 |---|---|---|
-| Grid / Header cell | `23:640` | 20 variants: State (Default, Hover, Focus, Lifted, Origin slot), Sort (None, Ascending, Descending), Align (Left, Right). Options: Label, Filtered, Menu button, Frozen edge |
+| Grid / Header cell | `23:640` | 20 variants: State (Rest, Hover, Focus, Lifted, Origin slot), Sort (None, Ascending, Descending), Align (Left, Right). Options: Label, Filtered, Show menu button, Frozen edge |
 | Grid / Header cell · Select | `23:652` | 3: Selection None, Some, All |
-| Grid / Cell | `24:537` | 18: Type (Text, Identity, Numeric, Chip, Checkbox, Row menu) by Row state (Default, Hover, Selected). Options: Value, Flag, Flag icon |
-| Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value |
-| Grid / Row | `24:759` | 8: Default, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
+| Grid / Cell | `24:537` | 18: Kind (Text, Identity, Numeric, Chip, Checkbox, Row menu) by Row state (Rest, Hover, Selected). Options: Value, Show flag, Flag icon |
+| Grid / Cell · Edit | `24:565` | 9: Rest, Editable hover, Editable focus, Editing, Saving, Saved, Failed, Locked, Reason required. Option: Value. Editable hover and Editable focus painted black until 12 November 2026, when `surface/hover` was re-applied ([library audit](library-audit.md), section 9) |
+| Grid / Row | `24:759` | 8: Rest, Hover, Selected, Focus, Previewed, Attention, Overdue, Loading. A reference row built from Grid / Cell |
 | Grid / Row marker | `22:420` | 3: Previewed, Attention, Overdue |
 | Controls / Checkbox | `22:416` | 10: State (Off, On, Mixed, Disabled, Focus) by Surface (White, Tint). Formerly Grid / Checkbox; renamed and moved to the Controls page with its node unchanged (section 12) |
 | Grid / Column divider | `5:109` | 4: Rest, Hover, Active, Focus |
@@ -295,7 +295,7 @@ Dean answered the audit with "Accept the recommended order and draw them". The c
 
 | Item | Outcome |
 |---|---|
-| G1, R2 | Grid / Header cell has a three-dot menu button (hover, focus, and a Menu button option for touch) and uses arrows for sort |
+| G1, R2 | Grid / Header cell has a three-dot menu button (hover, focus, and a Show menu button option for touch) and uses arrows for sort |
 | R1 | The grip sits in the left padding; the label is at the same position in every state |
 | G3, G12 | Grid / Checkbox has Disabled and Focus, and a Surface option that darkens the unticked border on tinted rows. The hover sort hint is drawn at full strength |
 | G2 | Grid / Cell added; Grid / Row and every table on the board are built from it |
@@ -366,7 +366,7 @@ Dean accepted the order for the next library pages and asked for the Controls pa
 | Icons | The 14 icons and 5 annotation cursors moved to the new Icons page with their nodes unchanged. Five icons were added there |
 | Plain frames replaced | 60 plain frames on the review board became Controls instances: 29 buttons, 9 chips, 2 tooltips, 3 toasts, 14 menu items and 3 menu dividers. None of those plain frames remain |
 | Toasts | The undo toasts in card 7 now follow the accepted shell toast: a tone bar and icon, the message, the Undo link and a dismiss button |
-| Cell chip | The chip inside Grid / Cell, Type=Chip, was set to 18 px to match Controls / Chip. It stays a local layer so the Value option can set its text |
+| Cell chip | The chip inside Grid / Cell, Kind=Chip (Type=Chip until 12 November 2026), was set to 18 px to match Controls / Chip. It stays a local layer so the Value option can set its text |
 
 Still plain frames on this page: the field boxes inside the quick-edit editors and the Set width… popover (the number editor needs a unit prefix that Controls / Field does not have yet), the bulk bar, the selection banner, the "Modified" bar and the column chooser panel, which are register-specific.
 
