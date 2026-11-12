@@ -42,12 +42,14 @@ Rules:
 
 ## 3. What changed in the library
 
-The variables live in "PPO layout", which now holds 39. The library holds 124 variables; [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
+The variables live in "PPO layout". With them the library held 124 variables, 134 once the audit added dialog, breakpoint and motion variables, and 138 with the [Phone page](library-phone.md)'s four; [`docs/design/library-variables.json`](../design/library-variables.json) is updated.
 
 - `record/panel-width`, created for the Record page's edit drawer, became `drawer/standard` at 480 px. Its binding on the Record page's card 7 carried over.
 - `form/panel-width` (680 px) became `drawer/wide` at 640 px. The Forms page's quick-add texts and card 8 now say 640 px ([Forms record](library-forms.md)).
 - `drawer/narrow` and `drawer/extra-wide` are new.
 - The Foundations layout table lists all four. The Read me names the scale. The Record page's edit drawer is 480 px, and its item R5 is recorded as decided ([Record record](library-record.md), section 6).
+
+**Drawer part.** After the [library audit](library-audit.md), also on 11 November 2026, the library gained Controls / Drawer `217:656`: one part in the four widths, each tied to its variable, with a title and Close, a content slot and a Form / Save bar footer ([Controls record](library-controls.md)). The Record page's card 7 places this component for both of its drawers, changed when the [Phone page](library-phone.md) was drawn. On a phone a drawer becomes a full-screen sheet.
 
 ## 4. To align at the next reviewed change
 
