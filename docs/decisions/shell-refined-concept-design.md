@@ -2,7 +2,7 @@
 document_id: PPO-SHELL-REFINED-FIGMA-DEC
 date: 2026-11-08
 owner: Dean Fiedler
-status: Owner-accepted design (named versions saved 8 and 10 November 2026); captures and application build separate
+status: Owner-accepted design (named versions saved 8 and 10 November 2026); the primary action colour change of 12 November 2026 (section 12) awaits Dean's acceptance and a named version; captures and application build separate
 source_commit: 1672c062981402037355fb9d813dbedabd87cfbb
 versioning: git
 ---
@@ -193,3 +193,37 @@ Dean saved a new named version of the file: "I have saved the named version as S
 The module proposal records that cite the 8 November version and Addendum A1 for the toolbar stay accurate for the sheets they describe; each cites the new version when it is next changed.
 
 **Verification.** Recorded on Dean's statement. This session cannot read the file's version history, so no comparison between the two versions was made; the node IDs above are those section 10 recorded. Nothing is built, and no application, capture or baseline changes.
+
+## 12. Primary action colour — 12 November 2026
+
+**Instruction.** Dean, in a Claude session on 12 November 2026: "Go ahead and fix the green contrast in the Shell file." The finding is AF-001 of the cross-file Figma alignment audit ([PR #920](https://github.com/deanrfiedler-gif/powerplants-one/pull/920), open and not yet reviewed): white text on brand/green-deep `#3d9a37` measures 3.57:1 on the 14 px primary labels, below the 4.5:1 of WCAG 1.4.3. Claude confirmed it in this file before changing anything: the Draft primary renders at `#3d9a37` with brand/white text, and the WCAG relative-luminance formula gives 3.57:1.
+
+**Cause.** brand/green-deep was added for markers on light surfaces (D24, R58). A marker is non-text, so 3:1 applies (WCAG 1.4.11) and 3.57:1 passes. The record header toolbar (section 10) also used it as the primary button fill behind brand/white text, which R58 had ruled out ("Green is never a fill behind text"). Dean accepted the toolbar as drawn on 9 November 2026, and the later rule governs, so the primary stays green and only its value changes.
+
+**What changed in the file.**
+
+| Item | Before | After |
+|---|---|---|
+| Variable `action/primary` in PPO colour (new, `VariableID:273:9983`) | — | `#2d7128`; scoped to frame and shape fills; CSS name `--ppo-refined-action-primary`; 5.99:1 with brand/white |
+| Primary button fill in Shell / Record header · toolbar `170:10178`: Draft `170:9969`, Awaiting approval · approver `170:10011`, Awaiting approval · preparer `170:10052` (disabled at 45%), Approved · not issued `170:10092`, Issued `170:10135` | brand/green-deep | `action/primary` |
+| Description of brand/green-deep | Marker role | Adds "Never a fill behind text: primary buttons use action/primary (12 November 2026)." |
+
+Unchanged: the value of brand/green-deep and its marker uses (39 on the shell page, 25 on the Workspace menus page, one on the toolbar page); the Closed variant, which has no primary; the phone component, whose sticky bar has no green fill; every node ID. The RH01 sheet's instance (`I170:10421;170:10092`) inherits the new fill. The PPO colour collection now holds 67 variables, one more than R15 states.
+
+**Why `#2d7128`.** It keeps brand/green-deep's hue and saturation (116°, 47%) and lowers lightness to 30%. Three alternatives were weighed:
+
+- `#30782b` (5.46:1) is lighter, but falls to 4.30:1 under the library's 12% hover layer (C1 below).
+- status/success `#416d33` (6.07:1), which Dean chose for the library's Now pill on 11 November 2026, is a status role, not an action, and reads olive beside the brand green.
+- brand/navy as the primary would follow R58's wording but changes the look Dean accepted.
+
+**Library button states.** [Library controls C1](library-controls.md#6-confirmed--10-november-2026), confirmed by Dean on 10 November 2026, lays brand/white at 12% and 24% over a Primary button for hover and pressed. Over `action/primary` these measure 4.63:1 and 3.61:1. No green that keeps the brand hue passes at 24%, because a white layer lightens the fill. Recommendation for the library session: darken Primary on hover and pressed (for example a brand/navy layer). This record does not decide it.
+
+**Verification.** Read through the Figma connector after the change: all five fills are bound to `action/primary`; renders of the component set and the RH01 toolbar sample `#2d7128` on every primary; no node with text sits on brand/green-deep on the shell page or the toolbar page; brand/green-deep uses on the shell page fell from 44 to 39. Contrast was computed with the WCAG 2.x relative-luminance formula. This session cannot read version history, so the change was not compared with a named version.
+
+**Release grade and acceptance.** Medium under [ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 10: it changes the appearance of an accepted component. It needs Dean's acceptance in words and a new named version, for example "Shell refined concept — accepted · primary action contrast". Until then a build cites "Shell refined concept — accepted · record header toolbar" (section 11), with this section governing the primary colour ([handoff rule 5](figma-named-version-build-handoff.md)).
+
+**Not done.**
+
+- **Module files.** The module files' local copies of the toolbar and their own primary buttons (AF-001 counts 102 occurrences) keep `#3d9a37` until each owning file's next reviewed change. Sales and Estimating are accepted files, so each needs its own new named version.
+- **Application.** No built page uses the failing pair: `src/app/styles/shell-refined-tokens.css` defines `--ppo-refined-brand-green-deep`, but no rule reads it. `--ppo-refined-action-primary` is added by the pull request that builds the record header toolbar ([ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 2).
+- **Token check.** `docs/design/figma-variables.json` snapshots "PPO - Design", not this file, so `scripts/check_design_tokens.py` is unaffected.
