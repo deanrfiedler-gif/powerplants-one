@@ -2,7 +2,7 @@
 document_id: PPO-LIBRARY-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the private Figma file "PPO - Library" on 12 November 2026 at Dean's request, by a session that did not hold the library; findings and recommendations only; the choices in section 5 are Claude's under Dean's instruction to proceed and are not Dean's acceptance of any design; the session that holds the library took the findings up on 12 November 2026, and on 13 November 2026 this session confirmed them in the file and re-applied one fill on two variants (section 9); no application code, route, migration, permission or deployment
+status: Independent read-only review of the private Figma file "PPO - Library" on 12 November 2026 at Dean's request, by a session that did not hold the library; findings and recommendations only; the choices in section 5 are Claude's under Dean's instruction to proceed and are not Dean's acceptance of any design; the session that holds the library took the findings up on 12 November 2026, and on 13 November 2026 this session confirmed them in the file, re-applied one fill on two variants, ran the text-contrast scan again and corrected eleven board texts and descriptions that still named renamed options (section 9); no application code, route, migration, permission or deployment
 versioning: git
 ---
 
@@ -162,21 +162,49 @@ The session that holds the library recorded the review as taken up and closed ([
 - Editable hover `24:538` and Editable focus `42:1862` had their fill re-applied with the variable's own value and the same binding.
 - Both now store, resolve and render `#f0f2f5`, as Locked does. Their four placed instances follow.
 - The cause is still not established.
-- Nothing else in the file was changed.
-
-**The claim.** One session edits the library at a time. The claim in pull request #922 had had no commit for more than seven hours, so it was stale under the contribution rules. This session stated its claim in pull request #924 before the edit, made the one edit, and has released the claim.
+- Nothing else in the file was changed in this pass.
 
 **Every bound colour was compared with its variable.** 24,595 fills and outlines on all fourteen pages, the new Play page included. Before the fix two differed: the two above. None differs now.
+
+**Second pass: the two checks left open, and eleven text corrections.** Dean answered "Continue".
+
+- **Text contrast, run again on every page.** No text in a resting state falls below 4.5:1, including the parts drawn since 12 November 2026. The only pairs below it are:
+  - labels of disabled controls at 45%, which WCAG 1.4.3 exempts;
+  - the Grid's origin slot, a deliberate placeholder at 40%.
+- **Review-board text and descriptions, searched for the old option names.** Eleven still named options renamed on 12 November 2026. Each was corrected, with its text style kept. No component, variant, option, variable, fill or layout changed.
+
+| Page | Where | Was | Now |
+|---|---|---|---|
+| Controls | Button matrix column head `52:141` | Default | Rest |
+| Controls | Filter chip values `53:817` | Default and Active | Rest and Selected |
+| Controls | Filter chip note `52:554` | Active means the filter is applied | Selected means the filter is applied |
+| Grid | Header example `29:963` | Default · label in text/secondary | Rest · … |
+| Grid | Row states `29:1428` | Default · surface/canvas | Rest · … |
+| Grid | Grid / Header cell description | keeps its Default fill | keeps its Rest fill |
+| Grid | Grid / Cell description | Type: …; Type=Chip | Kind: …; Kind=Chip |
+| Board | Values card `89:1485` | Board / Count: | Controls / Count, Neutral: |
+| Board | Modules note `89:1548` | Board / Count | Controls / Count |
+| Move | Modules note `76:1234` | Move / Count badge | Controls / Count |
+| Phone | Menu rows rule `240:927` | Default, Selected … | Rest, Selected … |
+
+- **Hits that are correct stay as they are.** "Menu button" names a part. "R6 · Default tab" and "Default and link" are about which tab opens first. "Merged from Board / Count and Move / Count badge" is history.
+
+**The claim.** One session edits the library at a time. The claim in pull request #922 had had no commit for more than seven hours, so it was stale under the contribution rules. For each pass, this session stated its claim in pull request #924 before editing. No other open pull request claimed the library. Both claims are released.
 
 **Still open.** None of these is a fault.
 
 - R10 and R11 wait for the reconciliation before publishing. 30 of 141 variables have a CSS name.
-- Several sets the review did not name still put content or a choice into `State`, for example Controls / Field, Controls / Search field, Phone / Menu row, Grid / Row, Time / Event and Gantt / Bar.
-- The text on the review boards was not re-read for the old option names. The holding session lists the same limit.
-- The text-contrast scan of 12 November was not run again on the parts drawn since.
+- Several sets the review did not name still put content or a choice into `State`, for example Controls / Field, Controls / Search field, Phone / Menu row, Grid / Row, Time / Event and Gantt / Bar. Changing them changes their options, so it is for the session that draws the library next, before the first publish.
+- Some frame names still say `Default`, for example `Row · Default` on the Grid board. Frame names are not shown on the canvas and were left.
+- Icon and outline contrast was not swept.
 
 **Checks.**
 
 - Every page was read for option names, variant sizes, spacing and bound colours. R6, R7 and the fix were each confirmed from a render, not from the stored values.
 - The fix was read back, rendered, and followed by a second read of the Grid page.
+- Second pass:
+  - each correction was guarded to change exactly one match, and read back;
+  - the search for old names, run again on the five pages, finds none;
+  - the Board line that grew was rendered and still fits its row;
+  - the values it now gives for Controls / Count match the component: 18 px, a 1 px `line/strong` outline, Text / 11 Medium in `status/neutral`.
 - Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_naming.py` and `python3 scripts/check_foundation.py`.
