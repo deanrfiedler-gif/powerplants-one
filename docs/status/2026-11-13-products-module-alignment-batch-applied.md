@@ -1,5 +1,5 @@
 ---
-title: Products module alignment batch applied in Figma after Dean's answers; a new named version is needed
+title: Products module alignment batch applied in Figma after Dean's answers and pinned by a new named version
 date: 2026-11-13
 ---
 
@@ -23,7 +23,7 @@ Dean adopted the six recommendations of the [independent review](../decisions/pr
   - A stale section label renamed.
   - The Read me cards updated.
 
-The file is now ahead of the saved version. Builds keep citing "PPO - Products module (accepted)" until Dean saves a new one (suggested "PPO - Products module (accepted) · alignment batch").
+Dean then saved the batch as the named version "PPO - Products module (accepted) · alignment batch". It is now the build basis that every build step from the record's section 6 cites. Nothing was changed in the file after it, so the Read me's "Dean saves a new named version" sentence stays and is superseded by section 13 of the record.
 
 Checked:
 - A script pass on all seven scope pages after the batch found:

@@ -2,7 +2,7 @@
 document_id: PPO-PRODUCTS-REFINED-FIGMA-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Owner-accepted design, 12 November 2026 ("accept"), covering 122 sheets and 7 notes cards on 7 scope pages; refinements R1 and R2 applied after the acceptance (section 12); build basis is the named version "PPO - Products module (accepted)", saved by Dean on 13 November 2026 after R1 and R2 (section 13); the alignment batch of the independent review was applied to the file after that version on 13 November 2026 and awaits a new named version (section 14); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
+status: Owner-accepted design, 12 November 2026 ("accept"), covering 122 sheets and 7 notes cards on 7 scope pages; refinements R1 and R2 applied after the acceptance (section 12); build basis is the named version "PPO - Products module (accepted) · alignment batch", saved by Dean on 13 November 2026 after the alignment batch of the independent review (sections 13 and 14); the earlier named version "PPO - Products module (accepted)", saved the same day after R1 and R2, holds the design before the batch; drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
 source_commit: 1892f7a92784b811bd36f0ef289816cfcfd31d4c
 versioning: git
 ---
@@ -464,7 +464,11 @@ Any wording in the file that still calls the named version Dean's to save, such 
 
 **Limits.** The version is recorded on Dean's statement. This session cannot read the file's version history, so the version was not compared with the file. This session changed nothing in the file after the section 12 work, so the version should hold the state that sections 3 and 12 describe.
 
-**After this version.** Later on 13 November 2026 the review session applied the alignment batch of section 14 to the file, on Dean's answers to the [independent review](products-module-independent-review.md). It also updated the Read me cards to name this version and the batch. The file is now ahead of this version. Builds keep citing this version until Dean saves a new one and this section names it.
+**After this version.** Later on 13 November 2026 the review session applied the alignment batch of section 14 to the file, on Dean's answers to the [independent review](products-module-independent-review.md). It also updated the Read me cards to name this version and the batch. **Current build basis.** Dean then saved the named version **"PPO - Products module (accepted) · alignment batch"** on 13 November 2026. He reported it in chat: "I have saved the named version as PPO - Products module (accepted) · alignment batch."
+
+That version holds everything listed above, plus the batch of section 14, at the same node IDs. It is now the build basis. Each build step from section 6 cites the file, the sheet's node ID and this later version. "PPO - Products module (accepted)" stays in the file's history as the design before the batch.
+
+The same limits apply: the version is recorded on Dean's statement and was not compared with the file's version history. Nothing was changed in the file after the batch. The Read me header's sentence that Dean "saves a new named version to pin it" is superseded by this paragraph and is not edited, so the file stays identical to the version.
 
 ## 14. Alignment batch — 13 November 2026
 
@@ -483,4 +487,4 @@ The [independent review](products-module-independent-review.md) (PPO-PRODUCTS-RE
 
 Every node ID in section 3 is unchanged. PH11's sheet name now reads "Unresolved source — SYN-SRC-0025 r01". Sections 3 to 7 otherwise stay as written, including the six-digit cost-source references in section 7's evidence scan, and are read with this section.
 
-The suggested name for the next named version is "PPO - Products module (accepted) · alignment batch". When Dean saves it, section 13 names it as the build basis.
+Dean saved the batch as the named version "PPO - Products module (accepted) · alignment batch" on 13 November 2026. Section 13 names it as the build basis.

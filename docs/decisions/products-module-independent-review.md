@@ -2,13 +2,13 @@
 document_id: PPO-PRODUCTS-REVIEW-PROP
 date: 2026-11-13
 owner: Dean Fiedler
-status: Independent review of the accepted private Figma file for the Products module on 13 November 2026 at Dean's request, by a session that did not draw it, with the private file "PPO - Library" read for comparison; the review itself was read-only; Dean then saved the named version "PPO - Products module (accepted)" and adopted the six recommendations of section 6 the same day, and this session applied the alignment batch to the Products file (section 9); nothing was changed in the Library; the batch needs a new named version that Dean saves; no application code, route, migration, permission or deployment
+status: Independent review of the accepted private Figma file for the Products module on 13 November 2026 at Dean's request, by a session that did not draw it, with the private file "PPO - Library" read for comparison; the review itself was read-only; Dean then saved the named version "PPO - Products module (accepted)" and adopted the six recommendations of section 6 the same day, and this session applied the alignment batch to the Products file (section 9), which Dean saved as the named version "PPO - Products module (accepted) · alignment batch" the same day; nothing was changed in the Library; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # PPO - Products module independent review, 13 November 2026
 
-**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Sections 1 to 8 are the review as first recorded. Section 9 records two things: Dean's answers and named version of 13 November 2026, and the alignment batch this session then applied to the Products file. The batch needs a new named version that Dean saves.
+**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Sections 1 to 8 are the review as first recorded. Section 9 records two things: Dean's answers and named version of 13 November 2026, and the alignment batch this session then applied to the Products file. Dean saved the batch as the named version "PPO - Products module (accepted) · alignment batch".
 
 ## 1. The request
 
@@ -222,4 +222,4 @@ A script pass ran on all seven scope pages after the batch.
 | PDR-18 (10 px labels) | Shell file | The rail labels and badges inside the Shell copies |
 | PDR-19, PDR-20 | Repository | Each in its own change |
 | Q-1, Q-3 elsewhere | Shell and Estimating files | The Shell's snapshot drawer at 480 px; the Estimating file's two-digit revisions |
-| New named version | Dean | Suggested name "PPO - Products module (accepted) · alignment batch" |
+| New named version | Dean | Done: saved as "PPO - Products module (accepted) · alignment batch" on 13 November 2026. It is now the build basis ([proposal record](products-module-refined-ui-proposal.md#13-named-version--13-november-2026), section 13) |
