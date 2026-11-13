@@ -112,3 +112,29 @@ Cross-file questions that still govern this file: AC-01 (Kim Patel), AC-12 (Upda
 2. The Projects file's next build session applies the alignment batch in the order Major, Minor, Polish; the batch text and the extraction script stay in that session's working files so each fix can be re-proved.
 3. In the same change as the batch, the Projects record updates its Shell basis, A9, A17, the inventory (`133:214`) and its file name.
 4. Separate later changes, not made here: the Library record's alignment row for this file (after AQ-1); the Sales Handovers page weekdays (with PJA-09).
+
+## 8. Status after the refinements of 12 and 13 November 2026
+
+Dean asked for the file to be refined in place; the changes are recorded in section 9 of the [proposal record](projects-module-refined-ui-proposal.md). Each status below was re-tested by a read-only sweep of all 248 frames.
+
+| Finding | Status | Evidence |
+|---|---|---|
+| PJA-06 Pinned group | Fixed | The docked menu's group reads Favourites |
+| PJA-07 Menu counts | Fixed | Register totals removed; Needs attention 3 and Variations & obligations 2 remain |
+| PJA-08 Literal paints | Partly fixed | Gantt bars, milestones, baseline bars and dependencies bound to the Gantt colour and PPO colour variables; other literal paints not re-counted |
+| PJA-09 Weekdays | Fixed in this file | 29 corrected, keeping the Sales handover page's dates. That page still has one "Mon 3 Nov", for the Sales file's own session |
+| PJA-11 Phone inputs and targets | Fixed | 19 inputs at 16 px and 48 px high; 11 buttons at 48 px; PH07's actions in a sticky bar |
+| PJA-13 Text under 11 px | Fixed | The file's own text is at least 11 px; smaller text remains only inside the accepted Shell copies and the kit Avatar |
+| PJA-14 Later-frame labels | Fixed | 17 labels carry "as at Thu 5 Nov hh:mm" |
+| PJA-15 Pronoun | Fixed | "They are flagged" |
+| PJA-16 Reference forms | Fixed | `SYN-EAR-000006`; ES-07 cases cited as fixtures; "Company calendar" for the configuration ID outside its Administration detail line |
+| PJA-17 Read me index | Fixed in the file | X33, the Interaction-states notes, the new Today parts and the non-scope page IDs are in the index (`219:2`); the repository inventory gains them in section 9 of the proposal record |
+| PJA-19 "Delivered" | Fixed | "Received by Supply Tue 27 Oct" |
+| PJA-22 Colour mode name | Fixed | "Value" |
+| PJA-01 to PJA-05, PJA-10, PJA-12, PJA-18, PJA-20, PJA-21 | Open | Wait on AQ-1 to AQ-6 or on the Library's publication |
+
+New since the audit, and also verified:
+- **Today marker.** It follows the Library's G6.
+- **Gantt alignment.** Elements are centred on their row lines, and the Gantt anatomy matches the Library.
+- **Avatars.** Initials replace full names.
+- **Clipped text.** None remains anywhere in the file.
