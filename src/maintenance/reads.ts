@@ -20,6 +20,12 @@ import { planRevision } from "./plans";
 import { latestPlan, warrantyCapability } from "./warranty";
 import { recoveryCapability } from "./recovery";
 import {
+  prepareReturnCommand,
+  returnProgress,
+  returnReceiptAuthority,
+  visibleReturnEvent,
+} from "./supply-return";
+import {
   agreementRevision,
   assetSnapshot,
   can,
@@ -287,7 +293,8 @@ async function visibleHistory(
 ) {
   const readable = new Map<string, boolean>();
   const shown: typeof events = [];
-  for (const event of events) {
+  for (const originalEvent of events) {
+    const event = await visibleReturnEvent(c, p, originalEvent);
     const content = (event.content ?? {}) as Record<string, unknown>;
     const workOrder =
       typeof content.work_order_id === "string" ? content.work_order_id : null;
@@ -406,11 +413,7 @@ export async function workspace(p: Principal, family: Family, id: string) {
           [p.workspace_id, id],
         )
       ).rows;
-      sources.sc08 = {
-        state: "Unavailable",
-        message:
-          "Native Supply Chain returns receiving is not available. Retain external evidence; no stock or custody transaction is created.",
-      };
+      sources.sc08 = await returnProgress(c, p, id);
     }
     if (family === "due" || family === "cases") {
       const requests = (
@@ -550,6 +553,7 @@ export async function receiptAuthority(
   command: string,
   recordVersion: number,
 ) {
+  if (command === prepareReturnCommand) return returnReceiptAuthority(c, p, id);
   const family = (Object.keys(families) as Family[]).find(
     (k) => families[k].type === type,
   );

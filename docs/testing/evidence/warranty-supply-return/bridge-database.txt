@@ -1,0 +1,19 @@
+✔ MA07-SC08 one atomic bridge, exact replay and separate native operation recovery (6688.620722ms)
+✔ MA07-SC08 competing fresh operations create one return only (429.900485ms)
+✔ MA07-SC08 exact quantity, source versions and demand identity are enforced without partial writes (614.830581ms)
+✔ MA07-SC08 preserves old external evidence; Received and NotRequired are not imported as custody (659.645106ms)
+✔ MA07-SC08 source changes block new preparation but retain original lookup and replay (803.289197ms)
+✔ MA07-SC08 scope, revoked Supply access and history redaction apply before receipt replay (569.093033ms)
+✔ MA07-SC08 native partial receipt and disposition stay independent of customer and Finance outcomes (761.553057ms)
+✔ MA07-SC08 incomplete native evidence never yields a complete receiving total (527.23244ms)
+✔ MA07-SC08 unknown outcomes remain visible until original native reconciliation (599.828115ms)
+✔ MA07-SC08 native revisions preserve identity and allow owned coordination changes (582.275214ms)
+✔ MA07-SC08 a used native operation or identity rolls the entire bridge back (491.278219ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15128.322948
