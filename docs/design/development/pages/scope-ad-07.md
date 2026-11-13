@@ -38,7 +38,7 @@ Review loading, empty, filtered-empty, read-only/denied, missing context, valida
 
 ## Visual references
 
-Refined design, owner-accepted 13 November 2026: the private Figma file "PPO - Settings module", page "Audit history · AD-07" (`11:11`, 14 sheets: desktop at 1440, dialogs and panels, states, tablet at 1024, phone at 390 and 320). The [Settings refined UI record](../../../decisions/settings-module-refined-ui-proposal.md) lists each sheet with its node ID in section 3 and records the acceptance in section 11. It is drawn inside the accepted shell and governs layout, states and wording where it differs from this page. The named version is Dean's to save; until it exists, this reference pins no build basis. No image export is retained in the repository and no application capture exists. Visual review, functional proof and deployment remain separate.
+Refined design, owner-accepted 13 November 2026: the private Figma file "PPO - Settings module", page "Audit history · AD-07" (`11:11`, 14 sheets: desktop at 1440, dialogs and panels, states, tablet at 1024, phone at 390 and 320). The [Settings refined UI record](../../../decisions/settings-module-refined-ui-proposal.md) lists each sheet with its node ID in section 3 and records the acceptance in section 11. It is drawn inside the accepted shell and governs layout, states and wording where it differs from this page. Build basis: the named version "PPO - Settings module (accepted)", saved by Dean on 13 November 2026 (record section 12). No image export is retained in the repository and no application capture exists. Visual review, functional proof and deployment remain separate.
 
 No exact image or HTML reference is linked, and no application page exists to capture. Keep this gap visible.
 

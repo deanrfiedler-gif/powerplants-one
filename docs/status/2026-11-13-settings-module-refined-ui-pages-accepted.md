@@ -1,5 +1,5 @@
 ---
-title: Settings module refined UI pages accepted; reference families adopted
+title: Settings module refined UI pages accepted and named; reference families adopted
 date: 2026-11-13
 ---
 
@@ -19,7 +19,7 @@ In the repository:
 - The [design-to-build standard](../standards/design-to-build-standard.md) names the file `PPO - Settings module`.
 - The fourteen design register pages (AD-01 to AD-10, AI-06, EC-02, SH-03, SH-05) point to their page in the file, with the status "refined design accepted, not built to it".
 
-The named version "PPO - Settings module (accepted)" and the file rename are Dean's. Until that version exists, no build basis is pinned. The file's link is not recorded here (ADR-0050, ADR-0053).
+Dean then saved the named version "PPO - Settings module (accepted)". It is the build basis for the Settings module pages (record section 12). The Figma connector cannot read version history, so the version is recorded on Dean's word. The file was not edited after the save. Renaming the file remains Dean's. The file's link is not recorded here (ADR-0050, ADR-0053).
 
 Checked:
 - position checks on the Global configuration and Read me pages;

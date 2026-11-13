@@ -2,14 +2,14 @@
 document_id: PPO-SETTINGS-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Owner-accepted design, 13 November 2026 (section 11; Dean adopted every recommendation, C7 is resolved by the brand/navy primary, and the Settings reference families are adopted into PPO-STD-001); the named version "PPO - Settings module (accepted)" is Dean's to save and is not yet saved, so no build basis is pinned; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
+status: Owner-accepted design, 13 November 2026 (section 11; Dean adopted every recommendation, C7 is resolved by the brand/navy primary, and the Settings reference families are adopted into PPO-STD-001); build basis is the named version "PPO - Settings module (accepted)", saved by Dean on 13 November 2026 (section 12); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
 source_commit: 1888cc81d4c99e68836390110a6655e767fa17d5
 versioning: git
 ---
 
 # Settings module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Owner-accepted design, 13 November 2026 ([Decisions and acceptance — 13 November 2026](#11-decisions-and-acceptance--13-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance. Section 9 is the audit, section 10 the audit items applied on 13 November 2026, and section 11 Dean's decisions and acceptance. Later sections will record the named version and any further batches, as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Owner-accepted design, 13 November 2026 ([Decisions and acceptance — 13 November 2026](#11-decisions-and-acceptance--13-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance. Section 9 is the audit, section 10 the audit items applied on 13 November 2026, section 11 Dean's decisions and acceptance, and section 12 the named version that pins the build basis. Later sections will record any further batches and versions, as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 10 November 2026 Dean asked for the refined UI pages of the Powerplants One Settings module to be designed in a new, empty private Figma file, "PPO - Settings module (proposal)", inside the accepted shell and to at least the standard of the Sales module file. The module is the **Administration** workspace reached from More (fourteen pages in the accepted Shell menu), the **Settings** rail item that opens the Settings hub, **Assistant settings** (AI-06), **My account and preferences** (SH-03, SH-05, EC-02) and the module's own **global configuration**. His brief set the scope, decisions D1 to D13, one synthetic dataset as at Thursday 5 November 2026, 09:00 AEDT, signed in as systems administrator Taylor Quinn, and Addendum A3 (persona and story reconciliation, as amended for Service, Finance and Settings on 10 November 2026). He added a standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The ten questions in the brief (Q1 to Q10) were therefore answered by their stated defaults; each is recorded in section 5 and can be reversed.
 
@@ -624,3 +624,11 @@ Not re-run: the whole-file structure and position pass of section 6. Only Global
 | Section 7's open questions, except C7, A26, A52 and A64 | Each scope's owner |
 
 Any later design change needs a new named version.
+
+## 12. Named version — 13 November 2026
+
+Dean saved the named version after the acceptance: "I have saved the named version as PPO - Settings module (accepted)." That version is the **build basis** for the Settings module pages ([named-version build handoff](figma-named-version-build-handoff.md)). It holds the 270 sheets of section 3 with the decisions of section 11. A build follows its sheets by node ID. Where the file and the version differ, the version governs.
+
+How this was checked: the Figma connector can read neither the version history nor the file's name, so the version is recorded on Dean's word. The file was not edited after Dean's message, so the version and the file as it stands are the same. The Read me header still reads "Named version to save". It was written before the save, and the version holds it as written.
+
+This closes the named-version row of 11.4. The other rows stay open. Renaming the file to "PPO - Settings module (accepted)" (A50) is still Dean's, and this record does not know whether it is done. Any later design change needs a new named version, recorded here with what it changes.
