@@ -26,6 +26,8 @@ import {
   type Detail,
 } from "./shared";
 
+import { lifecycleOptions, currentLifecycle } from "../vocabulary";
+
 export const emptyContent: Content = {
   title: "",
   manufacturer: "",
@@ -102,7 +104,7 @@ export function ContentFields({
           label="Lifecycle evidence conclusion"
           value={content.lifecycle}
           onChange={(v) => field("lifecycle", v)}
-          options={options(["Unknown", "Supported", "Discontinued", "Retired"])}
+          options={lifecycleOptions}
         />
         <Field
           name="support_until"
@@ -292,8 +294,13 @@ function ProductEditor({
   detail?: Detail;
   catalogue?: Catalogue;
 }) {
-  const [content, setContent] = useState(
-      detail?.revision.content ?? emptyContent,
+  const [content, setContent] = useState(() =>
+      detail
+        ? {
+            ...detail.revision.content,
+            lifecycle: currentLifecycle(detail.revision.content.lifecycle),
+          }
+        : emptyContent,
     ),
     [reason, setReason] = useState(""),
     [dirty, setDirty] = useState(false);
@@ -366,7 +373,10 @@ function ProductEditor({
           <Button
             type="button"
             onClick={() => {
-              setContent(detail.revision.content);
+              setContent({
+                ...detail.revision.content,
+                lifecycle: currentLifecycle(detail.revision.content.lifecycle),
+              });
               setBaseline(detail);
               setDirty(false);
             }}

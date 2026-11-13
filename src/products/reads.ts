@@ -18,32 +18,47 @@ import {
 } from "./model";
 import { productAuthority, productContext, productRevision } from "./context";
 
+import {
+  lifecycleLabels,
+  lifecycleFilterValues,
+  catalogueOrders,
+} from "./vocabulary";
+
 export async function listProducts(
   p: Principal,
   query: Record<string, string> = {},
 ) {
-  const b = object(query, ["q", "kind", "state", "lifecycle"]),
+  const b = object(query, ["q", "kind", "state", "lifecycle", "sort"]),
     q = optionalText(b.q, "q", 100) ?? "";
   const kind = b.kind ? choice(b.kind, "kind", kinds) : null,
     state = b.state ? choice(b.state, "state", states) : null;
   const lifecycle = b.lifecycle
-    ? choice(b.lifecycle, "lifecycle", [
-        "Unknown",
-        "Supported",
-        "Discontinued",
-        "Retired",
-      ] as const)
+    ? choice(b.lifecycle, "lifecycle", lifecycleLabels)
     : null;
+  const sort =
+    b.sort === undefined ? "product" : choice(b.sort, "sort", catalogueOrders);
+  const order =
+    sort === "updated" ? "s.updated_at DESC,s.id" : "r.content->>'title',s.id";
   return transaction(async (c) => {
     await c.query("SET TRANSACTION ISOLATION LEVEL REPEATABLE READ READ ONLY");
     await requireCapability(c, p, "products.read");
+    const read_at = (
+      await c.query<{ read_at: Date }>("SELECT now() AS read_at")
+    ).rows[0].read_at.toISOString();
     const items = (
       await c.query<Product & { content: Revision["content"] }>(
         `SELECT s.*,r.content FROM ppo.products s JOIN ppo.product_revisions r ON (r.workspace_id,r.id)=(s.workspace_id,s.current_revision_id)
       WHERE s.workspace_id=$1 AND ${scopeSql("s.company_id", "NULL", "products.read")} AND ${scopeSql("s.company_id", "NULL", "shared.read")}
       AND ($3='' OR strpos(lower(s.reference||' '||s.id::text||' '||s.provider||' '||s.entity_key||' '||(r.content->>'title')||' '||(r.content->>'manufacturer')||' '||(r.content->>'model')||' '||(r.content->>'variant')),lower($3))>0)
-      AND ($4::text IS NULL OR s.kind=$4) AND ($5::text IS NULL OR s.state=$5) AND ($6::text IS NULL OR r.content->>'lifecycle'=$6) ORDER BY r.content->>'title',s.id LIMIT 100`,
-        [p.workspace_id, p.actor_id, q, kind, state, lifecycle],
+      AND ($4::text IS NULL OR s.kind=$4) AND ($5::text IS NULL OR s.state=$5) AND ($6::text[] IS NULL OR r.content->>'lifecycle' = ANY($6::text[])) ORDER BY ${order} LIMIT 100`,
+        [
+          p.workspace_id,
+          p.actor_id,
+          q,
+          kind,
+          state,
+          lifecycle ? lifecycleFilterValues(lifecycle) : null,
+        ],
       )
     ).rows;
     const companies = (
@@ -66,7 +81,8 @@ export async function listProducts(
       items,
       companies,
       access,
-      filters: { q, kind, state, lifecycle },
+      filters: { q, kind, state, lifecycle, sort },
+      read_at,
       limit: 100,
       synthetic: true,
       stock: { state: "NotConfigured", observation: null },

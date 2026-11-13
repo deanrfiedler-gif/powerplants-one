@@ -11,6 +11,14 @@ import { useCrmResource } from "../../components/crm-state";
 import { Button } from "../../components/ui/button";
 import { useUnsavedChanges } from "../../components/record-ui";
 import type { RelationshipContent } from "../model";
+import {
+  relationshipOptions,
+  relationshipLabel,
+  criterionOptions,
+  criterionLabel,
+  conclusionLabel,
+  relationshipConclusions,
+} from "../vocabulary";
 import type { listRelationships } from "../relationships";
 import { ProductUses } from "./uses";
 import {
@@ -165,7 +173,7 @@ function RelationshipForm({
               onChange={(v) =>
                 update({ type: v as RelationshipContent["type"] })
               }
-              options={options(["CandidateReplacement", "Compatibility"])}
+              options={relationshipOptions}
             />
             {(
               [
@@ -229,7 +237,7 @@ function RelationshipForm({
                   onChange={(v) =>
                     change({ outcome: v as typeof criterion.outcome })
                   }
-                  options={options(["Met", "NotMet", "Unknown"])}
+                  options={criterionOptions}
                 />
                 <Field
                   name={`criterion-evidence-${i}`}
@@ -320,8 +328,11 @@ export function CompatibilityPage() {
                 {r.to_content.model} / {r.to_content.variant}
               </h2>
               <p>
-                {r.content.type} · {r.outcome ?? "Unreviewed"} ·{" "}
-                {r.content.purpose}
+                {relationshipLabel(
+                  r.content.type,
+                  selected === r.to_product_id ? "to" : "from",
+                )}{" "}
+                · {conclusionLabel(r.outcome)} · {r.content.purpose}
               </p>
               <p>
                 Original r{r.from_revision} / technical{" "}
@@ -353,7 +364,7 @@ export function CompatibilityPage() {
               {r.content.criteria.map((c, i) => (
                 <section className="pd-issue" key={i}>
                   <h3>
-                    {c.criterion}: {c.outcome}
+                    {c.criterion}: {criterionLabel(c.outcome)}
                   </h3>
                   <p>
                     {c.evidence} · Owner {c.owner}
@@ -390,20 +401,20 @@ export function CompatibilityPage() {
                 <div className="pd-form-grid">
                   <div>
                     <h3>Original</h3>
-                    <TechnicalContent content={r.from_content} />
+                    <TechnicalContent content={r.from_content} asRecorded />
                   </div>
                   <div>
                     <h3>Candidate</h3>
-                    <TechnicalContent content={r.to_content} />
+                    <TechnicalContent content={r.to_content} asRecorded />
                   </div>
                 </div>
               </details>
               {r.can_review && (
                 <div className="pd-cards">
-                  {["Conditional", "Unresolved", "Rejected"].map((outcome) => (
+                  {relationshipConclusions.map((outcome) => (
                     <RecoveryAction
                       key={outcome}
-                      label={`Record ${outcome.toLowerCase()} conclusion`}
+                      label={`Record ${conclusionLabel(outcome).toLowerCase()} conclusion`}
                       id={r.id}
                       path={`products/relationships/${r.id}/review`}
                       fields={{

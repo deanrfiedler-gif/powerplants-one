@@ -39,6 +39,12 @@ import {
   type ProductCapability,
 } from "./model";
 
+import {
+  currentLifecycle,
+  lifecycleLabel,
+  normaliseDuplicate,
+} from "./vocabulary";
+
 export const importFormat = "PPO synthetic catalogue 1";
 export type ImportBatch = {
   id: string;
@@ -310,7 +316,15 @@ async function planRows(
         (b.provider && b.provider !== batch.provider)
       )
         row.errors.push("Conflicting provider/company/entity context.");
-      row.parsed = productContent(b.content);
+      const supplied = productContent(b.content);
+      row.parsed = {
+        ...supplied,
+        lifecycle: currentLifecycle(supplied.lifecycle),
+      };
+      if (row.parsed.lifecycle !== supplied.lifecycle)
+        row.warnings.push(
+          `Supplier word ${supplied.lifecycle} read as ${lifecycleLabel(supplied.lifecycle)}`,
+        );
       if (!decision)
         row.errors.push(
           "Unresolved mapping: explicitly select exact identity or New, or exclude with a reason.",
@@ -321,10 +335,10 @@ async function planRows(
       );
       const similar = products.filter(
         (r) =>
-          r.content.title.toLocaleLowerCase() ===
-            row.parsed!.title.toLocaleLowerCase() ||
-          r.content.model.toLocaleLowerCase() ===
-            row.parsed!.model.toLocaleLowerCase(),
+          normaliseDuplicate(r.content.title) ===
+            normaliseDuplicate(row.parsed!.title) ||
+          normaliseDuplicate(r.content.model) ===
+            normaliseDuplicate(row.parsed!.model),
       );
       row.duplicate_candidates = similar.map((r) => ({
         id: r.id,
