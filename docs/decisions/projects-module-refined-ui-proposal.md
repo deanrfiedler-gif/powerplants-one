@@ -662,4 +662,4 @@ Screenshots were checked for PG02, PG07, TB07, RC01, RC02, CM03, CM06, TB10, TB0
 - **Elsewhere.** The Sales Handovers page's "Mon 3 Nov" is the Sales session's. The rename (AQ-6) is Dean's.
 - **For Dean's review.** RAID entries keep Edit as their primary, as drawn, rather than a state decision such as Move to Monitoring. AC01's 440 px inline inspector (A76) was not changed.
 
-The next named version, "PPO - Projects module (proposal) · 13 November 2026 · audit batch 3", is Dean's to save.
+Dean saved the named version "PPO - Projects module (proposal)" after the batch on 13 November 2026; the Read me's status line records it.
