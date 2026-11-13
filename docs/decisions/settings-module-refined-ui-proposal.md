@@ -9,7 +9,7 @@ versioning: git
 
 # Settings module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Proposal. Sections 1 to 8 are the proposal record and section 9 the audit. Later sections will record the audit, Dean's acceptance, further batches and named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Proposal. Sections 1 to 8 are the proposal record, section 9 the audit and section 10 the audit items applied on 13 November 2026. Later sections will record the audit, Dean's acceptance, further batches and named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 10 November 2026 Dean asked for the refined UI pages of the Powerplants One Settings module to be designed in a new, empty private Figma file, "PPO - Settings module (proposal)", inside the accepted shell and to at least the standard of the Sales module file. The module is the **Administration** workspace reached from More (fourteen pages in the accepted Shell menu), the **Settings** rail item that opens the Settings hub, **Assistant settings** (AI-06), **My account and preferences** (SH-03, SH-05, EC-02) and the module's own **global configuration**. His brief set the scope, decisions D1 to D13, one synthetic dataset as at Thursday 5 November 2026, 09:00 AEDT, signed in as systems administrator Taylor Quinn, and Addendum A3 (persona and story reconciliation, as amended for Service, Finance and Settings on 10 November 2026). He added a standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The ten questions in the brief (Q1 to Q10) were therefore answered by their stated defaults; each is recorded in section 5 and can be reversed.
 
@@ -68,16 +68,16 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 
 ## 3. Sheet inventory
 
-267 sheets on fourteen scope pages (the thirteen scope areas and Interaction states), each page with its "Flows and notes" card. Node IDs are those of the sheet frame. A sheet label reads `CODE · Page — state (scope) [source]`; the label above each sheet in the file carries the full text. Sections: D = Desktop 1440, X = Dialogs and panels, S = States, T = Tablet 1024, P = Phone 390 and 320.
+270 sheets on fourteen scope pages (the thirteen scope areas and Interaction states), each page with its "Flows and notes" card. Node IDs are those of the sheet frame. A sheet label reads `CODE · Page — state (scope) [source]`; the label above each sheet in the file carries the full text. Sections: D = Desktop 1440, X = Dialogs and panels, S = States, T = Tablet 1024, P = Phone 390 and 320.
 
 | Item | Node |
 |---|---|
-| Read me cards: header, "Sheet index and notes" (generated from the pages, the authority for every code and node), audit, page template | `151:876`, `151:888`, `151:971`, `151:1002` |
+| Read me cards: header, "Sheet index and notes" (generated from the pages, the authority for every code and node), audit, page template | `151:876`, `170:876`, `170:959`, `151:1002` (index and audit regenerated 13 November 2026) |
 | Notes cards: AD-02 `35:7571`, AD-03 `58:6138`, AD-04 `50:6399`, AD-05 `54:5413`, AD-06 `107:4527`, AD-07 `61:4210`, AD-09 `82:6748`, AD-10 `121:4385`, AI-06 `113:4282`, My account `128:4696`, Global configuration `136:3005`, Interaction states `140:4046`; the AD-01 and AD-08 cards are listed on the Sheet index card | one per page |
 | Pages: Read me `0:1`, — Accepted — `11:2`, — Proposals — `11:3`, Shell and kit `11:18`, Scratch `11:19` | separators and Scratch are empty |
 | Shell and kit: helper library `20:600` (hidden text), rebuild library `11:88`, icons `11:89`, page kit `15:21` to `15:86`, top bars `16:7` and `16:66`, rail set `16:585`, right strip `16:586`, phone chrome `16:611` to `16:697`, docked Administration menu `18:1647`, collapsed strip `18:1652`, Account menu `18:1653`, flyout `18:1741`, record header toolbar `19:804` and phone `19:805` | on page `11:18` |
 
-### Settings hub and Business policies · AD-02 — page `11:4` · 29 sheets
+### Settings hub and Business policies · AD-02 — page `11:4` · 30 sheets
 
 | Code | Sheet | Sec. | Node |
 |---|---|---|---|
@@ -102,10 +102,11 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | SH19 | Propose refused — a proposal is already open | S | `32:6221` |
 | SH20 | Publish refused — more than 200 bookings match (the limit as built) | S | `32:6559` |
 | TB01–TB03 | Hub (full length), Business policies, Scheduling version 2 (full length) on tablet | T | `33:6549`, `33:6912`, `33:7333` |
+| TB04 | Publish version 2 dialog on tablet (Jordan Kim) | T | `169:10872` |
 | PH01–PH06 | Hub list; version 2 waiting; Propose on desktop; Review (Sam Patel); Publish on desktop; hub at 320 | P | `34:7152`, `34:7294`, `34:7406`, `34:7505`, `34:7623`, `34:7741` |
 | — | Notes card | — | `35:7571` |
 
-### Users and access · AD-01 — page `11:5` · 27 sheets
+### Users and access · AD-01 — page `11:5` · 28 sheets
 
 | Code | Sheet | Sec. | Node |
 |---|---|---|---|
@@ -129,9 +130,10 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | UA18 | SYN-ACR-000002 — Returned is terminal | S | `43:5935` |
 | UA19 | Attestation refused — self-attestation | S | `43:6249` |
 | TB01–TB02 | Identities; Sasha Cole grants (full length) on tablet | T | `44:6300`, `44:6726` |
+| TB03 | Apply SYN-ACR-000005 dialog on tablet (Taylor Quinn) | T | `169:17431` |
 | PH01–PH04 | Phone sheets; PH04 at 320 | P | `44:7088`, `44:7202`, `44:7301`, `44:7421` |
 
-### Integrations & recovery · AD-04 — page `11:8` · 19 sheets
+### Integrations & recovery · AD-04 — page `11:8` · 20 sheets
 
 | Code | Sheet | Sec. | Node |
 |---|---|---|---|
@@ -148,6 +150,7 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | IN10 | Dependent item waiting behind the refused receipt | S | `49:10422` |
 | IN11a–c | Connector Not configured; Read-only with a partial run; MYOB refused as the source owner sees it | S | `49:10751`, `49:11050`, `49:11388` |
 | IN-TB01 | Overview on tablet | T | `50:5755` |
+| IN-TB02 | Retry after the fix panel on tablet | T | `169:22330` |
 | IN-PH01–03 | Overview; sync item Refused; Retry stays on desktop (phone) | P | `50:6118`, `50:6212`, `50:6305` |
 
 ### External mappings · AD-05 — page `11:9` · 17 sheets
@@ -415,7 +418,7 @@ File-wide pass (11 November 2026), run as a script over all fourteen scope pages
 
 | Check | Result |
 |---|---|
-| Structure: every sheet inside its section; every direct child inside its sheet | Pass on all 267 sheets |
+| Structure: every sheet inside its section; every direct child inside its sheet | Pass on all 267 sheets (11 November) |
 | Positions: no overlap between sections, or between sheets, labels and notes cards inside a section | Pass; nothing loose on any page; the separators and Scratch are empty |
 | Labels: a label 26 px above each sheet starting with the sheet's code | Pass on all 267 sheets |
 | Fonts | Roboto only (the mixed-weight runs are Roboto) |
@@ -500,3 +503,49 @@ N-N1 to N-N4 are integrated (hub ranking by rule, why-this-state, independence c
 6. G4 in the design-register change.
 
 Then Dean saves a named version.
+
+## 10. Audit items applied — 13 November 2026
+
+After pull request 913 merged, Dean said "Continue". The audit's recommended order was taken up as far as it lies inside this file and this task. The Shell file, the design register and the dataset were not touched.
+
+### 10.1 Whole-file scans (G3)
+
+Run inside Figma over every sheet, with only the findings returned:
+
+| Scan | What it checked | Result |
+|---|---|---|
+| Story | Every mention of 22 thread references (the access requests, SYN-SYNC-000431 and 000438, SYN-MAP-000014, SYN-FH-000044, SYN-DQF-000045 and 000047, SYN-OPI-000008, SYN-RPT-000039, the releases, exports, help requests, SYN-AIF-000002, SYN-DIF-000014, SYN-REH-000003), with its time and state, against dataset section 9 and the sheet's own "as at" moment | Two kinds of finding, both fixed (C8): OH13 still described the recovery item as three renders; five page states (PS06, PS07, PS09, PS10, PS12) showed events later than their "as at" line or facts not yet true at it |
+| Independence | Every two-person strip ("Independence check"): the people in each role | Pass. The only repeated people are the deliberate refusal states SH09 (proposer as reviewer) and UA19 (self-attestation), each naming who may act; the proposer publishing after a different reviewer (SH06, GL01, GL06) follows the scheduling pattern (A59) |
+| Capability | Every enabled gated button against the person signed in on that sheet | Three findings, fixed (C8): "Review…" enabled for Taylor Quinn on the version 3 proposal Taylor made (SH08, SH18), and "Resolve…" enabled for Taylor Quinn on Avery Lin's difference (EM07). Each is now disabled at 45 % with its reason |
+
+### 10.2 Corrections (C)
+
+| ID | Correction | State |
+|---|---|---|
+| C8 | OH13 recovery wording corrected to "Retried 09:05, Durable"; PS06 set to 09:06, PS07 and PS11 labelled as counterfactual, PS10 set to 09:25, PS12 set to 08:10 before Dean's review, and PS09's read-only list changed to facts true at 09:00 (scheduling version 1 in force, SYN-INV-000453 posted Wed 4 Nov); SH08, SH18 and EM07 primaries disabled with reasons | Fixed |
+| C7 | Record toolbar primary: white on brand/green-deep `#3d9a37` is 3.57:1. Proposed: a separate button-fill token at `#34842f` (the same hue darkened by 14 %), which gives 4.65:1; brand/green-deep stays for the focus ring (3.57:1 meets the 3:1 rule for UI edges) | **Open**: decide on the Shell file; this file follows |
+
+### 10.3 Refinements, gaps and polish applied
+
+| ID | Change |
+|---|---|
+| G2 | Tablet versions of the three dialogs and panels on the flagship journeys: SH TB04 Publish version 2, UA TB03 Apply, IN-TB02 Retry after the fix |
+| R3 | Card grids now share equal widths (MC01 and the tablet overviews) |
+| R4 | Search and filter icons removed from phone form headers (OS10c, MA10a), and the empty label above the MA10a search field removed |
+| P2 | AH-PH02's status bar reads 10:35, the moment of the posting it shows; the other phone times match their sheets |
+
+A position check on the three pages that gained sheets found no overlap and every label in place. The Read me index was regenerated (270 sheets) and the audit card updated.
+
+### 10.4 Still open
+
+| ID | Why it is not done here |
+|---|---|
+| C7 | A change to an accepted Shell component; Dean decides |
+| R1 | Persona-correct badges and phone bars need per-person counts and bars that the dataset does not define |
+| R2 | The docked Service menu belongs to the Service file and is not in this one |
+| G1 | Keyboard, screen-reader and 200 % zoom demonstrations, and prototype links: a review with a person and a device |
+| G4 | The design register and page guidance: the brief excluded them from this task; their own reviewed change |
+| P1, P3 | One "as at" wording and the early-page truncation review: low value until Dean's review sets the wording |
+
+Dean then saves a named version; any later design change needs a new one.
+
