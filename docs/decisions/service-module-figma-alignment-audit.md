@@ -202,13 +202,13 @@ On 13 November 2026 Dean answered the questions of section 5 with "accept all". 
 | Q12 | Owen Dunne's portal response at 10:42 is the response for SYN-RPT-000040 r01 | **Service:** draws the portal route; the in-person record is refused once a response exists | SVA-006 |
 | Q13 | Service hands Sales a renewal brief, and Sales X20 decides between a lead and an opportunity | **Service:** AG10a to AG10c send a renewal brief and create no Activity. **Sales:** confirms X20 takes the brief | SVA-024 |
 
-**Still open.**
-- **File name (SVA-035):** Dean's link reads "PPO - Service module"; the Read me header and the proposal record read "PPO - Service module (proposal)".
-- **Addendum A3 (and A1, A2):** not yet supplied. Q2 and Q4 are applied as decided until it arrives.
+**File name (SVA-035), resolved 13 November 2026.** Dean confirmed that the file is named "PPO - Service module". Sections 1 to 8 keep the name the file's Read me carried on 12 November ("PPO - Service module (proposal)"). The batch in section 10 renames the Read me header, and the Service record changes its references in its next change.
+
+**Still open.** Addendum A3 (and A1, A2) has not yet been supplied. Q2 and Q4 are applied as decided until it arrives.
 
 **Source of the decisions.** Dean's reply "accept all" in the working session of 13 November 2026, to the list of questions and recommendations in section 5.
 
-## 10. Alignment batch · PPO - Service module (proposal), as decided
+## 10. Alignment batch · PPO - Service module, as decided
 
 Paste this into the next build session for the Service file. It comes from the read-only alignment audit of 12 November 2026 (PPO-SERVICE-FIGMA-ALIGNMENT-AUDIT) with Dean's decisions of 13 November 2026 applied (Q1 to Q13, all accepted as recommended). Every person, record, value and date is synthetic. Use names or they/them for people, Australian English, and dates as "Thu 5 Nov 2026". Never record a Figma link or file key in the repository.
 
@@ -216,7 +216,6 @@ Paste this into the next build session for the Service file. It comes from the r
 
 ### Still open (do not block the batch)
 
-- SVA-035: confirm the file name with Dean ("PPO - Service module" in his link, "(proposal)" in the Read me header and record); align both once confirmed.
 - Addendum A3 (and A1, A2) text: requested from Dean; Q2 and Q4 are applied as decided until it arrives.
 
 ### Items for this file, in order
@@ -505,6 +504,15 @@ Paste this into the next build session for the Service file. It comes from the r
 - **Proves it fixed:** No Service change beyond SYN-FM2-40962; the families list in PPO-STD-001 includes CMS
 - **Owner:** Service file; Engineering; Repository (PPO-STD-001)
 
+#### SVA-035 · Minor · GV1 · decided name
+- **Where:** Read me (0:1) · 117:66487
+- **Rule:** File name agrees across Figma, the Read me header and the record (Audit prompt §4.8 GV1)
+- **Expected:** One name for the file: "PPO - Service module" (confirmed by Dean, 13 Nov 2026)
+- **Found:** The link Dean sent on 12 Nov reads "PPO - Service module"; the Read me header and record say "PPO - Service module (proposal)"
+- **Do:** Change the Read me header card 117:66487 and every in-file mention of "PPO - Service module (proposal)" to "PPO - Service module"; the Service record changes its references in its next change, and the named version to propose becomes "PPO - Service module · alignment batch 1"
+- **Proves it fixed:** A text search of the file finds the name only as "PPO - Service module"
+- **Owner:** Service file; Repository (the Service record, in its next change)
+
 #### SVA-036 · Minor · SH4
 - **Where:** All coordinator pages · Shell / Workspace menu · docked · Service operations 18:3530
 - **Rule:** Proposed pages carry "proposed" until they have routes (This record P4 (proposed); R110 (menus show only ready pages))
@@ -577,4 +585,4 @@ Paste this into the next build session for the Service file. It comes from the r
 
 ### When the batch is applied
 
-The file is a proposal, so the batch itself needs no named version. Ask Dean to save one once it is applied, for example "PPO - Service module (proposal) · alignment batch 1", and cite it in the record. Any later change needs a new named version. Update the record's sheet inventory if a node ID changes, and run `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`.
+The file is a proposal, so the batch itself needs no named version. Ask Dean to save one once it is applied, for example "PPO - Service module · alignment batch 1", and cite it in the record. Any later change needs a new named version. Update the record's sheet inventory if a node ID changes, and run `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`.

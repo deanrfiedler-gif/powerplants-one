@@ -15,7 +15,9 @@ What the decisions settle:
   - The goodwill limit stays proposed.
   - The ban on sync words holds on technician phones; the Shell's "Syncing" pill changes at its next named version.
 
-The record's new section 10 holds the alignment batch with these decisions applied: 40 items for the Service file in order, plus the items for the Settings, Supply, Finance, Sales, Reporting, Engineering, Projects, Shared records, Shell, Library and repository changes. Still open: the file's name, and the text of Addendum A3, on which the Q2 and Q4 decisions partly rest. Nothing in any Figma file or other record was changed, and no design is accepted.
+Dean also confirmed the file's name: "PPO - Service module". The batch renames the file's Read me header to match, and the Service record changes its references in its next change.
+
+The record's new section 10 holds the alignment batch with these decisions applied: 41 items for the Service file in order, plus the items for the Settings, Supply, Finance, Sales, Reporting, Engineering, Projects, Shared records, Shell, Library and repository changes. Still open: the text of Addendum A3, on which the Q2 and Q4 decisions partly rest. Nothing in any Figma file or other record was changed, and no design is accepted.
 
 Checked: `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`. The decisions were cross-checked against the Settings record as it stands on `main`. That record now says Settings edits the scheduling policy and record references and that every module publishes its own other policy families, which fits Q1. Every record, person, value and date shown is synthetic.
 
