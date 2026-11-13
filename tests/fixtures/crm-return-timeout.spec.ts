@@ -22,15 +22,16 @@ test("deliberate timeout retains CRM return events", async ({
     );
     await page.goto("http://127.0.0.1:3000/work/synthetic-return");
     await page.getByRole("link").click();
-    // Flush events before triggering the actual runner deadline. The subsequent
-    // finally still tries to evaluate the page after Playwright tears it down.
-    await page.evaluate(() =>
-      (
+    // Let deferred cancellation sampling run, then flush its delivered events
+    // before the real runner deadline tears down the page.
+    await page.evaluate(async () => {
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+      await (
         window as typeof window & {
           ppoCrmReturnDiagnostics: () => Promise<void>;
         }
-      ).ppoCrmReturnDiagnostics(),
-    );
+      ).ppoCrmReturnDiagnostics();
+    });
     info.setTimeout(1);
     await page.getByRole("button", { name: "SYN deliberately absent" }).click();
   } finally {
