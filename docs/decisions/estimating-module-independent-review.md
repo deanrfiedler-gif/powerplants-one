@@ -2,13 +2,13 @@
 document_id: PPO-ESTIMATING-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Estimating module on 12 November 2026 at Dean's request, by a session that did not draw it; findings and recommendations only; nothing was changed in Figma; no design is accepted or amended by this record; no application code, route, migration, permission or deployment
+status: Independent read-only review of the accepted private Figma file for the Estimating module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided all nine questions on the recommendations the same day (section 9); the review itself changed nothing in Figma; the alignment batch it leads to is a design amendment that needs Dean's acceptance and a new named version; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # PPO - Estimating module independent review, 12 November 2026
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Nothing is drawn. The session that holds the file decides what to draw, Dean decides the questions in section 7, and any change to the accepted file needs a new named version that Dean saves.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Review findings and recommendations. Dean decided the questions of section 7 on the recommendations the same day (section 9). The review itself drew nothing; the alignment batch that follows is an amendment to the accepted file and needs his acceptance and a new named version that he saves.
 
 ## 1. The request
 
@@ -188,3 +188,46 @@ Rules first; AI only where marked, grounded in the record, labelled, reviewed be
 ## 8. Boundary
 
 This record changes no design and accepts none. It corrects no other record: the proposal record's Shell version, file name and A17 wording are findings for the change that follows. It authorises no application code, route, migration, permission, integration, customer communication or deployment. Every record, person, value and date in the file is synthetic.
+
+## 9. Decisions — 12 November 2026
+
+Asked for his decisions, Dean asked for a professional recommendation on each, was given them, and answered: "proceed on your recommendations". In a comment on the batch's pull request the same day he confirmed that this answer "decides Q-A to Q-I as section 7 recommends them", and set out his decisions where this section had gone further than section 7:
+
+> Q-B and Q-I: keep the check against A3 that the recommendations carried. Before the batch, confirm Sam Jordan, the SYN-ORG- numbers and the other organisations against A3, and record the result. · Q-C: accepted, with the Sales file's own open item kept. Date-based identifiers such as r2026-07 and supplier references such as SQ-2026-114 stay as they are. · Q-D: draw the Expired stage as a proposal, not as part of the amendment, until D-010 and D-024 decide validity. · Q-E: accepted as part of the N-E16 proposal: an online acceptance creates a response for staff to confirm. · Q-F: accepted. Settings is the current rail item on the Administration sheets. · Q-G: accepted. Panels that are part of a workbench layout keep their width; the Library widths apply to overlay panels. … Nothing in the batch is accepted until I accept it in words and save the named version.
+
+| # | Decision |
+|---|---|
+| Q-A | One state-driven primary as Shell rule R117 says, labelled by the person's duties: "Issue & send", "Issue" (then "With Sales to send") or "Send quotation". Issue and Send remain two recorded decisions. This supersedes the "Issue & send" part of A17 in the [proposal record](estimating-module-refined-ui-proposal.md) |
+| Q-B | Sam Jordan replaces Kim Patel as the one engineering owner, subject to a check against addendum A3 whose result is recorded |
+| Q-C | Two-digit revisions and versions everywhere, briefs and rule sets included, with the Sales file's own open item kept; date-based identifiers such as r2026-07 and supplier references such as SQ-2026-114 stay as they are |
+| Q-D | Quotation validity printed as a date, set at issue as the issue date plus 30 days, labelled illustrative until D-010 and D-024 decide. The Expired stage is drawn as a proposal, not as part of the amendment |
+| Q-E | The customer quotation page is redrawn as a proposal; selectable options (N-E15) and online acceptance (N-E16) are drawn as proposals that wait on D-024, and an online acceptance creates a response for staff to confirm |
+| Q-F | The menu entries are decided in the Shell file; Settings is the current rail item on the Administration sheets |
+| Q-G | Overlay panels take the Library's widths, 360 or 480 px by content; panels that are part of a workbench layout keep their width |
+| Q-H | A read-only phone 390 summary of the estimate, and tablet 1024 and phone 320 sheets for the customer page |
+| Q-I | Organisations take the SYN-ORG- family with the Sales numbers (Riverbend Growers SYN-ORG-000142), subject to the same check against addendum A3 for every organisation |
+
+The process recommended with the decisions stands: the session that wrote this review applies the alignment batch after claiming the file in a draft pull request; the facts (ER-01 to ER-13) go first; one named version is saved at the end; a different session checks the changed sheets before Dean accepts them; N-E11, N-E12 and N-E13 are drawn as proposals; and the Sales file is the next file to audit.
+
+**The A3 check is open.** The comment arrived after the batch had started, and this session does not hold addendum A3. Sam Jordan and the SYN-ORG- references were applied provisionally, and checking them against A3 is still to do. If A3 differs, the file is corrected before Dean accepts the batch.
+
+What is drawn, with node IDs, is recorded in the proposal record. None of it is accepted until Dean accepts it in words and saves the named version.
+
+## 10. Outcome of the alignment batch — 12 November 2026
+
+The batch was drawn the same day; section 13 of the [proposal record](estimating-module-refined-ui-proposal.md) lists every change and new sheet with its node. Status of each finding:
+
+| Findings | Status |
+|---|---|
+| ER-01 to ER-14, ER-16, ER-17, ER-21, ER-27 to ER-31, ER-33, ER-35, ER-36 | Fixed in the file |
+| ER-15 | Fixed in layout and order; drawn as local frames rather than instances of the Shell component (A34) |
+| ER-18 | Fixed for the thirteen overlay drawers; docked panels keep their width (Q-G) |
+| ER-19 | Carried to the Shell file (Q-F) |
+| ER-20 | Fixed: 46 tables re-balanced, clipped texts end in an ellipsis, gate sentences shortened |
+| ER-22 to ER-25 | Fixed |
+| ER-26 | Partly: the file's own small text fixed; the 10 px texts inside the Shell copies belong to the Shell file |
+| ER-32 | Partly: E05's focus lines fixed; some KPI captions still truncate |
+| ER-34 | Partly: duplicate Columns buttons removed; register tables still stop short of the page foot |
+
+New sheets: QP09 to QP13 (Q-E, Q-H, N-E13, N-E15, N-E16), PH14 (Q-H), CO07 (N-E11), W17 (N-E12) and Q30 (the Expired stage, Q-D), all proposed. After Dean's comment the Expired stage was taken out of the amendment and drawn as Q30, and Settings became the current rail item on AD01 to AD08 (Q-F). The A3 check of Q-B and Q-I is open (section 9). A Design ready check by a session other than the one that drew the batch is still to run before Dean accepts it and saves a new named version.
+
