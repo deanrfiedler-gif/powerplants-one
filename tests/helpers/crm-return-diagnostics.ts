@@ -215,7 +215,10 @@ export async function crmReturnDiagnostics(
     ] as const)
       document.addEventListener(name, capture, true);
     Object.assign(window, {
-      ppoCrmReturnDiagnostics: () => {
+      ppoCrmReturnDiagnostics: async () => {
+        // Capture callbacks queue their settled samples before this timer. Let
+        // those samples join pending before recording final state and flushing.
+        await new Promise<void>((resolve) => setTimeout(resolve, 0));
         record("final-state");
         observer.disconnect();
         for (const name of [
@@ -226,7 +229,7 @@ export async function crmReturnDiagnostics(
           "click",
         ] as const)
           document.removeEventListener(name, capture, true);
-        return Promise.all(pending).then(() => undefined);
+        await Promise.all(pending);
       },
     });
   }, activityId);

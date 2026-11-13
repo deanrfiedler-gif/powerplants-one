@@ -112,5 +112,29 @@
       ],
       "log_sha256": "6658680a1860087ba33046ddec32a78f67a23edbe05de6334d94c93ffd1e6cb5"
     }
+  },
+  "shared_flush": {
+    "base_commit": "56cee14f7f857d81a1ff5828c681d5acd60b53ab",
+    "scope": "Move the timer turn into ppoCrmReturnDiagnostics before final state/listener removal/Promise.all; remove duplicate caller waits",
+    "source_sha256": {
+      "tests/helpers/crm-return-diagnostics.ts": "6ccfb6be14e5fddc15fc6c6aade4b4a1a3aa6879c1d13433032096f166fe0c62",
+      "tests/browser/crm-return-diagnostics.spec.ts": "6b4f253b7f5328ecfaa7edf48c2f2b024174db0526cbea5b46fe76a77fb69fcb",
+      "tests/fixtures/crm-return-timeout.spec.ts": "702eabdac44afa20609e56999e4f977744ec1ed208fabfbc35ab03a73cdfeb7d"
+    },
+    "assertions_timeouts_retries_changed": false,
+    "previous_caller_version_ci": {
+      "head": "56cee14f7",
+      "job": 131635317030,
+      "passed": 357,
+      "diagnostics_cases_passed": 3
+    },
+    "desktop_mobile_repetitions": {
+      "passed": 120,
+      "failed": 0,
+      "repetitions_per_project": 20,
+      "retries": 0,
+      "caller_waits": false,
+      "log_sha256": "543f80f0dcd9ed9cfa2cb4ac9f9742f244ea3d58c316a15ec0b4e1f451f0ff7f"
+    }
   }
 }

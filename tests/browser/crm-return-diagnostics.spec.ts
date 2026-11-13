@@ -70,17 +70,14 @@ test("CRM return events already sent to Node survive page teardown before finish
   );
   await page.goto("http://127.0.0.1:3000/work/synthetic-return");
   await page.getByRole("link").click();
-  // Cancellation is sampled in the next browser task. Let that task run before
-  // flushing delivery and destroying the page; flushing current promises alone
-  // can race a click-settled callback that has not run yet (especially on mobile).
-  await page.evaluate(async () => {
-    await new Promise<void>((resolve) => setTimeout(resolve, 0));
-    await (
+  // Await delivery, then destroy the in-page state before the helper's finally.
+  await page.evaluate(() =>
+    (
       window as typeof window & {
         ppoCrmReturnDiagnostics: () => Promise<void>;
       }
-    ).ppoCrmReturnDiagnostics();
-  });
+    ).ppoCrmReturnDiagnostics(),
+  );
   await page.close();
   await diagnostics.finish();
   const text = await readFile(
