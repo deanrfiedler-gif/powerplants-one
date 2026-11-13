@@ -64,5 +64,17 @@
       "passed": 1455,
       "failed": 0
     }
+  },
+  "shared_flush_integration": {
+    "parent_commit": "11c56fb9dd4e4cde9d31b046ad5b770f9ec3d5bb",
+    "helper_fix_commit": "0d3b4bba1",
+    "merge_commit": "4269e23f3a2dea667360443b89d75706e67d9e21",
+    "main": "11ac556109b2b310f0b31dd15a3e70ae492901a6",
+    "application_scripts_d1_renderer_delta": "none",
+    "parent_browser_repetitions": {
+      "passed": 120,
+      "failed": 0,
+      "retries": 0
+    }
   }
 }
