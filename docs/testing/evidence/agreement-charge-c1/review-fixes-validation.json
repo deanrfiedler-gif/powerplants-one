@@ -68,5 +68,49 @@
     "c1-fixes-diagnostics.log": "52e1bf19cee8580ebf4d8e92befa3fb06c44a253ca4fdb54335cc590c2055c6e",
     "c1-fixes-real-renderer-database.log": "d3b8dc4d68f103710e4bdc47505bdc07ff55ec07709114821d30e090d4229e27"
   },
-  "actual_timeout_artifact_sha256": "d0980d45f315ab152b457f0fb2c977ed6f80ee6d561989ebe9dcd3e886c01eef"
+  "actual_timeout_artifact_sha256": "d0980d45f315ab152b457f0fb2c977ed6f80ee6d561989ebe9dcd3e886c01eef",
+  "followup": {
+    "base_commit": "4b07fba0a43856b6a6a34f39acf16b4b4935c6b8",
+    "source_note": "Two synthetic browser fixtures await the deferred-sampling task before flushing; diagnostics helper unchanged",
+    "source_sha256": {
+      "tests/browser/crm-return-diagnostics.spec.ts": "8082cd09eae676fb2e18ba03f1d7db78d8dfdfd2f8de79c23dd5cb535ace43a5",
+      "tests/fixtures/crm-return-timeout.spec.ts": "fef9f05df3b5d86ae50ef3e25dbdad30798fa27c865c00c57b5bd2ece5b6c5eb"
+    },
+    "final_units": {
+      "passed": 1455,
+      "failed": 0,
+      "head": "4b07fba0a",
+      "log_sha256": "395df3135b69b2ab3f45057266ddec5e180f71f3919dd75c7fa8bd81ffe4f4fb"
+    },
+    "clean_main_units": {
+      "passed": 1450,
+      "failed": 0,
+      "head": "e41f806a6",
+      "log_sha256": "4b16c325d248c94726d1fcd4831404861a68da304cae74d6e87aa9b645b7d653"
+    },
+    "original_helper_timeout_control": {
+      "status": "timedOut",
+      "browser_events": 0,
+      "page_state_unavailable": true,
+      "log_sha256": "6d9e89debff437b476bd027d6e4beda7a2248bcf60d5fd8882c4a9aa76d596b1"
+    },
+    "ci_failure": {
+      "job_id": 131620530843,
+      "run_id": 43344218852,
+      "artifact_id": 14001519679,
+      "artifact_sha256": "faf9a9f9cb2cde4690817f8c70ee985d66a830682efead712b30d06d79935347",
+      "events_sha256": "a78762e8cbc732de4f38d3c297b36b0bea87f3386a8eb929a61a33d51b767534"
+    },
+    "desktop_mobile_repetitions": {
+      "passed": 60,
+      "failed": 0,
+      "repetitions_per_project": 10,
+      "retries": 0,
+      "projects": [
+        "desktop-chromium",
+        "mobile-chromium"
+      ],
+      "log_sha256": "6658680a1860087ba33046ddec32a78f67a23edbe05de6334d94c93ffd1e6cb5"
+    }
+  }
 }
