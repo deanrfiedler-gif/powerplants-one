@@ -1,0 +1,15 @@
+
+> powerplants-one@0.1.0 db:reset
+> node --env-file=.env.local --import tsx scripts/database.ts reset
+
+Database reset: completed
+✔ Claim evidence HTTP preserves exact request receipts and refuses foreign scope, wrong duties and altered commands (1280.921898ms)
+✔ Claim evidence HTTP real renderer serves exact protected original HTML and PDF (2631.622317ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6030.337586

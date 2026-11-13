@@ -1,0 +1,9 @@
+✔ B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing (56024.78516ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58320.976985

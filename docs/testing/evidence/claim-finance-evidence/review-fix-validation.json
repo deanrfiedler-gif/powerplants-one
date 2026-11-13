@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-13",
+  "executed_commit": "e18a7c5828f0ee20903b32f118fd80c824ae3e24",
+  "reviewed_commit": "4a11488eb63d9dab4df31dc9e05654b92e9c044b",
+  "parent_commit": "4b07fba0a43856b6a6a34f39acf16b4b4935c6b8",
+  "correction_commit": "db7052757",
+  "scope": "D1 HTTP assertion plus C1 tests and current main integration; subsequent changes are evidence only",
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.65.0",
+    "chrome": "157.0.8103.78",
+    "renderer_mock": false
+  },
+  "results": {
+    "compiled_http": {
+      "passed": 2,
+      "failed": 0,
+      "fresh_reset": true
+    },
+    "connected_real_renderer": {
+      "passed": 1,
+      "failed": 0,
+      "deadline_ms": 120000
+    },
+    "build": "passed",
+    "final_typecheck": "passed",
+    "focused_lint": "passed",
+    "full_unit_suite": "not repeated on this child; parent local installer-lock limitation is retained in C1 evidence",
+    "full_database_http_browser_upgrade_suites": "not repeated locally; current-head CI required"
+  },
+  "output": {
+    "html_hash": "2cd843254cb1a7768f6c642fd3d0afc2c5a728f55e659512a0ce6f2ab15600bf",
+    "html_bytes": 804825,
+    "pdf_hash": "0304d208b0603577ea55b3a69f6f31f5163fc7d0d92b10612caa8866d2b1fe0e",
+    "pdf_bytes": 529985,
+    "browser_version": "157.0.8103.78",
+    "renderer_version": "playwright-1.63.0"
+  },
+  "log_sha256": {
+    "claim-d1-http-final.log": "c656e14181ff3cdc6f05125dbc6e5264de9e0aef128f8738c05fb64bd90ad1a9",
+    "claim-d1-connected.log": "f1b0004073a8168caf10a2070322f246ab67b6e209005e8bfed95b2a78e1713a",
+    "claim-d1-build.log": "826484df9ff3cd62877b8701e99bfa676c5dc5f50baae5a10360b556d42de4fe",
+    "claim-d1-typecheck.log": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a"
+  },
+  "source_sha256": {
+    "tests/http/claim-finance-evidence.test.ts": "b329729e0c8ea6a3b5a6cc1aa434f8275810c15da1cacd0bc2fa2edd43281831",
+    "tests/helpers/connected-maintenance-billing.ts": "1ff6cb5843854048926a5d61f2340e289b86b8f84eb210e7a9dbb26a6b27d3f6",
+    "tests/helpers/maintenance-dates.ts": "323d3d9924a5b92b92a0fd35aee825c241ddbb9e09003fc726f3e209ed422c08",
+    "src/finance/http.ts": "f91cff62822ba962d514e8d6b08aec89dfbb399ed87e41c50bb1efe2fa08de2c",
+    "scripts/local-server.ts": "bbe2d60fc9bb6d4129a32404b79e6428dccb47690e3ee627542a4a47614648a0"
+  }
+}
