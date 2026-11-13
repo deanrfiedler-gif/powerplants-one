@@ -11,6 +11,8 @@ versioning: git
 
 Dean asked what backend work should follow the existing delivery. The recommendation named a permission-scoped PJ-07 readiness API, exact source evidence/owners, explicit missing/stale/unavailable sources and connected proof that completing a follow-up cannot clear a blocker. Dean replied: “Proceed with that work.” This authorises that bounded backend scope. It does not accept the Projects Figma proposal or the missing historical r02 source as an implementation baseline.
 
+On 13 November 2026, after the completed implementation and validation were reported and an explicit exception to the three-build publication limit was requested, Dean replied: “Yes. Proceed however you believe is the most professional.” This authorises publishing the completed PJ-07 implementation to PR #948 despite the earlier builds' outstanding CI. It is a scoped exception for this contribution; the standing concurrency rule and Dean-only merge rule remain in place. Full CI and the required independent Claude review remain separate gates.
+
 [DECIDED by Codex] Reuse the existing Next.js/TypeScript/PostgreSQL architecture and native source readers, with one read-only repeatable-read transaction. The [contract](../contracts/project-delivery-readiness.md) is the authoritative server boundary. No new framework, service, dependency, migration, capability, seed, UI or integration is selected.
 
 1. Start with exact Project-bound Engineering coordination, Supply material demand and specialist briefs. Their native permission and historical-source checks are available now. Direct and indirect WorkOrder prerequisites, whole-project scope applicability and work-release decisions need later contracts; inferred same-site joins would misattribute evidence.
