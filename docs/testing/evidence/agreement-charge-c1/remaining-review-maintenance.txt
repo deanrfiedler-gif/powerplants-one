@@ -1,0 +1,11 @@
+✔ MA01 typed identity, exact receipt, commercial duty, scope and immutable source (6128.358614ms)
+✔ MA02 a later decision or source revision makes old entitlement historical (301.749589ms)
+✔ MA05 separate CRM and Service owners, proposals do not extend source terms (895.526805ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 9172.429114

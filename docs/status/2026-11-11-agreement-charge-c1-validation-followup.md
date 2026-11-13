@@ -1,0 +1,10 @@
+---
+title: Agreement charge C1 CI correction and restart proof
+date: 2026-11-11
+---
+
+The continuing backend batch stays within existing [M2 #904](https://github.com/deanrfiedler-gif/powerplants-one/pull/904) and [C1 #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905), respecting the three-build limit and #897's separate ownership. [Current reconciliation](../delivery/backend-reconciliation.md#project--service--finance-continuation--11-november-2026) confirms merged M1/B1–B4 rather than rebuilding them. C1's attributable Contacts CI failure is corrected after comparing the Finance context and preserved Contact rules; only the working source pin is refreshed, with issued artifacts unchanged.
+
+[Fresh execution](../testing/evidence/agreement-charge-c1/README.md#continuation-validation--11-november-2026) passes the full application check (1,452 units/build), nine unmocked C1 database cases, two selected late-Maintenance upgrades, seven demo upgrades, compiled HTTP, 103 Contacts model groups, deterministic artifact and documentation checks. Four new database cases prove late audit/receipt/outbox rollback and recovery of an independently accepted target after local outcome failure. The actual app/PostgreSQL restart proof replays six original receipts after withdrawal, preserves source/Finance/audit history, accounts explicitly for five fresh sign-ins, and reconciles one AUD 4,800.00 target to one Consumed hold. Initial test-harness failures and corrected reruns are recorded.
+
+No runtime implementation, migration, seed, grant or operational policy changes in this follow-up. Chrome remains absent; no real PDF/browser or complete TS-01/02 acceptance is claimed. Draft runtime CI is skipped, so workflow success is not full runtime validation. Independent Claude review and final-head CI remain separate. Dean merges M2 first; then C1 must retarget and validate current main. TS-02 still needs its adopted six-monthly scenario refresh. No deployment, hosted-data change or live integration.

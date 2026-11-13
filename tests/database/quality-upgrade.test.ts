@@ -254,13 +254,13 @@ for (const state of ["Approved", "OutcomeUnknown", "Reconciled"]) {
       sorted(agentAskSeedGrants([...originalGrants.map(g => g.value), ...expected])));
   assert.deepEqual(sorted(added.map(g => g.value).filter(g => g.capability === "service_escalation.record")),
       sorted(escalationSeedGrants([...originalGrants.map(g => g.value), ...expected])));
-    // 0126 adds only these defaults. Preserve every original field and reject
+    // 0126/0127 add only these defaults. Preserve every original field and reject
     // unexpected new columns; all other tables keep their whole-row comparison.
     const financeDefaults: Record<string, Record<string, unknown>> = {
-      finance_handoffs: { source_kind: "WorkOrder", project_id: null },
+      finance_handoffs: { source_kind: "WorkOrder", project_id: null, agreement_id: null },
       finance_lines: { source_kind: "WorkOrder", claim_basis_id: null, claim_event_version: null,
-        claim_kind: null, claim_target_id: null, claim_amount: null, claim_currency: null, claim_tax_basis: null },
-      finance_allocation_holds: { claim_basis_id: null, claim_kind: null, claim_target_id: null },
+        claim_kind: null, claim_target_id: null, claim_amount: null, claim_currency: null, claim_tax_basis: null, agreement_revision_id: null, agreement_charge_id: null },
+      finance_allocation_holds: { claim_basis_id: null, claim_kind: null, claim_target_id: null, agreement_revision_id: null, agreement_charge_id: null },
     };
     for (const [table, defaults] of Object.entries(financeDefaults)) {
       const originalRows = before[table] as { value: Record<string, unknown> }[];
