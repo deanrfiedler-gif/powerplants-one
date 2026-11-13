@@ -50,5 +50,19 @@
     "tests/helpers/maintenance-dates.ts": "323d3d9924a5b92b92a0fd35aee825c241ddbb9e09003fc726f3e209ed422c08",
     "src/finance/http.ts": "f91cff62822ba962d514e8d6b08aec89dfbb399ed87e41c50bb1efe2fa08de2c",
     "scripts/local-server.ts": "bbe2d60fc9bb6d4129a32404b79e6428dccb47690e3ee627542a4a47614648a0"
+  },
+  "diagnostics_followup": {
+    "parent_commit": "56cee14f7f857d81a1ff5828c681d5acd60b53ab",
+    "merge_commit": "94cfc14c2099f964c884e0d3468b5cc666c87028",
+    "application_scripts_d1_renderer_delta": "none",
+    "parent_browser_repetitions": {
+      "passed": 60,
+      "failed": 0,
+      "retries": 0
+    },
+    "parent_final_units": {
+      "passed": 1455,
+      "failed": 0
+    }
   }
 }
