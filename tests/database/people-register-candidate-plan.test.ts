@@ -1,10 +1,14 @@
 import assert from "node:assert/strict";
 import { after, test } from "node:test";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import { reset } from "../../scripts/database";
 import { localConfig } from "../../src/platform/config";
-import { closeDatabase, transaction } from "../../src/platform/database";
+import {
+  closeDatabase,
+  database,
+  transaction,
+} from "../../src/platform/database";
 import { createSession } from "../../src/platform/identity";
 import { withWorkingCompany } from "../../src/platform/working-company";
 import { peopleRegister } from "../../src/shared/people-register";
@@ -17,7 +21,8 @@ import {
   assertNeverAnalysed,
   assertBoundedLoops,
 } from "../helpers/people-register-plan";
-import { CRM } from "../helpers/crm";
+import { CRM, crmBase } from "../helpers/crm";
+import { addAffiliation, createOrganisation } from "../../src/shared/commands";
 assert.equal(localConfig().database_name, "ppo_synthetic_test");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
@@ -168,3 +173,120 @@ for (const size of [30, 45])
       assertBoundedLoops(fixed.plan!, fixed.data.total);
     });
   });
+
+test("native long organisation notes do not spill the People affiliation candidates", async () => {
+  await isolatedPlan(async (seedStatistics, setupAttempt) => {
+    const p = (await createSession("coordinator")).principal;
+    const native = await nativeFixture(p, 30);
+    // Deterministic low-compressibility text exercises out-of-line storage at
+    // the native command's maximum length, unlike repetitive filler text.
+    const notes = Array.from({ length: 313 }, (_, i) =>
+      createHash("sha256").update(`SYN organisation notes ${i}`).digest("hex"),
+    )
+      .join("")
+      .slice(0, 10000);
+    const organisation = randomUUID();
+    await createOrganisation(p, {
+      ...crmBase(),
+      id: organisation,
+      company_id: CRM.company,
+      display_name: "SYN Long notes organisation",
+      relationship_status: "Active",
+      owner_id: p.actor_id,
+      access_class: "Internal",
+      notes,
+    });
+    const noteStorage = (
+      await database().query(
+        "SELECT length(notes)::int AS characters,pg_column_size(notes)::int AS bytes FROM ppo.organisations WHERE id=$1",
+        [organisation],
+      )
+    ).rows[0];
+    assert.deepEqual(noteStorage, { characters: 10000, bytes: 10000 });
+    const affiliations = [];
+    for (let i = 0; i < 450; i++) {
+      const id = randomUUID();
+      await addAffiliation(p, organisation, {
+        ...crmBase(),
+        id,
+        expected_version: i + 1,
+        person_id: native.created.people[0],
+        role_label: `Synthetic role ${i}`,
+        valid_from: "2026-01-01",
+        valid_to: null,
+      });
+      affiliations.push(id);
+    }
+    const before = await assertNeverAnalysed(peopleTables);
+    const old = await withWorkingCompany(p.actor_id, CRM.company, () =>
+      capturePeople(original, p, {}, true),
+    );
+    const fixed = await withWorkingCompany(p.actor_id, CRM.company, () =>
+      capturePeople(peopleRegister, p, {}, true),
+    );
+    const afterStatistics = await assertNeverAnalysed(peopleTables);
+    assertPeopleEqual(old, fixed);
+    assert.equal(fixed.data.total, 31);
+    assert.equal(fixed.data.organisations.length, 32);
+    const person = fixed.data.items.find(
+      (r) => r.id === native.created.people[0],
+    );
+    assert.ok(person);
+    assert.equal(person.organisations.length, 451);
+    assert.deepEqual(
+      person.organisations
+        .filter((o) => o.id === organisation)
+        .map((o) => o.role)
+        .sort(),
+      Array.from({ length: 450 }, (_, i) => `Synthetic role ${i}`).sort(),
+    );
+    mkdirSync("tmp/people-register-candidate-cost", { recursive: true });
+    writeFileSync(
+      "tmp/people-register-candidate-cost/long-notes.json",
+      JSON.stringify(
+        {
+          baseline,
+          native,
+          organisation,
+          affiliations,
+          noteStorage,
+          seedStatistics,
+          setupAttempt,
+          before,
+          afterStatistics,
+          old,
+          fixed,
+        },
+        null,
+        2,
+      ),
+    );
+    console.log(
+      JSON.stringify({
+        fixture: "long-notes",
+        work_mem: fixed.work_mem,
+        old: {
+          loops: old.max_loops,
+          hits: old.shared_hit_blocks,
+          ms: old.execution_ms,
+          temp: old.temp_written_blocks,
+        },
+        fixed: {
+          loops: fixed.max_loops,
+          hits: fixed.shared_hit_blocks,
+          ms: fixed.execution_ms,
+          temp: fixed.temp_written_blocks,
+        },
+      }),
+    );
+    // This dense fixture tests row width, not the ~one-affiliation-per-person
+    // loop bound retained unchanged in the two native-volume cases above.
+    // Do not assert elapsed timings or change PostgreSQL memory settings.
+    assert.equal(
+      fixed.temp_written_blocks,
+      0,
+      "Unused notes must not spill to temporary storage",
+    );
+    assert.equal(fixed.temp_read_blocks, 0);
+  });
+});
