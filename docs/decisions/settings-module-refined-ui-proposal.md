@@ -2,14 +2,14 @@
 document_id: PPO-SETTINGS-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposal, 11 November 2026; all sheets, the Read me cards, the file-wide verification and the audit are complete (sections 6 and 9); design acceptance is Dean's and has not been given; no named version is saved; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
+status: Owner-accepted design, 13 November 2026 (section 11; Dean adopted every recommendation, C7 is resolved by the brand/navy primary, and the Settings reference families are adopted into PPO-STD-001); the named version "PPO - Settings module (accepted)" is Dean's to save and is not yet saved, so no build basis is pinned; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every record shown is synthetic
 source_commit: 1888cc81d4c99e68836390110a6655e767fa17d5
 versioning: git
 ---
 
 # Settings module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Proposal. Sections 1 to 8 are the proposal record, section 9 the audit and section 10 the audit items applied on 13 November 2026. Later sections will record the audit, Dean's acceptance, further batches and named versions exactly as the [Sales record](sales-module-refined-ui-proposal.md) does.
+**Owner:** Dean Fiedler · **Date:** 10 November 2026, completed 11 November 2026 · **Status:** Owner-accepted design, 13 November 2026 ([Decisions and acceptance — 13 November 2026](#11-decisions-and-acceptance--13-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance. Section 9 is the audit, section 10 the audit items applied on 13 November 2026, and section 11 Dean's decisions and acceptance. Later sections will record the named version and any further batches, as the [Sales record](sales-module-refined-ui-proposal.md) does.
 
 On 10 November 2026 Dean asked for the refined UI pages of the Powerplants One Settings module to be designed in a new, empty private Figma file, "PPO - Settings module (proposal)", inside the accepted shell and to at least the standard of the Sales module file. The module is the **Administration** workspace reached from More (fourteen pages in the accepted Shell menu), the **Settings** rail item that opens the Settings hub, **Assistant settings** (AI-06), **My account and preferences** (SH-03, SH-05, EC-02) and the module's own **global configuration**. His brief set the scope, decisions D1 to D13, one synthetic dataset as at Thursday 5 November 2026, 09:00 AEDT, signed in as systems administrator Taylor Quinn, and Addendum A3 (persona and story reconciliation, as amended for Service, Finance and Settings on 10 November 2026). He added a standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach." The ten questions in the brief (Q1 to Q10) were therefore answered by their stated defaults; each is recorded in section 5 and can be reversed.
 
@@ -310,7 +310,7 @@ Across every scope: two people act on every change that matters (hub Q1; access 
 | GL01 | Edit menu (administrators) — Administration menu defaults version 2, reviewed; sets defaults for everyone | D | `129:882` |
 | GL02 | Manage workspaces — landing and secondary pages, readiness Ready or Unavailable, feature readiness; version 1 in force (full length) | D | `132:1183` |
 | GL03 | Companies and tenants — Powerplants AU (SYN01) and SYN Greenhouse Demonstration (SYN02 read only, Authority not configured) | D | `132:1721` |
-| GL04 | Numbering families registry — 81 families in 82 rows (19 adopted, 62 proposed), the DSP clash flagged (full length) | D | `133:1727` |
+| GL04 | Numbering families registry — 82 families (33 adopted, 49 proposed) with the cross-file clash settlement card; drawn on 11 November as 81 families in 82 rows with the DSP clash flagged, changed on 13 November (section 11) (full length) | D | `133:1727` |
 | GL05 | Notification defaults, the seven nudges with their rules, the support owner, run times and retention (full length) | D | `134:2311` |
 | GL06 | Publish configuration version — Taylor Quinn publishes after Dean Fiedler's review; server checks and impact | X | `135:2578` |
 | TB01 | Numbering families on tablet, the clash view | T | `135:2937` |
@@ -389,7 +389,7 @@ Each item is for Dean's decision. A1 to A49 are cited on the sheets and notes ca
 | A47 | MA01 draws the Service page without its docked Service menu | Keep |
 | A48 | Event kinds, saved view names and session devices are synthetic | Keep |
 | A49 | Account addresses are synthetic placeholders; Dean's account shows no address | Keep |
-| A50 | The file is named "PPO - Settings module (proposal)" as Dean created it; the design-to-build standard names the domain file "PPO - Administration & Shared" | Dean to choose; nothing renamed |
+| A50 | The file is named "PPO - Settings module (proposal)" as Dean created it; the design-to-build standard named the domain file `PPO - Administration` (first quoted here as "PPO - Administration & Shared"; corrected 13 November 2026) | Dean to choose; nothing renamed |
 | A51 | Page titles are the accepted Shell menu's fourteen labels; the decision records' names (Mappings & reconciliation, Integrations, Retention & lifecycle) are sub-lines. Two boundaries are drawn as splits: AD-05 reconciles records sent against records posted while FN-06 owns values against ledger balances; AD-05 links Finance differences that FN-01 and FN-02 own | Keep; record the labels in the design register in its own change |
 | A52 | The Settings reference families (ACR, SYNC, MAP, DQF, DQ-P, EXP, PIR, OPI, REL, MEX, REH, HLP, AIF, TDF) are proposed additions to the type catalogue; OPI replaces the Design's `SYN-INC-` on Operational health (Service's field incidents keep INC) and MEX replaces `SYN-EXC-` on Migration (Finance exceptions keep EXC) | Adopt through PPO-STD-001 in its own change |
 | A53 | Send states use the five words of the Supply, Service and Finance files; the AD-04 proposal's and EI-5's words map as waiting → Prepared, sent → Sent, posted → Posted, failed → Refused, needs attention → Unknown or Refused by cause | Keep |
@@ -523,7 +523,7 @@ Run inside Figma over every sheet, with only the findings returned:
 | ID | Correction | State |
 |---|---|---|
 | C8 | OH13 recovery wording corrected to "Retried 09:05, Durable"; PS06 set to 09:06, PS07 and PS11 labelled as counterfactual, PS10 set to 09:25, PS12 set to 08:10 before Dean's review, and PS09's read-only list changed to facts true at 09:00 (scheduling version 1 in force, SYN-INV-000453 posted Wed 4 Nov); SH08, SH18 and EM07 primaries disabled with reasons | Fixed |
-| C7 | Record toolbar primary: white on brand/green-deep `#3d9a37` is 3.57:1. Proposed: a separate button-fill token at `#34842f` (the same hue darkened by 14 %), which gives 4.65:1; brand/green-deep stays for the focus ring (3.57:1 meets the 3:1 rule for UI edges) | **Open**: decide on the Shell file; this file follows |
+| C7 | Record toolbar primary: white on brand/green-deep `#3d9a37` is 3.57:1. First proposed here: a separate button-fill token at `#34842f`, giving 4.65:1. That proposal is withdrawn. Dean had already decided on 12 November 2026 that primary buttons return to brand/navy (Q-B, recorded in the Shell file and the cross-file audit as AC-13), and this record had missed it. brand/green-deep stays for the focus ring (3.57:1 meets the 3:1 rule for UI edges) | Fixed the same day with brand/navy (section 11) |
 
 ### 10.3 Refinements, gaps and polish applied
 
@@ -540,7 +540,7 @@ A position check on the three pages that gained sheets found no overlap and ever
 
 | ID | Why it is not done here |
 |---|---|
-| C7 | A change to an accepted Shell component; Dean decides |
+| C7 | Closed in section 11: Dean's Q-B navy primary applied |
 | R1 | Persona-correct badges and phone bars need per-person counts and bars that the dataset does not define |
 | R2 | The docked Service menu belongs to the Service file and is not in this one |
 | G1 | Keyboard, screen-reader and 200 % zoom demonstrations, and prototype links: a review with a person and a device |
@@ -549,3 +549,78 @@ A position check on the three pages that gained sheets found no overlap and ever
 
 Dean then saves a named version; any later design change needs a new one.
 
+
+## 11. Decisions and acceptance — 13 November 2026
+
+Dean asked for professional recommendations on the decisions still open, then answered: "I am happy for you to proceed based on all your professional recommendations." That adopts each recommendation below and, with them, the design. The cross-file alignment audit on `main` ([figma-cross-file-alignment-audit.md](figma-cross-file-alignment-audit.md)) had already recorded three of Dean's decisions that bear on this file, and this record had not yet applied them: the brand/navy primary (Q-B, AC-13), `SYN-DPT-` for a Finance dispute (AF-137) and labelled later frames (AF-138).
+
+### 11.1 Decisions and what was changed
+
+| Item | Decision | Applied in the file |
+|---|---|---|
+| C7 · AF-001 · AF-139 | Primary buttons use brand/navy: white on it is 14.37:1 (Dean's Q-B of 12 November 2026; [Shell record section 13](shell-refined-concept-design.md#13-primary-action-returned-to-navy--12-november-2026)). The `#34842f` token first proposed in 10.2 is withdrawn. brand/green-deep stays for the focus ring | The seven "Button · Primary" fills in the local record header toolbar sets (`19:804`, `19:805`) are bound to brand/navy; no instance overrode them. ST01's contrast row reads 14.37:1, and its notice now says every pair passes. The Interaction states notes card is updated |
+| AF-047 | Scrims bound to the colour variables | 21 scrim rectangles bound to brand/navy at 32 % |
+| AF-137 | The Goulburn disputed invoice is `SYN-DPT-000003` | 5 texts on Retention |
+| AF-138 | The 09:40 publication is shown as a later frame | SH06 is labelled as the frame at 09:40. SH08, SH13, SH17 and SH18 are labelled as later frames, after the 09:40 publication. SH07 already said so |
+| AF-046 | The order revision reads `SYN-PO-000236 r02`; the integration key is unchanged | 1 text on Integrations |
+| AF-141 | The clashes between module files are settled on GL04 as a **proposal** for PPO-STD-001: DSP stays the Supply dispatch, and Finance disputes move to DPT; CLM stays the Finance progress claim, and Supply supplier claims move to SCL; EAR stays the outcome review, and the earth tester moves to ERT; CAL stays the calibration proposal, and Engineering's instrument moves to INST; PRS for pressure gauges, not PG; FLO for flow meters, not FLM; MEG for insulation testers, while INS stays the Service inspection | A settlement card on GL04, the DSP and DPT rows, and the tablet clash view and notes card. Adoption needs Dean as registry owner and the module files named, in their own changes. A64 is superseded |
+| A52 | The fourteen Settings families are adopted into PPO-STD-001 | [PPO-STD-001](../standards/naming-conventions.md) section 10.2 gains the rows ACR to TDF and a dated amendment. GL04 marks them Adopted: 82 families, 33 adopted, 49 proposed |
+| A4 | Propose, publish, apply, retry and sign-off stay on desktop and tablet | Recorded as an accepted departure on the AD-02 register page |
+| A7 | The collapsed strip stays 12 px, as the accepted component | No change |
+| A26 | An incident closes when a second administrator confirms it | As drawn; the duty stays proposed (A58) |
+| A30 | "Safe retry" is renamed "Retry with checks" | 9 texts on Operational health |
+| A35 | The 9.11 migration counts stand | No change |
+| A50 | The file is to be renamed "PPO - Settings module (accepted)" | The Read me header carries the name. Dean renames the file. The [design-to-build standard](../standards/design-to-build-standard.md) section 3 now names `PPO - Settings module`. The A50 row's quotation of the old name is corrected |
+| A58 | No capability, permission or grant is written until each page is built; the † capabilities stay proposed | None |
+| A59 | The Global configuration area is adopted as this module's own settings | None; its capabilities stay proposed (A58) |
+| A17, A22, A24 | Not decided here: they stay with AD-04 Q1 to Q6, AD-03 Q1 and Q3, and AD-07 Q1 to Q7 | None |
+| R1, R2 | Accepted as departures. People other than Taylor Quinn keep the accepted shell's badge counts and phone bars. MA01 shows the Service page without its docked menu, which belongs to the Service file | None |
+| G4 | The design register carries the refined design | Each of the fourteen register pages (AD-01 to AD-10, AI-06, EC-02, SH-03, SH-05) names its page in the file and points here, with its status set to the refined design accepted and not built to it. Visual review, functional proof and deployment stay separate |
+| Other section 5 items | As recommended there | None |
+
+### 11.2 The acceptance
+
+What it covers: the 270 sheets listed in section 3, as the accepted design for the Settings module pages. That means the desktop sheets, dialogs and panels, states, tablet and phone. It also covers the rules in section 4 and the decisions in 11.1.
+
+What it does not cover:
+- prototype links and behaviour (G1);
+- the built application pages;
+- any capability, permission, grant, route or integration (A58);
+- the proposed AF-141 settlement;
+- the state-to-tone table across files (AF-140);
+- any business approval.
+
+Changes in the Figma file:
+- The fourteen scope pages and Interaction states now sit under "— Accepted —". "— Proposals —" now sits before Shell and kit. Moving the pages kept every node ID.
+- The Read me header reads "PPO - Settings module (accepted)", with the status Accepted 13 Nov 2026 and Dean's words.
+- The audit card is rewritten as "Audit and decisions — accepted 13 Nov 2026" (`173:3008`, replacing `170:959`).
+- Six notes cards and their frames no longer say "(proposal)".
+
+The named version "PPO - Settings module (accepted)" is Dean's to save. Until it exists, no build basis is pinned ([named-version build handoff](figma-named-version-build-handoff.md)).
+
+### 11.3 Verification
+
+| Check | Result |
+|---|---|
+| Positions | Global configuration restacked after GL04 grew to 4222 px: no overlap between sections or sheets. Read me: no overlap between the four cards |
+| Renders | OH04 (`75:4974`) reads "Retry with checks". The AS06b record header primary (`111:2210`) renders navy. The new audit card and a GL04 row with the Adopted chip read correctly |
+| Words | No "safe" or "safer" remains in any text on the scope pages. The only remaining "awaiting Dean" text is AH05's story, an export awaiting Dean Fiedler's approval |
+| Contrast | The toolbar pair is recomputed: white on brand/navy is 14.37:1. The other pairs are unchanged from section 6 |
+| Repository | `python3 scripts/build_status.py --check`, `python3 scripts/check_foundation.py`, `python3 scripts/check_naming.py` and `npm run studio:check`, with the results in the pull request |
+
+Not re-run: the whole-file structure and position pass of section 6. Only Global configuration and Read me changed geometry, and both were checked.
+
+### 11.4 Still open
+
+| Item | Owner |
+|---|---|
+| Named version and file rename | Dean |
+| G1: keyboard, screen-reader and 200 % zoom review with a person and a device; prototype links | A later review |
+| AF-140: one state-to-tone table across files | Dean and the Library owner |
+| AF-141: the clash settlement adopted into PPO-STD-001 and renumbered in the module files | Dean as registry owner, then each module file |
+| A6: the Shell file's Recent-row stand-ins | The Shell file, when next touched |
+| A51 and the rest of A61: the fourteen menu labels in the register, AD-07's route, the README's hosted capability count | A register maintenance change |
+| P1, P3: one "as at" wording; the early-page truncation review | A polish batch |
+| Section 7's open questions, except C7, A26, A52 and A64 | Each scope's owner |
+
+Any later design change needs a new named version.
