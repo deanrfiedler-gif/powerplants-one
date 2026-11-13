@@ -1,6 +1,6 @@
 # Business configuration and policy publication — design reference
 
-Stable entry: `scope:AD-02`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `scope:AD-02`. Owner: Dean Fiedler. Status: **Refined Figma design owner-accepted, 13 November 2026; not built to it**. The guidance below remains a draft for visual review.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/admin/policies`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -37,6 +37,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Refined design, owner-accepted 13 November 2026: the private Figma file "PPO - Settings module", page "Settings hub and Business policies · AD-02" (`11:4`, 30 sheets: desktop at 1440, dialogs and panels, states, tablet at 1024, phone at 390 and 320). The [Settings refined UI record](../../../decisions/settings-module-refined-ui-proposal.md) lists each sheet with its node ID in section 3 and records the acceptance in section 11. It is drawn inside the accepted shell and governs layout, states and wording where it differs from this page. Accepted departure A4: propose and publish stay on desktop and tablet, and the phone shows the summary, the checks and a disabled "… on desktop". This replaces the accepted amendment phone sheets, which drew Propose and Publish on the phone. The named version is Dean's to save; until it exists, this reference pins no build basis. No image export is retained in the repository and no application capture exists. Visual review, functional proof and deployment remain separate.
 
 Accepted Figma design captures: [Settings hub design r01](../../../reference/ui/settings/settings-hub-design-r01/README.md) and [Settings amendments design r01](../../../reference/ui/settings/settings-amendments-design-r01/README.md). No HTML reference is linked.
 
