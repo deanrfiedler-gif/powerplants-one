@@ -19,7 +19,7 @@ This record is a **proposal**. It changes no code, test, migration, seed, permis
 
 | Source | Use |
 |---|---|
-| Private Figma file "PPO - Shell (accepted)", pages "Shell refined · desktop shell and menus" and "Workspace menus · flyout and docked (accepted 8 November 2026)" | Chrome and geometry: 48 px top bar, 80 px collapsed rail, 48 px right strip, content x 80 to 1392, 280 px docked workspace menu, 432 px drawers and panels at x 960, tablet 1024 bar zones 332 / 360 / 332. The accepted Projects flyout and docked menus (Quick create New project and New activity; groups Delivery, Commercial & risk, Insights; docked Pinned group) are drawn as accepted, with no item invented |
+| Private Figma file "PPO - Shell (accepted)", pages "Shell refined · desktop shell and menus", "Workspace menus · flyout and docked (accepted 8 November 2026)" and "Record header toolbar (accepted 9 November 2026)"; since 13 November 2026 the file cites the named version "Shell refined concept — accepted · record header toolbar" (10 November 2026), whose record header it now uses (section 10) | Chrome and geometry: 48 px top bar, 80 px collapsed rail, 48 px right strip, content x 80 to 1392, 280 px docked workspace menu, 432 px drawers and panels at x 960, tablet 1024 bar zones 332 / 360 / 332. The accepted Projects flyout and docked menus (Quick create New project and New activity; groups Delivery, Commercial & risk, Insights; docked Pinned group) are drawn as accepted, with no item invented |
 | Private Figma file "PPO - Sales module (accepted)", named versions "PPO - Sales module (accepted)", "… · batch 2" and "… · batch 2 · N13", live file read on 9 November 2026 | Page template, Read me cards, the local copies of the shell components, the kit (Status chip, Button, Avatar, Checkbox, Filter chip, Tab, KPI tile), the 101 Lucide icon stand-ins and the derived tablet and phone chrome. The Plugin API cannot copy nodes between files, so each was serialised from the Sales file and rebuilt in the new file by script under the same component names, bound to a recreated "PPO colour" collection with the same 66 variable names and values. Exemplars studied: D01, D04, R01, X07, X23, X24, AD05, AD06, X25, AD07, AD08, ST01 and the Handovers page (W01, W02, AC01, AC02) |
 | Private Figma file "PPO - Design", "— Projects —" pages | Frozen reference for content, accepted rules and stories: Projects register, Project record, Project initiation, Baseline, forecast and dependency review, Risks & issues (proposal), Contract obligations, notices and variations, Subcontractor packages (proposal), Delivery readiness (proposal), Stakeholder updates, Site assurance, Acceptance & closeout (proposal), Delivery performance, Project financial performance. Its shell is not the one copied |
 | [Sales module refined UI proposal](sales-module-refined-ui-proposal.md) and its status fragment | The record this one mirrors |
@@ -41,7 +41,7 @@ Seeded from the interface matrix of the brief. Ownership: PJ-01 prepares only; P
 | Source authority | The decisions in section 1 and Dean's 9 November direction with Addendum A2. The fixture is synthetic: as at Thursday 5 November 2026, 09:00 AEDT (Melbourne), signed in as project manager Morgan Lee unless a sheet names another person; site facts in site time with the zone named when it differs; a few sheets are dated at the event they show and say "as at" (A30, A44) |
 | Incoming handover | The exact accepted Won event and handover r01 from CR-03 (frozen text, fingerprint); the exact quotation revision from ES-07 for the source check; customer, contacts, witnesses and sites from CS-01 to CS-06; design basis, change events and the test, release and configuration basis from EN-02, EN-07 and EN-08; demand from SC-01 and withdrawals from SC-09; bookings, field hours, inspections and incidents from Service and Field (FI-03, FI-05, FI-06, SV-01); the Project update template from DK-06. Arriving creates no business record |
 | Outgoing handover | Questions to Sales and Estimating; the receiving decision and Started; prepared requests to EN-02, PJ-03, SC-01, PJ-06, PJ-08 and PJ-04; the accepted subcontract brief as an EN-06 version-2 handover; `ProjectClaim` to Finance on each milestone claim; approved updates as M4 messages through EC-04; stage pack OUT-13 issue through DK-03; Assurance released to PJ-09; a customer need to Sales as a lead; a schedule change request to Service; a CR-05 aftercare item and an ES-09 outcome review when a project closes; Waiting on customer, Waiting on others, reviews, ageing escalations, owned follow-ups and review deadlines to My Work. Nothing drawn awards, purchases, books, invoices or posts to MYOB |
-| Exceptions and recovery | Loading permitted evidence (PS01, PS08, PS12); true-empty with counts 0 (PS09, PS16, PS23, PS27); filtered-empty with filters restated (PS02, PS14, PS20); could not load (PS03, PS25); denied or not found (PS05, PS11, PS18, IS04); stale, a newer save by someone else (PS06, PS10, PS22, PS26, PS24, PS29); partial source (PS07 outcome unknown; PS13 Engineering, PS15 and PS21 Supply, PS19 My Work, PS30 Service unavailable); outcome unknown with recovery (PS07); read only (RC17, RK11, PS28, PS31, released plans on SA02); bulk action partial failure (PS04); Held (PS17); hold point (SA10) |
+| Exceptions and recovery | Loading permitted evidence (PS01, PS08, PS12); true-empty with counts 0 (PS09, PS16, PS23, PS27); filtered-empty with filters restated (PS02, PS14, PS20); could not load (PS03, PS25); denied or not found (PS05, PS11, PS18); stale, a newer save by someone else (PS06, PS10, PS22, PS26, PS24, PS29); partial source (PS07 outcome unknown; PS13 Engineering, PS15 and PS21 Supply, PS19 My Work, PS30 Service unavailable); outcome unknown with recovery (PS07); read only (RC17, RK11, PS28, PS31, released plans on SA02); bulk action partial failure (PS04); Held (PS17); hold point (SA10) |
 | Departures | Section 5, A1 to A92 |
 | Verification | Section 6 |
 
@@ -85,7 +85,7 @@ Counts: 248 frames on the 14 scope pages, being 234 sheets (139 desktop includin
 | X03 | Export register dialog — scope, columns, format; restricted fields never exported (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | Dialog | `32:3634` |
 | X04 | Reassign projects dialog — bulk reassignment, effective date, reason, logged (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | Dialog | `32:4355` |
 | X05 | Delegate approvals dialog — while Jess Wong is away, scope and dates, both names recorded (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | Dialog | `32:5120` |
-| X33 | Projects register — the accepted Projects workspace flyout open from the rail: Find in workspace, quick create, Delivery, Commercial & risk, Insights (shell) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | Panel | `126:5103` |
+| X33 | Projects register — the Projects workspace flyout open from the rail: a local copy of the accepted Shell flyout (Workspace=Projects) with Find in Projects, CREATE, Delivery, Commercial & risk, Insights, Favourites, Saved views, Recent, All 11 Projects pages and Edit menu (administrators) (section 10) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | Panel | `126:5103` |
 | PS01 | Projects register — loading permitted evidence (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | State | `32:5960` |
 | PS02 | Projects register — filtered, nothing matches, filters restated (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | State | `32:6427` |
 | PS03 | Projects register — could not load, counts read a dash (PJ-02) | Projects register and Pulse · PJ-02 | `route:/projects` · PJ-02 | State | `32:6751` |
@@ -298,12 +298,12 @@ Counts: 248 frames on the 14 scope pages, being 234 sheets (139 desktop includin
 | — | Flows and notes card | Acceptance & closeout · PJ-09 | `route:/projects/acceptance` and its six routes · PJ-09 | Flows and notes | `113:4313` |
 | FS01 | Field work and Service link — project field work: typed work orders, hours and parts as cost evidence only (PJ, FI, SV) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `114:2` |
 | FS02 | Field work and Service link — schedule change request and Service's answer; bookings untouched until Service moves them (PJ, SV) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `114:520` |
-| IS01 | Insights — Delivery performance: one page, five sections, working days first with calendar days beside, counts with their rules, no targets or good-or-bad colour (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:734` |
-| IS02 | Insights — Project financial performance: margin from the adjusted value, billed and indicative over or under billing, finance.read (FN-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1160` |
-| IS03 | Insights — drill-through list: from a count to its rows, the count's rule restated (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1637` |
-| IS04 | Insights — Project financial performance withheld for a non-Finance reader: no amounts, no counts, the grant named (FN-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1957` |
+| IS01 | Removed 13 November 2026 (audit AQ-5; the menu opens RP-03 and FN-03): Insights — Delivery performance: one page, five sections, working days first with calendar days beside, counts with their rules, no targets or good-or-bad colour (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:734` |
+| IS02 | Removed 13 November 2026 (audit AQ-5; the menu opens RP-03 and FN-03): Insights — Project financial performance: margin from the adjusted value, billed and indicative over or under billing, finance.read (FN-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1160` |
+| IS03 | Removed 13 November 2026 (audit AQ-5; the menu opens RP-03 and FN-03): Insights — drill-through list: from a count to its rows, the count's rule restated (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1637` |
+| IS04 | Removed 13 November 2026 (audit AQ-5; the menu opens RP-03 and FN-03): Insights — Project financial performance withheld for a non-Finance reader: no amounts, no counts, the grant named (FN-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Record detail | `116:1957` |
 | PS30 | Field work and Service link — partial source: Service unavailable, booking states, hours and parts a dash; requests withheld (PJ, SV) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | State | `114:897` |
-| TB16 | Insights — Delivery performance at 1024: five sections stacked, counts with rules (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Tablet 1024 variant | `116:2174` |
+| TB16 | Removed 13 November 2026 (audit AQ-5; the menu opens RP-03 and FN-03): Insights — Delivery performance at 1024: five sections stacked, counts with rules (RP-03) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Tablet 1024 variant | `116:2174` |
 | PH15 | Field work and Service link — field work summary on the phone: linked work orders, hours and parts as cost evidence (PJ, FI) | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Phone 390 or 320 variant | `116:2513` |
 | — | Flows and notes card | Field work and insights · PJ | Projects field work view · RP-03 · FN-03 | Flows and notes | `117:1904` |
 | ST01 | Interaction states and accessibility — register rows, column headers, inline edit, address lookup, Gantt, buttons, chips, checkboxes, keyboard order, tabular figures, contrast proof (PJ) | Interaction states · PJ | — (specimen board) | Specimen board | `123:2` |
@@ -329,7 +329,7 @@ Counts: 248 frames on the 14 scope pages, being 234 sheets (139 desktop includin
 - **Schedule.** Baselines are immutable revisions that keep their calendar (RC04, RC10, PG12); the forecast is a reasoned task save (PG04, PH07); FS and SS dependencies warn and never move dates (RC02, PG05, PG13); variance names its calendar ("+6 calendar days · +4 working days, Block C calendar r01"); only the project manager edits the calendar (PG07); a RAID Dependency is not a Gantt predecessor (RK08, PG13); Gantt colours follow [PPO-GANTT-FIGMA-COLOURS-DEC](gantt-figma-colours.md) (A14).
 - **Money.** Requested, priced and approved amounts are never added together (CM01 to CM06, CM11); Unknown is never A$0.00 (CM02); totals read Held when a source drifts (PS17); the reviewer differs from the author (CM05, CM08); approved variations freeze and a signed adjustment is its own record (CM06); margin uses only the PJ-05 adjusted value and is visible to `finance.read` or `shared.finance.read` holders (IS02, IS04); milestone claims total exactly, `ProjectClaim` hands to Finance, no retentions (CM12); field hours and parts are cost evidence only (FS01, RC16).
 - **Register standard.** One line per cell with ellipsis and sideways scroll; view tiles under the title; toolbar with segmented views, filter chips, Filters and Columns; frozen first column and row menu; group rows in the scroll band; footer with the count, as-at time and pager; no second search box. The structural pass counted 4,234 register cells, none wrapping.
-- **Shell geometry and tokens.** Every sheet instances the copied top bar, rail, right strip and, where shown, the docked or collapsed menu; content runs from x 80 to 1392 with 24 px gutters; drawers and panels are 432 px at x 960 (the working calendar 680 px, D3); dialogs 560 to 720 px with a plain navy scrim at 32 %; Roboto 11 to 20 px; colours bound to the "PPO colour" variables; the accepted flyout and docked menus carry exactly the Shell file's items (PJ02, X33).
+- **Shell geometry and tokens.** Every sheet instances the copied top bar, rail, right strip and, where shown, the docked or collapsed menu; content runs from x 80 to 1392 with 24 px gutters; drawers and panels are 432 px at x 960, 480 with the 48 px tab column (the working calendar 752 px, 800 with the tab column, D3; the tablet task panel 480 px; section 10); dialogs 560 to 720 px with a plain navy scrim at 32 %; Roboto 11 to 20 px; colours bound to the "PPO colour" variables; the accepted flyout and docked menus carry exactly the Shell file's items (PJ02, X33).
 - **Counts state their rule** and read a dash when a source cannot be read (PS13, PS15, PS19, PS21, PS30, PS25); unavailable or restricted sources are never zero. Who did what and when sits on every record (history tabs on IN09, RC09, RK03, SU10, AC14); frozen revisions carry fingerprints (handover r01, baseline r01, accepted briefs, approved variations, closeout snapshots); derived values carry a "why this" trace (Needs attention, variance, readiness class).
 - **Tablet and phone.** Tablet 1024 keeps the rail and folds the details column to 44 px; the phone bar is My Work, Projects, Programme, Acceptance & closeout, More (A6, A18); phones read and record site facts, decide where the decision has a phone (variation decision, update approval, check attempts), and never draft updates (Q3) or close a project.
 
@@ -347,7 +347,7 @@ Each item is for Dean's decision; the sheet that shows it carries the A-number i
 | A6 | The phone bar is My Work, Projects, Programme, Acceptance & closeout, More, as the code carries it; Updates sits under More (PJ-08 proposal recorded) | Keep |
 | A7 | A Health view is drawn once as a proposal (PJ08) with every threshold marked "Policy not configured" (PJ-02 Q, NAD-04, D-017) | Keep as proposal |
 | A8 | Display numbers V-01…, O-01…, N-01… for variations, obligations and notices are drawn and marked proposed (PJ-05 G3); the allocation rule is left to the build | Keep as proposal |
-| A9 | The collapsed docked workspace menu is a 56 px icon strip with per-user persistence (PJ03, PG02), derived here because the Shell file has none; a proposed shell departure | Keep as proposal |
+| A9 | The collapsed docked workspace menu is a 56 px icon strip with per-user persistence (PJ03, PG02), derived here because the Shell file has none; a proposed shell departure | Withdrawn 13 November 2026 (audit AQ-4): the Shell has the 12 px strip `29:3119`, now copied locally (section 10) |
 | A10 | The rebuilt shell copy "Shell / Rail · collapsed" shows Projects as the current workspace; everything else matches the Sales copy except node IDs | Keep |
 | A11 | Capabilities marked † in the brief (updates prepare and approve, site assurance plan, check, review and release, RAID read and edit) do not exist in `src/platform/permissions.ts`; the sheets draw them as design assumptions. The observed `coordinator` profile holds no `project.commercial.*` or `project.specialist.*` grant and no `acceptance.technical`, `.commercial`, `.receive` or `.response.validate`; `acceptance.commercial` sits with `finance-reviewer` | Record; a build needs its own capability decision |
 | A12 | Code, the role profile `coordinator` and the earlier Design pages still say Coordinator; renaming them is a separate change | Record |
@@ -355,7 +355,7 @@ Each item is for Dean's decision; the sheet that shows it carries the A-number i
 | A14 | Gantt bars are coloured by task status per PPO-GANTT-FIGMA-COLOURS-DEC; the brief's "pastel by phase" wording is read as that decision | Keep |
 | A15 | Register view tiles double as the counts (Active 9, Needs attention 3, Starting 2, Closing 2, Closed 2026 6) | Keep |
 | A16 | A selection bar appears above the register when rows are selected (PJ04), with Open in sequence and Export list | Keep |
-| A17 | The docked Projects menu is drawn as the Shell file has it, with a Pinned group; the brief's Favourites, Saved views and Recent sit in the flyout's third column | Keep |
+| A17 | The docked Projects menu is drawn as the Shell file has it, with a Pinned group; the brief's Favourites, Saved views and Recent sit in the flyout's third column | Superseded: the group is Favourites (R115, R121; section 9), and the flyout's third column is drawn (section 10) |
 | A18 | The phone bar label reads "Acceptance" for Acceptance & closeout at 390 px | Keep |
 | A19 | Initiation story references (SYN-OPP-000301, -000318, -000296, deal owners, fingerprints) are synthetic where the brief named none | Record |
 | A20 | A reminder and escalate rule on the waiting limit (ageing flag at 5 days, My Work escalation) is drawn as proposed (IN08) | Keep as proposal |
@@ -421,7 +421,7 @@ Each item is for Dean's decision; the sheet that shows it carries the A-number i
 | A80 | Reopen a stage (AC13) mirrors the project reopen (X15) | Keep |
 | A81 | The field work register's "work orders linked 5" counts open links; completed Block C work orders sit under History | Keep |
 | A82 | Project financial performance is drawn as the Projects view of the Finance rail page (FN-03 D1) | Keep |
-| A83 | All amounts on IS02 and the milestone and acceptance counts on IS01 are synthetic | Record |
+| A83 | All amounts on IS02 and the milestone and acceptance counts on IS01 are synthetic | Withdrawn with IS01 to IS04, 13 November 2026 (section 10) |
 | A84 | Schedule change requests carry a label SCR-nn and a lifecycle Requested → Accepted, Proposed another window or Declined | Dean decides |
 | A85 | A drill-through restates the count's rule and opens the records, not a copy | Keep |
 | A86 | Service unavailable withholds the request action | Keep |
@@ -459,7 +459,7 @@ Every sheet was rendered at 1200 to 1440 px and inspected after its batch; corre
 - **Contrast.** ST01 computes 29 foreground-on-background pairs from the 66 "PPO colour" variable values at build time: every text pair meets 4.5:1, the non-text pairs (control borders, focus ring, Gantt bar edge) meet 3:1, none passes only at large text.
 - **Wording scans.** No digit followed by a percent sign appears on any sheet except the phrase "200 % zoom" in tablet labels; "score" appears only in sentences that say there is none; "Coordinator" appears only in the register notes that say it is never used; the `SYN-PPO-` form appears only in two notes cards that cite it as legacy (A1).
 - **Story scan.** Every count, name, date and value on the sheets was taken from section 9 of the brief or from the story node derived from it (`27:182`); where the brief is silent the value is synthetic and listed in section 5 (A19, A29, A31, A38, A43, A45, A50, A51, A52, A63, A74, A79, A83). The Projects side of the Mallee, Yarra and Greenhill handovers matches the Sales file's Handovers page cell for cell; the Woodhaven quotation reads SYN-QUO-000177 r02 as section 9 says, not the Design page's earlier fixture.
-- **Capability scan.** Each sheet names its signed-in person in its label or subtitle and withholds what that person may not see: observers see no amounts (PS28, IS04), non-Finance readers see no value breakdown (PS18), authors cannot decide (CM04), preparers cannot approve (SU04), the project manager cannot override a hold (SA10) or clear a blocker (X19). Capabilities marked † remain assumptions (A11).
+- **Capability scan.** Each sheet names its signed-in person in its label or subtitle and withholds what that person may not see: observers see no amounts (PS28), non-Finance readers see no value breakdown (PS18), authors cannot decide (CM04), preparers cannot approve (SU04), the project manager cannot override a hold (SA10) or clear a blocker (X19). Capabilities marked † remain assumptions (A11).
 - **Repository checks** run for this change: `python3 scripts/build_status.py --check` and `python3 scripts/check_foundation.py`; results in the pull request. `origin/main` was re-merged before the push.
 
 ## 7. Audit and open questions
@@ -502,7 +502,7 @@ Every sheet was rendered at 1200 to 1440 px and inspected after its batch; corre
 | S-20 | AC12, AC14 |
 | S-21 | AC13 |
 | S-22 | FS01, FS02, PH15 |
-| S-23 | IS01 to IS04, TB16 |
+| S-23 | IS01 to IS04, TB16 (removed 13 November 2026, section 10) |
 | S-24 | PS03, PS05, PS11, PS28 |
 | S-25 | PS06, PS10, PS26 |
 | S-26 | PS07 |
@@ -587,3 +587,79 @@ Text under 11 px remains only inside the accepted Shell copies and the kit Avata
 4. Hidden weekends at Fit zoom, to confirm against PJ-03 D6.
 
 A new named version is Dean's to save.
+
+## 10. Audit batch 3, 13 November 2026
+
+Dean saved the named version "PPO - Projects module (proposal) · 13 November 2026 · refinements and batch 2" and accepted every recommendation: the six audit questions (section 5 of the [alignment audit](projects-module-figma-alignment-audit.md)), the four Gantt points of section 9 and three cross-file rulings. The file was changed in place and remains a proposal.
+
+**Decisions accepted and how they were applied.**
+
+| ID | Decision | Applied in the file |
+|---|---|---|
+| AQ-1 | The Library's drawer widths include the shell's 48 px tab column | The 432 px panels conform. The working calendar (PG07 `67:2948`) is 752 px, 800 with its tab column; the tablet task panel (TB07 `69:7106`) is 480 px. The Library record's row "432 px → 480 px" for this file is the Library owner's to correct |
+| AQ-2 | Sam Jordan replaces Kim Patel | 109 texts and 2 avatars |
+| AQ-3 | Keep the source bracket and append "· as <person>" when the signed-in person is not Morgan Lee | 71 sheet labels (76 before the Insights sheets were removed) |
+| AQ-4 | The Shell's 12 px collapsed strip; A9 withdrawn | Local component "Shell / Workspace menu · collapsed strip" `225:187` (Default and Hover) on PJ03 (`225:402`) and PG02 (`225:618`); their content region starts at x 92 and is 1300 px wide; the 56 px strip `25:222` is removed |
+| AQ-5 | Projects draws no Reporting or Finance page | IS01 to IS04 and TB16 removed; the menu's Insights items open Reporting RP-03 (`/reports/delivery`) and Finance FN-03 (`/finance/projects`); the page is now "Field work · PJ" and its notes card says so |
+| AQ-6 | The file is named "PPO - Projects module (proposal)" | Dean's rename in Figma; the Read me and this record already use the name |
+| G-1 | Gantt rows follow density: Comfortable 40 px rows with 26 px bars, Compact 32 px rows with 20 px bars | The record schedules drawn with 40 px rows (RC02, X14, PS10, TB05) have 26 px bars with the baseline pill below; the Programme keeps its rows until Library rule G2 is amended to the density rule (Library owner) |
+| G-2 | Connector bends rounded at 4 px | Deferred to the Library's Dependency part |
+| G-3 | The attention icon sits inside a bar at least 32 px wide, otherwise before the label | 48 at-risk or conflict bars on the three chart pages: 24 inside the bar, 24 before the label, in the warning or danger colour of the bar's state |
+| G-4 | Weekends hidden below about 60 px a week; calendar exceptions always shown | As drawn in section 9; a refinement of PJ-03 D6 |
+| AC-12 | Glasshouse 4 Update 4 has one revision, r01 | No change needed |
+| AC-22 | SYN-OPP-000318 stays My Work's; the Projects handover takes a new reference | SYN-OPP-000338 (2 texts; the reference is used nowhere else in the repository) |
+| AF-129 | Estimating's quotation revision wins | SYN-QUO-000170 r01 (1 text) |
+
+**Record header (audit PJA-02, Shell R116 to R125).** A new Shell and kit section `243:161` holds local copies of the accepted Shell components, rebuilt from their read-only anatomy because the Plugin API cannot copy between files:
+- "Shell / Record header · toolbar" `243:162`, 1312 px, filling its content region;
+- "Shell / Record header · toolbar · phone" `243:210`;
+- "Shell / Record sticky action bar · phone" `243:229`.
+
+The desktop component is used on 105 record sheets: Initiation 17, Project record 25, Programme 1 (PG12), Variations & obligations 6, Risks & issues 5, Subcontractor packages 11, Site assurance 12, Stakeholder updates 11 and Acceptance & closeout 17, tablets included. On each record sheet:
+- **Breadcrumb.** The breadcrumb returns, so there is no desktop back arrow. It ends at the record's reference where it has one (V-04, SYN-SUB-000015, SYN-ITP-000014, Update 5, Stage 2).
+- **Title row.** The title carries its state chip, a second chip where the old header had one, and the favourite star.
+- **Sub-line.** One line, ending with the module's "About this page" link.
+- **Navigation.** Previous and next with "n of N in view" where the register's order is drawn: Block C is 2 of 9 projects, V-04 2 of 6 variations, SYN-SUB-000011 1 of 5 packages, Update 5 1 of 8 updates, Stage 2 of Propagation house 1 of 6 stages. Where the order is not drawn (RAID entries, ITPs, closed or started records) navigation is hidden, as R120 allows for a record opened by link.
+- **Actions.** Holds every secondary decision the old header showed; the "…" menus are gone.
+- **Outputs.** Present on records with issued outputs (project records, the baseline comparison, ITPs, updates and acceptance stages); absent on handovers, variations, RAID entries, packages and the defect.
+- **Primary.** One primary: the sheet's own. Four sheets whose old header highlighted an open panel take the state's decision instead (SA11 Propose release, SP08 Submit for receiving, X29 Approve and send, SU09 Withdraw from approval). The 13 sheets with no decision read "Read only" with the reason and date (R117), for example RC17 "Read only · closed Fri 30 Oct 2026".
+
+The desktop back arrow is also removed from the 30 sheets that are not single records: the create form, the not-found and loading states, the project-scoped registers and the readiness views.
+
+The phone records PH05, PH06, PH13 and PH14 use the phone header, which keeps its back arrow (R123), with the state chip and reference beneath. Their sticky action bar sits above the tab bar (R124) and shows one of:
+- "Add task on desktop", for a desktop-only decision (PH05, PH06);
+- the primary, "Approve and send" (PH13), with Return under Actions;
+- "Read only · accepted Fri 30 Oct" (PH14).
+
+PH05's note no longer mentions a "…" menu.
+
+**Workspace flyout (PJA-05).** "Shell / Workspace flyout · Projects" `259:178` (section `259:340`) is a local copy of the accepted flyout (Workspace=Projects): accent chip, subtitle, Find in Projects, pin and close; CREATE; Delivery, Commercial & risk with its badges, Insights; Favourites, Saved views, Recent; "All 11 Projects pages" and "Edit menu (administrators)". It replaces X33's kit composition (instance `259:5486`), so the route and decision sub-lines are gone.
+
+**Other corrections found while checking.**
+- **Programme Gantt.** PG02's task column takes the 44 px the strip freed, so the chart fills the content region and the task names show in full.
+- **Calendar drawer.** The exceptions table fills its card, and its columns align.
+- **Gantt labels.** Labels pushed to the chart's right edge end with an ellipsis. Two labels whose marks lie wholly off the chart are hidden (TB05, TB07).
+- **Field work.** The Field work notes match the removal. Their RP-03 and FN-03 routes are corrected, and an empty Tablet section is reduced to the empty-section size.
+- **Read me.** It cites the Shell's 10 November named version (PJA-03) and gives the new counts. The audit card gains a batch 3 note (`260:2`) and moves below the sheet index, which it overlapped by 315 px.
+
+**Local departures from the Shell components, proposed.**
+- The sub-line keeps the module's "About this page" link (Sales R11 and P1).
+- The phone header and sticky bar make every control a 48 px touch target, the file's phone rule from section 9, where the Shell draws 32 px buttons.
+- The flyout's Recent items use this file's story (Block C, the week 45 Programme, Glasshouse 4, Propagation house) in place of the Shell's demo records.
+
+**Inventory.** 243 frames on 14 scope pages: 229 sheets (desktop 135, dialogs and panels 33, states 31, tablets 15, phones 15) and 14 notes cards. Removed: IS01 `116:734`, IS02 `116:1160`, IS03 `116:1637`, IS04 `116:1957`, TB16 `116:2174` and component `25:222`; their inventory rows stay, marked. Added: `225:187`, `225:402`, `225:618`, `243:161`, `243:162`, `243:210`, `243:229`, `259:178`, `259:340`, `259:5486` and `260:2`.
+
+**Verified.** A read-only sweep of all 229 sheets after the changes found:
+- no text cut by a clipping container, no overlapping text and no Gantt label collision;
+- no header toolbar, title or breadcrumb overflow;
+- no Kim Patel and no Insights sheet reference;
+- no desktop back arrow or "…" menu in any header.
+
+Screenshots were checked for PG02, PG07, TB07, RC01, RC02, CM03, CM06, TB10, TB05, SA03, IN05, X33, PH05, PH13 and PH14.
+
+**Open.**
+- **Waiting on the Library.** PJA-08's remaining literal paints and PJA-21's kit mapping wait for the Library's publication. G-2 waits for its Dependency part. The amendment of rule G2 and the correction of the Library record's drawer row are the Library owner's.
+- **Elsewhere.** The Sales Handovers page's "Mon 3 Nov" is the Sales session's. The rename (AQ-6) is Dean's.
+- **For Dean's review.** RAID entries keep Edit as their primary, as drawn, rather than a state decision such as Move to Monitoring. AC01's 440 px inline inspector (A76) was not changed.
+
+The next named version, "PPO - Projects module (proposal) · 13 November 2026 · audit batch 3", is Dean's to save.
