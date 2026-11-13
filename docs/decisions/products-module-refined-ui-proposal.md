@@ -2,14 +2,14 @@
 document_id: PPO-PRODUCTS-REFINED-FIGMA-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Owner-accepted design, 12 November 2026 ("accept"), covering 122 sheets and 7 notes cards on 7 scope pages; refinements R1 and R2 applied after the acceptance (section 12); named version not yet saved (section 13); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
+status: Owner-accepted design, 12 November 2026 ("accept"), covering 122 sheets and 7 notes cards on 7 scope pages; refinements R1 and R2 applied after the acceptance (section 12); build basis is the named version "PPO - Products module (accepted)", saved by Dean on 13 November 2026 after R1 and R2 (section 13); drawn in a new private Figma file; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, integration or deployment; every product, supplier, price, file and person shown is synthetic
 source_commit: 1892f7a92784b811bd36f0ef289816cfcfd31d4c
 versioning: git
 ---
 
 # Products module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, and section 13 the named version, which is Dean's to save.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, and section 13 the named version that pins it as the build basis.
 
 On 12 November 2026 Dean supplied the prompt "Design the Products module pages for Powerplants One in Figma" with Addendum A3 (persona and story reconciliation, section A3.13 for Products) and a new, empty Figma file: "Below is the link to the new Figma page file that I have created for this." The prompt carries his standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach."
 
@@ -447,6 +447,19 @@ On acceptance the seven scope pages were moved above the "— Proposals —" sep
 
 R3 to R5, G1 to G4 and P1 to P3 stay open as section 10 lists them.
 
-## 13. Named version
+## 13. Named version — 13 November 2026
 
-None yet. Dean saves the named version in Figma; this section then records its name and date. Until it is saved, a later change to the file is not pinned, and under the [named-version handoff](figma-named-version-build-handoff.md) the build basis is the named version, not the file's current state. The suggested name, matching the Sales file, is "PPO - Products module (accepted)".
+Dean saved the named version **"PPO - Products module (accepted)"** of the private Figma file "PPO - Products module" on 13 November 2026 and reported it in chat: "I have saved the named version as PPO - Products module (accepted)." He saved it after the acceptance (section 11) and after R1 and R2 were applied (section 12).
+
+It is the build basis under [Build from the named Figma version](figma-named-version-build-handoff.md). The file name, this version and the node IDs in section 3 are the lock-in that rule 2 asks for. The version holds:
+
+- the seven scope pages, with the 122 sheets and 7 notes cards of section 3, at the node IDs given there, between "— Accepted —" and "— Proposals —";
+- R1's one-line record sub-lines;
+- R2's "PPO review" collection, with the 99 Build difference cards bound to it and shown in the default Design review mode;
+- the Read me page (`0:1`) and the Shell and kit page (`9:11`), with Scratch (`9:12`) empty.
+
+Any wording in the file that still calls the named version Dean's to save, such as on the Read me cards, is superseded by this section. It is not edited in the file, because any change after the version would leave the file ahead of it (rule 5).
+
+**Citing it.** Each build step from section 6 cites the file "PPO - Products module", the node ID of the sheet it builds and this version. The chrome these sheets compose stays the accepted shell at its named version "Shell refined concept — accepted · record header toolbar" (10 November 2026). A shell build cites that version, not this one. Any later change to these sheets needs a new named version and an update to this section before a build uses it.
+
+**Limits.** The version is recorded on Dean's statement. This session cannot read the file's version history, so the version was not compared with the file. This session changed nothing in the file after the section 12 work, so the version should hold the state that sections 3 and 12 describe.
