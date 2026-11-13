@@ -112,3 +112,15 @@ The conformance audit of 10 November 2026 is a repository audit; the parts that 
 ## 8. Boundary
 
 This record changes no design and accepts none. It corrects no other record: the decision record, the rules export and the shell system page are findings for the change that follows (SR-20). It authorises no application code, route, migration, permission, integration or deployment. Every record, person, value and date in the file is synthetic.
+
+## 9. Outcome — 13 November 2026
+
+Dean answered the remaining questions on 13 November 2026: "You can proceed based on your professional recommendations that you have provided." Q-A and Q-C to Q-I are therefore decided as recommended in section 7; Q-B was decided on 12 November 2026. Alignment batch 1 applied SR-01 to SR-22, except SR-06, which pull request #923 had resolved, to the Shell file under pull request #946. The [shell decision record, section 14](shell-refined-concept-design.md#14-alignment-batch-1--13-november-2026) lists every change, the new component sets and their node IDs, and the verification. Points that differ from the wording above:
+
+- **Q-E and SR-11 without A3.** The cast (Casey Ward as the technician, Ravi Kumar authorising the work order, Sam Jordan on the pump specification) follows the My Work record and the alignment prompt's summary. The reference families follow the repository's existing use. Addendum A3 should confirm both.
+- **Q-H as drawn.** The Shared records entry is renamed "Documents"; where it leads is behaviour for the build, not something the static file can show.
+- **SR-03.** Mornington stays only as Riverbend's second deal, "Mornington expansion", so that the Assistant, the offline queue and the search agree.
+- **Missed by this review.** The "Phone 390" note on the toolbar page lay outside its section (ST4). It was found during the batch's verification and moved back.
+- **Named version.** The version Dean saved as "alignment batch 1" was saved before the batch. Section 14 of the decision record asks for a new one.
+
+This record's findings are closed by that change. Module files and the repository's other records follow in their own changes.
