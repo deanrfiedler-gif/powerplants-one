@@ -19,6 +19,8 @@ export async function crmReturnDiagnostics(
 ) {
   const started = Date.now();
   const events: Record<string, string | number | boolean>[] = [];
+  const browser: Record<string, string | number | boolean>[] = [];
+  let accepting = true;
   const requests = new Map<Request, number>();
   const number = (request: Request) => {
     if (!requests.has(request)) requests.set(request, requests.size + 1);
@@ -80,9 +82,57 @@ export async function crmReturnDiagnostics(
   page.on("framenavigated", navigated);
   page.on("pageerror", pageError);
   page.on("dialog", dialog);
+  // Retain events outside the page immediately: Playwright can close the page
+  // at the test deadline before finally can evaluate its in-page buffer.
+  const browserKinds = new Set([
+    "layout-state",
+    "final-state",
+    ...["pointerdown", "mousedown", "pointerup", "mouseup", "click"].flatMap(
+      (name) => [`${name}-capture`, `${name}-settled`],
+    ),
+  ]);
+  await page.exposeBinding(
+    "ppoRecordCrmReturnEvent",
+    ({ frame }, value: unknown) => {
+      if (
+        !accepting ||
+        frame !== page.mainFrame() ||
+        browser.length >= 100 ||
+        !value ||
+        typeof value !== "object"
+      )
+        return;
+      const v = value as Record<string, unknown>;
+      if (typeof v.event !== "string" || !browserKinds.has(v.event)) return;
+      const clean: Record<string, string | number | boolean> = {
+        event: v.event,
+      };
+      for (const key of [
+        "at_ms",
+        "link_top",
+        "link_left",
+        "link_width",
+        "link_height",
+        "scroll_y",
+        "x",
+        "y",
+      ])
+        if (typeof v[key] === "number" && Number.isFinite(v[key]))
+          clean[key] = v[key];
+      for (const key of [
+        "return_link",
+        "return_focused",
+        "activities_tab",
+        "return_target",
+        "prevented",
+      ])
+        if (typeof v[key] === "boolean") clean[key] = v[key];
+      browser.push(clean);
+    },
+  );
   await page.addInitScript((activityId: string) => {
     if (location.pathname !== `/work/${activityId}`) return;
-    const events: Record<string, string | number | boolean>[] = [];
+    const pending: Promise<unknown>[] = [];
     const link = () =>
       [...document.querySelectorAll("a")].find(
         (a) => a.textContent === "Return to opportunity and plan follow-up",
@@ -108,8 +158,23 @@ export async function crmReturnDiagnostics(
       event: string,
       detail: Record<string, string | number | boolean> = {},
     ) => {
-      if (events.length < 100)
-        events.push({ event, at_ms: Date.now(), ...state(), ...detail });
+      if (pending.length < 100) {
+        const target = window as typeof window & {
+          ppoRecordCrmReturnEvent: (
+            event: Record<string, string | number | boolean>,
+          ) => Promise<void>;
+        };
+        pending.push(
+          target
+            .ppoRecordCrmReturnEvent({
+              event,
+              at_ms: Date.now(),
+              ...state(),
+              ...detail,
+            })
+            .catch(() => undefined),
+        );
+      }
     };
     const changed = () => {
       const next = JSON.stringify(state());
@@ -161,7 +226,7 @@ export async function crmReturnDiagnostics(
           "click",
         ] as const)
           document.removeEventListener(name, capture, true);
-        return events;
+        return Promise.all(pending).then(() => undefined);
       },
     });
   }, activityId);
@@ -169,20 +234,17 @@ export async function crmReturnDiagnostics(
     mark,
     async finish() {
       try {
-        const browser = await page
+        await page
           .evaluate(() => {
             const target = window as typeof window & {
-              ppoCrmReturnDiagnostics?: () => Record<
-                string,
-                string | number | boolean
-              >[];
+              ppoCrmReturnDiagnostics?: () => Promise<void>;
             };
-            return target.ppoCrmReturnDiagnostics?.() ?? [];
+            return target.ppoCrmReturnDiagnostics?.();
           })
           .catch(() => {
             mark("page-state-unavailable");
-            return [];
           });
+        accepting = false;
         const file = info.outputPath("crm-return-navigation.json");
         await writeFile(
           file,
@@ -204,6 +266,7 @@ export async function crmReturnDiagnostics(
           contentType: "application/json",
         });
       } finally {
+        accepting = false;
         page.off("request", requested);
         page.off("response", responded);
         page.off("requestfailed", failed);

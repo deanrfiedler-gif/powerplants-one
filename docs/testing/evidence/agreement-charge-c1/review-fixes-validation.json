@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-13",
+  "base_commit": "b9ec3c64f",
+  "reviewed_commit": "af06b798df8d972b97359e04a6b73d9df639bcac",
+  "source_note": "Uncommitted review fixes on the merged base; exact test bytes identified by SHA-256 below. Documentation-only edits follow execution.",
+  "runtime": {
+    "node": "24.21.0",
+    "npm": "11.19.0",
+    "postgresql": "16.15",
+    "playwright": "1.65.0",
+    "chrome": "157.0.8103.78",
+    "renderer_mock": false
+  },
+  "source_sha256": {
+    "tests/browser/crm-return-diagnostics.spec.ts": "6b4f253b7f5328ecfaa7edf48c2f2b024174db0526cbea5b46fe76a77fb69fcb",
+    "tests/database/agreement-charge-review.test.ts": "df41352763a4726f10c413a89d4f176cc8e4d1c4243e6fbd3b1a115d3df1962f",
+    "tests/database/maintenance-m1.test.ts": "12104826f8bef9b97bfa6caa6e35a403b5ad28dfc6a68c75178b05d60895b723",
+    "tests/fixtures/crm-return-timeout.spec.ts": "702eabdac44afa20609e56999e4f977744ec1ed208fabfbc35ab03a73cdfeb7d",
+    "tests/helpers/connected-maintenance-billing.ts": "036e61188eb62fac3ac04477575ab438a186537646d2064ad467b2922bc5bd01",
+    "tests/helpers/crm-return-diagnostics.ts": "a5edbcb64d0dea2e35f97416c4a5a883e16507128baa206513a73a9e64cf7bf6",
+    "tests/helpers/crm-return-timeout.config.ts": "9a687f7798bfafa08f6d69977ae1f7787dd67ddf3516d900b1a158e54cce714d",
+    "tests/helpers/maintenance-dates.ts": "323d3d9924a5b92b92a0fd35aee825c241ddbb9e09003fc726f3e209ed422c08",
+    "tests/helpers/maintenance.ts": "d8a43139ea1737fa9dcd4cb9536ef9df5a83bb967a43bf574c0e37571e59ca69",
+    "tests/unit/maintenance-dates.test.ts": "31e2b75c04ba25347df63ae1920534b16559a63f2611e246ef7648c8794782d5"
+  },
+  "results": {
+    "studio_lint_typecheck": "passed; final added diagnostics files also received TypeScript and focused lint",
+    "production_build": "passed",
+    "unit_full": {
+      "passed": 1454,
+      "failed": 1,
+      "total": 1455,
+      "failure": "unchanged browser-install lock owner did not acquire within its existing 1s deadline; reproduced on default parallelism and concurrency 2"
+    },
+    "browser_install_isolated": {
+      "passed": 11,
+      "failed": 0
+    },
+    "c1_native_database": {
+      "passed": 18,
+      "failed": 0,
+      "mock": false
+    },
+    "browser_regressions": {
+      "passed": 3,
+      "failed": 0,
+      "scope": "actual Playwright test timeout, page teardown, bounded allowlisted metadata"
+    },
+    "real_renderer_database": {
+      "passed": 18,
+      "failed": 0,
+      "files": [
+        "finance-project-ts01.test.ts",
+        "maintenance-m1.test.ts",
+        "maintenance.test.ts"
+      ],
+      "mock": false,
+      "timeout_ms": 120000
+    }
+  },
+  "log_sha256": {
+    "c1-fixes-check.log": "7258738da8807ed2220d7437c7d116e8d851eb807af86863f745cc4dc5dcb49f",
+    "c1-fixes-unit-final.log": "380956b7263df6d54a7644ffbd19405cdb461a8b4b1ee2ff8fd8d4ae4cc8319c",
+    "c1-fixes-browser-install-isolated.log": "241ab1d9785b1267dd4948a5c42f23e45bb60924b0c22fe883a3144d60ed2dcb",
+    "c1-fixes-build.log": "4d8840690e81090c0651fa7577e14c521de4021a07ccded52931729e9563538a",
+    "c1-fixes-typecheck-final.log": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+    "c1-fixes-native-database.log": "511d1b930199cd54b713fa0ea6eec0b058a9064c26d0d1af8b88202018782f2e",
+    "c1-fixes-diagnostics.log": "52e1bf19cee8580ebf4d8e92befa3fb06c44a253ca4fdb54335cc590c2055c6e",
+    "c1-fixes-real-renderer-database.log": "d3b8dc4d68f103710e4bdc47505bdc07ff55ec07709114821d30e090d4229e27"
+  },
+  "actual_timeout_artifact_sha256": "d0980d45f315ab152b457f0fb2c977ed6f80ee6d561989ebe9dcd3e886c01eef"
+}

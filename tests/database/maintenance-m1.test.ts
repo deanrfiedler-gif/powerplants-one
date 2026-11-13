@@ -59,7 +59,7 @@ const twoTasks = (): Task[] => [
     kind: "Identification",
   },
 ];
-// A reviewed plan for the fixture asset under a fresh Active agreement (2026-01-01 to 2028-12-31).
+// A reviewed plan under a fresh Active agreement retaining historical 2026 evidence.
 async function reviewedPlan(
   overrides: Partial<ReturnType<typeof planContent>> = {},
 ) {
@@ -145,8 +145,10 @@ test("M-R1 yearly plans yield at most two dates per run and stay inside the agre
   assert.deepEqual(await dues(a.id), ["2026-01-31", "2027-01-31"]);
   await generate(a, "2027-06-01", "2028-06-01");
   assert.deepEqual(await dues(a.id), ["2026-01-31", "2027-01-31", "2028-01-31"]);
-  // 2029-01-31 falls after the agreement expires on 2028-12-31: the run is refused and creates nothing.
-  await assert.rejects(generate(a, "2028-06-01", "2029-06-01"), code("SourceReviewRequired"));
+  // Derive the out-of-term window from this fixture, preserving the expiry refusal
+  // when the shared agreement's current term advances with the execution year.
+  const expiryYear = Number(a.cmd.content.effective_to.slice(0, 4));
+  await assert.rejects(generate(a, `${expiryYear}-06-01`, `${expiryYear + 1}-06-01`), code("SourceReviewRequired"));
   assert.deepEqual(await dues(a.id), ["2026-01-31", "2027-01-31", "2028-01-31"]);
   await assert.rejects(generate(a, "2026-01-01", "2027-02-01"), code("InvalidData"));
   // Existing plans keep their interval; a change needs a successor revision and review.

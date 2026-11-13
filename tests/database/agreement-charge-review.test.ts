@@ -155,15 +155,16 @@ test("C1-3 consumed-charge renewal keeps its original start, exact charge and a 
   await beginAgreementClaim(f, a.id);
   await outcomeAgreementClaim(f, a.id);
   await reconcileAgreementClaim(f, a.id);
+  const renewalYear = Number(f.content.effective_to.slice(0, 4)) + 1;
   const newCharge = {
     id: randomUUID(),
-    due_date: "2029-01-01",
+    due_date: `${renewalYear}-01-01`,
     amount: "4900.00",
   };
   const content = {
     ...f.content,
-    effective_from: "2029-01-01",
-    effective_to: "2029-12-31",
+    effective_from: `${renewalYear}-01-01`,
+    effective_to: `${renewalYear}-12-31`,
     charge_schedule: {
       ...f.content.charge_schedule,
       lines: [...f.content.charge_schedule.lines, newCharge],

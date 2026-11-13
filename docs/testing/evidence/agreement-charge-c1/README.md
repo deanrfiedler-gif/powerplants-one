@@ -2,7 +2,30 @@
 
 [PPO-MAINTENANCE-TS02-DEC](../../../decisions/maintenance-service-ts02-decisions.md) C, [PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905). Originally stacked on M2 #904; M2 is now merged and C1 targets main. B3 is merged. No merge, deployment or live data action is implied.
 
-## Current delivery checkpoint — 12 November 2026
+## Current review-fix checkpoint — 13 November 2026
+
+[Claude's review at `af06b798`](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#pullrequestreview-5882994302) confirms C1-2, C1-3 and C1-4. C1-1/0128 remain confirmed at `c58b2c94`. This continuation addresses only its new C1-5 and C1-6 findings and [Dean's explicit shared-fixture follow-up](https://github.com/deanrfiedler-gif/powerplants-one/pull/905#issuecomment-6840475294). Targeted Claude confirmation of these fixes is still required; earlier pending-review statements below are historical.
+
+- **C1-5:** the connected agreement starts on the first day of the execution month in Brisbane, with a fee due that day and a term ending immediately before its first anniversary. Generation starts on day two and ends with the term, retaining exactly one six-monthly occurrence. The helper asserts the term against the database's actual Brisbane date before preparing Finance. The shared `agreementContent()` retains its historical 2026 start and extends its end to the execution year plus two; existing historical evidence stays in term. Its renewal and expiry-refusal tests derive their later windows from the fixture's actual expiry, so their original assertions remain meaningful as the year advances. Unit cases cover the former expiry dates, leap day and Brisbane's UTC year boundary through 2036.
+- **C1-6:** each allowlisted browser event is sent immediately through `page.exposeBinding` to a Node-owned buffer. The artifact therefore retains delivered clicks, cancellation and geometry even when the deadline closes the page before `finally`. Both buffers remain limited to 100 records; unknown event names, strings, URLs and text are discarded. Three browser regressions cover an actual Playwright timeout, explicit page closure and the privacy/size boundary. The existing mobile CRM journey, its 120-second deadline, retries and assertions are unchanged. This repairs diagnostic retention; it does not establish the cause of the historical Activity-page stall.
+
+The correction changes tests and evidence only, with no own change under `src/` or `db/`. Main `c31809470` is integrated by merge `b9ec3c64f` without conflicts; its People-register source/test correction belongs to main. The old reviewed head ultimately completed 81 successful checks and one intentional manual-only PT-27 skip. Those results are not attributed to this correction. Final published-head CI is recorded on the PR.
+
+### Fresh local validation
+
+The host setup supplied Node 24.21.0, npm 11.19.0 and disposable PostgreSQL 16.15 but no supported Chrome. A temporary local Docker test image installed official Google Chrome **157.0.8103.78**; the unchanged `npm run browser:check` passed with Playwright 1.65.0. Browser and rendered tests run as the workspace user in that container against the disposable database. No renderer mock or application change was loaded, and no container configuration is added to the repository.
+
+The retained [review-fix validation record](review-fixes-validation.json) binds the source and log hashes; results below describe this correction on the merged tree, not the earlier synthetic-byte runs.
+
+- Studio, full lint, final TypeScript and production build passed. The full unit suite passed **1,454/1,455** twice (default parallelism and concurrency two); both runs hit the unchanged installer lock test's one-second owner-acquisition assertion. That file passed **11/11** in isolation. This is recorded as a local limitation, not a green `npm run check`; no deadline was widened.
+- **18/18 C1 database cases passed unmocked**, including the renewal check adjusted for the rolling fixture expiry.
+- **18/18 connected/Maintenance cases passed with supported Chrome and no renderer substitution**: `finance-project-ts01` (1), `maintenance-m1` (7), `maintenance` (10), with the unchanged 120,000 ms case deadline and serial database execution. The connected case passed in 104,474 ms. Exact project/fee amounts, covered no-posting, duplicate refusal, receipts and occurrence-count assertions are retained.
+- **3/3 diagnostic browser regressions passed** in supported Chrome. The nested deliberate-timeout case was actually `timedOut`; its parent checks that click events remain in the attached JSON alongside `page-state-unavailable`. The [retained timeout events](review-fixes-timeout-events.json) show that recovery. Explicit teardown and malformed/oversized input cases also passed.
+- Foundation, naming, migrations, status sources and documentation tests are recorded with final publication. The full application browser/HTTP/upgrade suites were not repeated locally for these test-only fixes; final-head CI remains required.
+
+No full manual TS-01/TS-02 acceptance, operating pricing/tax/accounting rule, live ERP, customer distribution, merge or deployment is claimed. Dean owns merges. Claim-specific output remains the separate one-level follow-on [#932](https://github.com/deanrfiedler-gif/powerplants-one/pull/932).
+
+## Historical delivery checkpoint — 12 November 2026
 
 Diagnostic source `38adc923cbf93ef32ed5c5f4d73b74910035fd8b` integrates main `eeac965493a2d856d7e8fdc27ab4ef35acf15188` and preserves the original return action, assertions, deadlines and retries. It adds only bounded content-free diagnostics, retained original evidence and the TS-02 register correction. No application correction is supported by the available failure evidence. The original Activity-page stall remains causally unresolved; the passing retry is non-reproduction, not a fix.
 

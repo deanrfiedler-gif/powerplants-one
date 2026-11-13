@@ -36,9 +36,10 @@ import {
 } from "../../src/finance/service";
 import type { projectFinanceFixture } from "./project-claim-finance";
 import { verifyClaimEvidence } from "./claim-finance-evidence";
+import { maintenanceTestDates } from "./maintenance-dates";
 
 // Continuation of the TS-01 Finance component, on the SAME company/customer.
-// Dates are shifted to 2026 so the fee is due at execution; this does not execute
+// Dates follow the Brisbane execution month so the fee is due; this does not execute
 // the future-dated manual TS-01/TS-02 or assert operating prices/taxes.
 export async function verifyConnectedMaintenanceBilling(
   f: Awaited<ReturnType<typeof projectFinanceFixture>>,
@@ -47,14 +48,15 @@ export async function verifyConnectedMaintenanceBilling(
   assert.equal(f.project.company_id, CRM.company);
   const agreementId = randomUUID(),
     chargeId = randomUUID();
+  const { connected: dates } = maintenanceTestDates();
   const content = {
     ...agreementContent(),
-    effective_from: "2026-03-12",
-    effective_to: "2027-03-11",
+    effective_from: dates.effective_from,
+    effective_to: dates.effective_to,
     charge_schedule: {
       currency: "AUD",
       tax_basis: "ExcludingTax",
-      lines: [{ id: chargeId, due_date: "2026-03-12", amount: "4800.00" }],
+      lines: [{ id: chargeId, due_date: dates.due_date, amount: "4800.00" }],
     },
   };
   await createAgreement(f.owner, {
@@ -95,6 +97,9 @@ export async function verifyConnectedMaintenanceBilling(
     agreement_revision_id: agreement.current_revision_id,
     charge_ids: [chargeId],
   };
+  const today = (await rows("SELECT (clock_timestamp() AT TIME ZONE 'Australia/Brisbane')::date::text AS today"))[0].today;
+  assert.ok(content.effective_from <= today && today <= content.effective_to,
+    `Connected agreement must cover actual Brisbane database date ${today}`);
   await saveFinance(f.preparer, null, fee);
   await process(f, fee.id);
   const billed = await readFinance(f.reconciler, fee.id);
@@ -116,8 +121,8 @@ export async function verifyConnectedMaintenanceBilling(
     content: {
       ...planContent(agreement.current_revision_id),
       interval: "SixMonthly",
-      anchor: "2026-03-12",
-      effective_from: "2026-03-12",
+      anchor: dates.effective_from,
+      effective_from: dates.effective_from,
       timezone: "Australia/Brisbane",
       window_months: 12,
     },
@@ -131,8 +136,8 @@ export async function verifyConnectedMaintenanceBilling(
     ...base(),
     expected_version: 2,
     action: "Generate",
-    from: "2026-03-13",
-    until: "2027-03-11",
+    from: dates.generation_from,
+    until: dates.effective_to,
   };
   const generated = await planCommand(f.owner, planId, generate);
   assert.deepEqual(
@@ -145,7 +150,7 @@ export async function verifyConnectedMaintenanceBilling(
   );
   assert.deepEqual(
     occurrences.map((o) => o.due),
-    ["2026-09-12"],
+    [dates.occurrence],
   );
   const occurrence = occurrences[0];
   const entitlement = await assessment(

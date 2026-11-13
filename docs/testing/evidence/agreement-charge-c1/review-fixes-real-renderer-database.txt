@@ -1,0 +1,26 @@
+✔ B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing (104473.764594ms)
+✔ M-R1 six-monthly plans generate month-end-safe dates inside the 12-month window, with one obligation per date (18669.763681ms)
+✔ M-R1 yearly plans yield at most two dates per run and stay inside the agreement term (17069.954271ms)
+✔ M-R2 Prepare creates the request and its Draft work order with exactly the plan's tasks, in one operation (18184.455211ms)
+✔ M-R2 retrying Prepare never creates a second request or work order, and refusal precedes any write (51090.340831ms)
+✔ M-R4 a Partial occurrence offers one follow-on request carrying only the outstanding tasks (34589.62689ms)
+✔ M-R2/M-R4 retained completion requirements of 1,000, 1,001 and 4,000 characters reach the Draft scope whole (16955.125091ms)
+✔ M-R2 competing Prepare operations create one request and one work order (13294.47571ms)
+✔ MA01 typed identity, exact receipt, commercial duty, scope and immutable source (12355.444214ms)
+✔ MA02 a later decision or source revision makes old entitlement historical (369.48537ms)
+✔ MA02 omitted area cannot bypass the equipment's physical facility exclusion (300.658429ms)
+✔ MA03/04 overlapping and concurrent generation, deferral and exact request retries (1580.372486ms)
+✔ MA05 separate CRM and Service owners, proposals do not extend source terms (1260.988464ms)
+✔ MA06 exact evidence, stale assessment, separate goodwill and exact plan authority (582.393358ms)
+✔ MA07 supplier evidence chronology, partial approval, credit reference and independent disposition (876.882733ms)
+✔ current action revocation blocks original operation receipt replay (128.155118ms)
+✔ AT-33 relocation and retirement retain original obligations and require future-plan review (1209.680701ms)
+✔ MA06 goodwill is separate from entitlement and Service authority; withdrawal blocks receiving (843.798744ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 312907.086906
