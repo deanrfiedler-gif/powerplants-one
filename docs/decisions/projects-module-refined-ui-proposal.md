@@ -525,3 +525,65 @@ Every sheet was rendered at 1200 to 1440 px and inspected after its batch; corre
 This record authorises nothing in the application: no code, route, migration, permission, capability, grant or seed. The design register (`docs/design/development/register.json`) and the `pages/route-projects-*.md` and `scope-pj-*.md` guidance are not edited here; every Projects route stays "Needs review" and their update follows in its own reviewed change once the design is accepted. Sales file follow-ups: the two-digit revision labels (`r01`, `r02`) in a polish batch; the collapsed docked menu and the register standard once adopted; the Addendum A2 reconciliation of short forms is withdrawn.
 
 Next steps: Dean reviews the file and saves the named version "PPO - Projects module (proposal) · 10 November 2026 · batch 14"; this record then gains the named version, Dean's acceptance and the A-number decisions in later sections, as the Sales record did; any later design change needs a new named version. The extended helper library stays in the file's hidden nodes (`23:130`, `25:308`, `27:182`, `28:182`) and in the session scratchpad so later sessions can continue from it.
+
+## 9. Refinements, 12 and 13 November 2026
+
+At Dean's request, after the [alignment audit](projects-module-figma-alignment-audit.md) (PPO-PROJECTS-FIGMA-ALIGNMENT-AUDIT), the file was refined in place. The file is still a proposal: nothing here is an acceptance, and no sheet was added, removed or moved, so the inventory in section 3 keeps every node ID. The file's name in Dean's link is now "PPO - Projects module" (audit AQ-6 asks him to confirm).
+
+**Today on the Gantt, as PPO - Library draws it** (Library decision G6 of 12 November 2026: no label on the chart). The violet "Today · Thu 5 Nov" label is removed from all 27 charts (PJ-03 21, PJ-02 record 4, PJ-07 2) and from the ST01 specimen. In its place:
+- a 9 px violet dot on the date row's lower edge with a 1 px line;
+- the date cell that holds today, tinted;
+- a "Today" toolbar button carrying the dot as its key, on the 18 chart toolbars that have a view switcher;
+- the dot as the legend's Today key.
+
+The parts are local copies of the Library's, under its names, in a new Shell and kit section "Gantt · Today marker" `184:359`: Gantt / Today line `184:360`, Gantt / Today cell `184:363`, Gantt / Today key `184:365` and Gantt / Today button `184:367`. A local "Gantt colour" collection copies the Library's 11 variables by name and value. The "as at" sheets keep their own day (PG04 Wed 4 Nov, PG06 Mon 19 Oct, PG08 Mon 9 Nov).
+
+**Gantt anatomy brought to the Library and a benchmark of leading tools.**
+- **Alignment.** Every bar, diamond, label and baseline marker is centred on its row's line, where the connectors already ran. Before, bars and labels sat about 5 px low and diamonds about 5 px high.
+- **Markers.**
+  - Diamonds are 15 px with a 2 px radius: outlined when planned, green when complete, dashed for baseline.
+  - Baseline bars are pale pills inside their own row.
+  - Dependencies use the Library colours, red on warnings; the FS tag sits on its connector.
+  - Bars have a 4 px radius and colours bound to variables.
+- **Labels.** 12 px Regular secondary beside their bars, without the list bullet. They are cut with an ellipsis only at the chart edge and sit on a soft backing so connectors pass behind them.
+- **Clutter control.**
+  - Variance chips that repeated the task table's Variance column are hidden, not deleted.
+  - Weekend stripes are hidden on charts drawn below 60 px a week; calendar exceptions stay.
+  - Crowded scales show day numbers at 11 px under the month.
+  - Expanded parent rows are Library phase brackets with the name beside.
+- **Zoom.** A Week, Month and Fit switch sits beside Today, with the chart's actual zoom selected.
+
+**Visual polish across the file.**
+- **Avatars.** 30 avatars that held full names show initials.
+- **Overflowing text.** Text that spilled or was cut now wraps, or ends with an ellipsis in fixed cells.
+- **Strips and legends.** Check strips, legends and swatch rows wrap.
+- **Dialogs and panels.** Dialog footers keep their buttons; the Columns panel (X01) shows Density again.
+- **Headers.** Two clipped headers read "Variance vs baseline" and "Manager · owner".
+
+**Batch 2 of the audit.**
+- **Dates.** 29 weekdays corrected on Initiation, keeping the dates the Sales handover page uses.
+- **Later frames.** 17 sheets labelled "as at" their time after 09:00.
+- **Wording.** One pronoun replaced; "Received by Supply" for the dosing skid's arrival.
+- **Menu.** The docked menu's Pinned group is now Favourites (A17's wording is superseded), and only worklist counts remain.
+- **Phone screens.** 16 px phone inputs and 48 px phone targets; PH07's actions move to a sticky bar above the tab bar (Shell R124).
+- **Text size.** The file's own text is at least 11 px, including the Today cell.
+- **References.** Short-form references (`SYN-EAR-000006`; the ES-07 fixtures cited as "ES-07 cases 08 to 12"); "Company calendar" shown in place of the configuration ID, which stays on the Administration detail line.
+- **File tidy-up.** The colour collection's mode is named "Value", and the Read me index and audit card are updated (`219:2`, `219:3`).
+
+**Verified** by a read-only sweep of all 248 frames after the changes:
+- no text cut sideways by a clipping container;
+- no toolbar overflowing;
+- no crowded scale;
+- no overlapping or off-centre Gantt label;
+- no wrong weekday;
+- no phone input under 16 px.
+
+Text under 11 px remains only inside the accepted Shell copies and the kit Avatar, whose sizes come from the Shell.
+
+**Open for Dean.** Audit questions AQ-1 to AQ-6, then four Gantt points:
+1. Library rule G2's 40 px rows against the benchmark's bars at 62 to 75 % of the row (this file keeps 30 px rows and 20 px bars, 67 %).
+2. Rounded connector bends, best drawn when the charts move to the Library's Gantt components.
+3. Library rule G3's attention icon on at-risk bars, placed before the label where bars are narrow.
+4. Hidden weekends at Fit zoom, to confirm against PJ-03 D6.
+
+A new named version is Dean's to save.
