@@ -30,6 +30,9 @@ type Capture = {
   planning_ms?: number;
   shared_hit_blocks?: number;
   shared_read_blocks?: number;
+  temp_read_blocks?: number;
+  temp_written_blocks?: number;
+  work_mem?: string;
   max_loops?: number;
   node_count?: number;
   has_jit?: boolean;
@@ -80,6 +83,8 @@ export async function capturePeople(
       };
       if (explain) {
         const jit_setting = (await call("SHOW jit")).rows[0].jit as string;
+        const work_mem = (await call("SHOW work_mem")).rows[0]
+          .work_mem as string;
         const e = (
           await call(`EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON) ${sql}`, values)
         ).rows[0]["QUERY PLAN"][0];
@@ -90,6 +95,9 @@ export async function capturePeople(
           planning_ms: e["Planning Time"],
           shared_hit_blocks: e.Plan["Shared Hit Blocks"],
           shared_read_blocks: e.Plan["Shared Read Blocks"],
+          temp_read_blocks: e.Plan["Temp Read Blocks"],
+          temp_written_blocks: e.Plan["Temp Written Blocks"],
+          work_mem,
           max_loops: Math.max(...nodes.map((n) => n["Actual Loops"])),
           node_count: nodes.length,
           has_jit: "JIT" in e,

@@ -1,0 +1,464 @@
+{
+  "date": "2026-11-11",
+  "pr": 912,
+  "finding": "#897 Claude F1",
+  "base_main": "a55b09790039c469ae39120c1b2ec81fe8539948",
+  "original_frozen_reader": "c248355e0b570bcf0a027000a123b7790a27f194",
+  "environment": {
+    "node": "24.21.0",
+    "postgresql": "16.15",
+    "database": "ppo_synthetic_test"
+  },
+  "source_sha256": {
+    "src/shared/people-register.ts": "6f6ccdb79e4c247b36856dfc5b2ac72d1c9810342eb012223be61a9c7ca44632",
+    "tests/database/people-register-candidate-plan.test.ts": "f7fe029dcaa102c3337f6d66763db98b699faeba1f4b5cb1aa7f1fc486231155",
+    "tests/helpers/people-register-plan.ts": "fe294e2507c52882bb4ed78f332d7f981870d04bce0a65868e1fe65873ef4fd5",
+    "tests/helpers/people-register-main.ts": "8643f53a43fc205b1783f3279ea1530a5af1bceb4ae0b4fa14522800e378cfb9"
+  },
+  "before_source_sha256": "a9f97b440852aaf4b754ba6d68c94c872f516569efcdb5df6d6c10639ef9b310",
+  "method": "Native fixture and commands; no ANALYZE or settings changes. Each pair compares the complete frozen reader with the current candidate. Fresh UUIDs differ between the pre-fix and post-fix runs; cross-run timing and buffer ratios are not controlled comparisons. Real permission clocks retained. Raw/public outputs and signed cursors match within each pair except individually validated observed_at. No latency acceptance claimed.",
+  "red_control": {
+    "raw_capture_sha256": "2df8bd33fe550a585f679ecdb5458e77e2e336ed09b2b3f2559c17175c90d9ee",
+    "setup_attempt": 1,
+    "no_analysis_before_or_after": true,
+    "frozen": {
+      "execution_ms": 29.983,
+      "planning_ms": 1.89,
+      "shared_hit_blocks": 40190,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 6447,
+      "node_count": 89,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "20fd9bf002e37b1fd19ca249c0107dc9af3793065e6fa6c0904f8ace1d2fc966",
+      "visible_total": 31,
+      "raw_output_sha256": "e08695490cdd56bf3194628013527ce525b46233e50b10050a44136d6843053f",
+      "candidate_materialisation": [],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 6447,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 31287,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 6447,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 19341,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "candidate": {
+      "execution_ms": 22.899,
+      "planning_ms": 1.676,
+      "shared_hit_blocks": 10828,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 573,
+      "work_mem": "4MB",
+      "max_loops": 482,
+      "node_count": 90,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "c7418ca2fa579d2410cb5e30dbf99f0a7b25cdedcaa96ad0149e458194924316",
+      "visible_total": 31,
+      "raw_output_sha256": "e08695490cdd56bf3194628013527ce525b46233e50b10050a44136d6843053f",
+      "candidate_materialisation": [
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE affiliation_candidates",
+          "Actual Rows": 482,
+          "Actual Loops": 1,
+          "Plan Width": 578,
+          "Shared Hit Blocks": 4641,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 13,
+          "Actual Loops": 482,
+          "Plan Width": 413,
+          "Shared Hit Blocks": 3346,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[2].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 482,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 2408,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[2].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 482,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 1446,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "note_storage": {
+      "characters": 10000,
+      "bytes": 10000
+    },
+    "extra_affiliations": 450,
+    "organisation_id": "67a4394a-4c75-4b8a-a23b-1ec0cff83f50",
+    "person_id": "a8d962a0-5153-43a4-b8ca-bd8888e21b19"
+  },
+  "fixed_native_30": {
+    "raw_capture_sha256": "49671f22475883793c652f46a23caf3ced55cc94a261430a71dfaf8d5ba7f06e",
+    "setup_attempt": 1,
+    "no_analysis_before_or_after": true,
+    "frozen": {
+      "execution_ms": 6.622,
+      "planning_ms": 2.54,
+      "shared_hit_blocks": 5112,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 570,
+      "node_count": 89,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "20fd9bf002e37b1fd19ca249c0107dc9af3793065e6fa6c0904f8ace1d2fc966",
+      "visible_total": 31,
+      "raw_output_sha256": "b5c0b00853eed7359802ede20d385af80245f8664e5507a0173471e492e56538",
+      "candidate_materialisation": [],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 570,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 2806,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 570,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 1710,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "candidate": {
+      "execution_ms": 4.086,
+      "planning_ms": 2.168,
+      "shared_hit_blocks": 2353,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 35,
+      "node_count": 90,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "e4c7c8f3b38a320f19dd7028cc9283cd0e367e81038fbfa47b13a5c5bae058fd",
+      "visible_total": 31,
+      "raw_output_sha256": "b5c0b00853eed7359802ede20d385af80245f8664e5507a0173471e492e56538",
+      "candidate_materialisation": [
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE affiliation_candidates",
+          "Actual Rows": 32,
+          "Actual Loops": 1,
+          "Plan Width": 144,
+          "Shared Hit Blocks": 1176,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[3].Plans[0].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 21",
+          "Actual Rows": 1,
+          "Actual Loops": 35,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 173,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[3].Plans[0].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 35,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 105,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "native_size": 30,
+    "visible_population_bound": 310
+  },
+  "fixed_native_45": {
+    "raw_capture_sha256": "d24f5dc1eb06b4fc257907badc3e8cba1bfec78f7850570ef69c9bbb5947a409",
+    "setup_attempt": 1,
+    "no_analysis_before_or_after": true,
+    "frozen": {
+      "execution_ms": 12.659,
+      "planning_ms": 2.282,
+      "shared_hit_blocks": 9988,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 1202,
+      "node_count": 89,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "20fd9bf002e37b1fd19ca249c0107dc9af3793065e6fa6c0904f8ace1d2fc966",
+      "visible_total": 46,
+      "raw_output_sha256": "15955eb99da99e884f8e081657a5fa0146562d8d5df518d2df85ab32a02cf4a2",
+      "candidate_materialisation": [],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 1202,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 5936,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 1202,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 3606,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "candidate": {
+      "execution_ms": 7.336,
+      "planning_ms": 2.189,
+      "shared_hit_blocks": 4101,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 50,
+      "node_count": 90,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "e4c7c8f3b38a320f19dd7028cc9283cd0e367e81038fbfa47b13a5c5bae058fd",
+      "visible_total": 46,
+      "raw_output_sha256": "15955eb99da99e884f8e081657a5fa0146562d8d5df518d2df85ab32a02cf4a2",
+      "candidate_materialisation": [
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE affiliation_candidates",
+          "Actual Rows": 47,
+          "Actual Loops": 1,
+          "Plan Width": 144,
+          "Shared Hit Blocks": 2145,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[3].Plans[0].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 21",
+          "Actual Rows": 1,
+          "Actual Loops": 50,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 248,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[3].Plans[0].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 50,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 150,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "native_size": 45,
+    "visible_population_bound": 460
+  },
+  "fixed_long_notes": {
+    "raw_capture_sha256": "27cd5cbf5e943c66fbe593732aac3046d114b916b0fc6cb377356f8f2f031508",
+    "setup_attempt": 1,
+    "no_analysis_before_or_after": true,
+    "frozen": {
+      "execution_ms": 32.413,
+      "planning_ms": 2.012,
+      "shared_hit_blocks": 51359,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 8678,
+      "node_count": 89,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "20fd9bf002e37b1fd19ca249c0107dc9af3793065e6fa6c0904f8ace1d2fc966",
+      "visible_total": 31,
+      "raw_output_sha256": "f5cf6841610230d93ce1f7ff01236ec66c4eb338c8a8f40b2d166bb226406298",
+      "candidate_materialisation": [],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 8678,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 42450,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[1].Plans[1].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 8678,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 26034,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "candidate": {
+      "execution_ms": 12.411,
+      "planning_ms": 1.73,
+      "shared_hit_blocks": 8966,
+      "shared_read_blocks": 0,
+      "temp_read_blocks": 0,
+      "temp_written_blocks": 0,
+      "work_mem": "4MB",
+      "max_loops": 482,
+      "node_count": 90,
+      "has_jit": false,
+      "jit_setting": "on",
+      "sql_sha256": "e4c7c8f3b38a320f19dd7028cc9283cd0e367e81038fbfa47b13a5c5bae058fd",
+      "visible_total": 31,
+      "raw_output_sha256": "f5cf6841610230d93ce1f7ff01236ec66c4eb338c8a8f40b2d166bb226406298",
+      "candidate_materialisation": [
+        {
+          "Node Type": "Nested Loop",
+          "Subplan Name": "CTE affiliation_candidates",
+          "Actual Rows": 482,
+          "Actual Loops": 1,
+          "Plan Width": 144,
+          "Shared Hit Blocks": 2750,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ],
+      "maximum_nodes": [
+        {
+          "path": "Plan.Plans[1].Plans[1]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 18,
+          "Actual Loops": 482,
+          "Plan Width": 80,
+          "Shared Hit Blocks": 1448,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[2].Plans[0]",
+          "Node Type": "Nested Loop",
+          "Subplan Name": "SubPlan 16",
+          "Actual Rows": 1,
+          "Actual Loops": 482,
+          "Plan Width": 0,
+          "Shared Hit Blocks": 2408,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        },
+        {
+          "path": "Plan.Plans[2].Plans[0].Plans[0]",
+          "Node Type": "Index Scan",
+          "Actual Rows": 1,
+          "Actual Loops": 482,
+          "Plan Width": 32,
+          "Shared Hit Blocks": 1446,
+          "Shared Read Blocks": 0,
+          "Temp Read Blocks": 0,
+          "Temp Written Blocks": 0
+        }
+      ]
+    },
+    "note_storage": {
+      "characters": 10000,
+      "bytes": 10000
+    },
+    "extra_affiliations": 450,
+    "organisation_id": "690dbf93-1ecf-46aa-bfdf-efaeab750890",
+    "person_id": "d8069d95-24af-4c4a-a249-afcec2487489"
+  }
+}
