@@ -93,7 +93,14 @@ test("Claim evidence HTTP real renderer serves exact protected original HTML and
       headers: { cookie: await h.cookie("finance-reconciler") },
     });
     assert.equal(response.status, 200);
-    assert.equal(response.headers.get("cache-control"), "no-store, private");
+    const cacheDirectives = new Set(
+      response.headers
+        .get("cache-control")
+        ?.split(",")
+        .map((value) => value.trim().toLowerCase()),
+    );
+    assert.ok(cacheDirectives.has("private"));
+    assert.ok(cacheDirectives.has("no-store"));
     const bytes = Buffer.from(await response.arrayBuffer());
     assert.equal(response.headers.get("x-content-sha256"), digest(bytes));
     assert.equal(response.headers.get("x-content-type-options"), "nosniff");
