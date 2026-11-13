@@ -34,6 +34,10 @@ Local worktrees also contain concurrent work. Sales (`feature/sales-cr01-cr05-co
 
 The table records source presence, not a fresh execution of all historical tests. No native visual review, owner acceptance or deployment is granted by A0. Current register route entries and guides are draft; linking earlier evidence does not change their review fingerprints.
 
+## PJ-07 backend continuation — 13 November 2026
+
+Dean authorised the first native [readiness API](../contracts/project-delivery-readiness.md), owned by [PR #948](https://github.com/deanrfiedler-gif/powerplants-one/pull/948). It projects scoped Engineering coordination, Supply readiness and specialist brief evidence from the existing native services. This source-read dependency does not require reproducing the unavailable HTML bytes, and does not select either historical issue as a UI baseline. Complete applicability, release/change-impact commands and the native page remain separate. The historical source audit below is preserved; [execution evidence](../testing/evidence/project-readiness/README.md) records the actual backend checks and limits.
+
 ## PJ-07 source discrepancy
 
 The exact Git blobs at the starting commit were hashed, independent of Windows checkout line endings:

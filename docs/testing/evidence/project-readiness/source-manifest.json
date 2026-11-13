@@ -1,0 +1,36 @@
+{
+  "baseline_commit": "bdcdd347fcb29c3806cd23d1e85be03f972b6628",
+  "date": "2026-11-13",
+  "scope": "PJ-07 synthetic native-source read; local implementation; publication gate tracked in README",
+  "hash_basis": "Exact working bytes tested and staged as Git blobs. PJ07-07 was added after the five-case unmocked and six-case command-only runs and passed separately. The containing Git commit identifies the publication; no self-referential commit hash is asserted.",
+  "build_id": "ywOPCoyPO3G33xVMknlRK",
+  "sha256": {
+    "docs/testing/evidence/project-readiness/database-command-only.txt": "db91883d124fe0e3d962cfc40040d10fc46b4065c37e314077b30e64823ab889",
+    "docs/testing/evidence/project-readiness/database-native.txt": "92e69ad76873ab59850a532f791d592b437ea1c2cff0a27cb2e2e28546a18e75",
+    "docs/testing/evidence/project-readiness/database-promise.txt": "e65297358e4ef368ea82a57e58e79bb54998659cf8de24a552a14ebc8990144e",
+    "docs/testing/evidence/project-readiness/http.txt": "8228840f8adf7fc712be9246937b024947a042aea3b8e2e514949a21d1d73afa",
+    "docs/testing/evidence/project-readiness/restart.txt": "f323c7bed52a87c366aefee950da711ae50d23648117094dda4640e4df057690",
+    "package-lock.json": "b1c3b042ba075bafb0e8aba199b2412ad6dd4bad0e2cfee6ed7d6e20468db701",
+    "src/app/api/v1/projects/[id]/readiness/route.ts": "f271fdd488ffb2ca05c1aea325982fb925a696ee3d1a365ba9d838098d32f6ca",
+    "src/engineering/service.ts": "b4912854570f90cfedcd5ab8d6c7f1ca7701c16b013d3da27eb68b6b6238c7e2",
+    "src/projects/readiness/model.ts": "8612eb1386d09968a8d06991c2fb7d2e00b7707bee297b1791884cfc041018c5",
+    "src/projects/readiness/reads.ts": "eb36f79906a3d1bfdc646a05f27c73917cc2da68535dea6fa4b5881a04fea077",
+    "src/projects/specialist/context.ts": "26bb5053b29794f9d465f163c64ec1863b35116239c43227baebde67b12d21b8",
+    "src/shared/http.ts": "cff61706d5dad0803b75afc2c200d192fcdbee3e308025dba0a088cfcb829042",
+    "src/supply/context.ts": "f8d15e15505d0ec24e8d719e56eabb244d711e37645e58d3df7157026e1f636b",
+    "src/supply/model.ts": "f71e84cef1ef7ddd857caaed69b303c55f3895296f6302c074be7baf2c1a551c",
+    "src/supply/reads.ts": "7adb8307d4c8b65146ec16ca8c67029d2023627fbe785927ab998e9078d5e0a4",
+    "tests/database/project-readiness.test.ts": "de6ae5b61efbbfc1e65b43d7fe5cd6b8ace4213f023da6735d7b26865bc4000f",
+    "tests/helpers/project-claims-synthetic-renderer.mjs": "e60aae045ac7c0cdcfcc179956c619721467c005d1e328ebd7b3999f394b61aa",
+    "tests/helpers/project-readiness.ts": "38296d861fca224e58d673711969225fd3c812f513aed4a25fea265410097b66",
+    "tests/helpers/project-specialist.ts": "853a5f102d6fe22c662381e47e84e0d1857a634d4b88453c2dfc553a9f2f3ecf",
+    "tests/http/project-readiness.test.ts": "55612fcf3ac025c8cfc6d4f5f9a0e1813041ff346f803b5d4fbc97b78941eb3a",
+    "tests/unit/project-readiness.test.ts": "a576a16700ab448c52d588cd6e4df5c41353c954e5516c82ac8542449622f2a1"
+  },
+  "workspace_log_sha256": {
+    "pj07-check.log": "333f6ec9863658e71c7811d2aeb47dc3989739d4adf0080a73d8bbfecc89fe8a",
+    "pj07-setup.log": "20bcb826060ccb52c7f49f233856b3f6b6cf1cc18890eef05179a27d0ede88ad",
+    "pj07-final-types.log": "bc8033ab9263f80d6936b509b40414d8d01fa804136bf8b2d00f7ac11abe7a2a",
+    "pj07-restart.mts": "35fceea76ce7990d4a65a15b9fe8ed5d9f5c0b57944194bf6e4c5647830e6ad0"
+  }
+}

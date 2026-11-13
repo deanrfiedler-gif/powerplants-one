@@ -1,5 +1,11 @@
 # Backend completion delivery plan
 
+## PJ-07 native source-read increment — 13 November 2026
+
+Dean authorised the next bounded readiness API after the backend recommendation. [PR #948](https://github.com/deanrfiedler-gif/powerplants-one/pull/948) owns the [source/authority contract](../contracts/project-delivery-readiness.md), native read implementation and [execution evidence](../testing/evidence/project-readiness/README.md). It projects existing Engineering coordination, material readiness and specialist briefs without deciding complete-project readiness or release. Site/customer, crew, work preparation, commercial release and complete prerequisite applicability remain explicit follow-ons. The current instruction authorises backend scope, not the proposed Projects Figma design or the missing historical r02 source.
+
+Current reconciliation: SV-07 recurrence and SV-08 escalation are implemented in their native contracts; older missing-code checkpoints below are historical. Agreement charges #905, Finance claim output #932 and Warranty-to-Supply #945 are existing contributions with their own review/CI gates. PJ-07 does not duplicate or take over those changes.
+
 ## Project billing B2 backend — 10 November 2026
 
 [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the claim-schedule and completion-evidence API slice of the [project billing decision](../decisions/project-delivery-billing.md). See the [B2 contract](../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence). B3 Finance entitlements, B4 field-work billability and maintenance M2/C1 follow in dependency order. Claim-schedule page controls and connected TS-01 acceptance remain open; this does not complete BC-06/07. Verification and review status are recorded in the dated status fragment.
