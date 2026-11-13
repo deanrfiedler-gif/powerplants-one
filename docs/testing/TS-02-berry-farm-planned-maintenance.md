@@ -24,6 +24,9 @@ Change record: r01 draft prepared 30 October 2026 at Dean's request, following T
 
 Implementation checkpoint — 12 November 2026: M1 #770 and M2 #904 are merged; C1 #905 implements agreement charges and still requires delivery gates. This specification now uses the adopted six-monthly interval and M1's prepared Draft work order. M2 defaults are available through the API; the existing form still requires explicit allocations. C1 schedule authoring and claims remain API-only. The connected backend component in `tests/database/finance-project-ts01.test.ts` is separate from this full, unexecuted manual scenario. See [maintenance decision](../decisions/maintenance-service-ts02-decisions.md) and [C1 execution evidence](evidence/agreement-charge-c1/README.md).
 
+
+Claim evidence follow-up, 13 November 2026: [PR #932](https://github.com/deanrfiedler-gif/powerplants-one/pull/932) adds restricted evidence output for the separate reconciled agreement fee. The [execution chapter](evidence/claim-finance-evidence/README.md) distinguishes connected billing/output component proof from this full manual scenario. Existing step IDs, six-monthly recurrence and covered-service cost rules are unchanged.
+
 ## 1. Purpose and scope
 
 TS-02 tests one planned maintenance service from its due date to Finance, and the sales follow-up a field finding creates. It continues TS-01: Bellbird Ridge Berries' maintenance agreement is Active and one six-monthly occurrence was generated in TS01-15.05. The first, due 12 September 2027, finds a worn dosing pump.

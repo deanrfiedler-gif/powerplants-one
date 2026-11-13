@@ -14,11 +14,27 @@ import { currentRevision, financeLines, bump } from "./service";
 import { command } from "./validation";
 import { type FinanceOutput, type ReservedOutput } from "./render";
 import { supportedTemplateDefinition } from "../documents/p11-template";
+import { claimEvidenceTemplate } from "./claim-evidence-template";
+import {
+  claimEvidenceSource,
+  claimIssueAuthority,
+} from "./claim-evidence-source";
+import {
+  isClaimEvidence,
+  claimEvidenceHtml,
+  renderClaimEvidence,
+  type ClaimEvidence,
+} from "./claim-evidence-render";
 import {
   supportedFinanceHtml,
   supportedRenderFinance,
 } from "../documents/p11-render";
-async function template(c: PoolClient, p: Principal) {
+async function template(
+  c: PoolClient,
+  p: Principal,
+  claim = false,
+  register = false,
+) {
   const t = (
     await c.query(
       "SELECT t.*,p.version AS policy_version FROM ppo.finance_templates t JOIN ppo.finance_template_policy p ON (p.workspace_id,p.template_id)=(t.workspace_id,t.id) WHERE t.workspace_id=$1",
@@ -34,15 +50,16 @@ async function template(c: PoolClient, p: Principal) {
       "TemplateUnavailable",
       "The exact Finance template is unavailable.",
     );
-  return {
+  const base = {
     id: t.id,
     version: t.version,
     content_hash: t.content_hash,
     policy_version: t.policy_version,
   };
+  return claim ? claimEvidenceTemplate(c, p, base, register) : base;
 }
 type RenderInput = {
-  source: FinanceOutput;
+  source: FinanceOutput | ClaimEvidence;
   output: ReservedOutput;
   template: Awaited<ReturnType<typeof template>>;
 };
@@ -96,25 +113,31 @@ export async function requestFinanceEvidence(
     p,
     cmd,
     "RequestFinanceEvidence",
-    (c) => financeContext(c, p, id, "finance.issue"),
+    async (c) => {
+      const ctx = await financeContext(c, p, id, "finance.issue");
+      if (["ProjectClaim", "AgreementCharge"].includes(ctx.h.source_kind)) {
+        const original = (
+          await c.query(
+            "SELECT * FROM ppo.finance_revisions WHERE workspace_id=$1 AND handoff_id=$2 AND id=$3",
+            [p.workspace_id, id, cmd.revision_id],
+          )
+        ).rows[0];
+        if (!original) throw unavailable();
+        await claimIssueAuthority(c, p, ctx, original);
+      }
+      return ctx;
+    },
     async (c, ctx) => {
       sameVersion(ctx.h.version, cmd.expected_version);
-      if (ctx.h.source_kind === "AgreementCharge")
-        blocked(
-          "AgreementChargeOutputNotDefined",
-          "Agreement charge output content is not defined; use the exact internal Finance evidence.",
-        );
-      if (ctx.h.source_kind === "ProjectClaim")
-        blocked(
-          "ProjectClaimOutputNotDefined",
-          "Project claim OUT-14 content requires a separately reviewed output definition.",
-        );
+      const claim = ["ProjectClaim", "AgreementCharge"].includes(
+        ctx.h.source_kind,
+      );
       if (ctx.h.status !== "Reconciled")
         blocked(
           "FinanceStateChanged",
           "OUT-14 release requires the exact reconciled Finance revision.",
         );
-      const r = await currentRevision(c, p, ctx),
+      const r = await currentRevision(c, p, ctx, true, claim),
         review = (
           await c.query(
             "SELECT * FROM ppo.finance_reviews WHERE workspace_id=$1 AND revision_id=$2",
@@ -128,6 +151,8 @@ export async function requestFinanceEvidence(
           )
         ).rows[0];
       if (
+        !review ||
+        !recon ||
         cmd.revision_id !== r.id ||
         review.id !== cmd.review_id ||
         recon.id !== cmd.reconciliation_id
@@ -136,66 +161,76 @@ export async function requestFinanceEvidence(
           "SourceChanged",
           "The exact Finance review/reconciliation changed.",
         );
-      const t = await template(c, p),
+      const t = await template(c, p, claim, true),
         outcome = (
           await c.query(
             "SELECT evidence FROM ppo.finance_outcomes WHERE workspace_id=$1 AND id=$2",
             [p.workspace_id, recon.outcome_id],
           )
         ).rows[0],
-        source: FinanceOutput = {
-          reference: ctx.h.display_number,
-          work_reference: ctx.w.display_number,
-          status: ctx.h.status,
-          revision: r.revision,
-          company_id: ctx.h.company_id,
-          customer: ctx.w.customer_name,
-          site: ctx.w.site_name,
-          account: ctx.a.fixture_key,
-          currency: ctx.h.currency,
-          mode: ctx.h.mode,
-          source_hash: r.source_hash,
-          review_id: review.id,
-          reconciliation_id: recon.id,
-          treatment_basis: r.treatment_basis,
-          remaining_work_basis: r.remaining_work_basis,
-          reconciliation_basis: recon.basis,
-          definition: {
-            id: r.definition_id,
-            version: r.definition_version,
-            policy_version: r.policy_version,
-          },
-          corrections: (
-            await c.query(
-              "SELECT id,source_revision_id,outcome_id,disposition,reason,created_at FROM ppo.finance_corrections WHERE workspace_id=$1 AND handoff_id=$2 ORDER BY created_at",
-              [p.workspace_id, id],
+        source: FinanceOutput | ClaimEvidence = claim
+          ? await claimEvidenceSource(
+              c,
+              p,
+              ctx,
+              r,
+              review,
+              recon,
+              outcome.evidence,
             )
-          ).rows,
-          lines: await financeLines(c, p, r.id),
-          source_manifest: r.source_snapshot.reports.map(
-            (s: {
-              report_id: string;
-              revision_id: string;
-              review_id: string;
-              issue_id: string;
-              source_hash: string;
-              issue_hash: string;
-              scope_guard: unknown;
-              completion: unknown;
-            }) => ({
-              report_id: s.report_id,
-              revision_id: s.revision_id,
-              review_id: s.review_id,
-              issue_id: s.issue_id,
-              source_hash: s.source_hash,
-              issue_hash: s.issue_hash,
-              scope_and_authority: s.scope_guard,
-              personal_completion: s.completion,
-            }),
-          ),
-          target_evidence: outcome.evidence,
-          no_posting: recon.no_posting,
-        },
+          : {
+              reference: ctx.h.display_number,
+              work_reference: ctx.w.display_number,
+              status: ctx.h.status,
+              revision: r.revision,
+              company_id: ctx.h.company_id,
+              customer: ctx.w.customer_name,
+              site: ctx.w.site_name,
+              account: ctx.a.fixture_key,
+              currency: ctx.h.currency,
+              mode: ctx.h.mode,
+              source_hash: r.source_hash,
+              review_id: review.id,
+              reconciliation_id: recon.id,
+              treatment_basis: r.treatment_basis,
+              remaining_work_basis: r.remaining_work_basis,
+              reconciliation_basis: recon.basis,
+              definition: {
+                id: r.definition_id,
+                version: r.definition_version,
+                policy_version: r.policy_version,
+              },
+              corrections: (
+                await c.query(
+                  "SELECT id,source_revision_id,outcome_id,disposition,reason,created_at FROM ppo.finance_corrections WHERE workspace_id=$1 AND handoff_id=$2 ORDER BY created_at",
+                  [p.workspace_id, id],
+                )
+              ).rows,
+              lines: await financeLines(c, p, r.id),
+              source_manifest: r.source_snapshot.reports.map(
+                (s: {
+                  report_id: string;
+                  revision_id: string;
+                  review_id: string;
+                  issue_id: string;
+                  source_hash: string;
+                  issue_hash: string;
+                  scope_guard: unknown;
+                  completion: unknown;
+                }) => ({
+                  report_id: s.report_id,
+                  revision_id: s.revision_id,
+                  review_id: s.review_id,
+                  issue_id: s.issue_id,
+                  source_hash: s.source_hash,
+                  issue_hash: s.issue_hash,
+                  scope_and_authority: s.scope_guard,
+                  personal_completion: s.completion,
+                }),
+              ),
+              target_evidence: outcome.evidence,
+              no_posting: recon.no_posting,
+            },
         snapshot: RenderInput = {
           source,
           output: {
@@ -319,11 +354,9 @@ export async function processFinanceJob(
     await financeContext(database(), p, job.handoff_id, "finance.issue");
     let stored = await documentStore().locate(ctx);
     if (!stored) {
-      const rendered = await supportedRenderFinance(
-        s.source,
-        s.output,
-        s.template.version,
-      );
+      const rendered = isClaimEvidence(s.source)
+        ? await renderClaimEvidence(s.source, s.output)
+        : await supportedRenderFinance(s.source, s.output, s.template.version);
       await hooks.afterRender?.();
       const bundle: Bundle = {
           schema_version: 1,
@@ -345,7 +378,9 @@ export async function processFinanceJob(
       b.job_id !== id ||
       b.input_hash !== job.input_hash ||
       b.html !==
-        (await supportedFinanceHtml(s.source, s.output, s.template.version)) ||
+        (await (isClaimEvidence(s.source)
+          ? claimEvidenceHtml(s.source, s.output)
+          : supportedFinanceHtml(s.source, s.output, s.template.version))) ||
       !pdf.subarray(0, 5).equals(Buffer.from("%PDF-"))
     )
       blocked(
@@ -405,12 +440,21 @@ export async function processFinanceJob(
           job.handoff_id,
           "finance.issue",
         ),
-        r = await currentRevision(c, p, current);
+        r = await currentRevision(
+          c,
+          p,
+          current,
+          true,
+          isClaimEvidence(s.source),
+        );
+      if (isClaimEvidence(s.source))
+        await claimIssueAuthority(c, p, current, r);
       if (
         current.h.status !== "Reconciled" ||
         r.id !== job.revision_id ||
         r.source_hash !== s.source.source_hash ||
-        hash(await template(c, p)) !== hash(s.template)
+        hash(await template(c, p, isClaimEvidence(s.source))) !==
+          hash(s.template)
       )
         blocked(
           "StaleSource",

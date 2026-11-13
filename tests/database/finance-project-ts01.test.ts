@@ -38,6 +38,7 @@ import {
 } from "../helpers/acceptance";
 import { finishStage } from "../helpers/acceptance-journey";
 import { verifyConnectedMaintenanceBilling } from "../helpers/connected-maintenance-billing";
+import { verifyClaimEvidence } from "../helpers/claim-finance-evidence";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable database required");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
@@ -181,6 +182,7 @@ test("B4/M2/C1 connected Finance component: project claims, separate agreement f
     [null, null, null],
   );
   await verifyConnectedMaintenanceBilling(f);
+  await verifyClaimEvidence(f.reconciler, claim.id, "ProjectClaim", "135090.00");
   // The separate fee and covered visit must not change project entitlements.
   assert.deepEqual(
     (await readCommercialFinance(f.reconciler, f.project.id)).claim_measures,
