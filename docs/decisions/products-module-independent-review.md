@@ -2,13 +2,13 @@
 document_id: PPO-PRODUCTS-REVIEW-PROP
 date: 2026-11-13
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Products module on 13 November 2026 at Dean's request, by a session that did not draw it, with the private file "PPO - Library" read for comparison; findings and recommendations only; nothing was changed in either file; no design is accepted or amended by this record; no application code, route, migration, permission or deployment
+status: Independent review of the accepted private Figma file for the Products module on 13 November 2026 at Dean's request, by a session that did not draw it, with the private file "PPO - Library" read for comparison; the review itself was read-only; Dean then saved the named version "PPO - Products module (accepted)" and adopted the six recommendations of section 6 the same day, and this session applied the alignment batch to the Products file (section 9); nothing was changed in the Library; the batch needs a new named version that Dean saves; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # PPO - Products module independent review, 13 November 2026
 
-**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Review findings and recommendations. Nothing is drawn. The session that holds the file decides how to draw the fixes, Dean decides the questions in section 6, and any change to the accepted file needs a new named version that Dean saves.
+**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Sections 1 to 8 are the review as first recorded. Section 9 records two things: Dean's answers and named version of 13 November 2026, and the alignment batch this session then applied to the Products file. The batch needs a new named version that Dean saves.
 
 ## 1. The request
 
@@ -158,4 +158,68 @@ The Version 3.0 conformance audit of 10 November 2026 does not assess Products; 
 
 ## 8. Boundary
 
-This record changes no design and accepts none. It corrects no other record: the proposal record's A5, A9, A20 and section 13 are findings for the change that follows. It authorises no application code, route, migration, permission, integration, customer communication or deployment. Every product, supplier, price, file and person in the file is synthetic.
+The review (sections 1 to 7) changed no design and accepted none. The batch in section 9 changes the Products file only under Dean's answers. The proposal record gains a note after its named version and a section on the batch. This record authorises no application code, route, migration, permission, integration, customer communication or deployment. Every product, supplier, price, file and person in the file is synthetic.
+
+## 9. Decisions and the alignment batch — 13 November 2026
+
+### 9.1 Dean's answers
+
+Dean reported: "I have saved the named version as PPO - Products module (accepted)." On the six questions: "I am happy for you to proceed based on your recommendations." Each question is therefore decided as section 6 recommends:
+
+| # | Decision |
+|---|---|
+| Q-1 | The Library's drawer widths are panel widths and govern module files. Filters and column choosers are 360 px; editing, binding, review, lifecycle, row detail and the snapshot are 480 px; each sits beside the 48 px strip. The Shell's snapshot drawer becomes 480 px at the Shell's next version. This supersedes A5 of the proposal record |
+| Q-2 | Cost sources read `SYN-SRC-0024`, four digits, as Estimating and the code show them |
+| Q-3 | Revisions and versions of quoted records are two-digit, in this file now and in the Estimating file in its own batch (its Q-C) |
+| Q-4 | The interface shows "Source reported"; the stored value stays SourceReported |
+| Q-5 | The Pricing record header's primary is "Bind a cost source…". "Ask Estimating to review the source" sits in Actions and the binding row's menu, and "Open the source in ES-03" is a link |
+| Q-6 | The named version "PPO - Products module (accepted)" is saved (PDR-04 closed). It pins the accepted design before this batch. The batch below needs a new named version |
+
+### 9.2 Applied in the Products file
+
+No other session held the file: no open pull request touched Products. Every node ID is unchanged, and no sheet was added or removed.
+
+| Finding | Applied |
+|---|---|
+| PDR-01 | The record header primary on the twelve Pricing record sheets reads "Bind a cost source…". It replaced "Ask Estimating to review the source" on five, "Open the source in ES-03" on six and "Bind a cost source" on PP03. PP07, read only for Lee Nakamura, is unchanged. The duplicate "Bind a cost source" button was removed from the toolbar of the same twelve sheets. The Pricing notes card states where the other two actions sit |
+| PDR-02 | A local variable collection "PPO layout" holds `drawer/narrow` 360, `drawer/standard` 480, `drawer/wide` 640 and `drawer/extra-wide` 800, copied from the Library until it is adopted. Filters (X15) and Columns (X16) are 360 px. CA02's snapshot, CA12, PP03, PP04, PP05, PP10, PC04, PC08, PC09 and PI04 are 480 px. Each panel is flush with the strip and has its width bound to its variable. The contents reflow with no child overflowing. The PP03 and PP04 panels are 18 px shorter |
+| PDR-03 | 69 texts and one chip read `SYN-SRC-0024` to `SYN-SRC-0029`, and so does PH11's frame name |
+| PDR-08 | 79 revision tokens and one chip read two-digit: source revisions r01 and r02, `SYN-EST-000144 v01`, and the asset's "configuration r02". Texts that quote the build ("Built: …") keep the built value |
+| PDR-09 | 13 validity chips read "Validity unknown" (Warning). Lifecycle "Unknown" stays Neutral |
+| PDR-10 | 27 chips and 16 texts read "Source reported". Quotes of the build keep SourceReported |
+| PDR-06 | The PC03 and X09 headers moved from the Closed to the Draft variant, with the primary "Record a successor…". Outputs is hidden, as before, and the Unresolved chip keeps its Warning variables |
+| PDR-07 | PB05, X05 and TB04 read "1 of 1 in view" and "1 of 2 in view" |
+| PDR-11 | PH08's Done button is full width and 48 px high. Its dialog was raised 16 px to stay inside the sheet |
+| PDR-12 | The Catalogue's desktop sheets run CA01, CA02, CA03 and on. The Import desktop section is one column: PI01, PI02, PI03, PI05, PI06, PI07, PI09. Labels moved with their sheets, the sections below moved down, and every gap is 360 px |
+| PDR-16 | Shell and kit section `11:299` reads "(accepted 12 November 2026)" |
+| PDR-18 | The 16 import plan counts are 22 px, the KPI tile's value size |
+| Read me | The header card names the named version and this batch. The sheet index's A5 line gives the new widths, the audit card's step 3 is done, and the Catalogue notes give the source reference form |
+
+### 9.3 Verification
+
+A script pass ran on all seven scope pages after the batch.
+- **Layout.** The pass found:
+  - 122 sheets, each labelled with its frame name;
+  - no child outside a sheet, no overlap and nothing outside its section;
+  - every section gap 360 px, and no Read me card overlapping another.
+- **Leftovers.** Outside quotes of the build, the pass found:
+  - no `SYN-SRC-0000` reference;
+  - no one-digit revision;
+  - no "SourceReported";
+  - no "to review" stepper;
+  - no Warning-tone "Unknown";
+  - no 24 px text;
+  - no 432 px panel.
+- **Renders.** X15, PP03, CA02 and PC03 were read at full size after the change.
+
+### 9.4 Still open
+
+| Finding | Owner | State |
+|---|---|---|
+| PDR-05 | Shell file | Behaviour variants for the record header. PC03 and X09 now sit on the Draft variant |
+| PDR-13 | This file, at Library adoption | As recorded in A21 and P1 |
+| PDR-14, PDR-15, PDR-17 | Library file | `action/primary`, a scrim variable, CSS code names and styles |
+| PDR-18 (10 px labels) | Shell file | The rail labels and badges inside the Shell copies |
+| PDR-19, PDR-20 | Repository | Each in its own change |
+| Q-1, Q-3 elsewhere | Shell and Estimating files | The Shell's snapshot drawer at 480 px; the Estimating file's two-digit revisions |
+| New named version | Dean | Suggested name "PPO - Products module (accepted) · alignment batch" |
