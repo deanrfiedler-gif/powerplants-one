@@ -2,14 +2,14 @@
 document_id: PPO-ENGINEERING-FIGMA-ALIGNMENT-AUDIT
 date: 2026-11-13
 owner: Dean Fiedler
-status: Audit findings, 2026-11-13; no design is changed and nothing is accepted by this record; read-only in Figma; no application code, route, migration, permission or integration; every record shown is synthetic
+status: Audit findings, 2026-11-13 (read-only); Dean's answers of the same day and the Engineering alignment batch they authorised are recorded in section 8; nothing is accepted by this record; no application code, route, migration, permission or integration; every record shown is synthetic
 source_commit: bdcdd347fcb29c3806cd23d1e85be03f972b6628
 versioning: git
 ---
 
 # Engineering module Figma alignment audit
 
-**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Audit findings. Nothing in any Figma file was edited, moved, renamed, commented on or versioned. The fixes are delivered as one alignment batch (Appendix A) for the next Engineering build session to apply.
+**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Audit findings. The audit itself edited, moved, renamed, commented on or versioned nothing in any Figma file, and delivered its fixes as one alignment batch (Appendix A). Dean then adopted the recommendations, and the batch's Engineering items were applied to the Engineering file only; section 8 records what changed.
 
 On 13 November 2026 Dean asked for an audit of the Engineering module's Figma page set. Dean supplied the cross-file alignment audit prompt and the V3 read-only conformance audit of 10 November 2026 as supporting material, and made the PPO - Library file available for reference. This record applies the prompt's checks (its section 4) to one file, "PPO - Engineering module", recorded in [PPO-ENGINEERING-REFINED-FIGMA-PROP](engineering-module-refined-ui-proposal.md). Under Dean's standing instruction, the prompt's questions took their defaults: read-only, findings of every severity, and the Library read for reference only.
 
@@ -18,7 +18,7 @@ Four statements stay separate:
 - what was audited (sections 1, 2 and 6);
 - what is misaligned (sections 3 and 4);
 - what only Dean can decide (section 5);
-- what this audit did not change: no Figma file, no other record, no code.
+- what this audit did not change: no Figma file, no other record, no code. Section 8 records the batch Dean then authorised, applied to the Engineering file and its record only.
 
 ## 1. Scope and sources
 
@@ -130,7 +130,7 @@ The Majors and every Engineering-owned item are given in full in Appendix A, wit
 | AF-013 | Minor | FA1 | CR02 says the Fri 16 Oct rework "passed at 2.1 A"; four other sheets give the passing retest on Mon 19 Oct | Engineering |
 | AF-014 | Minor | FA5 | Eleven sheets show events after 09:00 (09:01 to 09:20) with no later-moment label | Engineering |
 | AF-015 | Minor | CV4 | About 371 dates without the year; as-at lines and history lists state no zone | Engineering (Q7) |
-| AF-016 | Minor | SH6 | Twelve no-action toolbars do not read "Read only" (R117), and TR06's primary is blank | Engineering |
+| AF-016 | Minor | SH6 | Twelve no-action toolbars do not read "Read only" (R117). Corrected in section 8: TR06's primary is not blank | Engineering |
 | AF-017 | Minor | SH4 | Administration sheets show Engineering current on the rail; AC-24 decided Settings | Engineering |
 | AF-018 | Minor | FA6, SH4 | The rail reads "My Work 4" (Dean Fiedler's count) whoever is signed in | Engineering |
 | AF-019 | Minor | FA4, ST3 | 79 of 83 sheets signed in as someone other than Sam Jordan do not name the person in the label | Engineering |
@@ -209,12 +209,114 @@ Agreed across files:
 
 ## 7. Next steps
 
+Steps 2, 3 and 6 were taken on 13 November 2026 for the Engineering file and its record (section 8). Steps 1, 4 and 5 remain.
+
 1. Dean saves a named version of the Engineering file as it stands (for example "PPO - Engineering module (proposal) · 10 November 2026"), so the batch is a difference from a pinned state.
 2. Dean answers Q1 to Q8.
 3. The next Engineering build session applies Appendix A in order, re-runs the structural pass and the text scans, and asks Dean to save a new named version.
 4. The Service and Customers, Sites & Equipment files take AF-003 (and AF-012 for EQ-09) into their next batches. The Supply file takes AF-004 once Q2 is answered.
 5. The Shell's owner takes AF-032, AF-033 and AF-034 under a new Shell named version, alongside pull request 946.
 6. Repository corrections, each in its own later change: the Engineering record's sources (latest Shell named version), A1 (file name), A11 and A17 (families), A13 (pronoun), and the assumptions Q2, Q4 and Q5 settle.
+
+## 8. Dean's answers and the batch applied — 13 November 2026
+
+Dean replied the same day: "I am happy to proceed based on your recommendations." This record reads that reply as two things:
+
+- an answer to Q1 to Q8, each as section 5 recommends;
+- authority to apply the Engineering items of Appendix A to the Engineering file.
+
+The session that wrote this audit applied them. No other Figma file was edited: not the Shell (pull request 946 is changing it), Supply, Service, Customers, Sites & Equipment or Settings. No named version was saved before the batch. Figma's version history holds the earlier state, and a named version that pins the aligned state is now Dean's to save.
+
+### 8.1 Decisions
+
+| # | Decision, as recommended | Where it lands |
+|---|---|---|
+| Q1 | Panels stay 432 px until the Shell's and the Library's widths are reconciled | No change; AF-023 stays open, CR08 included |
+| Q2 | Engineering's state stands: SYN-MAT-000031 r03 issued Fri 23 Oct 2026; r04 a draft blocked by the unmapped SV-20 spare and FC-2 enclosure | Supply's batch: MD02 reads origin r03 and holds the spares line |
+| Q3 | The accepted Sales file keeps SYN-OPP-000301 for Mallee Fresh Produce | The Hillview Glasshouse 5 basis reads SYN-OPP-000344, a synthetic number no record uses |
+| Q4 | The Settings registry owns the reference families | AD08 is a read-only view of it. Instruments follow its families: INS becomes MEG, and Engineering's CAL becomes INST |
+| Q5 | Two-digit revisions for materials releases, line content and test bases | Letters stay for drawings and design bases. PPO-STD-001 section 7 already preserves the CAD engineering scheme, and AD06 now records the rule |
+| Q6 | Checks recorded in October count in Q4 2026 | Engineering shows KPI-11 for Q4 2026 to date; Reporting's batch rebuilds its Q3 cohort |
+| Q7 | The short form stays in registers and timelines within the story year; headers and as-at lines carry the year and zone | Applied in this file |
+| Q8 | Engineering's 09:00 state stands: release blocked, handover not requested | The Service and Customers, Sites & Equipment batches label RV22 and EQ10 as later moments |
+
+### 8.2 Applied in the Engineering file
+
+| Finding | What changed |
+|---|---|
+| AF-001 | KPI-11 now reads "Q4 2026 to date" on IS01's header, card rule and tile, IS03's subtitle and footer, TB16's header and card title, and PH19's header. REP-06 stays Q3 2026 beside Q2, and the page's period tabs are unchanged |
+| AF-002 | Instruments now follow the EQ-09 register. Motor current (T04 to T07 and the T06 retest) is on clamp meter SYN-CLP-006, "valid then · expired Sat 31 Oct", and CM07's Tue 3 Nov retest on it is the flagged one. Insulation (T02) and continuity (T12) are on SYN-MEG-002, valid to Fri 30 Apr 2027. T01's multimeter SYN-MUL-004 is valid to Wed 30 Jun 2027, and T10's calibrator is SYN-INST-002. The change covers CM03, CM04, CM07, CM14, TB14, PH15, IS03, ST01, the notes and the Read me |
+| AF-005 | 13 citations now read SYN-SRV-000025, the Block C plant room as-found survey in the Site surveys register. Five "obs. 15" became "obs. 14", because that survey has 14 observations |
+| AF-006 | 16 references now read SYN-OPP-000344; the Read me's A14 note records the settlement |
+| AF-007 | All 15 gendered pronouns were rewritten with the name or "they/their", and the Read me's A13 now names Sam Jordan |
+| AF-008 | The five toolbar primaries now use brand/navy, and 16 drawn primary buttons followed (11 on phone sheets, 5 on ST01). ST03's text row now reads brand/navy at 14.37:1, and its note closes C1. The edge row (brand/green-deep on white, 3.57:1 against the 3:1 rule) stays as it was |
+| AF-009 | AD01 reads "Read from Settings". AD08 now reads "Read only · from Settings › Numbering families", with its sub-line and label changed to match. Its SUB row became SYN-MEG- (insulation tester, EQ-09), a SYN-SN- row was added, and the count is 15 |
+| AF-010 | The local phone header's buttons are 48 × 48. 37 drawn phone controls are now 48 px high: back and close buttons, form footers, and the PH02 and PH03 view chips. Nine form footers moved up 4 px, and their content areas lost 4 px, to stay inside the sheet |
+| AF-011 | 204 R-revision labels in texts and labels became r01 to r04, as did sheet names. The 21 lower-case r1 to r3 labels became r01 to r03 |
+| AF-013 | CR02 now reads "The rework was done on Fri 16 Oct and the retest passed at 2.1 A on Mon 19 Oct" |
+| AF-014 | Eighteen times moved inside the story clock: PS09 08:51 and 08:52; PS10 08:44; PS05 and PS06 08:47 and 08:51; DR12b 08:54; PH08 08:50; and Robin Hale's acknowledgement 08:59 on TR04, TR09, TR11, TB08 and PH11 |
+| AF-015 | "AEDT" was added to 36 as-at lines, and the IS01 and TB16 headers were rewritten with it. Four toolbar sub-line dates gained the year |
+| AF-016 | Twelve no-action toolbars now start "Read only ·" with the reason and date |
+| AF-017 | Settings is now current on the rail of all eleven administration sheets: tile fill, label, icon and the 3 px left marker moved from Engineering |
+| AF-018 | The rail's My Work count is hidden on 167 sheets not signed in as Dean Fiedler. A3.8's per-person totals were not available, so no count is shown rather than a wrong one. Dean's sheets keep 4 |
+| AF-019 | 79 labels now end "[signed in as Name]"; the other four already named the person |
+| AF-020 | Not acknowledged, Retest pending and To confirm are now Warning; Not saved is Danger; Received and Sent are Success. The verification chip reads "Verification required". The 16 bound-source chips that read "Unchanged" in Success now read "Current", so "Unchanged" stays Grey for differences |
+| AF-021 | 18 paints are bound (overlays, scrims and a divider), and accent/estimating-ink is #156e64 |
+| AF-022 | Text at 15 px became 16 px (PH01, PH02, PH03, PH15). The phone header title went from 17 to 16 px, PH01's count from 18 to 20 px, and the KPI tile value (component) and PH19's figures from 22 to 20 px |
+| AF-025 | The kit section and the Read me cite the Shell's named versions of 8, 10 and 12 November 2026, and the navy primary |
+| AF-027 | The flyout's five Recent rows start with the reference |
+| AF-028 | The Read me title is "PPO - Engineering module (proposal, drawn 10 November 2026; alignment batch 13 November 2026)" |
+| AF-030 | PK05's four "Not so" chips read "No change" |
+| AF-031 | The Insights notes date the acceptance "Sun 1 Nov 2026" |
+
+### 8.3 Not applied, and why
+
+- **AF-003:** for the Service file and the Customers, Sites & Equipment file (Q8).
+- **AF-004:** for the Supply file (Q2).
+- **AF-012:** the six-digit instrument numbers wait for the EQ-09 register to change first. The families are already aligned.
+- **AF-023:** no change, under Q1.
+- **AF-024:** waits for Library adoption.
+- **AF-025 and AF-029:** re-copying the Shell's component sets waits for the Shell's next named version.
+- **AF-032 to AF-034:** for the Shell's owner.
+- **AF-026:** applied in this change to the [Engineering record](engineering-module-refined-ui-proposal.md), section 11.
+
+For the Customers, Sites & Equipment batch: EQ-09's "last use" for SYN-CLP-006 (Thu 15 Oct) should follow the Engineering file. The meter is now used through Mon 19 Oct and for the flagged retest on Tue 3 Nov.
+
+### 8.4 Correction to this audit
+
+AF-016 first said TR06's primary was blank. It reads "Complete review", disabled with its reason as R117 requires. The extraction had cut the toolbar text at 120 characters. The item is corrected above.
+
+### 8.5 Verification
+
+The audit scans were re-run across all 12 scope pages after the batch. They found:
+
+- no gendered pronoun;
+- no SYN-SVY-, SYN-OPP-000301, SYN-INS-, SYN-CAL- or SYN-MEG-001;
+- no single-digit revision label;
+- no time after 09:00 on Thu 5 Nov 2026;
+- no as-at line without its zone;
+- no unbound solid paint outside instances;
+- no direct child outside its sheet;
+- every label at y − 26, the sheet's width and one line, truncated;
+- every sheet not signed in as Sam Jordan naming its person;
+- no phone control under 48 px outside the Shell's phone toolbar;
+- no drawn primary on brand/green-deep;
+- one tone per chip word within each of the two scans (pages 7:4 to 7:9, and 7:10 to 7:15);
+- Settings current on all eleven administration sheets.
+
+Text outside the C6 scale is now only the 22 px titles of the notes cards, which are annotation.
+
+Seven screenshots were checked for clipping and overlap: PH02, PH06, AD01, AD08, TR02, IS01 and CM03. The first round found three faults, each fixed and re-shot:
+
+- TR02's "Source unchanged" was clipped, so the chips now read "Current";
+- IS01's period tabs had been relabelled, so they were restored and the period stated on the KPI-11 card instead;
+- ST03's edge row had been changed, so it was restored.
+
+The batch took about 57 Figma calls. Three stopped on an instance sublayer that the edits had replaced and were re-run. Every rule matches only its before-state, so a re-run changes nothing twice.
+
+### 8.6 Named version
+
+The file is still a proposal, and nothing is accepted by this record. Dean is asked to save a named version that pins the aligned state, for example "PPO - Engineering module (proposal) · alignment batch 13 November 2026".
 
 ## Appendix A · Alignment batch · PPO - Engineering module
 
@@ -363,9 +465,9 @@ Before you start:
 
 ### AF-016 · Minor · SH6
 
-- **Where:** Technical reviews and issues · EN-05; Design basis · EN-02 · 36:455, 36:883, 37:1257, 37:1669, 37:2074, 37:2469, 37:3267, 39:4148, 36:1736, 37:3685, 39:4495, 29:6320, 39:3511
+- **Where:** Technical reviews and issues · EN-05; Design basis · EN-02 · 36:455, 36:883, 37:1257, 37:1669, 37:2074, 37:2469, 37:3267, 39:4148, 36:1736, 37:3685, 39:4495, 29:6320
 - **Rule:** R117: a state with no action reads "Read only" with its reason and date
-- **Found:** No-action primaries read "Reviewed · issued as SYN-ISS-000017" (TR02, TR04, TR03a, X15, X16, TR03b, TR08, TB07), "Delivered to every recipient · acknowledging is the recipient's" (TR09, TR11), "Acknowledging is the recipient's" (TB08) and "Nothing for you to confirm" (PH05); TR06's primary is blank. PS08 and DR12a already write "Read only · …"
+- **Found:** No-action primaries read "Reviewed · issued as SYN-ISS-000017" (TR02, TR04, TR03a, X15, X16, TR03b, TR08, TB07), "Delivered to every recipient · acknowledging is the recipient's" (TR09, TR11), "Acknowledging is the recipient's" (TB08) and "Nothing for you to confirm" (PH05). PS08 and DR12a already write "Read only · …". (Corrected in section 8: the first version of this item also called TR06's primary blank; it reads "Complete review", disabled with its reason.)
 - **Expected:** For example "Read only · issued as SYN-ISS-000017, Thu 5 Nov 2026, 08:55"
 - **Do:** Start each no-action primary with "Read only", keep the reason and add the date
 - **Proved fixed when:** Every no-action toolbar reads "Read only"
