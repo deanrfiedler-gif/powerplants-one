@@ -161,6 +161,8 @@ The private Figma file is now named "PPO - Shell (accepted)". Every citation in 
 
 **Name as of 12 November 2026.** Dean stated on 12 November 2026: "The file is named PPO - Shell". It is the same file: its three pages and every node ID this record cites are unchanged, read through the Figma connector that day. The connector returns only the generic root name "Document", so the name rests on Dean's word, and the date of the rename is not recorded. Citations of "PPO - Shell (accepted)" or "PPO - Shell refined concept", in this record, the rules export, the shell system page, status fragments and the module and library records, mean this file; none is rewritten. Named versions keep their titles; section 11 and section 12 list them.
 
+**Name as of 14 November 2026.** Dean renamed the file "PPO - Shell (accepted)" on 14 November 2026. That is the form the module files use: `PPO - <Surface>` from PPO-STD-001 section 13.2, with the "(proposal)" or "(accepted)" suffix the files carry in practice, as in "PPO - Sales module (accepted)". Section 13.2 itself does not mention the suffix. Citations of "PPO - Shell", "PPO - Shell (accepted)" and the earlier names all mean this file, and none is rewritten. The file's link and key are not recorded (ADR-0050, ADR-0053).
+
 ## 10. Record header toolbar — 9 November 2026
 
 Dean asked, from a screenshot of a quotation record header (breadcrumb, title with a Draft chip and a favourite star, a sub-line, and a toolbar with back, undo, new, duplicate, first, previous, next and last record buttons, Actions, Reports and Issue & send), whether its elements belonged on the module pages. Claude recommended a shared record header for every record page in every module, drew it in this file as a proposal on a new page, and Dean accepted it the same day: "Accept the record header toolbar as drawn."
@@ -354,7 +356,7 @@ The old sheet index section `80:8443` on the first page was removed. No record c
 
 **Named version.** The new named version that section 14 asks for should be saved after this change, so that one version pins alignment batch 1 and this structure together. The suggested title is "Shell refined concept — accepted · alignment batch 1 applied". The batch and this structure await Dean's acceptance in words.
 
-**Acceptance and named version — 14 November 2026.** Dean, in the session: "I have saved the named version as "Shell refined concept — accepted · alignment batch 1 applied"" and "I accept all your recommendations." That accepts alignment batch 1 (section 14) and the file structure (this section). It also answers the open naming question: the file keeps the name "PPO - Shell", which already follows PPO-STD-001 section 13.2 (`PPO - <Surface>`, with no status in the name). This session cannot read version history, so the title rests on Dean's word. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+**Acceptance and named version — 14 November 2026.** Dean, in the session: "I have saved the named version as "Shell refined concept — accepted · alignment batch 1 applied"" and "I accept all your recommendations." That accepts alignment batch 1 (section 14) and the file structure (this section). The same day Dean renamed the file "PPO - Shell (accepted)" (section 9). This session cannot read version history, so the title rests on Dean's word. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
 
 | Build | Named version it cites |
 |---|---|
