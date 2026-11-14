@@ -161,6 +161,8 @@ The private Figma file is now named "PPO - Shell (accepted)". Every citation in 
 
 **Name as of 12 November 2026.** Dean stated on 12 November 2026: "The file is named PPO - Shell". It is the same file: its three pages and every node ID this record cites are unchanged, read through the Figma connector that day. The connector returns only the generic root name "Document", so the name rests on Dean's word, and the date of the rename is not recorded. Citations of "PPO - Shell (accepted)" or "PPO - Shell refined concept", in this record, the rules export, the shell system page, status fragments and the module and library records, mean this file; none is rewritten. Named versions keep their titles; section 11 and section 12 list them.
 
+**Name as of 14 November 2026.** Dean renamed the file "PPO - Shell (accepted)" on 14 November 2026. That is the form the module files use: `PPO - <Surface>` from PPO-STD-001 section 13.2, with the "(proposal)" or "(accepted)" suffix the files carry in practice, as in "PPO - Sales module (accepted)". Section 13.2 itself does not mention the suffix. Citations of "PPO - Shell", "PPO - Shell (accepted)" and the earlier names all mean this file, and none is rewritten. The file's link and key are not recorded (ADR-0050, ADR-0053).
+
 ## 10. Record header toolbar — 9 November 2026
 
 Dean asked, from a screenshot of a quotation record header (breadcrumb, title with a Draft chip and a favourite star, a sub-line, and a toolbar with back, undo, new, duplicate, first, previous, next and last record buttons, Actions, Reports and Issue & send), whether its elements belonged on the module pages. Claude recommended a shared record header for every record page in every module, drew it in this file as a proposal on a new page, and Dean accepted it the same day: "Accept the record header toolbar as drawn."
@@ -322,3 +324,43 @@ Unchanged: every earlier node ID; the existing instances of the drawer, top bar,
 **Named version.** Dean saved a version titled "Shell refined concept — accepted · alignment batch 1" before this batch was applied: when the session started, the file still showed the earlier demo chip, weekdays, labels and banner. That version therefore pins the navy primary of section 13 without the batch. The batch needs Dean's acceptance in words and a new named version ([ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 10). The suggested title is "Shell refined concept — accepted · alignment batch 1 applied"; Dean may also retitle the earlier version "Shell refined concept — accepted · navy primary action", which section 13 awaits. Until the new version is recorded here, builds cite the earlier versions and this section ([handoff rule 5](figma-named-version-build-handoff.md)).
 
 **Not done.** Module files keep their local copies until each file's next reviewed change; accepted files (Sales, Estimating) each need their own named version. Addendum A3 should confirm the Q-E cast and the SR-11 families. The CSS value of `--ppo-refined-accent-estimating-ink` (#1f8a7e) changes with the build step that next touches the tokens. No application code changed.
+
+## 15. File structure aligned with the module template — 14 November 2026
+
+**Question and instruction.** Dean asked on 14 November 2026 whether the Shell file used the same layout template as the module files. It did not: the file was built on 8 November, a day before the Sales module file set the template that the other module files follow. Claude recommended aligning the file's structure but not re-laying its sheets. Dean replied: "Proceed based on your recommendations."
+
+**What changed in the file.** The pages now run in the template's order:
+
+| Page | Node | Content |
+|---|---|---|
+| Read me · PPO - Shell | `348:11333` | Page header `352:2`, page template card `352:6`, "Sheet index and notes" card `352:11` (every page, section, sheet and main component set with its node ID), audit card `352:28` |
+| — Accepted — | `348:11334` | Empty separator |
+| Shell refined · desktop shell and menus | `0:1` | Unchanged name. Page header `1:34`, the 40 sheets A–AN in section `6:583`, the notes card `5:686` in section `7:2766` |
+| Workspace menus · flyout and docked (accepted 8 November 2026) | `101:8553` | Unchanged |
+| Record header toolbar (accepted 9 November 2026) | `170:9926` | Unchanged |
+| — Proposals — | `348:11335` | Empty separator: nothing is pending |
+| Shell and kit · the accepted shell components | `348:11336` | Page header `349:2` and the Components section `7:2767`, moved here from the first page with its node ID unchanged |
+| Scratch | `348:11337` | Empty |
+
+The old sheet index section `80:8443` on the first page was removed. No record cites it, and the Read me's sheet index replaces it. The sheets and notes sections moved up 553 px to close the gap. No sheet, component or rule changed. Earlier sections that describe the Components section as "on the first page" (for example section 10) describe the file as it then stood; it now sits on Shell and kit with the same node ID.
+
+**Departures from the module template, by decision.** The page template card records them:
+- **Sheet layout kept.** The shell's sheets are states of one shell, not of one page. They keep their 1,540 × 1,032 grid, their labels 32 px above and the letters A–AN that many records cite, instead of the template's six sections.
+- **Page names kept.** Page names keep their status suffix, because records quote them ([ADR-0055](ADR-0055-figma-file-structure.md) rule 3).
+- **No phone sheets.** The accepted phone header governs below 768 px (R94).
+
+**Verification.** Read through the Figma connector after the change:
+- **Instances:** every instance on the three content pages (1,561, 1,084 and 45) resolves to a main component on Shell and kit, with none missing.
+- **Layout:** the separators and Scratch are empty, and no top-level node overlaps another on the Read me, the first page or Shell and kit.
+- **Render:** the Read me page was rendered and inspected.
+
+**Named version.** The new named version that section 14 asks for should be saved after this change, so that one version pins alignment batch 1 and this structure together. The suggested title is "Shell refined concept — accepted · alignment batch 1 applied". The batch and this structure await Dean's acceptance in words.
+
+**Acceptance and named version — 14 November 2026.** Dean, in the session: "I have saved the named version as "Shell refined concept — accepted · alignment batch 1 applied"" and "I accept all your recommendations." That accepts alignment batch 1 (section 14) and the file structure (this section). The same day Dean renamed the file "PPO - Shell (accepted)" (section 9). This session cannot read version history, so the title rests on Dean's word. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+
+| Build | Named version it cites |
+|---|---|
+| Any build step that starts after 14 November 2026 and uses the shell, including the record header toolbar | "Shell refined concept — accepted · alignment batch 1 applied" (14 November 2026). It also pins the navy primary of section 13 |
+| A build step already started from an earlier version, such as the [S1 build](shell-refined-s1-build.md) | Its own version, unchanged; moving it is its own step (rule 5) |
+
+The version titled "Shell refined concept — accepted · alignment batch 1", saved on 13 November 2026 before the batch, stays in the file's history. It pins the navy primary without the batch. Retitling it "… · navy primary action" remains optional. Module files cite the new version when each is next changed.
