@@ -2,7 +2,7 @@
 document_id: PPO-SALES-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided the questions on 14 November 2026 as recommended (section 11) and the alignment batch is being applied in the file; this record accepts no design; no application code, route, migration, permission or deployment
+status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided the questions on 14 November 2026 as recommended (section 11) and the alignment batch was applied in the file the same day (section 12; proposal record section 15), awaiting Dean's named version and a check by a different session; this record accepts no design; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
@@ -168,3 +168,22 @@ Dean renamed the file "PPO - Sales module (accepted)", the name the proposal rec
 
 The process is the one Dean set for the Estimating batch. This session claims the file in a draft pull request, applies the batch with the facts first, and records what changed. Dean saves one named version at the end; it also pins the phone tab bar change of 10 November. A different session checks the changed sheets before Dean accepts them.
 
+
+## 12. Batch applied — 14 November 2026
+
+The batch was applied in the file on 14 November 2026; [section 15 of the proposal record](sales-module-refined-ui-proposal.md#15-alignment-batch--14-november-2026) records each change, the new node IDs and the scans. No design is accepted by it: Dean saves the named version "PPO - Sales module (accepted) · alignment batch", and a different session checks the changed sheets first.
+
+| Findings | Outcome |
+|---|---|
+| SR-01 to SR-05, SR-07 to SR-10, SR-25, SR-26 | Fixed as decided under Q-A to Q-E |
+| SR-06, SR-14 | Fixed in part: PR01 and TB08 are the read-only Sales view (Q-H); the `SYN-PRD-` references wait for the Products file (A3.13) |
+| SR-11, SR-20, SR-21, SR-23, SR-24, SR-27, SR-29, SR-30 | Fixed; no text below 4.5:1 or under 11 px remains outside components |
+| SR-12, SR-13 | Fixed: the toolbar and the collapsed strip are local copies of the Shell components, placed on 37 record headers and 82 desktop sheets |
+| SR-15 | Fixed in part: R02's discovery workspace reads SYN-DISC-000312; the `SYN-REF-` family waits for the reference registry |
+| SR-16 | Open until Dean saves the named version, which also pins the phone tab bar change |
+| SR-17 | Unchanged in this file under Q-G; the Reporting file aligns |
+| SR-18, SR-19 | Fixed: the docked menu nests the Deals views and its badges match the pages |
+| SR-22 | Fixed in part: 88 texts raised to 11 px; 22 px KPI values, some 15 and 17 px texts and the absence of text styles remain |
+| SR-28 | Recorded: proposal record section 15.4 lists the IDs that no longer exist |
+
+Page structure followed Q-I. Shell and kit sits below the Proposals separator, the pages take the short names, Administration · Sales follows Interaction states, and IN01, IN02 and TB12 are on their own Insights page. The batch found one new contradiction, which it did not change: TB15 cites SYN-OPP-000301 for a Hillview deal that D01 gives to Mallee Fresh Produce (proposal record section 15.6).

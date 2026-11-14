@@ -2,14 +2,14 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6); not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6), until Dean saves "PPO - Sales module (accepted) · alignment batch" for the alignment batch of 14 November 2026 (section 15) and a different session has checked the changed sheets; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, section 12 the acceptance of N1–N4 and the named version, and section 13 the second batch, the customisation pages, the adoption of N13, the tablet-bar correction, the restructure of the file into pages and the version that pins them.
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, section 12 the acceptance of N1–N4 and the named version, and section 13 the second batch, the customisation pages, the adoption of N13, the tablet-bar correction, the restructure of the file into pages and the version that pins them. Section 14 records the phone tab bar restyle of 10 November 2026, and section 15 the alignment batch of 14 November 2026, applied on Dean's decisions on the [independent review](sales-module-independent-review.md).
 
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
@@ -388,3 +388,75 @@ Every scope page carries the same sections in the same order, Desktop 1440, Dial
 ## 14. Phone tab bar colours and labels — 10 November 2026
 
 Dean directed that the phone tab bar take the desktop rail's colours, and adopted a visible label on every tab ([phone tab bar decision](phone-tab-bar-labels-and-rail-colours.md)). In this file the component Phone / Tab bar · Sales `64:14209` and its 11 placed bars were restyled. The bar is `surface/rail`; the current tab sits on `surface/rail-active` with a 3 px green line along its top; other tabs are white at 84 %; the top border is removed; and each tab fills the bar's height. Labels, icons and their positions are unchanged. Each placed bar keeps the tab it showed as current, so the limitation recorded in section 13 stands: most phone sheets still show Deals as current, because the component has no active-tab property. This visibly changes accepted sheets without changing their layout or journey, which is a Medium change under the [design-to-build standard](../standards/design-to-build-standard.md#5-the-library); Dean's direction is its acceptance. The build basis in this record's status line predates the change, so the phone bar needs a new named version before it is built. Recommended title: "PPO - Sales module (accepted) · phone tab bar". Dean saves it.
+
+## 15. Alignment batch — 14 November 2026
+
+Dean decided the ten questions of the [independent review](sales-module-independent-review.md) (PPO-SALES-REVIEW-PROP, section 11) as recommended: "proceed on your recommendations". The session that wrote the review applied the batch in the file, in the order Dean set for the Estimating batch: the claim (pull request 958), then facts, the Shell parts, accessibility, conventions and page structure. No sheet was added or deleted; the file still holds 114 sheets. Dean saves one named version, recommended title "PPO - Sales module (accepted) · alignment batch", which also pins the phone tab bar change of section 14. A different session checks the changed sheets before he accepts them. Until then the build basis in the status line stands.
+
+### 15.1 Facts
+
+| Area | Change | Review |
+|---|---|---|
+| Riverbend story | One state on every sheet, as the Estimating file has it: Sales brief r01 submitted Mon 2 Nov 2026 and accepted by Priya Nair on Tue 3 Nov; quotation SYN-QUO-000214 r01 issued Fri 30 Oct, r02 awaiting approval; the earlier budget estimate SYN-EST-000398 superseded; R02's discovery workspace reads SYN-DISC-000312 | SR-01, SR-15 |
+| Lead reference | The Gippsland Dairy Gardens inbox lead takes SYN-LEAD-000214; SYN-LEAD-000208 stays the Riverbend deal's source lead | SR-02 |
+| Weekdays | 152 text nodes corrected to the 2026 calendar; every date is kept (Q-A) | SR-03 |
+| People | Kate Morgan owns the deals and leads Priya Nair owned (90 avatars; 96 texts naming people changed in this row); Priya Nair appears only as the Estimating receiver, estimator or quotation preparer; Jess Wong is the Projects receiver and Ravi Kumar the Service owner on desktop and tablet; Noah Patel replaces Noah Clarke; three gendered pronouns give way to names | SR-04, SR-07, SR-08, SR-25 |
+| Places and time | Hillview Growers at Tatura VIC, including its Glasshouse 4 site cells; staff times in Melbourne AEDT (UTC+11) on A01 and AD04; Westgate Flowers stays at Werribee | SR-05, SR-10 |
+| Story clock | Calls before the 09:00 story time read 08:42; tablet and phone task dates follow T01; TB18 and PH11 become future-day views without a now line rather than a later story time; X18 to X20 carry "later frame · Thu 12 Nov 2026" labels and the referral story on AC02 and X19 agrees | SR-09, SR-26 |
+| Revisions and versions | About 280 text nodes take two digits (r01, version 07, v03); an external file name keeps its own form (Q-J) | SR-24 |
+| GST and tones | "ex GST" throughout; 197 chips take one tone per word, Draft Neutral (Library C2) | SR-21, SR-23 |
+| Products (Q-H) | PR01 and TB08 are the read-only Sales view: "Open in Products" replaces "New draft revision", and the bounded-read footer ("12 shown · limit 100 · read live at 09:00 AEDT · no total is claimed") replaces totals, view-tile counts and the pager | SR-06, SR-14 |
+
+The fact pass edited 612 text nodes in all; the final scans found and fixed six more (three weekdays on AD02, three revision labels on H04, AD06 and X25) and five Hillview site cells on the Handovers page.
+
+### 15.2 Shell parts
+
+The Shell's record header toolbar and the collapsed docked-menu strip are not published as a library, so they were rebuilt as local components in the Shell components section `7:2` of Shell and kit, with the Shell's names, sizes and variable bindings, so that instances swap to the published library later. The basis is the Shell's named version "Shell refined concept — accepted · record header toolbar" (10 November 2026) and rules R116 to R125.
+
+| Component | Node | Notes |
+|---|---|---|
+| Shell / Record header · toolbar | `355:437` | Six State variants copied from the Shell: Draft `355:198`, Awaiting approval · approver `355:237`, Awaiting approval · preparer `355:278`, Approved · not issued `355:318`, Issued `355:360`, Closed `355:399`; 1312 × 138 px each |
+| Shell / Record header · toolbar · phone | `355:438` | 390 × 259 px; the sticky action bar of R124 |
+| Shell / Workspace menu · collapsed strip | `355:469` | Default `355:465` and Hover `355:467`; 12 × 852 px |
+
+**Placed.** The hand-drawn header rows of 37 record sheets became instances of the toolbar: R01 to R07, X03 to X05, X11, S04, TB02, L02 to L06, X06, X14, X15, TB13, H02 to H04, W02, AC02, X18 to X20, TB15 to TB17, C02, C360, SI02 and TB14. Each keeps its own breadcrumb, title, sub-line and the page's own bars below (stage bar, readiness, signals). The collapsed strip sits beside the rail on the 82 desktop sheets that show the menu collapsed, with the content region at x 92 to 1392 as the Shell sheets have it; 17 register tables and A01's hour lines that were fixed at 1264 px were narrowed by 12 px. The sticky bars of PH02, PH09 and PH10 hold a labelled Actions menu and the primary (R124). The phone tab bar is a component set `339:217` with a Current variant per tab and named cells, and each phone sheet shows its own tab as current (SR-29). D02's docked menu nests the Deals views under Deals (R108, Q21) and its badges match the counts on the pages they open (SR-18, SR-19).
+
+**How the toolbar was applied (for the check).**
+
+- One primary, state-driven (R117): Move to Quoting on deals, Convert to deal on leads, Submit r02, Answer clarification and Complete review on handovers and reviews. H02 and TB15 show "Submit r01" unavailable with "1 check missing before Submit" and "3 checks missing before Submit". W02 and TB16, where the signed-in sender has no decision, read "Read only · awaiting review by Jess Wong (Projects) since Mon 2 Nov 2026" and "Read only · accepted by Projects".
+- Records without a lifecycle decision keep their existing primary: Plan activity on the person record, Create follow-up on the organisation, Plan site visit on the site. TB14 and PH09 take "Create follow-up" in place of "New deal" (R123: no New in the header), and TB14's "Customer since 2019" chip, which contradicted C360's "Customer since Mar 2021", reads "Customer".
+- Actions holds the secondary decisions and buttons that were in the title row: Plan activity, Mark as lost, Save draft, Record feedback, Account development, Log call, Email, Withdraw r01, Open deal, Open in Projects, Add a note, Reschedule and Open in Service planner (R118, R123), as the Estimating batch moved Prepare revision and Plan follow-up.
+- Outputs is hidden on every Sales record: none issues a document of its own; quotation outputs stay with Estimating (R119).
+- Previous and next show where the sheet showed them ("7 of 38 in view" on deals, "1 of 14 in view" on leads) and are hidden on records opened from a link (R120).
+- One state chip: "Open · Scoping" on the Riverbend deal; "Won · awaiting receiving review" on W02; SI02's second chip, the land owner, moves to the sub-line. C02 loses the avatar from its title row, because the toolbar has none.
+- S03, the denied record, keeps only its breadcrumb: the state shows nothing about the record.
+
+**Effects.** A record header is 50 px taller on desktop and 54 px on tablet, so the lowest part of each record body falls below the frame, as a scrolling body does. The phone component is in the kit but placed nowhere: the phone record sheets keep the Sales compact header and take R124 through their sticky bars.
+
+### 15.3 Accessibility and conventions
+
+- **Contrast (SR-11).** Small green text on light surfaces takes `status/success`; the keyboard-order badges on ST01 take a darker fill. A scan of every page after the batch finds no text below 4.5:1 against its nearest solid background, except deliberately disabled controls.
+- **Sizes (SR-22, part).** 88 texts at 10 px outside components are now 11 px; no text under 11 px remains outside component instances.
+- **Colour bindings (SR-30).** Literal paints that equal a variable are bound to it, including the nine notes cards and the D07 selection bar; what stays literal is Figma's section backgrounds and the D05 forecast ramp.
+- **Widths (SR-20, Q-F).** Panels follow the Library: Filters X07 and Columns X23 at 360 px; New deal X01, New lead X02, Service referral X19, Renewal X20, New organisation X21 and New person X22 at 480 px; the Reschedule X12 and Reopen deal X17 dialogs at 560 px and Prepare handover X16 at 720 px.
+
+### 15.4 Page structure (Q-I)
+
+The pages now read, in order: Read me `0:1` · — Accepted — · Deals · CR-01 · CR-04 · Deal record · CR-01 · Leads and Sales Pulse · LC-11 · LC-12 · LC-13 · SH-02 · Tasks, Activities and Email · SH-02 · EC-01 · EC-03 · Handovers and aftercare · CR-02 · CR-03 · CR-05 · Contacts, customers and products · CS-01 · CS-02 · CS-03 · CS-04 · PD-01 (`133:27409`, 16 sheets) · Insights · CR-04 · RP-02 (`368:4773`, new, 3 sheets) · Interaction states · Sales (`133:27411`) · Administration · Sales (`133:27410`) · — Proposals — · Shell and kit (`133:27412`) · Scratch. IN01 `44:6852`, IN02 `45:7068` and TB12 `100:25953` moved to the Insights page with their labels; their node IDs are unchanged and nothing was redrawn. The Insights page has Desktop 1440 `368:4774`, Tablet 1024 `368:4775` and Flows and notes `368:4779` with its notes card `368:4776`; the Contacts sections were restacked with 360 px gaps. The 23 sheet labels that wrapped now cut off at the sheet's width (AF-010). The Read me header, sheet index, audit and Page template cards state the batch, the Shell versions, the new components, the widths and the page order (SR-27).
+
+**Node IDs (SR-28).** These IDs cited earlier in this record no longer exist: the sections `11:88`, `16:2455`, `21:2709`, `25:3470` to `25:3473`, `61:11501`, `63:14522`, `69:15443` and `89:23786`, removed by the restructure of section 13.6, and the proposal sheets `69:15988`, `69:16429` and `69:16971`, folded into accepted sheets. Every sheet ID still resolves; section 13.6 and the table above give the pages.
+
+### 15.5 Verification and limits
+
+- **Checked.** A scan of every scope page after the batch (about 16,000 text nodes): no weekday wrong for its date; none of Jordan Wu, Lena Brooks, Noah Clarke, Brisbane, AEST or "excl. GST"; no single-digit revision except an external file name; Priya Nair only in Estimating roles; 37 toolbar instances and 82 strips; no hand-drawn title row left. Renders of X01, D01, D02, D08, R01, TB02, H02, W02, C01, T01, A01, the three phone sticky bars, the rebuilt kit components and the Read me cards.
+- **Not done.** About 100 sheets were not read by eye after the batch; keyboard, screen-reader and touch-target behaviour cannot be tested in a static file; no prototype links exist.
+
+### 15.6 Open after the batch
+
+1. TB15 cites SYN-OPP-000301 for "Hillview Growers — Glasshouse 4 climate upgrade", while D01 lists SYN-OPP-000301 as Mallee Fresh Produce. Not changed, because the Hillview deal's own reference is not established in the file or a record.
+2. The `SYN-PRD-` references on PR01 and TB08 follow the Products file (A3.13) once that file is read; its link was not available to this session.
+3. The `SYN-REF-` family (Service referral SYN-REF-000802 here, a reference case in the Estimating file) waits for the reference registry (AF-141).
+4. Cross-file order: the Riverbend quotation r01 is issued on Fri 30 Oct, before the brief r01 is submitted on Mon 2 Nov, as the Estimating file has it. Recorded, not changed.
+5. KPI values at 22 px and some 15 and 17 px texts remain, and the file has no text styles (the rest of SR-22).
+6. The Reporting file aligns its stage counts to the Sales distribution under Q-G; that is its own change.
+7. Per-route page guidance and the design register still follow in their own change; no application code exists for these pages.
