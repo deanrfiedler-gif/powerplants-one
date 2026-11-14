@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-FIGMA-FILE-AUDIT-STD,Figma module file audit,docs/standards/figma-module-file-audit.md,,Working draft; the Finance pilot is pending; not adopted,Dean Fiedler,5f1727e4868e82d071474cdc00a595fbdac5bfd8,,,git,
