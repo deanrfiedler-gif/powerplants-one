@@ -6,7 +6,7 @@
 |---|---|
 | ID | PPO-FIGMA-ALIGNMENT-AUDIT |
 | Date | Thu 12 Nov 2026 |
-| Status | Audit findings, 2026-11-12, with a second pass on 2026-11-13; no design is changed and nothing is accepted by this record |
+| Status | Audit findings, 2026-11-12, with a second pass on 2026-11-13; Dean's decisions on six shared questions, 2026-11-14 (S11); no design is changed and nothing is accepted by this record |
 | Decision owner | Dean Fiedler |
 
 Thu 12 Nov 2026. Read-only findings; no design is changed and nothing is accepted by this report.
@@ -2966,6 +2966,8 @@ The first pass's questions AC-01 to AC-20 stand as written above. This pass adds
 
 Section 9 defaults as applied: no links arrived (Q1); read-only (Q2); files in progress included (Q3); the Library record's own transition settles the drawer widths (Q4); the Sales Products totals are a finding (Q5); briefs carry all severities (Q6).
 
+**Decided since.** On Sat 14 Nov 2026 Dean decided AC-04, AC-17, AC-24 (for every module), AC-26 and AC-27, together with question PDR-19 of the [Products review](products-module-independent-review.md). Section S11 records the decisions. The table above is left as the second pass wrote it.
+
 ### S7. Known items, second pass
 
 | Item | Second-pass disposition |
@@ -3019,3 +3021,24 @@ After the section above was first pushed, the session re-tested what it could wi
 Per-file alignment briefs, the findings CSV (one row per evidence occurrence, with node IDs), the full matrix CSV with a reason in every cell, the fact ledger difference and the questions file are in the session scratchpad and were sent to Dean with the report. They are not committed. The first pass's appendix of briefs above is superseded by the second-pass briefs where they differ.
 
 The second pass changed no Figma file, no application code, migration, permission or design register, and no record other than this one. All 78 parent requirement IDs remain.
+
+### S11. Dean's decisions on six shared questions — Sat 14 Nov 2026
+
+**Instruction.** On Sat 14 Nov 2026 a Claude session put six open questions to Dean, with a recommendation for each. Left open, each question would be raised again in every per-file audit. Dean replied: "Regarding the six questions, I am happy to proceed based on all your recommendations." The recommendations were those of section S6, in short form. Two of them named no value:
+- for AC-04, the recommendation was "decide 44 or 48 px, and how to migrate";
+- for PDR-19, it was "one rule for the whole app".
+
+For those two, the table states where the value comes from, and Dean can change either one when he reviews this change.
+
+| ID | Decision | Where it applies, and what it resolves |
+|---|---|---|
+| AC-24 | Settings is the current rail item on a module's Administration sheets. This extends the Estimating decision (review Q-F) to every module | Every module file. AF-143 resolves to Settings. Accepted files apply it at their next named version |
+| AC-26 | One table maps each state word to one chip tone, for every module. It is published with the Library's Controls record ([library-controls.md](library-controls.md)) and owned there | The Library's owning session drafts the table. Module files align to it in their next batches. AF-140 and the tone differences under it, such as AF-072 and AC-09, stay open until the table is published |
+| AC-27 | Registers and timelines may give a date in the story year without the year. Record headers, documents, outputs and customer-facing sheets show the year | A missing year is now a finding only on a header, document, output or customer-facing sheet. AF-032, AF-038, AF-042 and AF-068 are re-read on that basis at each file's next audit |
+| AC-17 | A sheet label names the sheet code and the signed-in person, and keeps its source citation where it has one. A sheet with no signed-in user, such as a specification board or a system state, says so: no user is invented. Each file keeps its own label punctuation; for example, the Estimating form `CODE · Page — state (scope) [source]` adds the person | Every module file. AF-020, AF-027, AF-035, AF-040, AF-045 and AF-059 stand as findings. How the accepted files take the rule up is AC-28, which stays open |
+| AC-04 | No new value is needed, because the phone sizes are already set by owner decisions: every touch target is at least 44 px (phone header amendment P8, adopted 19 October 2026); a main action is a full-width 48 px button, `form/phone-action` (Dean's phone button rule, 19 October 2026); the Service field dock stays at 56 px (Library phone Ph3, confirmed 12 November 2026). The [Library phone record](library-phone.md) holds all three. The original prompt's reading in RA3 ("48 px except the Assistant's 44 px") merged the target size with the button height. Accepted designs are not resized silently: each aligns at its next reviewed change and named version | RA3 tests these three values in every file |
+| PDR-19 | One GST wording for the whole app. Write "excluding GST" and "including GST" in full in sentences, headings, documents, outputs and customer-facing sheets. Use "excl. GST" and "incl. GST" only in compact table cells, chips and tiles. Never write "ex GST", "inc GST" or a bare "excl.". This session proposed the wording, following the Products file's accepted usage (PDR-19) and PPO-STD-001 N09. It takes effect when Dean merges this change | The Products file already follows it. Estimating's three forms (its review's ER-29) align in that file's batch. Other files align at their next batch |
+
+**Still open.** AC-25 (one registry for reference families) and AC-28 (how the accepted files take up the label form) are not decided by this section, and neither are AC-01, AC-05 and AC-23 for files other than Estimating. The questions that need the Addendum A3 text, AC-08, AC-21 and AC-22, also stay open.
+
+**Boundary.** This section records decisions only. No Figma file, application code, migration, permission, design register or page guide is changed. Each file applies the decisions in its own reviewed batch, and an accepted file needs a new named version when it does. All 78 parent requirement IDs remain.
