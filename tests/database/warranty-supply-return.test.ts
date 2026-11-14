@@ -433,6 +433,117 @@ test("MA07-SC08 native revisions preserve identity and allow owned coordination 
   assert.equal((await progress(f)).version, 2);
 });
 
+test("MA07-SC08 bridged demand revisions refuse customer and equipment relinking but allow coordination", async () => {
+  const f = await warrantyReturnFixture();
+  await prepareSupplyReturn(f.p, f.claimId, f.cmd);
+  const row = await supplyRecord(database(), f.p, f.demand.id),
+    before = await counts();
+  for (const changes of [
+    { customer_id: null },
+    { asset_id: null },
+    { customer_id: null, asset_id: null },
+    { asset_id: "80000000-0000-4000-8000-000000000002" },
+  ])
+    await assert.rejects(
+      saveRecord(
+        f.p,
+        {
+          ...f.demand,
+          ...base(),
+          expected_version: row.version,
+          data: { ...row.data, ...changes },
+        },
+        true,
+      ),
+      errorCode("SourceReviewRequired"),
+    );
+  assert.deepEqual(await counts(), before);
+  assert.deepEqual(await supplyRecord(database(), f.p, row.id), row);
+  const revised = await saveRecord(
+    f.p,
+    {
+      ...f.demand,
+      ...base(),
+      expected_version: row.version,
+      next_action: "SYN confirm receiving appointment",
+      data: { ...row.data, required_on: "2026-10-02" },
+    },
+    true,
+  );
+  const saved = await supplyRecord(database(), f.p, row.id);
+  assert.equal(revised.receipt.record_version, row.version + 1);
+  assert.equal(saved.next_action, "SYN confirm receiving appointment");
+  assert.equal(saved.data.required_on, "2026-10-02");
+  assert.equal(saved.data.customer_id, row.data.customer_id);
+  assert.equal(saved.data.asset_id, row.data.asset_id);
+  assert.equal((await progress(f)).state, "Available");
+  assert.equal((await progress(f)).stage, "Prepared");
+});
+
+test("MA07-SC08 reads detect parent demand identity drift outside the native revision command", async () => {
+  const f = await warrantyReturnFixture();
+  await prepareSupplyReturn(f.p, f.claimId, f.cmd);
+  const row = await supplyRecord(database(), f.p, f.demand.id);
+  // Simulate a legacy writer; retain the live database guards and exact version advance.
+  // The application revision guard is deliberately bypassed to prove read-side defence.
+  for (const changes of [
+    { customer_id: null },
+    { asset_id: null },
+    { asset_id: "80000000-0000-4000-8000-000000000002" },
+  ]) {
+    try {
+      await database().query(
+        "UPDATE ppo.supply_records SET data=$3::jsonb,version=version+1 WHERE workspace_id=$1 AND id=$2",
+        [f.p.workspace_id, row.id, JSON.stringify({ ...row.data, ...changes })],
+      );
+      const result = await progress(f);
+      assert.equal(result.state, "ReviewRequired");
+      assert.equal(result.stage, undefined);
+      assert.match(String(result.message), /customer and equipment/);
+    } finally {
+      await database().query(
+        "UPDATE ppo.supply_records SET data=$3::jsonb,version=version+1 WHERE workspace_id=$1 AND id=$2",
+        [f.p.workspace_id, row.id, JSON.stringify(row.data)],
+      );
+    }
+  }
+  assert.equal((await progress(f)).state, "Available");
+  assert.equal((await progress(f)).stage, "Prepared");
+});
+
+test("MA07-SC08 rejected native authorisation is explicit without receiving or changing claim outcomes", async () => {
+  const f = await warrantyReturnFixture();
+  await prepareSupplyReturn(f.p, f.claimId, f.cmd);
+  const proposal = supplyFact("ReturnAuthorisation", 1, {
+    state: "Proposed",
+    quantity: "2",
+  });
+  await recordFact(f.p, f.cmd.return_id, proposal);
+  assert.equal((await progress(f)).stage, "Prepared");
+  const rejected = {
+    ...supplyFact("ReturnAuthorisation", 2, {
+      state: "Rejected",
+      quantity: "2",
+    }),
+    predecessor_id: proposal.id,
+  };
+  await recordFact(f.p, f.cmd.return_id, rejected);
+  const result = await progress(f);
+  assert.equal(result.state, "Available");
+  assert.equal(result.stage, "AuthorisationRejected");
+  assert.equal(result.received_quantity, "0");
+  assert.equal((result.authorisation as { id: string }).id, rejected.id);
+  assert.equal(
+    (result.authorisation as { data: { state: string } }).data.state,
+    "Rejected",
+  );
+  assert.equal(
+    (await workspace(f.p, "recovery", f.claimId)).row.state,
+    "Prepared",
+  );
+  assert.equal((await workspace(f.p, "cases", f.id)).row.state, "Open");
+});
+
 test("MA07-SC08 a used native operation or identity rolls the entire bridge back", async () => {
   const f = await warrantyReturnFixture();
   const before = await counts();

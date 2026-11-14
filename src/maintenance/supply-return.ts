@@ -88,7 +88,7 @@ export async function guardReturnRevision(
   before: SupplyRecord,
   after: Parameters<typeof returnBasis>[0],
 ) {
-  if (before.kind !== "Return") return;
+  if (before.kind !== "Return" && before.kind !== "Demand") return;
   if (
     !(await c.query("SELECT to_regclass('ppo.maintenance_events') relation"))
       .rows[0].relation
@@ -96,10 +96,26 @@ export async function guardReturnRevision(
     return;
   const link = (
     await c.query<Event>(
-      "SELECT * FROM ppo.maintenance_events WHERE workspace_id=$1 AND action=$2 AND content->>'supply_return_id'=$3",
-      [p.workspace_id, returnPreparedAction, before.id],
+      "SELECT * FROM ppo.maintenance_events WHERE workspace_id=$1 AND action=$2 AND content->>$3=$4",
+      [
+        p.workspace_id,
+        returnPreparedAction,
+        before.kind === "Demand" ? "demand_id" : "supply_return_id",
+        before.id,
+      ],
     )
   ).rows[0];
+  if (before.kind === "Demand") {
+    if (
+      link &&
+      (after.data.customer_id !== before.data.customer_id ||
+        after.data.asset_id !== before.data.asset_id)
+    )
+      conflict(
+        "This demand retains the customer and equipment of a prepared Warranty return. Change only fields outside that bound identity; a source correction requires separate review.",
+      );
+    return;
+  }
   if (link && hash(returnBasis(after)) !== hash(link.content.return_basis))
     conflict(
       "This return retains its exact Warranty source, item, quantity and identity. Change only its coordination fields; record receiving and disposition through native Supply evidence.",
@@ -365,6 +381,18 @@ export async function returnProgress(
         state: "ReviewRequired",
         message: "The native return no longer matches its retained source.",
       };
+    const demand = await supplyRecord(c, p, String(link.content.demand_id)),
+      claim = await record<Claim>(c, p, "recovery", claimId),
+      w = await record<WarrantyCase>(c, p, "cases", claim.case_id);
+    if (
+      demand.data.customer_id !== claim.customer_id ||
+      demand.data.asset_id !== w.asset_id
+    )
+      return {
+        state: "ReviewRequired",
+        message:
+          "The original demand no longer matches the claim's retained customer and equipment. Review its source identity before continuing receiving.",
+      };
     const facts = (await factsFor(c, p, r)).filter((f) =>
       physicalKinds.has(f.kind),
     );
@@ -393,7 +421,9 @@ export async function returnProgress(
               : "PartiallyReceived"
             : authorised?.data.state === "Approved"
               ? "Authorised"
-              : "Prepared";
+              : authorised?.data.state === "Rejected"
+                ? "AuthorisationRejected"
+                : "Prepared";
     return {
       state: "Available",
       stage,
