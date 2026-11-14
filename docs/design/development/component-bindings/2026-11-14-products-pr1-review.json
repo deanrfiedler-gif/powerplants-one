@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "bindings": {
+    "product-patterns": {
+      "states": [
+        {
+          "id": "products-pr1-relationship-sides",
+          "label": "Selected product relationship direction",
+          "description": "Original then Replaced by then successor; successor then Replaces then original; accessory side Accessory for. Both product names and exact revision roles remain visible. Browser fixture: tests/browser/products.spec.ts."
+        }
+      ],
+      "dependencies": [
+        "src/products/vocabulary.ts",
+        "src/products/components/compatibility.tsx"
+      ],
+      "used_on": [
+        "scope:PD-04"
+      ]
+    },
+    "register-table": {
+      "states": [
+        {
+          "id": "products-pr1-filter-footer",
+          "label": "Catalogue vocabulary, order and bounded read",
+          "description": "Friendly lifecycle labels retain PascalCase URL values; Order remains selected across reload. Footer includes count, limit, viewer-zone read time and no total claim. Browser fixture: tests/browser/products.spec.ts on desktop and phone."
+        }
+      ],
+      "dependencies": [
+        "src/products/components/catalogue-register.tsx",
+        "src/products/vocabulary.ts"
+      ],
+      "used_on": [
+        "scope:PD-01"
+      ]
+    }
+  }
+}

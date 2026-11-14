@@ -128,7 +128,7 @@ test("PD catalogue retirement and CostSource successors preserve saved estimate,
     expected_version: before.product.version,
     content: {
       ...before.revision.content,
-      lifecycle: "Retired",
+      lifecycle: "Discontinued",
       lifecycle_evidence:
         "SYN discontinuation source; installed impact requires Equipment review",
     },

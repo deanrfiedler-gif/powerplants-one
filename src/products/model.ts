@@ -10,6 +10,20 @@ import {
   uuid,
 } from "../shared/validation";
 
+import {
+  lifecycleStoredValues,
+  currentLifecycle,
+  lifecycleLabel,
+  relationshipTypes,
+  criterionOutcomes,
+  criterionLabel,
+  relationshipConclusions,
+  type Lifecycle,
+  type WriteLifecycle,
+  type RelationshipType,
+  type CriterionOutcome,
+} from "./vocabulary";
+
 export const kinds = ["Family", "Model", "Variant"] as const;
 export const states = [
   "Draft",
@@ -75,7 +89,7 @@ export type Content = {
   unit: "each" | "m" | "kg";
   attributes: Attribute[];
   documents: DocumentReference[];
-  lifecycle: "Unknown" | "Supported" | "Discontinued" | "Retired";
+  lifecycle: Lifecycle;
   lifecycle_evidence: string;
   support_until: string | null;
   data_mode: "Synthetic";
@@ -242,12 +256,7 @@ export function productContent(value: unknown): Content {
     unit: choice(b.unit, "unit", ["each", "m", "kg"] as const),
     attributes: attrs,
     documents,
-    lifecycle: choice(b.lifecycle, "lifecycle", [
-      "Unknown",
-      "Supported",
-      "Discontinued",
-      "Retired",
-    ] as const),
+    lifecycle: choice(b.lifecycle, "lifecycle", lifecycleStoredValues),
     lifecycle_evidence: label(b.lifecycle_evidence, "lifecycle_evidence", 1000),
     support_until:
       b.support_until == null
@@ -255,6 +264,19 @@ export function productContent(value: unknown): Content {
         : dateOnly(b.support_until, "support_until"),
     data_mode: choice(b.data_mode, "data_mode", ["Synthetic"] as const),
   };
+}
+// Direct writes refuse legacy words; readers above preserve their exact stored content.
+export function productWriteContent(
+  value: unknown,
+): Content & { lifecycle: WriteLifecycle } {
+  const content = productContent(value);
+  const lifecycle = currentLifecycle(content.lifecycle);
+  if (content.lifecycle !== lifecycle)
+    invalid(
+      "lifecycle",
+      `Use ${lifecycleLabel(content.lifecycle)}; ${content.lifecycle} is an earlier word.`,
+    );
+  return { ...content, lifecycle };
 }
 export function compareContent(before: Content | null, after: Content) {
   return (Object.keys(after) as (keyof Content)[])
@@ -267,7 +289,7 @@ export function compareContent(before: Content | null, after: Content) {
 }
 export type RelationshipContent = {
   purpose: string;
-  type: "CandidateReplacement" | "Compatibility";
+  type: RelationshipType;
   evidence: string;
   source_revision: string;
   source_date: string;
@@ -275,7 +297,7 @@ export type RelationshipContent = {
   limitations: string;
   criteria: {
     criterion: string;
-    outcome: "Met" | "NotMet" | "Unknown";
+    outcome: CriterionOutcome;
     evidence: string;
     owner: string;
   }[];
@@ -299,11 +321,7 @@ export function relationshipContent(value: unknown): RelationshipContent {
     const c = object(v, ["criterion", "outcome", "evidence", "owner"]);
     return {
       criterion: label(c.criterion, "criterion", 200),
-      outcome: choice(c.outcome, "outcome", [
-        "Met",
-        "NotMet",
-        "Unknown",
-      ] as const),
+      outcome: choice(c.outcome, "outcome", criterionOutcomes),
       evidence: label(c.evidence, "evidence", 1000),
       owner: label(c.owner, "owner", 200),
     };
@@ -311,14 +329,11 @@ export function relationshipContent(value: unknown): RelationshipContent {
   if (!criteria.length)
     invalid(
       "criteria",
-      "Record at least one interface/application criterion, including an owned Unknown where evidence is missing.",
+      `Record at least one interface/application criterion, including an owned ${criterionLabel("Unknown")} criterion where evidence is missing.`,
     );
   return {
     purpose: label(b.purpose, "purpose", 200),
-    type: choice(b.type, "type", [
-      "CandidateReplacement",
-      "Compatibility",
-    ] as const),
+    type: choice(b.type, "type", relationshipTypes),
     evidence: label(b.evidence, "evidence", 1000),
     source_revision: label(b.source_revision, "source_revision", 200),
     source_date: dateOnly(b.source_date, "source_date"),
@@ -337,11 +352,7 @@ export function relationshipOutcome(
   content: RelationshipContent,
   outcome: string,
 ) {
-  const result = choice(outcome, "outcome", [
-    "Conditional",
-    "Unresolved",
-    "Rejected",
-  ] as const);
+  const result = choice(outcome, "outcome", relationshipConclusions);
   if (
     result === "Conditional" &&
     content.criteria.some((c) => c.outcome !== "Met")

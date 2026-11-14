@@ -954,7 +954,11 @@ test("mapped CPQ preserves exact conditional compatibility and refuses replaceme
   const s = await setup();
   await grant(s.p.actor_id, ["products.read"]);
   async function relation(
-    type: "Compatibility" | "CandidateReplacement",
+    type:
+      | "Compatibility"
+      | "CandidateReplacement"
+      | "Replaces"
+      | "RequiresAccessory",
     outcome: "Conditional" | "Unresolved",
     from = m.product.revision.id,
   ) {
@@ -1006,6 +1010,8 @@ test("mapped CPQ preserves exact conditional compatibility and refuses replaceme
   for (const [type, outcome] of [
     ["Compatibility", "Unresolved"],
     ["CandidateReplacement", "Conditional"],
+    ["Replaces", "Conditional"],
+    ["RequiresAccessory", "Conditional"],
   ] as const) {
     const rel = await relation(type, outcome);
     m.definition.parts[0].product!.relationships = [rel.ref];
