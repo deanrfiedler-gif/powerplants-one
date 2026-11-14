@@ -1,8 +1,29 @@
 # Warranty to Supply return receiving evidence
 
-Source: [PR #945](https://github.com/deanrfiedler-gif/powerplants-one/pull/945), `codex/warranty-supply-receiving`, based on main `e41f806a6`. Synthetic local data only. [Contract](../../../contracts/maintenance-warranty-api.md#warranty-to-supply-return-receiving).
+Source: [PR #945](https://github.com/deanrfiedler-gif/powerplants-one/pull/945), `codex/warranty-supply-receiving`, owned by Codex. Synthetic local data only. [Contract](../../../contracts/maintenance-warranty-api.md#warranty-to-supply-return-receiving).
 
-## Executed verification
+## Review corrections — 14 November 2026
+
+Read [Dean's instruction 6848501977](https://github.com/deanrfiedler-gif/powerplants-one/pull/945#issuecomment-6848501977) and [Claude's full review 5885392190](https://github.com/deanrfiedler-gif/powerplants-one/pull/945#pullrequestreview-5885392190). [Claim](https://github.com/deanrfiedler-gif/powerplants-one/pull/945#issuecomment-6869255640). The dedicated worktree integrated main `4cd33a0b1f307defd03855e8620b02b011b35d83` in merge `31359cfa1afa6406498d11df86f19e9f01b32494`, with no conflicts. The reviewed contribution at `9e634df7` and its post-merge contribution have the same stable patch ID, `eb04fd3089205469a2163003453ae2b7c6dcb99d`. Both the C1 reviewed agreement charge schedules section and the adjacent Warranty receiving chapter retain their proper sections. No prior PR change was altered by integration.
+
+Fix commit `a0e72bb1734a853de2c78bdf01636c8c058312f4` changes only the two findings and their proof/contract/decision. The existing native revision transaction refuses a bridged demand's customer or asset change with `409 SourceReviewRequired`. The read independently detects a mismatch with the retained claim customer/case asset. Facility is not a bound identity in this bridge. A rejected native authorisation now yields `AuthorisationRejected` when there is no receipt, subject to the existing incomplete/unknown evidence precedence. No migration, capability, grant, dependency, cancellation or other receiving behaviour is added. Repository search found no separate SC-08 stage type/label list or guide/register enumeration: the Warranty page renders source values generically.
+
+Cloud setup succeeded with Node 24.21.0, npm 11.19.0 and PostgreSQL 16.15 (`ppo_synthetic_test`); browser unavailable. The setup environment was sourced in each later shell. Executed with the unchanged 120-second database deadline and no retries:
+
+- **Before any fix, after the main merge: 22/22 bridge and Supply database cases passed.** [Merge baseline](review-merge-database.txt).
+- **Three new cases failed against the unchanged merged runtime**, reproducing the missing identity refusal, undetected demand drift, and false Prepared stage. No prior assertion was changed. [Negative control](review-defects-before.txt).
+- **After the fixes: 25/25 bridge and Supply cases passed.** Separate null customer/asset changes, combined clearing and a different same-site asset are refused without effects; unrelated next-action/required-date changes persist. Direct SQL with live database guards simulates legacy customer/asset drift and proves `ReviewRequired`. Proposed → Rejected proves the explicit stage, zero receipt and unchanged claim/customer outcome. [Fixed proof](review-fixed-database.txt).
+- **MA-02/MA-07: 3/3 passed.** [Regression](review-maintenance.txt).
+- **Unmodified main control: 58/58 assistant unit cases passed** at `4cd33a0b1` in its own detached worktree. The previously reported 15 T2d/T2e failures did not recur. A first restricted-sandbox invocation reported only six file-level successes without individual cases; it is excluded from coverage. The normal execution environment ran all 58. [Main control](review-main-assistant.txt).
+- **`npm run check` passed**, including studio integrity, full ESLint, TypeScript, **1,457/1,457 units** and production build. [Application summary](review-application.txt).
+- **Compiled HTTP: 3/3 passed**, covering the bridge and existing Maintenance and Supply scenarios against that production build. [HTTP proof](review-http.txt).
+- **Foundation, naming, status, migration registry, prototype and 44 documentation unit tests passed.** [Documentation results](review-documentation.txt). No assertion, retry or deadline was weakened.
+
+The [current SHA-256 manifest](review-source-sha256.txt) binds the runtime, helpers, tests, contract and decision to fix commit `a0e72bb1734a853de2c78bdf01636c8c058312f4`. Documentation/evidence added after that commit changes no executable source. The reproduction commands below remain applicable; the main control used `node --import tsx --test tests/unit/assistant*.test.ts` in the unmodified main worktree, and the pre-fix negative control selected the three added test names against merge `31359cfa1` before changing runtime code.
+
+Final-head CI and the current-main merged-tree check are recorded on the PR; local passes do not replace them. Branch-protection settings could not be read with the current integration (`403 Resource not accessible by integration`), so no new observation of the configured required set is claimed. Browser/device/owner acceptance, full TS-05 and a new real-database restart were not run in this correction pass. The earlier restart proof remains historical. Nothing is merged or deployed; only confirmation of Claude's two findings is requested.
+
+## Initial implementation verification — 13 November 2026
 
 The disposable environment was prepared with `scripts/cloud-setup.sh`: Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, database `ppo_synthetic_test`. The script reports database ready and browser unavailable. No renderer is needed by the bridge or its database cases.
 
@@ -16,7 +37,7 @@ The disposable environment was prepared with `scripts/cloud-setup.sh`: Node 24.2
 
 ## Reproduction and source binding
 
-[SHA-256 source manifest](source-sha256.txt) identifies the final implementation, helper and proof files. The final database, compiled HTTP and restart results refer to these production sources. The combined Supply and Maintenance regression runs and full unit check preceded the two bounded final changes above; the final bridge/database and compiled regression runs cover their behaviour.
+[Initial SHA-256 source manifest](source-sha256.txt) identifies the implementation, helper and proof files reviewed at `9e634df7`. The initial database, compiled HTTP and restart results refer to those production sources. The combined Supply and Maintenance regression runs and full unit check preceded the two bounded initial changes above; the initial final bridge/database and compiled regression runs cover their behaviour. These retained logs and hashes are historical and are not rewritten to claim the review corrections.
 
 After successful `scripts/cloud-setup.sh`, source its reported tools environment in every shell. Use only the disposable `ppo_synthetic_test` database. The local executions used these commands (HTTP ran after the final production build):
 
@@ -34,4 +55,4 @@ For restart proof, run `scripts/warranty-supply-return-restart.ts write <scratch
 
 ## Remaining gates
 
-Independent Claude review, final-head CI and Dean's merge are separate. Browser/device/owner acceptance, full TS-05, stock posting, live ERP, customer or supplier communications and deployment are not claimed.
+Claude completed the full review at `9e634df7`; confirmation of its two findings, final-head CI and Dean's merge remain separate. Browser/device/owner acceptance, full TS-05, stock posting, live ERP, customer or supplier communications and deployment are not claimed.

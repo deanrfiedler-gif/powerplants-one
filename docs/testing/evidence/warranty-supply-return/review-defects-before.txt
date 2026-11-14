@@ -1,0 +1,67 @@
+✖ MA07-SC08 bridged demand revisions refuse customer and equipment relinking but allow coordination (3731.628791ms)
+✖ MA07-SC08 reads detect parent demand identity drift outside the native revision command (355.28177ms)
+✖ MA07-SC08 rejected native authorisation is explicit without receiving or changing claim outcomes (400.602044ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 0
+ℹ fail 3
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6306.324937
+
+✖ failing tests:
+
+test at tests/database/warranty-supply-return.test.ts:6:10435
+✖ MA07-SC08 bridged demand revisions refuse customer and equipment relinking but allow coordination (3731.628791ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/workspace/ppo-warranty-945/tests/database/warranty-supply-return.test.ts:447:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    operator: 'rejects',
+    diff: 'simple'
+  }
+
+test at tests/database/warranty-supply-return.test.ts:6:11752
+✖ MA07-SC08 reads detect parent demand identity drift outside the native revision command (355.28177ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Available'
+  - 'ReviewRequired'
+  
+      at TestContext.<anonymous> (/workspace/ppo-warranty-945/tests/database/warranty-supply-return.test.ts:492:14)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Available',
+    expected: 'ReviewRequired',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/database/warranty-supply-return.test.ts:6:12756
+✖ MA07-SC08 rejected native authorisation is explicit without receiving or changing claim outcomes (400.602044ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  + actual - expected
+  
+  + 'Prepared'
+  - 'AuthorisationRejected'
+  
+      at TestContext.<anonymous> (/workspace/ppo-warranty-945/tests/database/warranty-supply-return.test.ts:522:10)
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Prepared',
+    expected: 'AuthorisationRejected',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

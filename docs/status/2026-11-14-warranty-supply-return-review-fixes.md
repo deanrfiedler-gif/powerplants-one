@@ -1,0 +1,11 @@
+---
+title: Warranty Supply return review findings corrected
+date: 2026-11-14
+---
+
+[PR #945](https://github.com/deanrfiedler-gif/powerplants-one/pull/945) integrates main `4cd33a0b1` without conflicts or changes to its own reviewed patch, preserving both C1 charge schedules and the Warranty receiving contract. Codex's correction `a0e72bb17` addresses only defects 1 and 2 from Claude review 5885392190: native revisions refuse a bridged demand's customer/equipment relink, Warranty independently detects identity drift, and rejected native authorisation is explicitly `AuthorisationRejected`. The [contract](../contracts/maintenance-warranty-api.md#warranty-to-supply-return-receiving) and [decision](../decisions/warranty-supply-return-receiving.md) record those boundaries. No migration, capability, grant or dependency is added.
+
+The [execution evidence](../testing/evidence/warranty-supply-return/README.md#review-corrections--14-november-2026) retains the 22-case post-merge baseline, three failing regression cases before the fix, 25 passing bridge/Supply cases after it, three MA-02/MA-07 cases and 58 passing assistant control cases on unmodified main. `npm run check` passes with 1,457 unit cases and the production build; three compiled HTTP scenarios, foundation, naming, status, migration registry, prototype and 44 documentation unit tests pass. Browser unavailable: local browser suites are left to CI. Device/owner acceptance, full TS-05 and a new database restart are not claimed. The configured required check set could not be read (`403 Resource not accessible by integration`); no repository settings were changed. Final-head CI and only targeted Claude confirmation remain PR gates. Dean merges; nothing is merged or deployed.
+
+<!-- decision-index -->
+[Warranty to Supply return receiving](../decisions/warranty-supply-return-receiving.md) (PPO-WARRANTY-SUPPLY-RETURN-DEC) records the two review corrections using the existing application transaction and physical-progress projection.

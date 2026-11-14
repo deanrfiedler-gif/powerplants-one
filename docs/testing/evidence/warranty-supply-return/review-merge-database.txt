@@ -1,0 +1,30 @@
+✔ Supply company/site reads, strict payloads, immutable identity and operation recovery (4186.948259ms)
+✔ approved demand with nothing allocated is a shortage, and promise basis and timing decide At risk or Blocked (SUP-1) (125.528318ms)
+✔ Project demand, split shipment and quarantined partial receipt keep readiness short of Ready (350.698075ms)
+✔ record revisions cannot reduce supply or returns below retained physical evidence (266.363787ms)
+✔ racing allocations conserve one source and failed writes leave no receipt/outbox (111.379727ms)
+✔ pick, stage, partial movement and partial delivery retain exact outstanding and corrections (157.767136ms)
+✔ customer remedy completes independently of supplier recovery, with remaining-return and restricted credits (250.8807ms)
+✔ unknown source outcome reconciles the original operation and idempotent replay never repeats effect (46.446856ms)
+✔ Service promise delay creates one owned impact and preserves confirmed appointment (163.959068ms)
+✔ exact durable photo is scoped, hashed and replayable (25.75905ms)
+✔ reseed and upgrade preserve exact original records, revisions and revoked grants (31.3714ms)
+✔ MA07-SC08 one atomic bridge, exact replay and separate native operation recovery (3627.351741ms)
+✔ MA07-SC08 competing fresh operations create one return only (220.152385ms)
+✔ MA07-SC08 exact quantity, source versions and demand identity are enforced without partial writes (366.656534ms)
+✔ MA07-SC08 preserves old external evidence; Received and NotRequired are not imported as custody (394.674111ms)
+✔ MA07-SC08 source changes block new preparation but retain original lookup and replay (428.187489ms)
+✔ MA07-SC08 scope, revoked Supply access and history redaction apply before receipt replay (335.542975ms)
+✔ MA07-SC08 native partial receipt and disposition stay independent of customer and Finance outcomes (444.302531ms)
+✔ MA07-SC08 incomplete native evidence never yields a complete receiving total (238.937146ms)
+✔ MA07-SC08 unknown outcomes remain visible until original native reconciliation (705.926354ms)
+✔ MA07-SC08 native revisions preserve identity and allow owned coordination changes (703.145656ms)
+✔ MA07-SC08 a used native operation or identity rolls the entire bridge back (325.893993ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16015.819434
