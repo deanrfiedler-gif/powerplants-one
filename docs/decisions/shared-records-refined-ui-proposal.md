@@ -531,3 +531,7 @@ The audit card on the Read me page (`90:87`) carries the same lists.
 3. R5 when the reference file is readable.
 4. Draw G4 if wanted.
 5. Dean accepts and saves a named version; the design register and page guidance follow in their own change.
+
+## 10. File name — 14 November 2026
+
+The private Figma file is now named "PPO - Customers, Sites & Equipment module (proposal)". Dean renamed it on 14 November 2026, on the recommendation that a file awaiting acceptance carries "(proposal)", as the other module proposals do, and takes "(accepted)" only when Dean accepts it and saves its first named version. It is the same file: read through the Figma connector the same day, it holds the same 20 pages, and the Read me cards (`90:2`, `90:23`, `90:87`, `90:126`), one sheet on each scope page and the proposed docked menu `16:1719` resolve under the node IDs this record cites. The connector returns only the generic root name, so the name itself rests on Dean's word. Every citation of "PPO - Customers, Sites & Equipment module" in this record, its status fragments and the [alignment audit](shared-records-figma-alignment-audit.md) (PPO-SHARED-RECORDS-FIGMA-ALIGNMENT-AUDIT) means this file; none is rewritten. No named version exists yet.
