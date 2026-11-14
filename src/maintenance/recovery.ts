@@ -285,7 +285,9 @@ export async function recoveryCommand(
           );
         Object.assign(detail, {
           stage,
-          receiving_state: "SupplyReceivingNotIntegrated",
+          receiving_state: await (await import("./supply-return")).returnLink(c, p, row.id)
+            ? "ExternalEvidenceOnly"
+            : "SupplyReceivingNotIntegrated",
           source_mode: "ExternalEvidenceReference",
           asset_id: w.asset_id,
         });

@@ -4,7 +4,13 @@
 
 Owner: Dean Fiedler. Review: implementation delivered with local synthetic verification; owner/business/device acceptance pending. No deployment or external transaction.
 
-## Current integration — 7 October 2026
+## Warranty to Supply backend — 13 November 2026
+
+[PR #945](https://github.com/deanrfiedler-gif/powerplants-one/pull/945) adds the MA-07 → SC-08 backend bridge on main `e41f806a6`, with Finance #905/#932 retaining their owners. The [contract](../contracts/maintenance-warranty-api.md#warranty-to-supply-return-receiving) specifies preparation from an exact authorised claim and delivered demand, atomic native creation, independent original receipts, source-preserving revisions and permission-scoped physical progress. This supersedes the missing-return-bridge statements in the historical checkpoints below for this bounded Customer-return path. No historical evidence is rewritten.
+
+Supply still approves and receives the return through its native commands; Warranty/customer and Finance outcomes remain independent. Preparation controls have not been added to a page. Corrections that replace a mistaken bridge, broader warranty scenario acceptance, and external systems remain separate. [Execution evidence](../testing/evidence/warranty-supply-return/README.md) distinguishes verification, independent Claude review, integration and acceptance. Dean owns the merge; no deployment occurs here.
+
+## Retained integration checkpoint — 7 October 2026
 
 The contribution is reconciled with main `fbf2ed3` (#356) on `codex/maintenance-warranty-completion`, preserving both Maintenance migration/seed 0051 and ES-07 migration 0072. Supply’s 0049 remains unchanged. The combined permission contract contains 120 capabilities. The decision uses stable ID PPO-MA-NATIVE-DEC, preserving Supply’s ADR-0049. Source and design-register integration are complete; the [integration ledger](../testing/evidence/maintenance-warranty/integration/README.md) records exact source checkpoints, current verification and failures separately. No deployment or business acceptance is claimed.
 

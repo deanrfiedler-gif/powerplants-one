@@ -1,0 +1,16 @@
+CI reload synchronization evidence — 2026-11-14 UTC
+Failed source head: d81a46ebe90e9efbbecfd309df7e240690f1b4bc
+Application assurance run: 43541156132, attempt 1; failed job: 132281828786
+Artifact: P11-retained-browser-evidence, id 14092894888
+Artifact SHA-256: b3601d9c41cfa1e74e87286f9552abfe6a16414cb864b0d1a1d58597dc1ed487
+Main control: 4cd33a0b1f307defd03855e8620b02b011b35d83; successful Application assurance run 43396621657
+Original test and src/engineering/materials are byte-identical between main and the failed head.
+The sanitized artifact excludes raw Playwright traces. The post-failure screenshot/context show badge 2.
+No infrastructure fault, retry or measured request duration is claimed.
+Repair: wait for the exact new frame request and successful response body after reload, then retain all original assertions.
+Local validation: changed-file ESLint and TypeScript; browser unavailable, execution left to fresh CI.
+
+SHA-256 source/evidence hashes:
+028de923583b119b6c6f228fafbe26e317d95746bbf9dcdde22ce5a42419a36b  tests/browser/engineering-materials.spec.ts
+340ea83505c009e2dd6a8f90fd77c20a442914abb7bb688787ae3f0ec17ce7c3  docs/testing/evidence/warranty-supply-return/review-ci-materials-failure.txt
+a85ed9af36ea333fe2a171cd44cbb316748a002ccf0d46c4a3a461cb9069ee0b  docs/testing/evidence/warranty-supply-return/review-ci-materials-reload.png

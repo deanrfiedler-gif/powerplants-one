@@ -1,0 +1,68 @@
+foundation: exit 0
+{
+  "status": "passed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 19093,
+  "files_scanned_for_markers": 8689,
+  "status_fragments": 485,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
+
+naming: exit 0
+{
+  "status": "passed",
+  "document_records": 926,
+  "register_entry_files": 105,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 761,
+  "git_masters": 521,
+  "project_instruction_characters": 7998,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}
+
+status: exit 0
+status sources: passed (485 fragments; no tracked output required)
+
+migrations: exit 0
+migration numbering: unique, registered and unreserved
+
+prototype: exit 0
+{
+  "status": "passed",
+  "package": "PP-01",
+  "documents": 12,
+  "parent_dispositions": 78,
+  "dispositions": {
+    "Core": 24,
+    "Partial": 25,
+    "Deferred": 29
+  },
+  "master_decisions": 29,
+  "prototype_procedures": 30,
+  "implementation_packages": 12,
+  "registers": {
+    "SC": 15,
+    "CMP": 12,
+    "SR": 20,
+    "VAL": 24,
+    "TR": 16,
+    "API-C": 26,
+    "API-R": 10
+  },
+  "errors": [],
+  "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+}
+
+documentation-units: exit 0
+............................................
+----------------------------------------------------------------------
+Ran 44 tests in 0.851s
+
+OK

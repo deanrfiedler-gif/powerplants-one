@@ -1,0 +1,2 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-WARRANTY-SUPPLY-RETURN-DEC,Warranty to Supply return receiving,docs/decisions/warranty-supply-return-receiving.md,,Codex implementation decision under standing order; independent Claude review pending,Dean Fiedler,e41f806a6e005b29c5b13d7f69afee8c28adb2f7,,,git,

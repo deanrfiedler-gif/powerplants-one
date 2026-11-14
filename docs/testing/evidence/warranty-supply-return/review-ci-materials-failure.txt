@@ -1,0 +1,35 @@
+# Error details
+
+```
+Error: expect(locator).toHaveText(expected) failed
+
+Locator: locator('#em-menu').locator('nav a')
+Timeout: 5000ms
+- Expected  - 1
++ Received  + 1
+
+  Array [
+    "Materials register",
+    "Item & unit mapping",
+-   /^Substitution review\s*2$/,
++   "Substitution review",
+    "Review & release",
+    "Supply handover",
+    "Changes & history",
+  ]
+
+Call log:
+  - Expect "toHaveText" locator('#em-menu').locator('nav a') with timeout 5000ms
+  - waiting for locator('#em-menu').locator('nav a')
+    14 × locator resolved to 6 elements
+
+```
+
+
+Retained post-failure snapshot excerpt:
+-   /^Substitution review\s*2$/,
++   "Substitution review",
+                  - link "Substitution review 2 proposed alternates waiting" [ref=f1e164] [cursor=pointer]:
+                    - generic [ref=f1e167]: Substitution review
+                    - generic "2 proposed alternates waiting" [ref=f1e168]: "2"
+> 81  |   await expect(menu.locator("nav a")).toHaveText([/^Materials register$/, /^Item & unit mapping$/, /^Substitution review\s*2$/, /^Review & release$/, /^Supply handover$/, /^Changes & history$/]);
