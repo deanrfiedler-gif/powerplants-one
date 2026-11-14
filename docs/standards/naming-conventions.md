@@ -444,8 +444,34 @@ The synthetic format is the only enabled proposal for the current prototype. The
 | Help request | HLP | `SYN-HLP-000013` | Settings AD-10 |
 | Flagged assistant answer | AIF | `SYN-AIF-000002` | Settings AI-06 |
 | Test definition | TDF | `SYN-TDF-000001` | Workshop settings (Q9), shown in the Settings numbering registry |
+| Dispatch | DSP | `SYN-DSP-000061` | Supply SC-06 and SC-07; a delivery dispatch only, never a dispute (14 November 2026) |
+| Customer dispute | DPT | `SYN-DPT-000003` | Finance FN-02; disputes drawn as `SYN-DSP-` move here and keep their numbers (14 November 2026) |
+| Progress claim | CLM | `SYN-CLM-000016` | Finance FN-04; never a supplier claim (14 November 2026) |
+| Supplier claim | SCL | `SYN-SCL-000320` | Supply SC-08; supplier claims drawn as `SYN-CLM-` move here and keep their numbers (14 November 2026) |
+| Estimate-to-actual review | EAR | `SYN-EAR-0001` | Estimating ES-09 outcome review; the four-digit r01 references are preserved (14 November 2026) |
+| Calibration proposal | CAL | `SYN-CAL-0003` | Estimating ES-10; the four-digit references are preserved; never an instrument tag (14 November 2026) |
+| Inspection | INS | `SYN-INS-000021` | Service FI-03 and FI-04 inspections only; never an instrument tag (14 November 2026) |
+| Commissioning handover | CMS | `SYN-CMS-000012` | Engineering EN-08 to Service; registered by the Service alignment decision Q11 (14 November 2026) |
 
 **13 November 2026 amendment:** Dean adopted the fourteen Settings families above, from ACR to TDF ([Settings refined UI record](../decisions/settings-module-refined-ui-proposal.md), A52 and section 11). They name synthetic design records only. No counter, column or allocation is implemented. The families that other module files propose are not added here. The settlement of the clashes between files (cross-file audit AF-141, drawn on the Settings numbering registry) is proposed and not yet adopted.
+
+**14 November 2026 amendment:** On Dean's instruction of 14 November 2026 ("Proceed however you believe is the most professional"), the clash settlement drawn on the Settings numbering registry (GL04; cross-file audit AF-141; [Settings refined UI record](../decisions/settings-module-refined-ui-proposal.md), section 11) is adopted. So are the reference decisions Dean accepted in the [Service alignment audit](../decisions/service-module-figma-alignment-audit.md) (Q11) on 13 November 2026. The eight rows above dated 14 November 2026, from DSP to CMS, record them:
+
+- DSP stays the Supply dispatch, and Finance disputes move to DPT.
+- CLM stays the Finance progress claim, and Supply supplier claims move to SCL.
+- EAR stays the Estimating outcome review, CAL stays the Estimating calibration proposal, and INS stays the Service inspection.
+- CMS is registered for commissioning handovers.
+- A record keeps its number when it changes family, as `SYN-DSP-000003` becomes `SYN-DPT-000003`.
+
+**Test-instrument and certificate tags.** Tags on test instruments and certificates (for example `SYN-MEG-002`, `SYN-CLP-006`, `SYN-PRS-001`, `SYN-FLO-001`, `SYN-TMR-002` and `SYN-CERT-0417`) are asset tags, not record references. They keep their three- or four-digit numbers, outside the six-digit rule of section 10.1 and Addendum A2 (Service Q11). A tag prefix names the instrument's kind and never reuses a record type in the table above:
+
+- insulation testers MEG, not INS, so Engineering's `SYN-INS-003` becomes `SYN-MEG-003`;
+- earth testers ERT, not EAR;
+- pressure gauges PRS, not PG;
+- flow meters FLO, not FLM;
+- the Engineering instrument drawn as `SYN-CAL-002` becomes `SYN-INST-002`.
+
+Each module file renumbers in its own reviewed change, and an accepted file needs a new named version when it does. Like the Settings families, these codes name synthetic design records only: no counter, column or allocation is implemented.
 
 These type codes are a proposed registry. Adding optional references to existing Organisation, Person, Site or revision records requires an explicit dictionary amendment. Do not silently add fields because a naming example mentions them. Existing `display_number` fields should use the common format where applicable.
 
