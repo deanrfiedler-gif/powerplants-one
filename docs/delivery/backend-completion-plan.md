@@ -1,5 +1,11 @@
 # Backend completion delivery plan
 
+## PJ-07 native source-read increment — 13 November 2026
+
+Dean authorised the next bounded readiness API after the backend recommendation. [PR #948](https://github.com/deanrfiedler-gif/powerplants-one/pull/948) owns the [source/authority contract](../contracts/project-delivery-readiness.md), native read implementation and [execution evidence](../testing/evidence/project-readiness/README.md). It projects existing Engineering coordination, material readiness and specialist briefs without deciding complete-project readiness or release. Site/customer, crew, work preparation, commercial release and complete prerequisite applicability remain explicit follow-ons. The current instruction authorises backend scope, not the proposed Projects Figma design or the missing historical r02 source.
+
+Current reconciliation: SV-07 recurrence and SV-08 escalation are implemented in their native contracts; older missing-code checkpoints below are historical. Agreement charges #905, Finance claim output #932 and Warranty-to-Supply #945 are existing contributions with their own review/CI gates. PJ-07 does not duplicate or take over those changes.
+
 ## Claim-specific Finance evidence — 13 November 2026
 
 [PR #932](https://github.com/deanrfiedler-gif/powerplants-one/pull/932), dependent on C1 #905, implements the fixed internal ProjectClaim/AgreementCharge OUT-14 contract through the existing Finance pipeline. [Contract](../contracts/document-issue-distribution.md#claim-specific-out-14--13-november-2026) and [evidence](../testing/evidence/claim-finance-evidence/README.md) separate exact historical claim output, local command/storage proof, compiled HTTP, real PDF and independent review. Claim-authoring UI, full manual TS-01/TS-02, operational policies, real MYOB and deployment remain separate. No new schema or grants.

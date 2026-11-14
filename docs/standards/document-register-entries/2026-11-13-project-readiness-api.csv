@@ -1,0 +1,3 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-PJ07-READINESS-API-DEC,PJ-07 source-backed readiness API,docs/decisions/project-readiness-api.md,,Backend scope authorised; implementation choices by Codex,Dean Fiedler,bdcdd347fcb29c3806cd23d1e85be03f972b6628,,,git,
+PPO-PJ07-READINESS-CONTRACT,Project delivery readiness native evidence API,docs/contracts/project-delivery-readiness.md,,Bounded synthetic backend contract; operational acceptance separate,Dean Fiedler,bdcdd347fcb29c3806cd23d1e85be03f972b6628,,,git,

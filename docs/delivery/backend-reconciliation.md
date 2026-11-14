@@ -1,5 +1,10 @@
 # Backend implementation reconciliation
 
+## Current PJ-07 selection — 13 November 2026
+
+Main `bdcdd347fcb29c3806cd23d1e85be03f972b6628` contains native Findings recurrence and Service escalation, so their older missing-code rows below are historical. PRs #905 (agreement charges), #932 (Finance claim outputs, stacked on #905) and #945 (Warranty-to-Supply return receiving) already own those implementations and retain their separate final verification/review work. They are not fresh backend gaps.
+
+Dean authorised the recommended first PJ-07 increment: [PR #948](https://github.com/deanrfiedler-gif/powerplants-one/pull/948), governed by the [native evidence contract](../contracts/project-delivery-readiness.md). Its read dependency combines existing permitted Engineering coordination, material demand and specialist evidence. It cannot establish full-project readiness, accept the Figma proposal, recover the missing r02 source, release work or override source modules. Execution and remaining gates belong in its [evidence chapter](../testing/evidence/project-readiness/README.md).
 
 ## C1 connected billing continuation — 12 November 2026
 

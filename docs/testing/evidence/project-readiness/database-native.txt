@@ -1,0 +1,13 @@
+✔ PJ07-01 native source versions, owners and blockers are read without business effects; empty is not ready (5245.830273ms)
+✔ PJ07-02 native source revisions and allocations change readiness; completing a follow-up cannot clear a source blocker (6430.827262ms)
+✔ PJ07-03 project, company and revoked source permissions do not disclose source identities or counts (7464.056515ms)
+✔ PJ07-04 incomplete demand evidence is explicit and strict reads cannot filter away blockers (11353.424928ms)
+✔ PJ07-05 bounded candidate coverage cannot imply full project readiness or disclose another project's sources (15376.715734ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 48184.039196

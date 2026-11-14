@@ -1,0 +1,17 @@
+(node:2761) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:2761) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ PJ07-01 native source versions, owners and blockers are read without business effects; empty is not ready (6980.238825ms)
+✔ PJ07-02 native source revisions and allocations change readiness; completing a follow-up cannot clear a source blocker (8005.556926ms)
+✔ PJ07-03 project, company and revoked source permissions do not disclose source identities or counts (9353.211759ms)
+✔ PJ07-04 incomplete demand evidence is explicit and strict reads cannot filter away blockers (13057.931458ms)
+✔ PJ07-05 bounded candidate coverage cannot imply full project readiness or disclose another project's sources (18984.359567ms)
+✔ PJ07-06 accepted specialist evidence becomes stale after native Engineering change and is hidden after source revocation (28038.429118ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 86852.484643
