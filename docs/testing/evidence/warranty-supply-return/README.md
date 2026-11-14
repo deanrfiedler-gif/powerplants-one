@@ -41,6 +41,10 @@ A matched temporary control delayed only the synthetic `guard-fails` npx startup
 
 Separately, [compiled application retained proof](https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43546502654/job/132299029489) completed its proof execution but failed creating its artifact with `ETIMEDOUT`. Its upload service needs no source change. A fresh head is already required for the unit fixture repair, so that upload job is not rerun separately. Final-head CI remains a gate and is recorded on the PR.
 
+### Current-main integration during CI
+
+Main moved during final-head CI to `4d0fcdf89176aef3287c03c1b104adeeda031363`. Merge `ceb35c98a52d1f0fa1b6fbde1dd1fd696cf5929c` integrates its 15 documentation files without conflicts. The complete PR contribution, including the two Warranty corrections and test-harness repairs, has the same stable patch ID before and after this merge: `a669246cff73b38ff77fa19c78efeb8f1f7ce3be`. No executable source changed, and both C1 and Warranty contract sections remain intact. [Post-merge documentation checks and source hashes](review-current-main.txt) bind this integration; fresh final-head CI replaces the superseded head's run.
+
 ## Initial implementation verification — 13 November 2026
 
 The disposable environment was prepared with `scripts/cloud-setup.sh`: Node 24.21.0, npm 11.19.0, PostgreSQL 16.15, database `ppo_synthetic_test`. The script reports database ready and browser unavailable. No renderer is needed by the bridge or its database cases.

@@ -11,5 +11,7 @@ The first correction head's CI exposed an existing Engineering Materials browser
 
 The next head exposed an unchanged installer unit fixture racing its synthetic 300 ms hang timer during ordinary subprocess startup. A matched 350 ms startup-delay control fails on main's harness and passes after the test-only repair; real hang/watchdog coverage and all original assertions remain. A separate compiled-proof artifact upload failed with `ETIMEDOUT` after proof execution passed. [Follow-up evidence](../testing/evidence/warranty-supply-return/README.md#ci-installer-fixture-and-artifact-upload) records both, with no job rerun or production installer change.
 
+Main advanced during CI to `4d0fcdf89`; merge `ceb35c98a` integrates only its 15 documentation files without conflicts. The complete PR patch is identical before and after this second merge, including both fixes and the test-harness repairs. [Current-main integration evidence](../testing/evidence/warranty-supply-return/README.md#current-main-integration-during-ci) records the repeated documentation checks and unchanged executable source hashes.
+
 <!-- decision-index -->
 [Warranty to Supply return receiving](../decisions/warranty-supply-return-receiving.md) (PPO-WARRANTY-SUPPLY-RETURN-DEC) records the two review corrections using the existing application transaction and physical-progress projection.
