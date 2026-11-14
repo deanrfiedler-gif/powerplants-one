@@ -1,0 +1,188 @@
+CI follow-up investigation — 2026-11-14 UTC
+Source head: eccc1b957a02c1b1997604c10b321f1f1434b915
+Application run 43546502684, job 132300395530 (attempt 1).
+Browser diagnostic execution did not start: npm run check failed in the existing installer unit fixture.
+Original installer and unit-test sources are identical to main 4cd33a0b1.
+No infrastructure classification or rerun is claimed for this unit failure.
+
+2026-11-14T02:41:51.9586246Z ✖ failing tests:
+2026-11-14T02:41:51.9586479Z 
+2026-11-14T02:41:51.9586711Z test at tests/unit/browser-install.test.ts:52:5042
+2026-11-14T02:41:51.9587318Z ✖ browser installer remains bounded and fails closed: guard-fails (456.647712ms)
+2026-11-14T02:41:51.9587840Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+2026-11-14T02:41:51.9588463Z   
+2026-11-14T02:41:51.9588651Z   2 !== 3
+2026-11-14T02:41:51.9588851Z   
+2026-11-14T02:41:51.9589423Z       at TestContext.<anonymous> (/home/runner/work/powerplants-one/powerplants-one/tests/unit/browser-install.test.ts:176:12)
+2026-11-14T02:41:51.9590020Z       at Test.runInAsyncScope (node:async_hooks:227:14)
+2026-11-14T02:41:51.9590401Z       at Test.run (node:internal/test_runner/test:1402:25)
+2026-11-14T02:41:51.9590839Z       at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+2026-11-14T02:41:51.9591289Z       at Test.postRun (node:internal/test_runner/test:1542:19)
+2026-11-14T02:41:51.9591954Z       at Test.run (node:internal/test_runner/test:1467:12)
+2026-11-14T02:41:51.9592550Z       at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+2026-11-14T02:41:51.9592948Z     generatedMessage: true,
+2026-11-14T02:41:51.9593205Z     code: 'ERR_ASSERTION',
+2026-11-14T02:41:51.9593442Z     actual: 2,
+2026-11-14T02:41:51.9593649Z     expected: 3,
+2026-11-14T02:41:51.9593881Z     operator: 'strictEqual',
+2026-11-14T02:41:51.9594119Z     diff: 'simple'
+2026-11-14T02:41:51.9594321Z   }
+2026-11-14T02:41:51.9803811Z ##[error]Process completed with exit code 1.
+2026-11-14T02:41:51.9858730Z ##[group]Run python3 scripts/prepare-review-evidence.py
+2026-11-14T02:41:51.9859108Z [36;1mpython3 scripts/prepare-review-evidence.py[0m
+2026-11-14T02:41:51.9872279Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-11-14T02:41:51.9872629Z env:
+2026-11-14T02:41:51.9872850Z   NEXT_TELEMETRY_DISABLED: 1
+2026-11-14T02:41:51.9873118Z   PPO_PROOF_DIAGNOSTICS: 1
+2026-11-14T02:41:51.9873441Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:41:51.9873770Z ##[endgroup]
+2026-11-14T02:41:52.0210906Z Review evidence prepared: 0 diagnostic files redacted; issued outputs untouched
+2026-11-14T02:41:52.0317764Z ##[group]Run actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+2026-11-14T02:41:52.0318171Z with:
+2026-11-14T02:41:52.0318409Z   name: P11-original-failure-replay-evidence
+2026-11-14T02:41:52.0319111Z   path: verification-evidence/review-diagnostic-redactions.json
+
+Compiled application run 43546502654, job 132299029489 (attempt 1).
+Proof execution passed; artifact creation failed with ETIMEDOUT. No source repair is needed for the upload service.
+This job is not rerun because a new source head is already necessary for the installer fixture repair.
+
+2026-11-14T02:33:38.4898145Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:33:57.2685845Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:34:03.8459955Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:34:40.9071934Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:35:04.8200317Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:36:18.3660459Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:36:18.8604112Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:36:23.1334487Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:39:36.5169635Z   30 passed (3.2m)
+2026-11-14T02:39:36.5545254Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:39:58.6442226Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:40:15.8819442Z   "source_head": "eccc1b957a02c1b1997604c10b321f1f1434b915",
+2026-11-14T02:40:15.8823601Z   "result": "Exact accepted recovery, delayed Start ReviewRequired, altered retry Conflict, publication replay and all snapshots/files unchanged"
+2026-11-14T02:40:15.9215787Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:40:15.9716872Z   PPO_SOURCE_HEAD: eccc1b957a02c1b1997604c10b321f1f1434b915
+2026-11-14T02:42:31.3684775Z ##[error]Failed to CreateArtifact: Unable to make request: ETIMEDOUT
+
+
+Local main-browser-install proof:
+✔ browser installer succeeds once and checks the original user's browser/PDF (26.666028ms)
+✔ browser installer preserves the original attempt loop with missing timeout (45.197952ms)
+✔ browser installer preserves the original attempt loop with password-required sudo (65.660689ms)
+✔ ordinary install failure repairs before retry and preserves caller download timeout (26.210072ms)
+✔ three install failures exit 1, sleep only twice and never run the guard (33.535079ms)
+✔ failed dpkg recovery refuses a new install without deleting package locks (27.539762ms)
+✔ a real timeout kills TERM-resistant descendants, releases their lock and retries successfully (327.79768ms)
+✔ browser installer remains bounded and fails closed: hang (917.793398ms)
+✔ browser installer remains bounded and fails closed: guard-fails (46.613107ms)
+✔ browser installer remains bounded and fails closed: guard-hangs (942.884919ms)
+✔ pinned Playwright preserves a fresh lock, reclaims a dead owner's stale lock and retains cached assets (1805.078275ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4423.195833
+
+Local fixed-browser-install proof:
+✔ browser installer succeeds once and checks the original user's browser/PDF (30.534337ms)
+✔ browser installer preserves the original attempt loop with missing timeout (47.375215ms)
+✔ browser installer preserves the original attempt loop with password-required sudo (66.862688ms)
+✔ ordinary install failure repairs before retry and preserves caller download timeout (24.859685ms)
+✔ three install failures exit 1, sleep only twice and never run the guard (33.200021ms)
+✔ failed dpkg recovery refuses a new install without deleting package locks (26.261527ms)
+✔ a real timeout kills TERM-resistant descendants, releases their lock and retries successfully (323.89279ms)
+✔ browser installer remains bounded and fails closed: hang (918.277749ms)
+✔ browser installer remains bounded and fails closed: guard-fails (45.35911ms)
+✔ browser installer remains bounded and fails closed: guard-hangs (940.868144ms)
+✔ pinned Playwright preserves a fresh lock, reclaims a dead owner's stale lock and retains cached assets (1709.380162ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 11
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4337.979615
+
+Local installer-delay-control proof:
+Matched controls: original main and repaired harness; same production installer and unchanged assertions.
+Only control change: sleep 0.35 before the guard-fails fixture npx launch is recorded.
+Existing 300 ms deliberate-hang watchdog, 5-second elapsed assertion and 10-second process bound are unchanged.
+
+main control exit: 1
+✖ browser installer remains bounded and fails closed: guard-fails (934.530338ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1148.452842
+
+✖ failing tests:
+
+test at tmp/ci-installer-controls/main.test.ts:53:5042
+✖ browser installer remains bounded and fails closed: guard-fails (934.530338ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  0 !== 3
+  
+      at TestContext.<anonymous> (/workspace/ppo-warranty-945/tmp/ci-installer-controls/main.test.ts:177:12)
+      at Test.runInAsyncScope (node:async_hooks:227:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.start (node:internal/test_runner/test:1262:17)
+      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 0,
+    expected: 3,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+
+
+fixed control exit: 0
+✔ browser installer remains bounded and fails closed: guard-fails (1107.498701ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1272.501164
+
+
+
+All assertion source lines remain byte-identical after stripping leading whitespace.
+2983322da67a74f28bf1e9e69d5ab505b756b1e3ad2b0d0401bf069dc4fc8576  tests/unit/browser-install.test.ts
+d46659bf5e4782c81a4aa0a26551cac52248796f6b6839454a336925a8b93911  scripts/install-browser.sh
+
+Full local npm run check after the installer fixture repair: exit 0.
+> powerplants-one@0.1.0 check
+> npm run studio:check && npm run lint && npm run typecheck && npm run test:unit && npm run build
+> powerplants-one@0.1.0 studio:check
+> node --import tsx scripts/check-development-register.ts
+> powerplants-one@0.1.0 lint
+> eslint .
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit
+> powerplants-one@0.1.0 test:unit
+> node --import tsx --test tests/unit/*.test.ts
+ℹ tests 1457
+ℹ pass 1457
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ duration_ms 40332.681958
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-guides.ts && node --import tsx scripts/build-offline.ts && next build
+✓ Running next.config.ts took 45ms
+✓ Compiled successfully in 13.6s
+✓ Generating static pages using 4 workers (86/86) in 152ms
+Full-log SHA-256: ce57ffe4704292faddca4f5a802c2a6b40281c833e10aa400787c2ab8c7ab37d
+Foundation, naming, status and migration registry also passed.

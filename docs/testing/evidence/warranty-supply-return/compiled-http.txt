@@ -1,0 +1,11 @@
+✔ MA HTTP native routes, current authority, exact receipts and optimistic competing updates (2075.58424ms)
+✔ Supply HTTP permissions, source states, replay/content conflict, stale writes and unknown recovery (424.865396ms)
+✔ MA07-SC08 HTTP prepares once, scopes reads, rejects foreign origin and recovers both original operations (1179.638805ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5573.690421

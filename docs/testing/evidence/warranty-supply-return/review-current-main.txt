@@ -1,0 +1,208 @@
+Current-main integration — 2026-11-14 UTC
+Main: 4d0fcdf89176aef3287c03c1b104adeeda031363
+Merge: ceb35c98a52d1f0fa1b6fbde1dd1fd696cf5929c
+15 documentation files only; no conflicts.
+Stable PR patch ID before/after merge: a669246cff73b38ff77fa19c78efeb8f1f7ce3be
+
+python3 scripts/check_foundation.py — exit 0
+{
+  "status": "passed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 19124,
+  "files_scanned_for_markers": 8703,
+  "status_fragments": 491,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
+
+python3 scripts/check_naming.py — exit 0
+{
+  "status": "passed",
+  "document_records": 926,
+  "register_entry_files": 105,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 761,
+  "git_masters": 521,
+  "project_instruction_characters": 7998,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}
+
+python3 scripts/build_status.py --check — exit 0
+status sources: passed (491 fragments; no tracked output required)
+
+python3 scripts/check_migrations.py — exit 0
+migration numbering: unique, registered and unreserved
+
+python3 scripts/check_prototype.py — exit 0
+{
+  "status": "passed",
+  "package": "PP-01",
+  "documents": 12,
+  "parent_dispositions": 78,
+  "dispositions": {
+    "Core": 24,
+    "Partial": 25,
+    "Deferred": 29
+  },
+  "master_decisions": 29,
+  "prototype_procedures": 30,
+  "implementation_packages": 12,
+  "registers": {
+    "SC": 15,
+    "CMP": 12,
+    "SR": 20,
+    "VAL": 24,
+    "TR": 16,
+    "API-C": 26,
+    "API-R": 10
+  },
+  "errors": [],
+  "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+}
+
+python3 -m unittest discover -s scripts -p test_documentation*.py — exit 0
+............................................
+----------------------------------------------------------------------
+Ran 44 tests in 0.409s
+
+OK
+
+python3 scripts/check_documentation_scope.py --base origin/main --head HEAD — exit 0
+documentation scope: passed
+
+sha256sum -c docs/testing/evidence/warranty-supply-return/review-source-sha256.txt — exit 0
+src/maintenance/supply-return.ts: OK
+src/maintenance/reads.ts: OK
+src/maintenance/recovery.ts: OK
+src/supply/commands.ts: OK
+src/app/api/v1/warranty/supplier-recovery/[id]/prepare-return/route.ts: OK
+scripts/warranty-supply-return-restart.ts: OK
+tests/database/warranty-supply-return.test.ts: OK
+tests/http/warranty-supply-return.test.ts: OK
+tests/helpers/warranty-supply-return.ts: OK
+docs/contracts/maintenance-warranty-api.md: OK
+docs/decisions/warranty-supply-return-receiving.md: OK
+tests/database/supply.test.ts: OK
+tests/database/maintenance.test.ts: OK
+tests/helpers/maintenance.ts: OK
+tests/helpers/maintenance-dates.ts: OK
+tests/http/maintenance.test.ts: OK
+tests/http/supply.test.ts: OK
+
+git diff --check — exit 0
+
+028de923583b119b6c6f228fafbe26e317d95746bbf9dcdde22ce5a42419a36b  tests/browser/engineering-materials.spec.ts
+2983322da67a74f28bf1e9e69d5ab505b756b1e3ad2b0d0401bf069dc4fc8576  tests/unit/browser-install.test.ts
+d46659bf5e4782c81a4aa0a26551cac52248796f6b6839454a336925a8b93911  scripts/install-browser.sh
+
+Further current-main integration — 2026-11-14 UTC
+Main: 96d677a3232e6ac8b06fa1072309344e1e510302
+Merges: 9fe10301aa19777eeab862f84324b788ef12903f, 48d34fc418693ce752b21f348e7d5a2873d4020f, 827411069ff6b7bf3b5c9fbdbef2e125f8314b55
+4, 17 and 3 documentation files respectively; no conflicts or executable changes.
+Stable PR patch ID before/after these merges: fc8370e400e5385a220b1b255f8177b24c26eebd
+
+python3 scripts/check_foundation.py — exit 0
+{
+  "status": "passed",
+  "issued_sources": 22,
+  "requirements": 78,
+  "decisions": 29,
+  "planned_acceptance": 38,
+  "backlog_items": 16,
+  "linked_issues": 16,
+  "local_links_checked": 19176,
+  "files_scanned_for_markers": 8715,
+  "status_fragments": 501,
+  "errors": [],
+  "scope": "Documentation assurance only; no business acceptance tests executed"
+}
+
+python3 scripts/check_naming.py — exit 0
+{
+  "status": "passed",
+  "document_records": 927,
+  "register_entry_files": 106,
+  "standing_exceptions": 9,
+  "metadata_documents_compared": 762,
+  "git_masters": 522,
+  "project_instruction_characters": 7998,
+  "errors": [],
+  "scope": "Naming and documentation consistency only; runtime behaviour is verified separately"
+}
+
+python3 scripts/build_status.py --check — exit 0
+status sources: passed (501 fragments; no tracked output required)
+
+python3 scripts/check_migrations.py — exit 0
+migration numbering: unique, registered and unreserved
+
+python3 scripts/check_prototype.py — exit 0
+{
+  "status": "passed",
+  "package": "PP-01",
+  "documents": 12,
+  "parent_dispositions": 78,
+  "dispositions": {
+    "Core": 24,
+    "Partial": 25,
+    "Deferred": 29
+  },
+  "master_decisions": 29,
+  "prototype_procedures": 30,
+  "implementation_packages": 12,
+  "registers": {
+    "SC": 15,
+    "CMP": 12,
+    "SR": 20,
+    "VAL": 24,
+    "TR": 16,
+    "API-C": 26,
+    "API-R": 10
+  },
+  "errors": [],
+  "scope": "Documentation consistency only; authored catalogue defaults are not execution evidence; see recorded runs"
+}
+
+python3 -m unittest discover -s scripts -p test_documentation*.py — exit 0
+............................................
+----------------------------------------------------------------------
+Ran 44 tests in 0.408s
+
+OK
+
+python3 scripts/check_documentation_scope.py --base origin/main --head HEAD — exit 0
+documentation scope: passed
+
+sha256sum -c docs/testing/evidence/warranty-supply-return/review-source-sha256.txt — exit 0
+src/maintenance/supply-return.ts: OK
+src/maintenance/reads.ts: OK
+src/maintenance/recovery.ts: OK
+src/supply/commands.ts: OK
+src/app/api/v1/warranty/supplier-recovery/[id]/prepare-return/route.ts: OK
+scripts/warranty-supply-return-restart.ts: OK
+tests/database/warranty-supply-return.test.ts: OK
+tests/http/warranty-supply-return.test.ts: OK
+tests/helpers/warranty-supply-return.ts: OK
+docs/contracts/maintenance-warranty-api.md: OK
+docs/decisions/warranty-supply-return-receiving.md: OK
+tests/database/supply.test.ts: OK
+tests/database/maintenance.test.ts: OK
+tests/helpers/maintenance.ts: OK
+tests/helpers/maintenance-dates.ts: OK
+tests/http/maintenance.test.ts: OK
+tests/http/supply.test.ts: OK
+
+git diff --check — exit 2
+docs/testing/evidence/warranty-supply-return/review-current-main.txt:200: new blank line at EOF.
+
+The evidence writer initially left a blank line at EOF; trimmed before commit.
+028de923583b119b6c6f228fafbe26e317d95746bbf9dcdde22ce5a42419a36b  tests/browser/engineering-materials.spec.ts
+2983322da67a74f28bf1e9e69d5ab505b756b1e3ad2b0d0401bf069dc4fc8576  tests/unit/browser-install.test.ts
+d46659bf5e4782c81a4aa0a26551cac52248796f6b6839454a336925a8b93911  scripts/install-browser.sh
+git diff --check after trimming the evidence EOF: exit 0

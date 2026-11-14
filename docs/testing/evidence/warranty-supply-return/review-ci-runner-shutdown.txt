@@ -1,0 +1,24 @@
+Head: 0702930e612f32c2714090d2672d0a44df03a974
+Workflow: 43561697202
+Job: 132348548613, P01–P11 browser-2 proof
+URL: https://github.com/deanrfiedler-gif/powerplants-one/actions/runs/43561697202/job/132348548613
+Job started: 2026-11-14T06:19:03Z
+Job completed: 2026-11-14T06:49:02Z
+Configured matrix job timeout: 90 minutes (.github/workflows/application.yml:71).
+No test assertion failure preceded the runner shutdown.
+First rerun API request was rejected because the workflow still has running jobs; no rerun started.
+
+2026-11-14T06:48:32.9084552Z   ✓  240 [desktop-chromium] › tests/browser/sales-workflows.spec.ts:361:1 › CR05 issued source review saves attributed feedback, commercial preparation and guarded closure with responsive controls (42.4s)
+2026-11-14T06:48:44.8545240Z   ✓  241 [desktop-chromium] › tests/browser/sales-workflows.spec.ts:658:1 › CR05 a superseded success cannot start the current-read render deadline (11.9s)
+2026-11-14T06:48:45.4958178Z   ✓  242 [desktop-chromium] › tests/browser/scheduling-refinement.spec.ts:13:1 › planner renders a continuing closure on every intersecting day, excluding its end boundary (622ms)
+2026-11-14T06:48:48.4377182Z   ✓  243 [desktop-chromium] › tests/browser/scheduling-refinement.spec.ts:36:1 › Field Team and resource evidence retain date, site and timezone through reload and return (2.9s)
+2026-11-14T06:48:51.2296414Z   ✓  244 [desktop-chromium] › tests/browser/scheduling-refinement.spec.ts:112:1 › changes queue and selected appointment survive reload and the appointment control handover (2.8s)
+2026-11-14T06:48:53.5506914Z   ✓  245 [desktop-chromium] › tests/browser/scheduling-refinement.spec.ts:141:1 › travel warns about a supplied closure, retains resource on reload and hands exact site context to Changes (2.3s)
+2026-11-14T06:48:56.2810160Z   ✓  246 [desktop-chromium] › tests/browser/scheduling-refinement.spec.ts:192:1 › capacity retains meaningful filters on reload while analytical exclusions stay disposable (2.7s)
+2026-11-14T06:48:59.4528444Z ##[error]The runner has received a shutdown signal. This can happen when the runner service is stopped, or a manually started runner is canceled.
+2026-11-14T06:48:59.6079307Z   ✘  247 [desktop-chromium] › tests/browser/scheduling-workspaces.spec.ts:26:1 › native scheduling pages retain context and reflow at coordination, phone and zoom widths (3.1s)
+2026-11-14T06:49:00.5172956Z ##[error]The operation was canceled.
+2026-11-14T06:49:00.5277218Z Cleaning up orphan processes
+
+
+At 07:06 UTC all other suites had passed. The aggregate job 132370499425 failed only its PPO_SUITE_RESULT=success gate because the interrupted job had failed. GitHub accepted one targeted rerun of job 132348548613 after workflow completion; its dependent aggregate is included. No source, assertion, timeout or retry-setting change.

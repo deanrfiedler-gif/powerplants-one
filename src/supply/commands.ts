@@ -144,6 +144,8 @@ export async function reviseSupplyRecordInTransaction(
 ) {
   const cmd = recordCommand(input, true);
   const before = await supplyRecord(c, p, cmd.id, createCapability[cmd.kind]);
+  const { guardReturnRevision } = await import("../maintenance/supply-return");
+  await guardReturnRevision(c, p, before, cmd);
   await newContext(c, p, cmd);
   if (before) currentVersion(before.version, cmd.expected_version);
   const {

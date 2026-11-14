@@ -70,7 +70,19 @@ test("EN06-A33 A34 A35 A36 A37 A38 A39: the register keeps the refined r04 contr
   expect(Math.round(collapsedLeft)).toBe(Math.round((await strip.boundingBox())!.x + 20));
   await page.getByRole("button", { name: "Show menu" }).first().click();
   await expect(root).toHaveAttribute("data-menu", "docked");
+  // The stored menu layout is synchronous; its count comes from a separate read.
+  // Observe the new request (not a response left over from before the reload).
+  const reloadedFrame = page.waitForRequest((request) => {
+    const url = new URL(request.url());
+    return request.method() === "GET" &&
+      url.pathname === `/api/v1/${s.base}` &&
+      url.searchParams.get("page_size") === "1" &&
+      url.searchParams.get("set") === s.ids.set;
+  });
   await page.reload();
+  const frameResponse = await (await reloadedFrame).response();
+  expect(frameResponse?.ok()).toBe(true);
+  await frameResponse!.finished();
   await expect(root).toHaveAttribute("data-menu", "docked");
   // Docked or not, the register is the module's default view, so the breadcrumb is the module alone.
   await expect(page.locator(".ppo-crumbs li .ppo-crumb")).toHaveText(["Released Materials & Substitutions"]);

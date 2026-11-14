@@ -1,0 +1,26 @@
+npm run check: exit 0; source a0e72bb1734a853de2c78bdf01636c8c058312f4
+Full local log SHA-256: 37cad8f9624d26a044cb4d5d3cb8e2e803c542cae5e9ba724423003903d69e46
+
+> powerplants-one@0.1.0 check
+> npm run studio:check && npm run lint && npm run typecheck && npm run test:unit && npm run build
+> powerplants-one@0.1.0 studio:check
+> node --import tsx scripts/check-development-register.ts
+> powerplants-one@0.1.0 lint
+> eslint .
+> powerplants-one@0.1.0 typecheck
+> tsc --noEmit
+> powerplants-one@0.1.0 test:unit
+> node --import tsx --test tests/unit/*.test.ts
+ℹ tests 1457
+ℹ suites 0
+ℹ pass 1457
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 41904.794449
+> powerplants-one@0.1.0 build
+> node --import tsx scripts/build-guides.ts && node --import tsx scripts/build-offline.ts && next build
+✓ Running next.config.ts took 43ms
+✓ Compiled successfully in 24.1s
+✓ Generating static pages using 4 workers (86/86) in 173ms

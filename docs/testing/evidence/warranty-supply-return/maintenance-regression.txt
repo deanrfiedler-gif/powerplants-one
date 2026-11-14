@@ -1,0 +1,11 @@
+✔ MA02 a later decision or source revision makes old entitlement historical (8006.775408ms)
+✔ MA02 omitted area cannot bypass the equipment's physical facility exclusion (415.431182ms)
+✔ MA07 supplier evidence chronology, partial approval, credit reference and independent disposition (839.59371ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12956.827506

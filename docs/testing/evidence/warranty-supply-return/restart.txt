@@ -1,0 +1,1 @@
+{"result":"passed","different_database_start":true,"snapshot_hash":"851dbad92c0488334bc0e7266c87f7d256b765a017116ede682bd1f1dd8a66f5","exact_originals":2,"replay_added_effects":0}
