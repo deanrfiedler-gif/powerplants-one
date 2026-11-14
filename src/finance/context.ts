@@ -1,3 +1,7 @@
+import {
+  agreementFinanceContext,
+  agreementFinanceHistory,
+} from "./agreement-charge-source";
 import type { Principal } from "../platform/identity";
 import {
   scopeSql,
@@ -96,9 +100,11 @@ export async function financeContext(
   ).rows[0];
   if (!h) throw unavailable();
   const w =
-      h.source_kind === "ProjectClaim"
-        ? await projectClaimProject(c, p, h.project_id, cap)
-        : await financeWork(c, p, h.work_order_id, cap),
+      h.source_kind === "AgreementCharge"
+        ? await agreementFinanceContext(c, p, h.agreement_id, cap)
+        : h.source_kind === "ProjectClaim"
+          ? await projectClaimProject(c, p, h.project_id, cap)
+          : await financeWork(c, p, h.work_order_id, cap),
     a = await financeAccount(c, p, h.account_id, cap);
   if (
     w.customer_id !== h.customer_id ||
@@ -115,6 +121,8 @@ export async function financeContext(
     h.processing_owner_id !== p.actor_id
   )
     throw unavailable();
+  if (h.source_kind === "AgreementCharge")
+    await agreementFinanceHistory(c, p, h.id, h.agreement_id);
   if (h.source_kind === "ProjectClaim")
     await projectClaimHistoryAuthority(c, p, h.id, h.project_id);
   return { h, w, a };

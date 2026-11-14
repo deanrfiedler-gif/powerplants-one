@@ -1,3 +1,4 @@
+import { AppError } from "../platform/errors";
 import { randomUUID } from "node:crypto";
 import type { Principal } from "../platform/identity";
 import { sharedOperation } from "../platform/operations";
@@ -73,6 +74,49 @@ async function saveRevision(
   reason: string,
   predecessor: string | null,
 ) {
+  // Revision is provenance, not a new entitlement. sharedOperation holds the workspace lock.
+  const hasCharges = (
+    await c.query("SELECT to_regclass('ppo.agreement_charge_lines') AS name")
+  ).rows[0].name;
+  const reserved = hasCharges
+    ? await c.query(
+        `SELECT l.charge_id,l.due_date::text,l.amount::text,l.currency,l.tax_basis
+     FROM ppo.finance_allocation_holds h JOIN ppo.agreement_charge_lines l
+       ON (l.workspace_id,l.revision_id,l.charge_id)=(h.workspace_id,h.agreement_revision_id,h.agreement_charge_id)
+     WHERE h.workspace_id=$1 AND l.agreement_id=$2 AND h.state<>'Released'`,
+        [p.workspace_id, row.id],
+      )
+    : { rows: [] };
+  for (const held of reserved.rows) {
+    const line = x.charge_schedule?.lines.find((l) => l.id === held.charge_id);
+    if (
+      !line ||
+      line.due_date !== held.due_date ||
+      line.amount !== held.amount ||
+      x.charge_schedule!.currency !== held.currency ||
+      x.charge_schedule!.tax_basis !== held.tax_basis
+    )
+      throw new AppError(
+        409,
+        "AgreementChargeReserved",
+        "Retain every held or consumed charge with its exact date, amount, currency and tax basis. No reversal policy is defined.",
+      );
+  }
+  if (
+    predecessor &&
+    !x.charge_schedule &&
+    (
+      await c.query(
+        `SELECT 1 FROM ppo.agreement_revisions WHERE workspace_id=$1
+       AND agreement_id=$2 AND content ? 'charge_schedule' LIMIT 1`,
+        [p.workspace_id, row.id],
+      )
+    ).rowCount
+  )
+    invalid(
+      "charge_schedule",
+      "Supply the explicit charge schedule for this successor. Removing an agreement charge schedule is not supported.",
+    );
   await insert(c, "agreement_revisions", {
     id,
     workspace_id: p.workspace_id,
@@ -85,6 +129,17 @@ async function saveRevision(
     created_by: p.actor_id,
     reason,
   });
+  for (const line of x.charge_schedule?.lines ?? [])
+    await insert(c, "agreement_charge_lines", {
+      workspace_id: p.workspace_id,
+      agreement_id: row.id,
+      revision_id: id,
+      charge_id: line.id,
+      due_date: line.due_date,
+      amount: line.amount,
+      currency: x.charge_schedule!.currency,
+      tax_basis: x.charge_schedule!.tax_basis,
+    });
   for (const s of x.sites) {
     await insert(c, "agreement_scope", {
       workspace_id: p.workspace_id,
@@ -227,6 +282,15 @@ export async function agreementCommand(
     async (c, row) => {
       expected(row.version, cmd.expected_version);
       const current = await agreementRevision(c, p, row.current_revision_id);
+      // Historical schedules keep their review duty even if a legacy successor
+      // omitted the schedule. A second omission must not erase that duty.
+      const chargedRevisions = (
+        await c.query<{ content: AgreementContent }>(
+          `SELECT content FROM ppo.agreement_revisions
+           WHERE workspace_id=$1 AND agreement_id=$2 AND content ? 'charge_schedule'`,
+          [p.workspace_id, row.id],
+        )
+      ).rows;
       if (action === "Revise") {
         const revision = randomUUID(),
           next = { ...row, revision: row.revision + 1 };
@@ -259,6 +323,21 @@ export async function agreementCommand(
           "authority_reference",
           "Record the exact approval or withdrawal authority evidence.",
         );
+      if (action === "Approve" && chargedRevisions.length) {
+        if (current.revision.created_by === p.actor_id)
+          invalid(
+            "action",
+            "A different Finance reviewer must approve the exact charge schedule.",
+          );
+        const sites = new Set([
+          ...current.revision.content.sites.map((s) => s.site_id),
+          ...chargedRevisions.flatMap((r) =>
+            r.content.sites.map((s) => s.site_id),
+          ),
+        ]);
+        for (const site of sites)
+          await companyContext(c, p, row.company_id, site, "finance.review");
+      }
       if (
         action === "Approve" &&
         (row.state !== "Proposed" ||

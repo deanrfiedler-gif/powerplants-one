@@ -1,6 +1,6 @@
 # Retention and information lifecycle — design reference
 
-Stable entry: `scope:AD-08`. Owner: Dean Fiedler. Status: **Figma design owner-accepted, 1 November 2026; not built**.
+Stable entry: `scope:AD-08`. Owner: Dean Fiedler. Status: **Figma design owner-accepted, 1 November 2026; refined Figma design owner-accepted, 13 November 2026; not built**.
 Source baseline: `ccc2251bbba9df266cac9027ddaa9418ab9abc1d`. Application destination: `/admin/retention`.
 This is an editable working specification. Existing accepted page baselines take precedence over these proposed common-layout rules. A blank review record is not approval.
 
@@ -35,6 +35,8 @@ Use the global Roboto/Verdana typography and semantic tokens. Reuse the shared B
 Review loading, empty, filtered-empty, read-only/denied, missing context, validation error, stale revision, saving, uncertain result and success where the workflow supports them. Status must include words, not colour alone. Preserve a draft when opening guidance or inspecting a reference.
 
 ## Visual references
+
+Refined design, owner-accepted 13 November 2026: the private Figma file "PPO - Settings module", page "Retention · AD-08" (`11:6`, 19 sheets: desktop at 1440, dialogs and panels, states, tablet at 1024, phone at 390 and 320). The [Settings refined UI record](../../../decisions/settings-module-refined-ui-proposal.md) lists each sheet with its node ID in section 3 and records the acceptance in section 11. It is drawn inside the accepted shell and governs layout, states and wording where it differs from this page. It redraws the design accepted on 1 November 2026 inside the accepted shell; the r01 captures below stay as the issued reference. Build basis: the named version "PPO - Settings module (accepted)", saved by Dean on 13 November 2026 (record section 12). No image export is retained in the repository and no application capture exists. Visual review, functional proof and deployment remain separate.
 
 Accepted Figma design: [Retention design r01 captures](../../../reference/ui/retention-lifecycle-design-r01/README.md) (icon-free). No exact HTML reference or application capture exists.
 

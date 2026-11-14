@@ -1,0 +1,43 @@
+{
+  "source_head": "e18a7c5828f0ee20903b32f118fd80c824ae3e24",
+  "manifest": {
+    "job_id": "bbfe9eb0-1aa1-4f10-a17a-c0e8c61a24a3",
+    "audience": "CurrentScopedFinance",
+    "filename": "SYN-FH-000002-finance-evidence-r01.pdf",
+    "issue_id": "63e10de6-5b92-4d7a-976d-d9ae6cd0fb82",
+    "pdf_hash": "0304d208b0603577ea55b3a69f6f31f5163fc7d0d92b10612caa8866d2b1fe0e",
+    "template": {
+      "id": "d2d771ad-e802-5009-a9d5-c143368c0450",
+      "version": 3,
+      "content_hash": "c8af6d3aadf6eaf03564ef462e7e0570bdd09a43d90e274546d715e90be83a6a",
+      "base_template": {
+        "id": "f3000000-0000-4000-8000-000000000002",
+        "version": 2,
+        "content_hash": "1fd8d16fb46f884af894ed9de9b5e65aff9848f69df660e18fb25fa4dca00f51",
+        "policy_version": 2
+      },
+      "policy_version": 2
+    },
+    "html_hash": "2cd843254cb1a7768f6c642fd3d0afc2c5a728f55e659512a0ce6f2ab15600bf",
+    "pdf_bytes": 529985,
+    "review_id": "c7f71c48-9b8c-4e86-8ee3-0a1028d89681",
+    "store_key": {
+      "sha256": "8745572021809e4a1bf6598ee32d1a7eab66c8311356d008e86bfcfdffb38c8d",
+      "item_id": "bbfe9eb0-1aa1-4f10-a17a-c0e8c61a24a3",
+      "site_id": null,
+      "drive_id": null,
+      "provider": "Synthetic",
+      "tenant_id": null,
+      "version_id": "8745572021809e4a1bf6598ee32d1a7eab66c8311356d008e86bfcfdffb38c8d"
+    },
+    "html_bytes": 804825,
+    "prepared_at": "2026-11-13T01:24:21.786Z",
+    "revision_id": "353c1102-5827-40ec-88ca-7aab0efa4c2d",
+    "source_hash": "3bb779b827257fc98b22feb1b2b11c810c8c5783bcaf9d3dfcf8a62c62f5a5da",
+    "bundle_bytes": 1511879,
+    "schema_version": 1,
+    "browser_version": "157.0.8103.78",
+    "renderer_version": "playwright-1.63.0",
+    "reconciliation_id": "70bc06f6-6fd5-48f9-b060-55e9ec2bc070"
+  }
+}

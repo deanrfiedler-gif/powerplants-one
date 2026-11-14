@@ -2,13 +2,13 @@
 document_id: PPO-LIBRARY-DRAWER-WIDTHS-DEC
 date: 2026-11-11
 owner: Dean Fiedler
-status: Owner decision, 11 November 2026, recorded as four width variables in the private Figma file "PPO - Library"; the library is not published; accepted module pages and the built application keep their current widths until a reviewed change aligns them; no application code, route, migration, permission or deployment
+status: Owner decision, 11 November 2026, recorded as four width variables in the private Figma file "PPO - Library"; what a width measures decided 14 November 2026 (section 6) — each width is the drawer panel and the shell's 48 px tab strip sits outside it; the library is not published; accepted module pages and the built application keep their current widths until a reviewed change aligns them; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
 # Right-hand drawer widths in PPO - Library
 
-**Owner:** Dean Fiedler · **Date:** 11 November 2026 · **Status:** Owner decision. Recorded in the library's variables; accepted pages and built screens align at their next reviewed change.
+**Owner:** Dean Fiedler · **Date:** 11 November 2026, measurement decided 14 November 2026 · **Status:** Owner decision. Recorded in the library's variables; accepted pages and built screens align at their next reviewed change. Section 6 records what a width measures.
 
 ## 1. The question
 
@@ -53,7 +53,7 @@ The variables live in "PPO layout". With them the library held 124 variables, 13
 
 ## 4. To align at the next reviewed change
 
-None of these is changed by this record.
+None of these is changed by this record. Section 6 supersedes the table's last row and lists the files that align under the measurement decided on 14 November 2026.
 
 | Where | Today | Under this decision |
 |---|---|---|
@@ -68,3 +68,47 @@ None of these is changed by this record.
 
 - The library is not published; module files keep their local widths.
 - No application code changed. The four variables have no CSS property yet.
+
+## 6. What a width measures — 14 November 2026
+
+### 6.1 The question
+
+Section 2 did not say whether a width includes the shell's 48 px tab strip, and the sources read it both ways:
+
+- The shell draws its snapshot drawer as a 432 px panel plus the 48 px tab column, 480 px in all at every width (shell R45, R98, R112), and section 4 listed that drawer as `drawer/standard`.
+- The library's Drawer part `217:656` is drawn at 360, 480, 640 and 800 px with no tab column, and the Record page's card 7 places it with no strip.
+- On 13 November 2026 the [Projects alignment audit](projects-module-figma-alignment-audit.md) (AQ-1, accepted) counted the tab column inside 480 px, so its 432 px panels conformed. The [Products review](products-module-independent-review.md) (Q-1, adopted the same day) and the [Estimating alignment batch](estimating-module-independent-review.md) (Q-G) put 360 and 480 px panels beside the tab column.
+- The [Service](service-module-figma-alignment-audit.md) (Q7) and [Engineering](engineering-figma-alignment-audit.md) (Q1) decisions kept 432 px panels until the two readings were reconciled. The Sales, Supply, Finance, Reporting, My Work, Customers, Sites & Equipment and Documents & messages reviews and audits asked.
+
+### 6.2 Decision
+
+Asked for the most professional approach, Claude recommended the panel reading. Dean answered on 14 November 2026: "drawer widths are the panel; the tab strip sits outside".
+
+- Each width (360, 480, 640 or 800 px) is the drawer panel's own width. On desktop the shell's 48 px tab strip stands outside it, so a standard drawer and the strip together cover 528 px, and at 1440 the panel's left edge sits at x = 912.
+- The four variables keep their names and values; [`docs/design/library-variables.json`](../design/library-variables.json) is unchanged.
+- The rules of section 2 stand: drawers overlay the page without a scrim; below 1280 px a drawer whose panel is wider than 480 px fills the content area; on a phone every drawer is full screen; dialogs keep 560 to 720 px.
+
+Why the panel reading:
+
+- **One meaning in every context.** A width that included the strip would give one panel width beside the strip and another wherever the strip is absent.
+- **Widths follow content.** Dean chose the widths "depending on what content is included in the actual drawer" (section 1), and content sits in the panel.
+- **Build fidelity.** The width a build sets on the drawer element is the variable itself, with no subtraction.
+- **The part already draws it.** The library's Drawer part can be placed as published, without per-file overrides.
+- **The alternative's alignment is local.** R45's left edge on the top bar's x = 960 line holds only at 1440.
+
+This supersedes Projects AQ-1 and the last row of the section 4 table. Products Q-1 and the Estimating batch already follow it.
+
+### 6.3 To align, each in its own reviewed change
+
+| Where | Today | Under this section |
+|---|---|---|
+| Shell: snapshot drawer and Assistant panel (R45, R67, R98, R112) | 432 px panel inside a 480 px drawer with its tab column | 480 px panel beside the tab column, with alignment batch 1's acceptance and the new named version that follows it |
+| Sales (accepted) | Pending alignment batch, Q-F: Filters and Columns 360 px, side forms 480 px | Follows this section; its preview drawer follows the shell |
+| Projects | 432 px panels under AQ-1; the working calendar 752 px | 480 px panels, Filters and Columns 360 px; the calendar 640 or 800 px by content |
+| Supply, Engineering, Service, Finance, Reporting, My Work, Customers, Sites & Equipment, Documents & messages | 432 px panels, with some at 400, 520 or 560 px | 360, 480, 640 or 800 px by content, in each file's next batch |
+| Settings (accepted) | Not checked | Any 432 px panel changes with the file's next named version |
+| Products (accepted), Estimating (accepted) | 360 and 480 px panels beside the tab column | No change |
+| Library: Controls / Drawer `217:656` | Four widths; silent on the tab strip | A note on the part: the width is the panel and the shell's tab strip stands outside it |
+| Built application: the Organisations drawer | 380 px | 360 or 480 px by content, as section 4 |
+
+Not done: no Figma file, design register entry, page guide or application code is changed by this section. The shell, library and module files change in their own sessions, and each accepted file needs a new named version when it does. The file links are not recorded here (ADR-0050, ADR-0053).

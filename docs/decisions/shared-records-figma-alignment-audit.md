@@ -1,15 +1,15 @@
 ---
 document_id: PPO-SHARED-RECORDS-FIGMA-ALIGNMENT-AUDIT
-date: 2026-11-13
+date: 2026-11-14
 owner: Dean Fiedler
-status: Audit findings, 2026-11-13; no design is changed and nothing is accepted by this record
+status: Audit findings, 2026-11-13; Dean's decisions on the ten questions recorded 2026-11-14 (section 8); no design is changed and nothing is accepted by this record
 source_commit: 707b21cce42393433b90fbfa84a9aa850834db13
 versioning: git
 ---
 
 # Customers, sites and equipment Figma file — alignment audit
 
-**Owner:** Dean Fiedler · **Date:** 13 November 2026 · **Status:** Decision support. This record lists where the private Figma file "PPO - Customers, Sites & Equipment module" does not align with the accepted shell, the shared addenda, the PPO - Library, its own recorded rules and the other module files. It changes no design, accepts nothing and edits no other record. Each correction belongs to the file's next build session, through the alignment batch in section 7.
+**Owner:** Dean Fiedler · **Date:** 13 November 2026; decisions 14 November 2026 · **Status:** Decision support, with Dean's decisions on the ten questions in section 8. This record lists where the private Figma file "PPO - Customers, Sites & Equipment module" does not align with the accepted shell, the shared addenda, the PPO - Library, its own recorded rules and the other module files. It changes no design, accepts nothing and edits no other record. Each correction belongs to the file's next build session, through the alignment batch in section 7.
 
 On 13 November 2026 Dean asked for the Figma file of the Customers, Sites & Equipment module UI to be audited, with the cross-file alignment audit prompt and the UI/UX V3 conformance audit of 10 November as background, and the PPO - Library available for reference. The cross-file prompt's checks were applied to this one file; its standing instruction to proceed on the most professional approach was followed, so its section 9 defaults were taken (read-only in Figma; the file audited as it stands; every finding briefed). Figma links and file keys are not recorded here (ADR-0050, ADR-0053); frames are named by the node IDs the [proposal record](shared-records-refined-ui-proposal.md) already uses.
 
@@ -104,10 +104,29 @@ Alignment matrix in summary: of the 43 checks, 26 pass, 12 fail, 4 are not appli
 
 ## 7. Next steps
 
-1. Dean answers the questions in section 5.
+1. Dean answers the questions in section 5. Done on 14 November 2026 (section 8).
 2. The file's next build session applies the alignment batch (22 items covering the 24 findings, Majors first, each with its node IDs, rule, expected value and the check that proves it fixed), then updates the [proposal record](shared-records-refined-ui-proposal.md) and adds a status fragment.
 3. The proposal record's section 1 cites the Shell's named version (AF-012), in that change.
 4. The Shell file's owner renames the record header variants by layout, updates the Workspace menus header and answers the type-scale question (AF-015, AF-020, AF-024) under a new named version.
 5. Dean accepts the file and saves its first named version; the design register and page guidance follow in their own change.
 
 Boundary: no Figma file, application code, route, migration, permission, register or other record is changed by this record. Every record, person, value and date in the file is synthetic. All 78 parent requirement IDs are unchanged.
+
+## 8. Dean's decisions — 14 November 2026
+
+Shown the ten questions of section 5 with a recommendation for each, Dean answered: "accept as recommended". Each is decided as recommended:
+
+| Q | Decision | Findings it settles |
+|---|---|---|
+| 1 | View rows in the Shared records docked menu carry no count. Only rows that hold items waiting for the viewer carry one: Possible duplicates, Channels to review, Details to complete and Gaps. R34 and Q22 stand | AF-001 |
+| 2 | Right-hand panels follow the Library drawer widths ([PPO-LIBRARY-DRAWER-WIDTHS-DEC](library-drawer-widths.md)): 360 px for Filters and Columns, 480 px for the snapshot and edit forms, 640 px for two-column create forms and 800 px for comparisons; dialogs stay within 720 px. No Shell rule changes: the R45 drawer is 480 px in all, which is `drawer/standard`, and the 432 px form panel of Sales A5 aligns at that file's next reviewed change, as the Library record already lists | AF-010, AF-011 |
+| 3 | Addendum A3 governs the instrument set. SYN-CLP-004, the van 1 clamp meter, is expired from Sat 31 Oct and flagged, with SYN-CLP-006 as its calibrated alternative; SYN-FLO-001 stays expired only if A3 lists it | AF-004 |
+| 4 | The motor M-2 replacement time is fixed once, in A3. Where A3 gives none, the Service file's 14:55 governs, because Service owns the visit capture, and this file's sequence (scan, effective time, work order closed, applied) is re-timed around it | AF-005 |
+| 5 | Mallee Fresh Produce follows A3, with the site's zone named on every sheet that shows it. Still to confirm: Mildura VIC keeps Melbourne time and cannot be on ACDT, so the build session checks A3's exact location before re-addressing the sheets | AF-006 |
+| 6 | The seed assets show the short form, SYN-AST-000002 and SYN-AST-000003, with the legacy SYN-PPO-AST- form beside it, as the Sites pages show SYN-SITE-000012 | AF-019 |
+| 7 | Test-instrument tags (SYN-MEG-002, SYN-CLP-006 and the other type-prefixed tags) are the identifiers on the instruments and are exempt from the A2 short form. The exemption is noted on the EQ-09 notes card, and A2 carries it when next issued | AF-018 |
+| 8 | The focus ring is 2 px text/link with a 2 px offset (R85). brand/green-deep stays for current-page markers (R58) | AF-009 |
+| 9 | The shared-records settings live under Settings › Shared records, with Settings as the current rail item. The Settings file's Business policies register lists their policy families at its next change | AF-016 |
+| 10 | Every phone record sheet uses the accepted phone record header with its sticky action bar (R124); a page's own button becomes the one primary in the bar | AF-002 |
+
+The decisions settle the questions only. They change no Figma file, accept nothing and amend no other record. The alignment batch can now run in full; only the A3 confirmations named in Q3 to Q5 are checked during the build. The other findings (AF-003, AF-007, AF-008, AF-012 to AF-015, AF-017 and the polish items) needed no decision and stand as written.

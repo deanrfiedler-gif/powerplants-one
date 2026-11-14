@@ -1,0 +1,8 @@
+
+Running 3 tests using 1 worker
+
+  ✓  1 tests/browser/crm-return-diagnostics.spec.ts:6:1 › CRM return diagnostic artifact survives an actual Playwright test timeout (6.1s)
+  ✓  2 tests/browser/crm-return-diagnostics.spec.ts:56:1 › CRM return events already sent to Node survive page teardown before finish (481ms)
+  ✓  3 tests/browser/crm-return-diagnostics.spec.ts:106:1 › CRM return browser diagnostics retain only bounded allowlisted metadata (557ms)
+
+  3 passed (9.1s)

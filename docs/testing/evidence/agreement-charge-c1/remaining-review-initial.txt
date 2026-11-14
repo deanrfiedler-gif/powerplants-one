@@ -1,0 +1,41 @@
+✔ C1-2 UI-shaped omissions cannot remove unreserved or Held schedules and leave no effects (7113.539409ms)
+✖ C1-2 legacy omission chains retain independent Finance approval and original charged-site duties (6191.788464ms)
+✔ C1-3 consumed-charge renewal keeps its original start, exact charge and a new UUID for the new fee (8419.064553ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 2
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24415.365212
+
+✖ failing tests:
+
+test at tests/database/agreement-charge-review.test.ts:1:2448
+✖ C1-2 legacy omission chains retain independent Finance approval and original charged-site duties (6191.788464ms)
+  AssertionError [ERR_ASSERTION]: The validation function is expected to return "true". Received false
+  
+  Caught error:
+  
+  Error: This record is unavailable.
+      at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+      at async TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/agreement-charge-review.test.ts:134:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: This record is unavailable.
+        at unavailable (/workspace/work/agreement-charge-c1/src/platform/errors.ts:12:3)
+        at companyContext (/workspace/work/agreement-charge-c1/src/shared/authority.ts:43:11)
+        at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+        at async <anonymous> (/workspace/work/agreement-charge-c1/src/maintenance/agreements.ts:339:11)
+        at async <anonymous> (/workspace/work/agreement-charge-c1/src/platform/operations.ts:200:22)
+        at async transaction (/workspace/work/agreement-charge-c1/src/platform/database.ts:46:20)
+        at async sharedOperation (/workspace/work/agreement-charge-c1/src/platform/operations.ts:165:12)
+        at async waitForActual (node:assert:646:5)
+        at async strict.rejects (node:assert:769:25)
+        at async TestContext.<anonymous> (/workspace/work/agreement-charge-c1/tests/database/agreement-charge-review.test.ts:134:3),
+    operator: 'rejects',
+    diff: 'simple'
+  }

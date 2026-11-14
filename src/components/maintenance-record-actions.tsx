@@ -46,6 +46,7 @@ export function MaintenanceActions({
     path = `${root}/${d.row.id}`;
   const row = d.row as typeof d.row & Record<string, unknown>,
     forms: Form[] = [];
+  let chargeSuccessorUnavailable = false;
   const add = (
     title: string,
     action: string,
@@ -79,7 +80,8 @@ export function MaintenanceActions({
     const revisions = d.sources.revisions as {
       content: Record<string, unknown>;
     }[];
-    forms.push({
+    chargeSuccessorUnavailable = revisions.some((r) => !!r.content.charge_schedule);
+    if (!chargeSuccessorUnavailable) forms.push({
       title: "Prepare successor agreement revision",
       fields: agreementFields,
       cap: "maintenance.manage",
@@ -447,6 +449,12 @@ export function MaintenanceActions({
   const permitted = forms.filter((form) => d.actions[form.cap]);
   return (
     <>
+      {chargeSuccessorUnavailable && d.actions["maintenance.manage"] && (
+        <p className="ma-notice">
+          Successor preparation for agreements with charge schedules is not
+          available in this form yet. The existing schedule remains unchanged.
+        </p>
+      )}
       {permitted.map((form) => (
         <MaForm
           key={form.title}

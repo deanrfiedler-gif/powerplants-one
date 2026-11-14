@@ -1,5 +1,9 @@
 # Backend completion delivery plan
 
+## Claim-specific Finance evidence — 13 November 2026
+
+[PR #932](https://github.com/deanrfiedler-gif/powerplants-one/pull/932), dependent on C1 #905, implements the fixed internal ProjectClaim/AgreementCharge OUT-14 contract through the existing Finance pipeline. [Contract](../contracts/document-issue-distribution.md#claim-specific-out-14--13-november-2026) and [evidence](../testing/evidence/claim-finance-evidence/README.md) separate exact historical claim output, local command/storage proof, compiled HTTP, real PDF and independent review. Claim-authoring UI, full manual TS-01/TS-02, operational policies, real MYOB and deployment remain separate. No new schema or grants.
+
 ## Project billing B2 backend — 10 November 2026
 
 [PR #881](https://github.com/deanrfiedler-gif/powerplants-one/pull/881) implements the claim-schedule and completion-evidence API slice of the [project billing decision](../decisions/project-delivery-billing.md). See the [B2 contract](../contracts/project-commercial-controls.md#b2-claim-schedules-and-completion-evidence). B3 Finance entitlements, B4 field-work billability and maintenance M2/C1 follow in dependency order. Claim-schedule page controls and connected TS-01 acceptance remain open; this does not complete BC-06/07. Verification and review status are recorded in the dated status fragment.
@@ -15,6 +19,18 @@ Merged [PR #883](https://github.com/deanrfiedler-gif/powerplants-one/pull/883), 
 ## Maintenance M2 backend — 11 November 2026
 
 [PR #904](https://github.com/deanrfiedler-gif/powerplants-one/pull/904) extends WorkOrder allocation defaults for Covered agreement work with reasoned Finance exceptions and B4 precedence. [Contract](../contracts/finance-handoff.md#m2-agreement-covered-workorder-defaults) and [evidence](../testing/evidence/maintenance-m2/README.md) record the bounded API slice. C1 scheduled charges, UI, connected TS-02 acceptance and operational authority remain separate.
+
+## Agreement charges C1 backend — 11 November 2026
+
+[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) adds reviewed exact agreement charge schedules and typed AgreementCharge sources in the existing Finance pipeline. M2 and B3 are merged; C1 now targets main. See [contract](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md). Migrations 0127/0128 add no seed/grant. The 12 November continuation adds connected project/agreement/covered-visit command proof and refreshes the six-monthly scenario fixtures, with bounded demo setup. [Current reconciliation](backend-reconciliation.md#c1-connected-billing-continuation--12-november-2026) supersedes the historical batch states below. UI, OUT-14 wording, full TS-01/02 acceptance, real ERP, D-017 and operational authority remain separate.
+
+### Existing batch validation follow-up — 11 November 2026
+
+The [current reconciliation](backend-reconciliation.md#project--service--finance-continuation--11-november-2026) confirms merged M1/B1–B4 and the three-build limit with #897/#904/#905. Continue the claimed M2/C1 contributions: fix C1's source-pin CI defect and prove transactional rollback and original-operation recovery across actual app/database restarts. This adds no feature label, migration, seed or grant. [C1 evidence](../testing/evidence/agreement-charge-c1/README.md) records commands/results and browser limits. Claude review, full CI and Dean's merge remain separate; C1 retargets only after M2 merges.
+
+### Independent review corrections — 11 November 2026
+
+Claude reviewed exact M2 `9c29ef63a` and C1 `7d0a2254f`. Continue those existing drafts for M2-1/M2-2 (approved/current scope defaults and NonBillable-only fallback contract) and C1-1 (stable agreement-charge conservation across revisions). Additive reserved 0128 preserves 0127 and protects Held/Consumed charge terms. This is correction of the adopted M-R3/C rules, not a new increment. Evidence remains in the existing [M2](../testing/evidence/maintenance-m2/README.md) and [C1](../testing/evidence/agreement-charge-c1/README.md) chapters. Current main is `2d9a8ff24`; M2 is unmerged and C1 remains stacked. Full scenarios and the six-monthly TS-02 refresh remain separate from this defect batch.
 
 ## BC-06 Service findings reads and next action — 20 October 2026
 

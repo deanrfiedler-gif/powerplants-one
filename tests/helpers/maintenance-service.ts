@@ -24,7 +24,7 @@ import {
   reviewReport,
 } from "../../src/reports/service";
 import { confirmed, content } from "./packs";
-import { startInput, entry, draft, photo } from "./field";
+import { startInput, entry, draft, photo, timePayload, materialPayload } from "./field";
 import { decision } from "./reports";
 import { base, CRM, principal, rows } from "./maintenance";
 import { completionRequirementEntries } from "../../src/maintenance/model";
@@ -40,6 +40,7 @@ export async function serviceResult(
   taskOutcomes?: string[],
   // A second visit for the same crew starts later the same day, so the bookings do not overlap.
   visitOffsetHours = 0,
+  costs: { time?: ReturnType<typeof timePayload>; material?: ReturnType<typeof materialPayload> } = {},
 ) {
   const request = (
     await rows("SELECT * FROM ppo.maintenance_work_requests WHERE id=$1", [
@@ -256,6 +257,8 @@ export async function serviceResult(
   let job = (await readFieldJob(technician, appointment)).items[0];
   await startAttendance(technician, appointment, startInput(job));
   job = (await readFieldJob(technician, appointment)).items[0];
+  if (costs.time) await captureEntry(technician, entry(job, "Time", costs.time));
+  if (costs.material) await captureEntry(technician, entry(job, "Material", costs.material));
   await captureEntry(
     technician,
     entry(job, "Observation", {

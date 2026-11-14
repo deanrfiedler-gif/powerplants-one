@@ -1,0 +1,8 @@
+---
+title: Agreement charge C1 Finance backend
+date: 2026-11-11
+---
+
+[PR #905](https://github.com/deanrfiedler-gif/powerplants-one/pull/905) implements C1 of the [maintenance decision](../decisions/maintenance-service-ts02-decisions.md#c1-backend-implementation--11-november-2026), stacked on M2 #904 to sequence shared Finance edits. Optional immutable agreement charge schedules require independent Finance approval; exact due charges use the existing Finance holds, review, unknown-outcome lookup and reconciliation. See [Maintenance](../contracts/maintenance-warranty-api.md#c1-reviewed-agreement-charge-schedules), [Finance](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md). Migration 0127 adds no seed, grant, dependency or UI. Existing agreement bytes and WorkOrder/ProjectClaim histories remain intact. OUT-14 charge content remains held.
+
+Validation passed: Studio/lint/final TypeScript, 1,452 units and final production build; 20 selected database cases, seven unmocked demo-upgrade cases, one compiled HTTP case, documentation/migration checks and 44 documentation tests. Historical document fixtures explicitly use synthetic stored bytes, not a renderer. Late-Maintenance reconstruction now defers dependent 0123/0127 until 0051 exists; its command-only preservation and SV08 cases pass. The retained PDF-size proof cannot pass the short synthetic renderer helper; real rendered/browser suites remain for CI because Chrome is absent. Independent Claude review, final-head CI, retargeting after M2 and Dean's merge remain outstanding. No deployment, hosted data action, live ERP processing or TS-01/02 acceptance is claimed.

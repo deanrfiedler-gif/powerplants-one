@@ -1,0 +1,19 @@
+
+> powerplants-one@0.1.0 browser:check
+> node --import tsx scripts/check-browser.ts
+
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+browserType.launch: Chromium distribution 'chrome' is not found at /opt/google/chrome/chrome
+Run "npx playwright install chrome"
+    at launchDocumentBrowser (/workspace/work/claim-finance-evidence/src/platform/browser.ts:43:34)
+    at checkBrowser (/workspace/work/claim-finance-evidence/scripts/check-browser.ts:5:25)
+    at <anonymous> (/workspace/work/claim-finance-evidence/scripts/check-browser.ts:29:9)
+    at async node:internal/modules/esm/loader:647:26 {
+  log: [],
+  name: 'Error'
+}
+
+Node.js v24.21.0
