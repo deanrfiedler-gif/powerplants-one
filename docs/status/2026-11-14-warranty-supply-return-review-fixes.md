@@ -13,5 +13,7 @@ The next head exposed an unchanged installer unit fixture racing its synthetic 3
 
 Main advanced during CI to `4d0fcdf89`; merge `ceb35c98a` integrates only its 15 documentation files without conflicts. The complete PR patch is identical before and after this second merge, including both fixes and the test-harness repairs. [Current-main integration evidence](../testing/evidence/warranty-supply-return/README.md#current-main-integration-during-ci) records the repeated documentation checks and unchanged executable source hashes.
 
+Further documentation-only main updates were integrated through `96d677a32` by merges `9fe10301a`, `48d34fc41` and `827411069`, with this PR's patch and executable sources unchanged. Every test job at `9fe10301a` passed, including all bridge/Supply/MA-02/MA-07 cases, compiled HTTP and the repaired browser suite; its application aggregate was still queued when newer main was discovered. The [integration evidence](../testing/evidence/warranty-supply-return/README.md#current-main-integration-during-ci) distinguishes those source-bound results from the fresh final-head CI required on the PR.
+
 <!-- decision-index -->
 [Warranty to Supply return receiving](../decisions/warranty-supply-return-receiving.md) (PPO-WARRANTY-SUPPLY-RETURN-DEC) records the two review corrections using the existing application transaction and physical-progress projection.
