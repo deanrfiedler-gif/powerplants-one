@@ -49,10 +49,10 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
       height: width === 1024 ? 768 : width <= 780 ? 844 : 900,
     });
     await page.goto(
-      `/products?q=${encodeURIComponent(marker)}&kind=Variant&state=Draft&lifecycle=Supported`,
+      `/products?q=${encodeURIComponent(marker)}&kind=Variant&state=Draft&lifecycle=Current`,
     );
     await expect(
-      page.getByText("22 shown · maximum 100").first(),
+      page.getByText("22 shown · limit 100").first(),
     ).toBeAttached();
     const rows = page.locator(
       width > 780 ? ".pd-catalogue-desktop tbody tr" : ".pd-catalogue-phone li",
@@ -88,13 +88,13 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
       await expect(rows).toHaveCount(22);
       await page
         .getByLabel("Lifecycle", { exact: true })
-        .selectOption("Retired");
+        .selectOption("Discontinued");
       await expect(
         page.getByText("No products match these filters", { exact: true }),
       ).toBeVisible();
       await page
         .getByLabel("Lifecycle", { exact: true })
-        .selectOption("Supported");
+        .selectOption("Current");
       await expect(rows).toHaveCount(22);
     }
     const row = rows.nth(18),
@@ -182,7 +182,7 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
     page.getByText("No products match these filters", { exact: true }),
   ).toBeVisible();
   await page.getByLabel("Search exact identity, model or name").fill(marker);
-  await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
+  await expect(page.getByText("22 shown · limit 100").first()).toBeAttached();
   await page.route("**/api/v1/products?*", (route) =>
     route.fulfill({
       status: 503,
@@ -205,10 +205,10 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
   ).toHaveCount(0);
   await page.unroute("**/api/v1/products?*");
   await page.getByRole("button", { name: "Retry loading" }).click();
-  await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
+  await expect(page.getByText("22 shown · limit 100").first()).toBeAttached();
   await chooseWorkingCompany(f.author.p, { company_id: null });
   await page.reload();
-  await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
+  await expect(page.getByText("22 shown · limit 100").first()).toBeAttached();
   await expect(page.locator("[data-selected=true]")).toHaveCount(0);
   const resetLink = page
     .locator("[data-product] a")
@@ -228,7 +228,7 @@ test("PD-DISC catalogue filters, exact return, bounded rows and unavailable reco
     },
   ]);
   await page.reload();
-  await expect(page.getByText("22 shown · maximum 100").first()).toBeAttached();
+  await expect(page.getByText("22 shown · limit 100").first()).toBeAttached();
   await expect(page.locator("[data-selected=true]")).toHaveCount(0);
   await expect(
     page.getByRole("link", { name: "New catalogue draft", exact: true }),

@@ -9,12 +9,12 @@ import {
 test("catalogue return state cannot widen API filters or redirect outside Products", () => {
   const query = catalogueQuery(
     new URLSearchParams(
-      "q=VC+20&kind=Variant&state=Published&lifecycle=Supported&revision_id=secret&return_to=https://example.com",
+      "q=VC+20&kind=Variant&state=Published&lifecycle=Current&sort=updated&revision_id=secret&return_to=https://example.com",
     ),
   );
   assert.equal(
     query,
-    "q=VC+20&kind=Variant&state=Published&lifecycle=Supported",
+    "q=VC+20&kind=Variant&state=Published&lifecycle=Current&sort=updated",
   );
   assert.equal(catalogueHref("return_to=https://example.com"), "/products");
   assert.equal(catalogueHref(query), `/products?${query}`);

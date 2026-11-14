@@ -17,6 +17,7 @@ import { useRecoverableCommand } from "../../shared/ui/use-recoverable-command";
 import { acceptsProductCommand } from "../journal";
 import type { listProducts, readProduct } from "../reads";
 import type { Content } from "../model";
+import { lifecycleLabel } from "../vocabulary";
 import "./products.css";
 
 export type Catalogue = Awaited<ReturnType<typeof listProducts>>;
@@ -305,7 +306,13 @@ export function Comparison({
     </section>
   );
 }
-export function TechnicalContent({ content: c }: { content: Content }) {
+export function TechnicalContent({
+  content: c,
+  asRecorded = false,
+}: {
+  content: Content;
+  asRecorded?: boolean;
+}) {
   return (
     <>
       <section className="pd-panel">
@@ -350,7 +357,8 @@ export function TechnicalContent({ content: c }: { content: Content }) {
       <section className="pd-panel">
         <h2>Lifecycle and support</h2>
         <p>
-          {c.lifecycle} · {c.lifecycle_evidence}
+          {asRecorded ? c.lifecycle : lifecycleLabel(c.lifecycle)} ·{" "}
+          {c.lifecycle_evidence}
         </p>
         <p>Support through: {c.support_until ?? "Unknown"}</p>
         <p>
