@@ -84,7 +84,7 @@ Compare the running page with the accepted frames at their named version side by
 | | `PPO - Supply Chain & Workshop` | Supply chain, workshop |
 | | `PPO - Finance & Reporting` | Finance, Reporting |
 | | `PPO - Records & Documents` | Customers, sites, equipment, documents, knowledge |
-| | `PPO - Administration` | Administration, settings |
+| | `PPO - Settings module` | Administration, the Settings hub, Assistant settings, My account and the module's global configuration ([record](../decisions/settings-module-refined-ui-proposal.md), A50) |
 | | `PPO - Customer Portal` | Customer portal |
 | | Powerplants One configurator workflows | The existing FigJam board, name unchanged |
 | | The Priva Fertigation Configurator workflow board | The existing FigJam board, name unchanged |

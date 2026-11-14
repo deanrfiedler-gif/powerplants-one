@@ -97,14 +97,24 @@ export async function listFinance(p: Principal, input: unknown = {}) {
     const sourceKind =
       q.source_kind === undefined
         ? "WorkOrder"
-        : choice(q.source_kind, "source_kind", ["WorkOrder", "ProjectClaim"]);
+        : choice(q.source_kind, "source_kind", [
+            "WorkOrder",
+            "ProjectClaim",
+            "AgreementCharge",
+          ]);
     // P10 upgrade proofs run these readers before Projects or claim columns exist.
     const projectJoin =
       sourceKind === "ProjectClaim"
         ? "LEFT JOIN ppo.projects pr ON (pr.workspace_id,pr.id)=(f.workspace_id,(to_jsonb(f)->>'project_id')::uuid)"
-        : "";
+        : sourceKind === "AgreementCharge"
+          ? "LEFT JOIN ppo.service_agreements ag ON (ag.workspace_id,ag.id)=(f.workspace_id,(to_jsonb(f)->>'agreement_id')::uuid)"
+          : "";
     const workReference =
-      sourceKind === "ProjectClaim" ? "pr.display_number" : "w.display_number";
+      sourceKind === "AgreementCharge"
+        ? "ag.reference"
+        : sourceKind === "ProjectClaim"
+          ? "pr.display_number"
+          : "w.display_number";
     const fetchRows = async (after: string | null) =>
       (
         await c.query(
@@ -138,7 +148,7 @@ export async function listFinance(p: Principal, input: unknown = {}) {
       const batch = await fetchRows(after);
       for (const row of batch) {
         try {
-          if (row.source_kind === "ProjectClaim")
+          if (row.source_kind !== "WorkOrder")
             await financeContext(c, p, row.id);
           visible.push(row);
           if (visible.length === 51) break;
@@ -216,9 +226,11 @@ export async function readFinance(
     const lines = (
         await c.query(
           `SELECT l.*,(SELECT sum(quantity) FROM ppo.finance_allocation_holds h WHERE h.workspace_id=l.workspace_id AND ${
-            ctx.h.source_kind === "ProjectClaim"
-              ? "h.claim_basis_id=l.claim_basis_id AND h.claim_kind=l.claim_kind AND h.claim_target_id=l.claim_target_id"
-              : "h.root_entry_id=l.root_entry_id"
+            ctx.h.source_kind === "AgreementCharge"
+              ? "h.agreement_revision_id=l.agreement_revision_id AND h.agreement_charge_id=l.agreement_charge_id"
+              : ctx.h.source_kind === "ProjectClaim"
+                ? "h.claim_basis_id=l.claim_basis_id AND h.claim_kind=l.claim_kind AND h.claim_target_id=l.claim_target_id"
+                : "h.root_entry_id=l.root_entry_id"
           } AND h.state<>'Released') AS reserved_quantity FROM ppo.finance_lines l WHERE workspace_id=$1 AND revision_id=$2 ORDER BY id`,
           [p.workspace_id, ctx.h.current_revision_id],
         )

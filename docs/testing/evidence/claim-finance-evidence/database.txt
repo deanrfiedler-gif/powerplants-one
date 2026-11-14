@@ -1,0 +1,16 @@
+(node:3299) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3299) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ Claim evidence retains exact monetary output, template history, original bytes and receipt after agreement withdrawal/reseed (11140.549951ms)
+✔ Claim evidence recovers the same stored bundle after a post-storage failure without a second issue (12056.324439ms)
+✔ Claim evidence refuses release when the selected template policy changes during rendering (16374.627899ms)
+✔ Claim evidence rechecks source and Finance issue authority before release and current read authority for originals (20093.525003ms)
+✔ Claim evidence requires reconciled state and exact IDs; concurrent original requests create one job (17322.946268ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 80281.534003

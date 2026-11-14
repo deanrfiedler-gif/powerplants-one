@@ -2,7 +2,7 @@
 document_id: PPO-MAINTENANCE-TS02-DEC
 date: 2026-10-30
 owner: Dean Fiedler
-status: Dean adopted the recommended answers to TS-02 Q1–Q5 on 30 October 2026; build increments M1, M2 and C1 proposed for agent delivery under the standing order; no application change in this record
+status: Dean adopted TS-02 Q1–Q5 on 30 October 2026; M1 is on main; M2 and C1 backend implementation is in review; operating authority and acceptance remain separate
 source_commit: fa15714324b1dcb939355666023272e0a4ffb0f3
 versioning: git
 ---
@@ -64,9 +64,9 @@ Synthetic. Work order WO-A is covered by agreement SYN-AGR-0001 and is not linke
 - A maintenance agreement gains a charge schedule: one or more dated charges in exact cents, with currency and tax basis. The default is one annual charge in advance on the effective date. The schedule is part of the agreement revision that Finance reviewer approves, so it changes only through a successor revision.
 - A charge becomes claimable on its date while the agreement is Active. Finance prepares the claim as a Finance handoff of a new source kind, `AgreementCharge`, for one agreement. Project billing keeps its own source kind, `ProjectClaim`, exactly as #751 R2 and B3 define it; this record does not rename or amend it.
 - **One pipeline, two typed kinds.** `AgreementCharge` reuses the same machinery as `ProjectClaim`: the existing handoff states, review, processing claim, ERP outcome as evidence, reconciliation, and the entitlement holds and lifecycle of #751 R2 (Held from submission, including while Returned, OutcomeUnknown or ReconciliationRequired; Consumed once processed and reconciled; released only by a pre-effect cancellation, a revised Draft or an explicit release with a reason, atomically under the workspace lock). It adds no second allocation scheme.
-- **Disjoint entitlements.** Each scheduled agreement charge is one claimable entitlement, identified by its agreement, agreement revision and charge line. A `ProjectClaim` can name only milestones and variation lines of its project's basis, and an `AgreementCharge` can name only charge lines of its agreement's schedule. Neither kind can reserve the other's entitlements, so one charge has exactly one entitlement identity and one hold, whichever kind claims it.
+- **Disjoint entitlements.** Each scheduled agreement charge is one claimable entitlement, identified by its agreement and stable charge UUID across revisions. The selected agreement revision is immutable source provenance, not a fresh entitlement. A `ProjectClaim` can name only milestones and variation lines of its project's basis, and an `AgreementCharge` can name only charge lines of its agreement's schedule. Neither kind can reserve the other's entitlements, so one charge has exactly one entitlement identity and one hold, whichever kind claims it.
 - **Agreements sold with a project.** As #751 R3 says, such an agreement is billed under the agreement. Its fee is a charge on the agreement's schedule, and the project's claim schedule must not also contain it: the basis's `original_control_value` excludes the agreement fee, as in the TS-01 example ($129,910.00 base scope; the $4,800.00 agreement billed separately).
-- A claim takes a whole charge line. Renewal does not extend charges; a successor agreement revision carries its own schedule.
+- A claim takes a whole charge line. Renewal does not extend charges; a successor agreement revision carries its own schedule. Retained charges keep their UUIDs. While Held or Consumed, a charge must remain in successors with its exact due date, amount, currency and tax basis; otherwise the revision is refused. A genuinely new renewal charge uses a new UUID. No correction or reversal policy is inferred.
 
 ## Build increments
 
@@ -81,6 +81,12 @@ Changes to migrations or grants need a cross-model review before merge. TS-01 an
 ## M2 backend implementation — 11 November 2026
 
 [DECIDED by Codex] Dean instructed proceeding with M2 and C1 in chat. M2 follows merged M1 and B4. It extends the existing WorkOrder sources API defaults and server reason fallback, preserving explicit allocation input rather than silently replacing a Finance decision. Only Covered with an agreement reference receives the agreement default; no inferred agreement or zero charge is invented for missing evidence. Current project links retain unconditional B4 precedence. No UI is changed. [Contract](../contracts/finance-handoff.md#m2-agreement-covered-workorder-defaults) and [evidence](../testing/evidence/maintenance-m2/README.md) distinguish source delivery from executed acceptance. C1 remains separate.
+
+## C1 backend implementation — 11 November 2026
+
+[DECIDED by Codex] Dean instructed proceeding with M2 and C1. C1 uses an optional explicit charge schedule on the existing immutable agreement revision; it does not assign a fee to old agreements. One explicit annual advance line defaults only its date to the effective date. AUD and exact positive cents follow the existing bounded Finance/account fixture; tax basis is explicit text, with no operational tax calculation. Due/currentness checks use Australia/Brisbane. Independent Finance approval is required for agreements whose revision history contains a charge schedule, including any legacy successor that omitted it. Successors must explicitly retain a schedule; complete schedule removal has no adopted policy. The existing native form therefore withholds successor preparation for charge-bearing histories rather than silently dropping charges. Existing source authority remains required; no seed/grant is added.
+
+The implementation reuses Finance handoffs, allocations, review and uncertain-outcome machinery with typed AgreementCharge identities. Historical source access stays distinct from new-effect currentness. There is no new allocation scheme, charge editor, MYOB document type, fee duplication classifier or OUT-14 wording. [Maintenance contract](../contracts/maintenance-warranty-api.md#c1-reviewed-agreement-charge-schedules), [Finance contract](../contracts/finance-handoff.md#c1-agreementcharge-backend-amendment) and [evidence](../testing/evidence/agreement-charge-c1/README.md) are the implementation boundary. The C1-3 review clarification retains the existing term/hold constraints: every reserved due date remains inside the successor term. The supported renewal pattern keeps the original effective start and extends the end; a separate later-start term that excludes historical due dates uses a new agreement. It does not exempt historical charges from term validation. These bounded choices are reversible agent decisions, not operating tax/pricing approval or TS-02 acceptance.
 
 ## Traceability
 

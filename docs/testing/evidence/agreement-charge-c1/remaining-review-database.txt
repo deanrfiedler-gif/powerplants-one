@@ -1,0 +1,26 @@
+✔ C1 late audit_events failure rolls back whole-charge reservation and permits exact retry (6468.160729ms)
+✔ C1 late operation_receipts failure rolls back whole-charge reservation and permits exact retry (7622.008155ms)
+✔ C1 late outbox_jobs failure rolls back whole-charge reservation and permits exact retry (8445.478592ms)
+✔ C1 accepted target survives local outcome rollback and is recovered only by original lookup (11040.47913ms)
+✔ C1 exact scheduled fee uses the existing review, unknown-result and historical reconciliation pipeline once (17491.298109ms)
+✔ C1 whole charges race once; reasoned cancellation releases and no ProjectClaim identity is allocated (20638.279704ms)
+✔ C1 requires exact independently approved, current and due agreement charge authority (9900.391483ms)
+✔ C1 SQL guards retain exact source amount, disjoint identities and immutable schedule evidence (9589.420144ms)
+✔ C1 source grants govern reads, queues and original-operation receipts after revocation (8835.151805ms)
+✔ C1-1 Accepted charge stays reserved across title-only successors and original recovery (13296.143695ms)
+✔ C1-1 AcceptedThenTimeout charge stays reserved across title-only successors and original recovery (9631.69075ms)
+✔ C1-1 held and consumed charge terms cannot change or disappear; refused revisions leave no effects (8254.948307ms)
+✔ C1-1 Returned claim transfers a stable hold to a successor without releasing it to a competitor (7748.62437ms)
+✔ C1-1 SQL races across two source revisions conserve one agreement charge (6888.703779ms)
+✔ C1-1 an older repeatable-read snapshot cannot reserve a charge across revisions (7621.21066ms)
+✔ C1-2 UI-shaped omissions cannot remove unreserved or Held schedules and leave no effects (7540.795629ms)
+✔ C1-2 legacy omission chains retain independent Finance approval and original charged-site duties (6706.782337ms)
+✔ C1-3 consumed-charge renewal keeps its original start, exact charge and a new UUID for the new fee (12543.078258ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 18
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 185815.135427

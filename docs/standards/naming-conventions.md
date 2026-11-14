@@ -430,6 +430,22 @@ The synthetic format is the only enabled proposal for the current prototype. The
 | Variation | VAR | `SYN-PPO-VAR-000001` | Future local scope-change identity |
 | Library document | DOC | `SYN-PPO-DOC-000001` | Stable internal library identity; exact revisions are separate (DK-01/DK-02) |
 | Document transmittal | TRN | `SYN-PPO-TRN-000001` | Future exact issue/distribution package |
+| Access-change request | ACR | `SYN-ACR-000007` | Settings AD-01; short form of the legacy `SYN-PPO-ACR-`, whose references are preserved |
+| Sync item | SYNC | `SYN-SYNC-000431` | Settings AD-04; one finished event sent to MYOB under one key; never an MYOB document number |
+| External mapping | MAP | `SYN-MAP-000014` | Settings AD-05; the source-system key stays separate (10.3) |
+| Data-quality finding | DQF | `SYN-DQF-000045` | Settings AD-03 |
+| Data policy | DQ-P | `SYN-DQ-P01` | Settings AD-03; a two-digit series (P01 to P07) as drawn, an explicit exception to the six-digit sequence of 10.1, limited to data policies |
+| Audit export | EXP | `SYN-EXP-000004` | Settings AD-07; identifies the manifest, not the exported content |
+| Personal information request | PIR | `SYN-PIR-000002` | Settings AD-08 |
+| Operational incident | OPI | `SYN-OPI-000007` | Settings AD-09; separate from Service field incidents |
+| Release readiness record | REL | `SYN-REL-000005` | Settings AD-09; not a software release tag (16.3) |
+| Migration exception | MEX | `SYN-MEX-000033` | Settings AD-06; separate from Finance exceptions |
+| Migration rehearsal | REH | `SYN-REH-000003` | Settings AD-06; a rehearsal writes nothing live |
+| Help request | HLP | `SYN-HLP-000013` | Settings AD-10 |
+| Flagged assistant answer | AIF | `SYN-AIF-000002` | Settings AI-06 |
+| Test definition | TDF | `SYN-TDF-000001` | Workshop settings (Q9), shown in the Settings numbering registry |
+
+**13 November 2026 amendment:** Dean adopted the fourteen Settings families above, from ACR to TDF ([Settings refined UI record](../decisions/settings-module-refined-ui-proposal.md), A52 and section 11). They name synthetic design records only. No counter, column or allocation is implemented. The families that other module files propose are not added here. The settlement of the clashes between files (cross-file audit AF-141, drawn on the Settings numbering registry) is proposed and not yet adopted.
 
 These type codes are a proposed registry. Adding optional references to existing Organisation, Person, Site or revision records requires an explicit dictionary amendment. Do not silently add fields because a naming example mentions them. Existing `display_number` fields should use the common format where applicable.
 

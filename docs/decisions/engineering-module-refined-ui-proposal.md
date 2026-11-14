@@ -2,7 +2,7 @@
 document_id: PPO-ENGINEERING-REFINED-FIGMA-PROP
 date: 2026-11-10
 owner: Dean Fiedler
-status: Proposal, 10 November 2026; design acceptance is Dean's and has not been given; no named version is saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, CAD, SharePoint or MYOB integration, or deployment; every record shown is synthetic
+status: Proposal, 10 November 2026, with the alignment batch of 13 November 2026 applied (section 11); design acceptance is Dean's and has not been given; no named version is saved yet; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed, CAD, SharePoint or MYOB integration, or deployment; every record shown is synthetic
 source_commit: 1888cc81d4c99e68836390110a6655e767fa17d5
 versioning: git
 ---
@@ -19,7 +19,7 @@ This record is a **proposal**. It describes what was drawn, the rules applied, t
 
 | Source | Use |
 |---|---|
-| Private Figma file "PPO - Shell", named version "Shell refined concept — accepted" (8 November 2026), with the accepted record header toolbar of Addendum A1 (accepted 9 November 2026, rules R116 to R125) | Chrome and geometry: 48 px top bar with global search, 80 px collapsed rail, 48 px right strip, content from x 80 to 1392, the accepted Engineering flyout and docked menus (nine pages in four groups, nested views per rule R108, no Quick create tiles per rule R107), the collapsed strip, the 1024 top bar (332 / 360 / 332), the record header toolbar set and its phone variant. Components were rebuilt in the new file by value under the same names |
+| Private Figma file "PPO - Shell", named version "Shell refined concept — accepted" (8 November 2026), with the accepted record header toolbar of Addendum A1 (accepted 9 November 2026, rules R116 to R125) | Chrome and geometry: 48 px top bar with global search, 80 px collapsed rail, 48 px right strip, content from x 80 to 1392, the accepted Engineering flyout and docked menus (nine pages in four groups, nested views per rule R108, no Quick create tiles per rule R107), the collapsed strip, the 1024 top bar (332 / 360 / 332), the record header toolbar set and its phone variant. Components were rebuilt in the new file by value under the same names. Since the alignment batch of 13 November 2026 (section 11) the local copies cite the named versions of 8, 10 and 12 November 2026, and the toolbar primary is brand/navy as the Shell record's section 13 sets it |
 | Private Figma file "PPO - Sales module (accepted)", named version "PPO - Sales module (accepted) · batch 2 · N13" | Conventions mirrored: the page template and its four Read me cards, sheet labels, the page kit (chip, button, avatar, checkbox, filter chip, tab, KPI tile), Filters, Columns, Export, the settings hub, configuration editor and Publish version patterns, the phone header and tab bar pattern |
 | Private Figma file "PPO - Supply module (proposal)" and the Estimating and Projects module files | Component names kept identical; their datasets are the truth where the Engineering story touches them, as amended by Addendum A3 |
 | Private Figma file "PPO - Design", the earlier Engineering pages | Rules, stories and vocabulary: Engineering workload EN-01 (accepted 11 October 2026), Delivery performance RP-03 (accepted 1 November 2026), and the proposals of 23 October 2026 for EN-02 to EN-08, which the design-to-build standard classes as tier 2, to be redrawn in the new language before a build |
@@ -243,24 +243,24 @@ Page `7:10` · `scope:EN-06`, `/engineering/materials` · 20 sheets.
 | Code | Sheet | View | Size | Node |
 |---|---|---|---|---|
 | MT01 | Materials register, grouped by project | Register | 1440 × 900 | `40:8` |
-| MT02 | Block C SYN-MAT-000031 R3, Lines with content revision and hash (S-13) | Record detail | 1440 × 900 | `40:651` |
-| MT03 | Block C R4 draft, Item & unit mapping; MYOB mapping read only | Record detail | 1440 × 900 | `40:1266` |
+| MT02 | Block C SYN-MAT-000031 r03, Lines with content revision and hash (S-13) | Record detail | 1440 × 900 | `40:651` |
+| MT03 | Block C r04 draft, Item & unit mapping; MYOB mapping read only | Record detail | 1440 × 900 | `40:1266` |
 | MT04 | Substitutions: SYN-SBS-000007 accepted on criteria | Record detail | 1440 × 900 | `40:1824` |
 | MT05 | Review & release: reviewed, authorised and issued by three people (E9) | Record detail | 1440 × 900 | `41:1356` |
 | MT06 | Supply handover: the whole payload, version 2 with the PJ-06 brief, accepted by Robin Hale (E11) | Record detail | 1440 × 1383 | `41:1876` |
-| MT12 | CP-4 SYN-MAT-000028 R2 raised after release; Workshop booked out R1 parts (S-15, N-N3) | Record detail | 1440 × 900 | `41:2434` |
+| MT12 | CP-4 SYN-MAT-000028 r02 raised after release; Workshop booked out r01 parts (S-15, N-N3) | Record detail | 1440 × 900 | `41:2434` |
 | MT14 | Changes & history, grouped by day | Record detail | 1440 × 900 | `41:2913` |
 | MT07 | Request substitution against stated criteria | Form | 1440 × 900 | `42:2622` |
 | MT08 | Decide substitution SYN-SBS-000009, a result per criterion | Form | 1440 × 900 | `42:3171` |
 | X17 | Submit materials review: blocked while lines are unmapped | Form | 1440 × 900 | `42:3715` |
-| MT09 | Authorise and issue release, as Alex Morgan recorded R3 on Fri 23 Oct 2026 (E6, E9) | Form | 1440 × 900 | `42:4248` |
+| MT09 | Authorise and issue release, as Alex Morgan recorded r03 on Fri 23 Oct 2026 (E6, E9) | Form | 1440 × 900 | `42:4248` |
 | X18 | Prepare Supply handover: the whole issued payload, version 2 (E11) | Form | 1440 × 1383 | `42:4749` |
-| MT10 | R4 release blocked by two unmapped lines | State | 1440 × 900 | `43:4298` |
-| MT11a | Water treatment SYN-MAT-000034 R1 draft: Ambiguous and Missing rows (S-14) | State | 1440 × 900 | `43:4797` |
+| MT10 | r04 release blocked by two unmapped lines | State | 1440 × 900 | `43:4298` |
+| MT11a | Water treatment SYN-MAT-000034 r01 draft: Ambiguous and Missing rows (S-14) | State | 1440 × 900 | `43:4797` |
 | MT11b | Company B (SYN Greenhouse Demonstration) reads "Authority not configured" (E6) | State | 1440 × 900 | `43:5270` |
 | MT13 | Supply has not received: awaiting the receiver for 3 working days | State | 1440 × 900 | `43:5691` |
-| TB09 | Block C R3 Lines at 1024 × 768 | Tablet | 1024 × 768 | `43:6129` |
-| TB10 | Block C R3 Supply handover at 1024 × 768 | Tablet | 1024 × 768 | `43:6569` |
+| TB09 | Block C r03 Lines at 1024 × 768 | Tablet | 1024 × 768 | `43:6129` |
+| TB10 | Block C r03 Supply handover at 1024 × 768 | Tablet | 1024 × 768 | `43:6569` |
 | PH12 | Decide substitution on the phone (MT08) | Phone | 390 × 844 | `43:6908` |
 | — | Notes card | Notes | 1440 wide | `66:6014` |
 
@@ -311,7 +311,7 @@ Page `7:12` · `scope:EN-08`, `/engineering/commissioning` · 23 sheets.
 | X21 | Decide difference | Form | 1440 × 900 | `52:3948` |
 | CM11 | Release as-built: StagedArea excluding screen drive 3, by the independent authority | Form | 1440 × 900 | `52:4449` |
 | CM13 | Hand over to Service: obligations, receiver and what Equipment records | Form | 1440 × 900 | `52:4908` |
-| CM07 | Instrument calibration expired: the retest with SYN-MEG-001 is flagged and cannot pass | State | 1440 × 900 | `52:5384` |
+| CM07 | Instrument calibration expired: the retest with SYN-CLP-006 is flagged and cannot pass | State | 1440 × 900 | `52:5384` |
 | CM16a | Handover waiting on Service: SYN-CMS-000011 as at Fri 30 Oct 2026 | State | 1440 × 900 | `52:5794` |
 | CM16b | The project manager reads SYN-CMS-000012: exact versions, no commands | State | 1440 × 900 | `52:6217` |
 | TB13 | Test basis r02 at 1024 × 768 | Tablet | 1024 × 768 | `53:5114` |
@@ -385,7 +385,7 @@ Page `7:15` · Engineering settings; no route is built · 11 sheets, desktop onl
 
 | ID | Assumption or departure |
 |---|---|
-| A1 | File name. The file is "PPO - Engineering module (proposal)" as Dean created it; the design-to-build standard names the domain file "PPO - Engineering & Projects", and Projects has its own file. Recorded, not changed |
+| A1 | File name. The file is "PPO - Engineering module (proposal)" as Dean created it; Dean's link of 13 November 2026 names it "PPO - Engineering module", and the Read me title follows that name; the design-to-build standard names the domain file "PPO - Engineering & Projects", and Projects has its own file. Recorded, not changed |
 | A2 | Page titles are the rail labels, with the module's full name as the sub-line (Q1); the route register's long titles differ. A departure for the register |
 | A3 | Reference families follow PPO-REFERENCE-NAMESPACES-DEC: supplier submittals are `SYN-SMT-` so `SYN-SUB-` stays the subcontract package family (Q2); the EN-04 and PD-04 fixtures that used `SYN-SUB-` are earlier examples. The flyout's Recent rows use this file's fixtures; the Shell file's accepted stand-ins (DRW-, TQ-, CH-) remain to be aligned there |
 | A4 | The collapsed docked menu is the accepted Shell strip as drawn in the Shell file: 12 px wide with 1300 px of content. The brief described 80 px and 1232 px; the accepted component was used (Q8) |
@@ -395,13 +395,13 @@ Page `7:15` · Engineering settings; no route is built · 11 sheets, desktop onl
 | A8 | Insights is the Engineering extract of the accepted RP-03 page; IS02 and its finding patterns are proposed (N-N6) |
 | A9 | The output-hash check on Add revision (EN-03 D11) is drawn as a refusal marked proposed, not built (Q3) |
 | A10 | Review policy and release authority are settings versions (Q4): release authority version 1 published Thu 1 Oct 2026 for Powerplants AU and reviewed by Alex Morgan; the review policy is not configured and Dean's procurement proposal is in review; SYN Greenhouse Demonstration (Company B) reads "Authority not configured" |
-| A11 | D7 and Addendum A3 are adopted over the earlier Design pages (Q6): Glasshouse 4 belongs to Hillview Growers (earlier Riverbend on EN-08); the CP-4 dates follow D7 (T06 on Thu 15 Oct, not Mon 12 Oct as on Site assurance); drawings are `SYN-DWG-` (earlier `SYN-EDOC-` on EN-03); submittals are `SYN-SMT-` (earlier `SYN-SUB-` on EN-04) |
+| A11 | D7 and Addendum A3 are adopted over the earlier Design pages (Q6): Glasshouse 4 belongs to Hillview Growers (earlier Riverbend on EN-08); the CP-4 dates follow D7 (T06 on Thu 15 Oct, not Mon 12 Oct as on Site assurance); drawings are `SYN-DWG-` (earlier `SYN-EDOC-` on EN-03); submittals are `SYN-SMT-` (earlier `SYN-SUB-` on EN-04). `SYN-EDOC-` stays the family for controlled documents that are not drawings (schedules), as the Settings registry lists it |
 | A12 | Released 4 = SYN-ENG-000718 and 000720 (issued Fri 30 Oct 2026), 000711, and 000709 (re-issued as SYN-ISS-000017 on Thu 5 Nov 2026 at 08:55 after change; first released Fri 25 Sep as SYN-ISS-000009). "Released this week 2" counts first releases in the last seven days: 000718 and 000720. Their coordination status stays In design |
-| A13 | Sam's "Reviews assigned to me 2" are change-impact reviews he did not author: SYN-ECR-000012 and SYN-ECR-000009. Casey Quinn's "Reviews to do" are SYN-REV-000046 and SYN-REV-000045 |
-| A14 | The brief gives SYN-OPP-000301 to the Hillview Glasshouse 5 design basis; the Sales file uses SYN-OPP-000301 for Mallee Fresh Produce's irrigation pump station. Kept as the brief says; the clash is open |
+| A13 | Sam's "Reviews assigned to me 2" are change-impact reviews Sam Jordan did not author: SYN-ECR-000012 and SYN-ECR-000009. Casey Quinn's "Reviews to do" are SYN-REV-000046 and SYN-REV-000045 |
+| A14 | Settled by Dean on 13 November 2026 (audit Q3): the accepted Sales file keeps SYN-OPP-000301 for Mallee Fresh Produce's irrigation pump station, and the Hillview Glasshouse 5 design basis reads SYN-OPP-000344, a synthetic number no other record uses |
 | A15 | SYN-CMS-000012 test basis r02 (approved for test Tue 13 Oct 2026) cites SYN-DWG-000318 revision B, because revision C did not exist until Tue 3 Nov; the r03 draft adds T13 and cites C. The brief's "from 000318 C" is read as the current revision |
-| A16 | Sheets drawn as at an earlier moment, each saying so in its header or banner: MT09 (R3 authorised and issued on Fri 23 Oct 2026; the brief names R4, which is still a blocked draft), MT13 (Thu 29 Oct), CR14 (Fri 16 Oct), CR15b (Tue 3 Nov, 11:00), CM13 and CM16a (SYN-CMS-000011, Fri 30 Oct) |
-| A17 | New synthetic fixtures where the dataset was silent: SYN-MAT-000035, SYN-ECR-000013, SYN-TQ-000017, 000022, 000023 and 000024, SYN-SMT-000009, 000012 and 000015, SYN-REV-000031, 000042, 000043 and 000046, SYN-ISS-000009, 000012 and 000015, instruments SYN-MUL-004, SYN-INS-003, SYN-ROT-001, SYN-CAL-002 and SYN-MEG-001 (calibration expired Sat 31 Oct 2026), SYN-BKP-000017 and SYN-ACR-000008 |
+| A16 | Sheets drawn as at an earlier moment, each saying so in its header or banner: MT09 (r03 authorised and issued on Fri 23 Oct 2026; the brief names r04, which is still a blocked draft, and Dean confirmed this state on 13 November 2026, audit Q2), MT13 (Thu 29 Oct), CR14 (Fri 16 Oct), CR15b (Tue 3 Nov, 11:00), CM13 and CM16a (SYN-CMS-000011, Fri 30 Oct) |
+| A17 | New synthetic fixtures where the dataset was silent: SYN-MAT-000035, SYN-ECR-000013, SYN-TQ-000017, 000022, 000023 and 000024, SYN-SMT-000009, 000012 and 000015, SYN-REV-000031, 000042, 000043 and 000046, SYN-ISS-000009, 000012 and 000015, instruments SYN-ROT-001 and SYN-INST-002; since the alignment batch the other instruments are read from the EQ-09 register: SYN-MUL-004 (multimeter), SYN-MEG-002 (insulation tester) and SYN-CLP-006 (clamp meter, calibration lapsed Sat 31 Oct 2026 and renewed Tue 3 Nov), SYN-BKP-000017 and SYN-ACR-000008 |
 | A18 | Contrast is computed from the variables in this file, which carry the accepted values by copy (A5); the one failing pair is audit item C1 |
 | A19 | The rail shows Engineering current on the settings pages; Settings current would be truer (audit R2) |
 | A20 | Addenda A1 and A2 were not supplied as text: A1 was read from the Shell file's record header toolbar components and rules R116 to R125; A2 is [readable reference namespaces](readable-reference-namespaces.md) |
@@ -459,16 +459,16 @@ Run after the last batch. Every sheet was read against first impression, usabili
 
 | ID | Item | State |
 |---|---|---|
-| C1 | White 14 px Medium on brand/green-deep is 3.57:1, below 4.5:1, on the accepted A1 toolbar primary. Proposed for the Shell file, for every module: a darker primary such as #34832f (4.74:1) or status/success #416d33 (6.07:1); 18.67 px bold labels would meet the 3:1 large-text threshold but break the 32 px toolbar | Open, the Shell owner's |
+| C1 | White 14 px Medium on brand/green-deep is 3.57:1, below 4.5:1, on the accepted A1 toolbar primary. Proposed for the Shell file, for every module: a darker primary such as #34832f (4.74:1) or status/success #416d33 (6.07:1); 18.67 px bold labels would meet the 3:1 large-text threshold but break the 32 px toolbar | Closed 13 November 2026: Dean chose brand/navy (14.37:1) on 12 November and this file's copies follow it (section 11) |
 | C2 | "CO2" written as CO₂ on 14 package rows | Applied |
 | C3 | Query counts on PK01 to PK04 and PH04 corrected to 1 open, 1 answered (SYN-TQ-000019 open, SYN-TQ-000018 answered) | Applied |
 | C4 | PH13's note corrected to "on site"; MT11b's company switcher reads SYN Greenhouse Demonstration | Applied |
 | C5 | Two ST02 tooltips that covered Columns and ran under the right strip moved inside the content | Applied |
 | C6 | During the build: CM03 results overflow and CM02 check column rebuilt; IS01 bar rows rebuilt; collapsed photo and redline tiles fixed in the helper; ST02 overlays rebuilt | Applied |
-| R1 | Dates without the year in cells, timelines and sentences (about 360 texts), as the accepted Sales sheets do. Options: a rule that one-line cells and timelines omit the current year, or the year everywhere. Recommended: the rule, stated on ST01 for every module | Proposed |
-| R2 | Settings pages to show Settings current on the rail (A19) | Proposed |
+| R1 | Dates without the year in cells, timelines and sentences (about 360 texts), as the accepted Sales sheets do. Options: a rule that one-line cells and timelines omit the current year, or the year everywhere. Recommended: the rule, stated on ST01 for every module | Decided 13 November 2026 (audit Q7): the short form in registers and timelines, the year on headers and as-at lines |
+| R2 | Settings pages to show Settings current on the rail (A19) | Applied 13 November 2026 |
 | R3 | CR08's background to show the actions before confirmation, not after | Proposed |
-| R4 | The Shell file's flyout Recent stand-ins aligned to the reference families (A3) | Proposed |
+| R4 | The Shell file's flyout Recent stand-ins aligned to the reference families (A3) | This file's flyout applied 13 November 2026; the Shell's rows are the Shell owner's (audit AF-034) |
 | G1 | The Change tab of SYN-ECR-000014 at 1024; TB11 shows Actions | Open |
 | G2 | A 200 % zoom proof of the desktop pages | Open |
 | G3 | Record retest as its own dialog | Open |
@@ -483,4 +483,31 @@ Run after the last batch. Every sheet was read against first impression, usabili
 
 ## 10. Named version
 
-No named version is saved yet. The proposal state should be pinned by Dean saving the named version "PPO - Engineering module (proposal) · 10 November 2026"; this section is updated when he does. Any later design change needs a new named version ([named-version build handoff](figma-named-version-build-handoff.md)).
+No named version is saved yet. The proposal state should be pinned by Dean saving the named version "PPO - Engineering module (proposal) · 10 November 2026"; this section is updated when he does. Any later design change needs a new named version ([named-version build handoff](figma-named-version-build-handoff.md)). The alignment batch of 13 November 2026 changed the design, so the named version should now pin the aligned state, for example "PPO - Engineering module (proposal) · alignment batch 13 November 2026".
+
+## 11. Alignment batch — 13 November 2026
+
+The [Engineering module Figma alignment audit](engineering-figma-alignment-audit.md) (PPO-ENGINEERING-FIGMA-ALIGNMENT-AUDIT) was a read-only audit of this file. Dean answered its questions Q1 to Q8 as it recommended: "I am happy to proceed based on your recommendations." The audit session then applied the Engineering items of its alignment batch to this file. Its section 8 lists every change, with the counts and the verification.
+
+In summary:
+
+- **Story facts.** KPI-11 reads Q4 2026 to date. Instruments follow the EQ-09 register (SYN-CLP-006, SYN-MEG-002, SYN-MUL-004, SYN-INST-002). The Block C sources cite SYN-SRV-000025, and the Glasshouse 5 basis reads SYN-OPP-000344. CR02 gives the retest on Mon 19 Oct.
+- **Times.** Events after 09:00 moved inside the story clock.
+- **Revisions and wording.** Materials and line revisions read r01 to r04, the pronouns are gone, and twelve no-action toolbars read "Read only".
+- **Shell parts.** The toolbar and drawn primaries are brand/navy, and ST03's note closes C1. The phone controls drawn here and the local phone header's buttons are 48 px.
+- **Rail.** Settings is current on the administration sheets. The My Work count is hidden where the signed-in person's total is not known.
+- **Administration.** AD08 reads the Settings registry, and AD06 records the revision series.
+- **Labels and conventions.** Labels name the signed-in person. Tones are one per word, paints are bound, and text sizes follow C6.
+- **File-level text.** The Read me and the kit cite the Shell's latest named versions.
+
+Sheet node IDs are unchanged and no sheet was added. AD08 gained one table row, and AD06 one note line.
+
+Not applied:
+
+- the six-digit instrument numbers, which wait for EQ-09;
+- the drawer widths (Q1);
+- Library adoption;
+- the re-copy of the Shell's new component sets, which waits for the Shell's next named version;
+- the handover findings that belong to the Service, Customers, Sites & Equipment, Supply and Shell files.
+
+Design acceptance is still Dean's, and no named version is saved yet (section 10).

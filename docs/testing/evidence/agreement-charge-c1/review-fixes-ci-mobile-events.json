@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "source_head": "4b07fba0a43856b6a6a34f39acf16b4b4935c6b8",
+  "project": "mobile-chromium",
+  "started_at_ms": 1794534031049,
+  "events": [
+    {
+      "event": "navigation",
+      "at_ms": 1794534031083,
+      "destination": "other"
+    },
+    {
+      "event": "page-state-unavailable",
+      "at_ms": 1794534031150
+    }
+  ],
+  "browser": [
+    {
+      "event": "layout-state",
+      "at_ms": 1794534031084,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "return_link": true,
+      "return_focused": false,
+      "activities_tab": false
+    },
+    {
+      "event": "pointerdown-capture",
+      "at_ms": 1794534031139,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "x": 140.1999969482422,
+      "y": 16.489999771118164,
+      "return_link": true,
+      "return_focused": false,
+      "activities_tab": false,
+      "return_target": true,
+      "prevented": false
+    },
+    {
+      "event": "mousedown-capture",
+      "at_ms": 1794534031139,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "x": 140,
+      "y": 16,
+      "return_link": true,
+      "return_focused": false,
+      "activities_tab": false,
+      "return_target": true,
+      "prevented": false
+    },
+    {
+      "event": "pointerup-capture",
+      "at_ms": 1794534031139,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "x": 140.1999969482422,
+      "y": 16.489999771118164,
+      "return_link": true,
+      "return_focused": true,
+      "activities_tab": false,
+      "return_target": true,
+      "prevented": false
+    },
+    {
+      "event": "mouseup-capture",
+      "at_ms": 1794534031139,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "x": 140,
+      "y": 16,
+      "return_link": true,
+      "return_focused": true,
+      "activities_tab": false,
+      "return_target": true,
+      "prevented": false
+    },
+    {
+      "event": "click-capture",
+      "at_ms": 1794534031139,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "x": 140,
+      "y": 16,
+      "return_link": true,
+      "return_focused": true,
+      "activities_tab": false,
+      "return_target": true,
+      "prevented": false
+    },
+    {
+      "event": "final-state",
+      "at_ms": 1794534031145,
+      "link_top": 8,
+      "link_left": 8,
+      "link_width": 264.40625,
+      "link_height": 17,
+      "scroll_y": 0,
+      "return_link": true,
+      "return_focused": true,
+      "activities_tab": false
+    }
+  ]
+}

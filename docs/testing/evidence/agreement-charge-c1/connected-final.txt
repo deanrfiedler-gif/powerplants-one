@@ -1,0 +1,19 @@
+(node:3611) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3611) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing (74454.403289ms)
+(node:3790) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3790) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ agreement to due maintenance to reviewed Service outcome preserves the original obligation and exact retry (18003.072172ms)
+✔ partial reviewed Service results retain an open remedy and refuse customer resolution (18779.770302ms)
+✔ canonical replacement receives exact completed work, preserves identities and owns future maintenance (25158.468399ms)
+✔ completed exact Service remedy needs current customer update and response; recovery stays outstanding (43452.950216ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 189103.830313

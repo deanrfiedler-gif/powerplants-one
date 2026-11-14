@@ -25,27 +25,28 @@ const read = (file: string) => readFile(new URL(`../../db/${file}`, import.meta.
 // Reconstruct the current-main gap from its original SQL, hashes and seed receipts.
 // Do not pretend that a 0051 ledger row means the schema already exists.
 // 0123 (maintenance M1) alters 0051's own tables, so a history without 0051 can never have
-// installed it: omit 0123, but retain independent 0124 and its seed. The runner adds 0051 then 0123.
-const beforeMaintenanceDependants = 123;
+// installed it: omit 0123 and C1 0127/0128, but retain independent 0124–0126 and their seeds.
+// The runner adds 0051 then 0123, 0127 and 0128.
+const beforeMaintenanceDependants = [123, 127, 128];
 async function currentMainWithoutMaintenance() {
   await recoverSchema();
   await rows("DROP TABLE IF EXISTS public.ppo_migrations");
   await migrate(50);
   await seed(50);
   await transaction(async (c) => {
-    for (const file of migrationFiles.filter((f) => Number(f.slice(0, 4)) > 51 && Number(f.slice(0, 4)) !== beforeMaintenanceDependants)) {
+    for (const file of migrationFiles.filter((f) => Number(f.slice(0, 4)) > 51 && !beforeMaintenanceDependants.includes(Number(f.slice(0, 4))))) {
       const sql = await read(`migrations/${file}`);
       await c.query(sql);
       await c.query("INSERT INTO public.ppo_migrations(version,sha256) VALUES($1,$2)",
         [Number(file.slice(0, 4)), createHash("sha256").update(sql).digest("hex")]);
     }
-    for (const [version, file] of seedFiles.filter(([v]) => v > 51 && Number(v) !== beforeMaintenanceDependants)) {
+    for (const [version, file] of seedFiles.filter(([v]) => v > 51 && !beforeMaintenanceDependants.includes(Number(v)))) {
       await c.query(await read(file));
       await c.query("INSERT INTO ppo.seed_receipts(version) VALUES($1)", [version]);
     }
   });
-  assert.equal((await rows("SELECT max(version) AS version FROM public.ppo_migrations"))[0].version, latestMigrationVersion);
-  assert.ok(latestMigrationVersion >= beforeMaintenanceDependants);
+  assert.equal((await rows("SELECT max(version) AS version FROM public.ppo_migrations"))[0].version, Math.max(...migrationFiles.map(f=>Number(f.slice(0,4))).filter(v=>!beforeMaintenanceDependants.includes(v))));
+  assert.ok(beforeMaintenanceDependants.every(v=>latestMigrationVersion >= v));
   assert.equal((await rows("SELECT to_regclass('ppo.service_agreements') AS table"))[0].table, null);
 }
 
@@ -71,14 +72,16 @@ test("late reserved Maintenance migration preserves the current schema, original
   // 0051 adds an optional relationship; every existing value remains exact and the new field is null.
   const expected = { ...before, coverage_assessments: before.coverage_assessments.map(
     (row: Record<string, unknown>) => ({ ...row, entitlement_assessment_id: null }),
-  ) };
+  ), finance_handoffs: before.finance_handoffs.map((row:Record<string,unknown>)=>({...row,agreement_id:null})),
+  finance_lines: before.finance_lines.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
+  finance_allocation_holds: before.finance_allocation_holds.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})) };
   assert.deepEqual(await snapshot(tables), expected);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>51 AND version<>$1 ORDER BY version", [beforeMaintenanceDependants]), ledger);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version<>51 AND version<>ALL($1::integer[]) ORDER BY version", [beforeMaintenanceDependants]), ledger);
   assert.deepEqual(
-    (await rows("SELECT version FROM public.ppo_migrations WHERE version=51 OR version=$1 ORDER BY version", [beforeMaintenanceDependants])).map((r: { version: number }) => r.version),
-    [51, ...migrationFiles.map((f) => Number(f.slice(0, 4))).filter((v) => v === beforeMaintenanceDependants)],
+    (await rows("SELECT version FROM public.ppo_migrations WHERE version=51 OR version=ANY($1::integer[]) ORDER BY version", [beforeMaintenanceDependants])).map((r: { version: number }) => r.version),
+    [51, ...migrationFiles.map((f) => Number(f.slice(0, 4))).filter((v) => beforeMaintenanceDependants.includes(v))],
   );
-  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 AND version<>$1 ORDER BY version", [beforeMaintenanceDependants]), seeds);
+  assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 AND version<>ALL($1::integer[]) ORDER BY version", [beforeMaintenanceDependants]), seeds);
   const everything = await rows("SELECT * FROM ppo.permission_grants ORDER BY id"), ids = new Set(grants.map((g) => g.id));
   // Seed 108 copies Opportunity and Project reads as conversation duties; everything else is this suite's subject.
   const actual = everything.filter((g) => ids.has(g.id) || !String(g.capability).startsWith("conversation.") && g.capability !== "service_escalation.record");
@@ -122,7 +125,7 @@ test("SV08 seed 124 is inert when late reserved Maintenance 0051 is installed af
   assert.deepEqual(after.filter(g=>ids.has(g.id)), grants);
   assert.deepEqual(after.filter(g=>!ids.has(g.id) && g.capability === "service_escalation.record"), []);
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"),users);
-  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123) ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127,128) ORDER BY version"),ledger);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts WHERE version<>51 ORDER BY version"),seedLedger);
   const completeLedger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version"), completeSeeds = await rows("SELECT * FROM ppo.seed_receipts ORDER BY version");
   await migrate(); await seed(); await seed();
@@ -130,4 +133,30 @@ test("SV08 seed 124 is inert when late reserved Maintenance 0051 is installed af
   assert.deepEqual(await rows("SELECT * FROM ppo.users ORDER BY id"),users);
   assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),completeLedger);
   assert.deepEqual(await rows("SELECT * FROM ppo.seed_receipts ORDER BY version"),completeSeeds);
+});
+
+test("C1 command-only late Maintenance installation preserves all earlier rows and adds exact dependent migrations", async () => {
+  await currentMainWithoutMaintenance();
+  const p = await principal(), proposal = crmCreate();
+  const accepted = await createOpportunity(p, proposal);
+  const tables = (await rows("SELECT tablename FROM pg_tables WHERE schemaname='ppo' ORDER BY tablename"))
+    .map((r: {tablename:string}) => r.tablename)
+    .filter((name:string) => !["permission_grants","seed_receipts"].includes(name));
+  const before = await snapshot(tables), ledger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate(); await seed();
+  const expected = {...before,
+    coverage_assessments: before.coverage_assessments.map((row:Record<string,unknown>)=>({...row,entitlement_assessment_id:null})),
+    finance_handoffs: before.finance_handoffs.map((row:Record<string,unknown>)=>({...row,agreement_id:null})),
+    finance_lines: before.finance_lines.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
+    finance_allocation_holds: before.finance_allocation_holds.map((row:Record<string,unknown>)=>({...row,agreement_revision_id:null,agreement_charge_id:null})),
+  };
+  assert.deepEqual(await snapshot(tables), expected);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations WHERE version NOT IN (51,123,127,128) ORDER BY version"),ledger);
+  assert.deepEqual(await rows("SELECT version FROM public.ppo_migrations WHERE version IN (51,123,127,128) ORDER BY version"),[{version:51},{version:123},{version:127}, { version: 128 }]);
+  assert.deepEqual(await rows("SELECT * FROM ppo.agreement_charge_lines"),[]);
+  assert.deepEqual((await createOpportunity(p, proposal)).receipt,accepted.receipt);
+  const finalLedger = await rows("SELECT * FROM public.ppo_migrations ORDER BY version");
+  await migrate(); await seed();
+  assert.deepEqual(await snapshot(tables),expected);
+  assert.deepEqual(await rows("SELECT * FROM public.ppo_migrations ORDER BY version"),finalLedger);
 });

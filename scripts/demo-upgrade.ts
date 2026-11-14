@@ -405,7 +405,9 @@ export async function upgradeExistingDemo(databaseName: string, tenant: string, 
   // 0125 adds an empty append-only claim schedule ledger on existing commercial bases.
   // No seed, identity, grant, external effect or historical evidence changes.
   // 0126: additive source discrimination and claim columns preserve WorkOrder defaults, seed/grants and original evidence; no backfill effects.
-  if (latestMigrationVersion !== 126) throw Error("Review the existing-demo upgrade for this release.");
+  // 0127 adds empty agreement-charge source tables/columns and disjoint Finance guards; original WorkOrder/ProjectClaim rows, seed/grants and receipts remain unchanged.
+  // 0128 preserves all rows and adds stable agreement-charge guards; ambiguous duplicate histories refuse atomically.
+  if (latestMigrationVersion !== 128) throw Error("Review the existing-demo upgrade for this release.");
   console.log("Demo upgrade stage: load-release");
   if (latestDemoMigrationVersion !== 3) throw Error("Review the existing-demo upgrade for this release.");
   const migrations = await Promise.all(migrationFiles.map(async file => ({

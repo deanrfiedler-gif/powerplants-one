@@ -1,0 +1,11 @@
+✔ C1-1 Accepted charge stays reserved across title-only successors and original recovery (7321.296563ms)
+✔ C1-1 AcceptedThenTimeout charge stays reserved across title-only successors and original recovery (7402.165009ms)
+✔ C1-1 Returned claim transfers a stable hold to a successor without releasing it to a competitor (6964.943129ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 24178.357872
