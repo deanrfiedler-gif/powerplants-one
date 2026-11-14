@@ -161,6 +161,8 @@ The private Figma file is now named "PPO - Shell (accepted)". Every citation in 
 
 **Name as of 12 November 2026.** Dean stated on 12 November 2026: "The file is named PPO - Shell". It is the same file: its three pages and every node ID this record cites are unchanged, read through the Figma connector that day. The connector returns only the generic root name "Document", so the name rests on Dean's word, and the date of the rename is not recorded. Citations of "PPO - Shell (accepted)" or "PPO - Shell refined concept", in this record, the rules export, the shell system page, status fragments and the module and library records, mean this file; none is rewritten. Named versions keep their titles; section 11 and section 12 list them.
 
+**Name as of 14 November 2026.** Dean renamed the file "PPO - Shell (accepted)" on 14 November 2026. That is the form the module files use: `PPO - <Surface>` from PPO-STD-001 section 13.2, with the "(proposal)" or "(accepted)" suffix the files carry in practice, as in "PPO - Sales module (accepted)". Section 13.2 itself does not mention the suffix. Citations of "PPO - Shell", "PPO - Shell (accepted)" and the earlier names all mean this file, and none is rewritten. The file's link and key are not recorded (ADR-0050, ADR-0053).
+
 ## 10. Record header toolbar — 9 November 2026
 
 Dean asked, from a screenshot of a quotation record header (breadcrumb, title with a Draft chip and a favourite star, a sub-line, and a toolbar with back, undo, new, duplicate, first, previous, next and last record buttons, Actions, Reports and Issue & send), whether its elements belonged on the module pages. Claude recommended a shared record header for every record page in every module, drew it in this file as a proposal on a new page, and Dean accepted it the same day: "Accept the record header toolbar as drawn."
@@ -277,3 +279,88 @@ Contrast was computed with the WCAG 2.x relative-luminance formula.
 - **CSS token:** no new token is needed. `--ppo-refined-action-primary` is dropped, because the built S1 stylesheet already defines `--ppo-refined-brand-navy`.
 - **Module files:** their copies of the green primary move to brand/navy in each file's next reviewed change (AF-001 in [PR #925](https://github.com/deanrfiedler-gif/powerplants-one/pull/925)). Sales and Estimating, as accepted files, each need a new named version.
 - **Token check:** unaffected, as section 12 states.
+
+## 14. Alignment batch 1 — 13 November 2026
+
+**Instruction.** Dean, in a Claude session on 13 November 2026, after the [independent Shell review](shell-independent-review.md) (PPO-SHELL-REVIEW-PROP): "You can proceed based on your professional recommendations that you have provided." That answers the review's questions Q-A and Q-C to Q-I as recommended; Q-B was already answered (section 13). The session first confirmed that none of the batch was yet in the file, then applied findings SR-01 to SR-22 except SR-06 (section 13), under [PR #946](https://github.com/deanrfiedler-gif/powerplants-one/pull/946). The file's link and key are not recorded (ADR-0050, ADR-0053).
+
+**Decisions applied.**
+
+| Question | Applied as |
+|---|---|
+| Q-A | The repository's [rules export](../design/development/systems/shell-refined-concept-rules.md) is the governing text. Its wording for C1–C6, R1–R115, D1–D41 and Q1–Q22 is now on the notes card `5:686`, and the toolbar rules card `170:10581` is numbered R116–R125 with the export's wording |
+| Q-C | Badge numerals and avatar initials stay at 10 px Medium, as the one exception now written into C6; every other text is on the 11/12/13/14/16/20 scale |
+| Q-D | The demo tenant chip is `status/warning-surface` with brand/navy text (12.97:1); the 3 px `status/warning` stripe stays (R72) |
+| Q-E | Casey Ward is the Service technician (sheet Z, the "Viewing as" banner, the Service flyout's Recent row); Ravi Kumar authorises work order SYN-WO-000041; Sam Jordan confirms the pump specification; Priya Nair stays the estimator. To be confirmed against addendum A3, which this session did not have |
+| Q-F | `accent/estimating-ink` is #156e64 (5.29:1), as the accepted Estimating file set it. The other eleven accents measure 3.13:1 (Sales) to 12.33:1 (Assistant) on their surfaces; R102 confines accents to icon chips, where 3:1 applies, so none changes |
+| Q-G | The workspace menus are components in the Shell file now (below) |
+| Q-H | The More panel's Shared records entry "Documents & outputs" is now "Documents", pointing at the Knowledge workspace's Document register |
+| Q-I | Recorded in the review record: the seven departments, Settings and More are PPO's adaptation of the candidate `REQ-SHELL-001` |
+
+**What changed in the file.**
+
+| Finding | Change |
+|---|---|
+| SR-01 | Demo chip fill on sheet T (`I64:4429;47:3869`) bound to `status/warning-surface` |
+| SR-02, SR-16 | Account menu last sign-in "Wed 4 Nov 2026, 16:04"; AI expected close "Fri 27 Nov 2026" and next activity "Call · Thu 5 Nov, 14:00", matching L's best match; AJ "Due Fri 13 Nov" and "Fri 30 Oct"; the search best match reads "Lindenow VIC · 2 open deals · A$177,500"; the Assistant names Mornington expansion as the one deal without a next activity; the toolbar's Closed variant closes on Mon 7 Dec 2026, after validity |
+| SR-03 | The Riverbend deal reads "Glasshouse fertigation upgrade", its site "Riverbend glasshouse" and Mei Tran "Operations manager" in the search, the call card, the record drawers and their sheets, as the Sales record's one truth (C1). Mornington remains only as Riverbend's second deal, "Mornington expansion", awaiting a site survey |
+| SR-04, SR-18 | Personas as Q-E; the banner reads "Changes are made in their name" |
+| SR-05 | Twelve section eyebrows from 10 to 11 px (Page guide, Assistant, Keyboard shortcuts, Customise my rail, Snapshot drawer); the caller's name and RH01's two headings from 15 to 16 px |
+| SR-07 | Two component sets in the Components section `7:2767`: **Shell / Workspace flyout** `331:10782` (Workspace = the twelve workspaces; Sales is `4:286`) and **Shell / Workspace menu · docked** `331:10783` (the twelve and My Work; Sales is `4:358`). The 23 detached menus on the Workspace menus page became variants, and every sheet there now holds an instance |
+| SR-08 | **Shell / Right drawer · open** `327:10839` with Tab = Nothing selected (`39:3675`), Snapshot `327:10076`, Activity `327:10296`, Files `327:10521`, Conversations `327:10743`, Assistant (`66:4695`) and Page guide (`66:4787`); sheets AI–AL hold instances. **Shell / Top bar** `328:10914` with Width = 1440 (`3:194`), 1920 `328:10447`, 1280 `328:10489`, 1024 `328:10531` and 834 `328:10573`; sheets W and AC and the two reference frames hold instances. **Shell / Rail · expanded** `329:10905` with Workspaces = Seven (`3:423`) and Twelve `329:10726`; sheet AN holds an instance. Only AH keeps its declared detached copies |
+| SR-09, SR-15 | Notes card, its title, status, introduction and headings; toolbar rules card; the shell page header names the named versions through this record; the sheet index lists AI–AN; the Workspace menus header reads accepted; RH01's label drops "[proposal]" |
+| SR-10, SR-19 | Variables: the estimating accent value; role scopes on the 30 core variables (none left at all scopes); a CSS name `var(--ppo-refined-…)` on all 66, each matching a property in `src/app/styles/shell-refined-tokens.css`; the mode renamed "Value"; descriptions of brand/navy, surface/rail-hover, surface/rail-active, status/warning, status/warning-surface and accent/estimating-ink rewritten |
+| SR-11 | Recent rows use the repository's families: SYN-PO-000318, SYN-SHP-000091, SYN-RTN-000007, SYN-DWG-000421, SYN-TQ-000087, SYN-ECR-000012, SYN-FH-000042, SYN-CLM-000011, SYN-SR-000019, SYN-ACR-000007; the Riverbend estimate is SYN-EST-000312; quotation rows lead with the record name (R114); the file reads "Riverbend fertigation layout r02.pdf" |
+| SR-12, SR-13 | Service menu labels "16 pages"; five component descriptions and two labels state the accepted values |
+| SR-14 | The search's zero-count filters use `text/secondary` (5.77:1) in the component and on sheet L |
+| SR-17, SR-22 | "handover" and "Handoffs" throughout; "Sales Pulse"; one search placeholder; the banner date "Sun 15 Nov 2026"; the tooltip's default reads New · N |
+| SR-21 | R15 names the scrim, the strip handle and the file-drop overlay as deliberate plain paints |
+| Found while verifying | The "Phone 390" note on the toolbar page (`170:10242`), left outside its section when the phone component moved on 9 November, is back inside it |
+
+Unchanged: every earlier node ID; the existing instances of the drawer, top bar, rail and Sales menus, which stay linked because combining components keeps their IDs; the Components section's other parts; the toolbar component set and its navy primary (section 13).
+
+**Verification.** Read through the Figma connector after the batch: on all three pages no detached frame is left except AH's declared copies; no child lies outside its sheet or section; no top-level children overlap in any section; every text is on the C6 scale or its 10 px exception; every weekday-and-date string is true to the calendar; the only unbound non-white paints are the three R15 now names; the only text below 4.5:1 is the AB focus-marker annotations (R86) and the preparer's disabled primary. Every menu sheet holds an instance of its Workspace variant, and each menu's page total matches its footer. Renders of sheets T, X, L, O and AI were inspected; one line that wrapped on L was shortened and re-rendered. This session cannot read version history.
+
+**Named version.** Dean saved a version titled "Shell refined concept — accepted · alignment batch 1" before this batch was applied: when the session started, the file still showed the earlier demo chip, weekdays, labels and banner. That version therefore pins the navy primary of section 13 without the batch. The batch needs Dean's acceptance in words and a new named version ([ADR-0067](ADR-0067-design-to-build-operating-model.md) decision 10). The suggested title is "Shell refined concept — accepted · alignment batch 1 applied"; Dean may also retitle the earlier version "Shell refined concept — accepted · navy primary action", which section 13 awaits. Until the new version is recorded here, builds cite the earlier versions and this section ([handoff rule 5](figma-named-version-build-handoff.md)).
+
+**Not done.** Module files keep their local copies until each file's next reviewed change; accepted files (Sales, Estimating) each need their own named version. Addendum A3 should confirm the Q-E cast and the SR-11 families. The CSS value of `--ppo-refined-accent-estimating-ink` (#1f8a7e) changes with the build step that next touches the tokens. No application code changed.
+
+## 15. File structure aligned with the module template — 14 November 2026
+
+**Question and instruction.** Dean asked on 14 November 2026 whether the Shell file used the same layout template as the module files. It did not: the file was built on 8 November, a day before the Sales module file set the template that the other module files follow. Claude recommended aligning the file's structure but not re-laying its sheets. Dean replied: "Proceed based on your recommendations."
+
+**What changed in the file.** The pages now run in the template's order:
+
+| Page | Node | Content |
+|---|---|---|
+| Read me · PPO - Shell | `348:11333` | Page header `352:2`, page template card `352:6`, "Sheet index and notes" card `352:11` (every page, section, sheet and main component set with its node ID), audit card `352:28` |
+| — Accepted — | `348:11334` | Empty separator |
+| Shell refined · desktop shell and menus | `0:1` | Unchanged name. Page header `1:34`, the 40 sheets A–AN in section `6:583`, the notes card `5:686` in section `7:2766` |
+| Workspace menus · flyout and docked (accepted 8 November 2026) | `101:8553` | Unchanged |
+| Record header toolbar (accepted 9 November 2026) | `170:9926` | Unchanged |
+| — Proposals — | `348:11335` | Empty separator: nothing is pending |
+| Shell and kit · the accepted shell components | `348:11336` | Page header `349:2` and the Components section `7:2767`, moved here from the first page with its node ID unchanged |
+| Scratch | `348:11337` | Empty |
+
+The old sheet index section `80:8443` on the first page was removed. No record cites it, and the Read me's sheet index replaces it. The sheets and notes sections moved up 553 px to close the gap. No sheet, component or rule changed. Earlier sections that describe the Components section as "on the first page" (for example section 10) describe the file as it then stood; it now sits on Shell and kit with the same node ID.
+
+**Departures from the module template, by decision.** The page template card records them:
+- **Sheet layout kept.** The shell's sheets are states of one shell, not of one page. They keep their 1,540 × 1,032 grid, their labels 32 px above and the letters A–AN that many records cite, instead of the template's six sections.
+- **Page names kept.** Page names keep their status suffix, because records quote them ([ADR-0055](ADR-0055-figma-file-structure.md) rule 3).
+- **No phone sheets.** The accepted phone header governs below 768 px (R94).
+
+**Verification.** Read through the Figma connector after the change:
+- **Instances:** every instance on the three content pages (1,561, 1,084 and 45) resolves to a main component on Shell and kit, with none missing.
+- **Layout:** the separators and Scratch are empty, and no top-level node overlaps another on the Read me, the first page or Shell and kit.
+- **Render:** the Read me page was rendered and inspected.
+
+**Named version.** The new named version that section 14 asks for should be saved after this change, so that one version pins alignment batch 1 and this structure together. The suggested title is "Shell refined concept — accepted · alignment batch 1 applied". The batch and this structure await Dean's acceptance in words.
+
+**Acceptance and named version — 14 November 2026.** Dean, in the session: "I have saved the named version as "Shell refined concept — accepted · alignment batch 1 applied"" and "I accept all your recommendations." That accepts alignment batch 1 (section 14) and the file structure (this section). The same day Dean renamed the file "PPO - Shell (accepted)" (section 9). This session cannot read version history, so the title rests on Dean's word. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+
+| Build | Named version it cites |
+|---|---|
+| Any build step that starts after 14 November 2026 and uses the shell, including the record header toolbar | "Shell refined concept — accepted · alignment batch 1 applied" (14 November 2026). It also pins the navy primary of section 13 |
+| A build step already started from an earlier version, such as the [S1 build](shell-refined-s1-build.md) | Its own version, unchanged; moving it is its own step (rule 5) |
+
+The version titled "Shell refined concept — accepted · alignment batch 1", saved on 13 November 2026 before the batch, stays in the file's history. It pins the navy primary without the batch. Retitling it "… · navy primary action" remains optional. Module files cite the new version when each is next changed.

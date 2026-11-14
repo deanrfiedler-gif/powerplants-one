@@ -1,0 +1,10 @@
+✔ SV08 seed 124 is inert when late reserved Maintenance 0051 is installed after it (8932.091841ms)
+✔ C1 command-only late Maintenance installation preserves all earlier rows and adds exact dependent migrations (8481.316084ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 19295.016117

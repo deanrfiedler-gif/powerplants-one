@@ -1,6 +1,6 @@
 # Notifications and preferences — design reference
 
-Stable entry: `scope:SH-03`. Owner: Dean Fiedler. Status: **Draft for visual review**.
+Stable entry: `scope:SH-03`. Owner: Dean Fiedler. Status: **Refined Figma design owner-accepted, 13 November 2026; not built to it**. The guidance below remains a draft for visual review.
 Source baseline and existing issued references remain recorded in the register. SH implementation is synthetic and bounded; guide, visual and owner acceptance remain separate.
 
 ## Purpose and task
@@ -26,6 +26,8 @@ Use existing My Work styles, semantic tokens, WorkDialog and platform resource l
 Loading, empty, partial/unavailable, denied, stale and save-error states are distinct. An unavailable source is not a zero workload. A conflicting save requires refresh/review rather than silent overwrite.
 
 ## Visual references
+
+Refined design, owner-accepted 13 November 2026: the private Figma file "PPO - Settings module", page "My account and preferences · SH-03 · SH-05 · EC-02" (`11:15`, 26 sheets: desktop at 1440, dialogs and panels, states, tablet at 1024, phone at 390 and 320). The [Settings refined UI record](../../../decisions/settings-module-refined-ui-proposal.md) lists each sheet with its node ID in section 3 and records the acceptance in section 11. It is drawn inside the accepted shell and governs layout, states and wording where it differs from this page. The page is shared with SH-05 and EC-02; the notification preference sheets are this scope's part. Build basis: the named version "PPO - Settings module (accepted)", saved by Dean on 13 November 2026 (record section 12). No image export is retained in the repository and no application capture exists. Visual review, functional proof and deployment remain separate.
 
 - [notifications-inbox-desktop.png](../../../testing/evidence/sh-platform/captures/notifications-inbox-desktop.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.
 - [notifications-inbox-320.png](../../../testing/evidence/sh-platform/captures/notifications-inbox-320.png) — synthetic implementation capture, pre-PR #283 shell integration; not an approved mockup.

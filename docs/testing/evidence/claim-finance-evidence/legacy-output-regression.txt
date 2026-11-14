@@ -1,0 +1,18 @@
+(node:3505) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3505) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ P10 revoked output owner after durable storage cannot release, retry or recover its receipt (13901.790267ms)
+✔ P10 source changes after rendering preserve reserved bytes and refuse release (15437.643389ms)
+✔ P10 revoked Finance read scope denies released bytes and original issue receipt (25345.747659ms)
+(node:5073) ExperimentalWarning: Module mocking is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:5073) DeprecationWarning: mock.module(): options.namedExports is deprecated. Use options.exports instead.
+✔ tests/database/finance-project-ts01.test.ts (6113.096401ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 65685.727998

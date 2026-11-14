@@ -42,6 +42,12 @@ For PR #883 finding 2, Codex compared `src/finance/context.ts` against merged ma
 
 Only the working Finance contract pin is refreshed after this source review. Issued HTML, historical build manifests, fixture evidence and visual/owner acceptance remain unchanged. Deterministic and model checks are recorded separately from browser execution in the B3 review-fix evidence.
 
+## Agreement charge contract re-read — 11 November 2026
+
+For PR #905 CI job 130201651306, Codex compared the complete Finance context change with M2 `6b26031e0` and current main `9926da5fa`, then read binding `bd-04` and the model check for the active Person/company-context query and `SourceAudienceChanged`. C1 adds AgreementCharge context selection and historical source access checks only. The WorkOrder audience query, refusal and ProjectClaim path remain unchanged. AgreementCharge adds no Contact command, relationship field or customer-distribution authority; its OUT-14 remains held. The Contacts design's existing Service audience assertion remains accurate.
+
+Only the working Finance contract hash is refreshed after this comparison. Issued HTML, source provenance, historical manifests and visual/owner acceptance remain unchanged. The [C1 evidence](../../testing/evidence/agreement-charge-c1/README.md) records deterministic/model checks separately from browser execution.
+
 ## The theme edition
 
 The module builds on the r20 shared token core and adopts theme **r22**'s selection family. `source-pins.json` pins the r22 board by content — SHA-256 `a305361c5d937296a8837e751f1a80ac7e6ca7615013705c7ad55ad794957df0` — and the builder refuses to run if it changes.

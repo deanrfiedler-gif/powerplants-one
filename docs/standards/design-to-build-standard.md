@@ -78,13 +78,13 @@ Compare the running page with the accepted frames at their named version side by
 | `PPO Library` | `PPO - Library` | Variables, styles, icons, shared components, page template, shared patterns |
 | `PPO Domains` | `PPO - Workspace & Assistant` | My Work, Conversations, Assistant, search, calling, account |
 | | `PPO - Sales & Products` | Sales, Products |
-| | `PPO - Estimating & Quotation` | Estimating, CPQ, configurators, quotations |
+| | `PPO - Estimating module` | Estimating, CPQ, configurators, quotations ([record](../decisions/estimating-module-refined-ui-proposal.md), section 14) |
 | | `PPO - Engineering & Projects` | Engineering, Projects |
 | | `PPO - Service & Field` | Service, planning, field, maintenance |
 | | `PPO - Supply Chain & Workshop` | Supply chain, workshop |
 | | `PPO - Finance & Reporting` | Finance, Reporting |
 | | `PPO - Records & Documents` | Customers, sites, equipment, documents, knowledge |
-| | `PPO - Administration` | Administration, settings |
+| | `PPO - Settings module` | Administration, the Settings hub, Assistant settings, My account and the module's global configuration ([record](../decisions/settings-module-refined-ui-proposal.md), A50) |
 | | `PPO - Customer Portal` | Customer portal |
 | | Powerplants One configurator workflows | The existing FigJam board, name unchanged |
 | | The Priva Fertigation Configurator workflow board | The existing FigJam board, name unchanged |

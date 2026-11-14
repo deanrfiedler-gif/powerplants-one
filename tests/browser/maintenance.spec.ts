@@ -245,6 +245,24 @@ const overflow = (page: Page) =>
     ].some((el) => el && el.scrollWidth > el.clientWidth + 1),
   );
 test.beforeEach(async ({ page, baseURL }) => login(page, baseURL!));
+test("C1-2 charge-bearing agreements explicitly withhold the lossy successor form", async ({ page, baseURL }) => {
+  const f = await fixtures(page, baseURL!);
+  await page.goto(`/maintenance/agreements/${f.ag}?view=actions`);
+  await expect(page.locator("summary", { hasText: "Prepare successor agreement revision" })).toBeVisible();
+  const before = await read(page, `maintenance/agreements/${f.ag}`);
+  const schedule = {
+    currency: "AUD", tax_basis: "SYN exact fixture only",
+    lines: [{ id: randomUUID(), due_date: "2026-01-01", amount: "4800.00" }],
+  };
+  await post(page, baseURL!, `maintenance/agreements/${f.ag}`, {
+    ...base(), expected_version: before.row.version, action: "Revise",
+    content: { ...before.sources.revisions[0].content, charge_schedule: schedule },
+  });
+  await page.reload();
+  await expect(page.getByText("Successor preparation for agreements with charge schedules is not available in this form yet. The existing schedule remains unchanged.", { exact: true })).toBeVisible();
+  await expect(page.locator("summary", { hasText: "Prepare successor agreement revision" })).toHaveCount(0);
+  expect((await read(page, `maintenance/agreements/${f.ag}`)).sources.revisions[0].content.charge_schedule).toEqual(schedule);
+});
 test("all fourteen native routes expose their exact guide and preserve shell focus", async ({
   page,
   baseURL,

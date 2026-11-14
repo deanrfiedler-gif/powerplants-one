@@ -1,0 +1,10 @@
+✔ C1-1 populated 0127 upgrade preserves consumed/unknown charges and original recovery (8962.963109ms)
+✔ C1-1 0127 duplicate cross-revision history is reproduced and 0128 refuses atomically (6200.870972ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18242.323977

@@ -220,6 +220,6 @@ A script pass ran on all seven scope pages after the batch.
 | PDR-13 | This file, at Library adoption | As recorded in A21 and P1 |
 | PDR-14, PDR-15, PDR-17 | Library file | `action/primary`, a scrim variable, CSS code names and styles |
 | PDR-18 (10 px labels) | Shell file | The rail labels and badges inside the Shell copies |
-| PDR-19, PDR-20 | Repository | Each in its own change |
+| PDR-19, PDR-20 | Repository | Each in its own change. PDR-19 was decided on 14 November 2026: one GST wording for the whole app, recorded in the [cross-file alignment audit](figma-cross-file-alignment-audit.md), section S11. This file already follows it |
 | Q-1, Q-3 elsewhere | Shell and Estimating files | The Shell's snapshot drawer at 480 px; the Estimating file's two-digit revisions |
 | New named version | Dean | Done: saved as "PPO - Products module (accepted) · alignment batch" on 13 November 2026. It is now the build basis ([proposal record](products-module-refined-ui-proposal.md#13-named-version--13-november-2026), section 13) |

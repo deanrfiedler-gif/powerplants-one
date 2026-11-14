@@ -430,6 +430,48 @@ The synthetic format is the only enabled proposal for the current prototype. The
 | Variation | VAR | `SYN-PPO-VAR-000001` | Future local scope-change identity |
 | Library document | DOC | `SYN-PPO-DOC-000001` | Stable internal library identity; exact revisions are separate (DK-01/DK-02) |
 | Document transmittal | TRN | `SYN-PPO-TRN-000001` | Future exact issue/distribution package |
+| Access-change request | ACR | `SYN-ACR-000007` | Settings AD-01; short form of the legacy `SYN-PPO-ACR-`, whose references are preserved |
+| Sync item | SYNC | `SYN-SYNC-000431` | Settings AD-04; one finished event sent to MYOB under one key; never an MYOB document number |
+| External mapping | MAP | `SYN-MAP-000014` | Settings AD-05; the source-system key stays separate (10.3) |
+| Data-quality finding | DQF | `SYN-DQF-000045` | Settings AD-03 |
+| Data policy | DQ-P | `SYN-DQ-P01` | Settings AD-03; a two-digit series (P01 to P07) as drawn, an explicit exception to the six-digit sequence of 10.1, limited to data policies |
+| Audit export | EXP | `SYN-EXP-000004` | Settings AD-07; identifies the manifest, not the exported content |
+| Personal information request | PIR | `SYN-PIR-000002` | Settings AD-08 |
+| Operational incident | OPI | `SYN-OPI-000007` | Settings AD-09; separate from Service field incidents |
+| Release readiness record | REL | `SYN-REL-000005` | Settings AD-09; not a software release tag (16.3) |
+| Migration exception | MEX | `SYN-MEX-000033` | Settings AD-06; separate from Finance exceptions |
+| Migration rehearsal | REH | `SYN-REH-000003` | Settings AD-06; a rehearsal writes nothing live |
+| Help request | HLP | `SYN-HLP-000013` | Settings AD-10 |
+| Flagged assistant answer | AIF | `SYN-AIF-000002` | Settings AI-06 |
+| Test definition | TDF | `SYN-TDF-000001` | Workshop settings (Q9), shown in the Settings numbering registry |
+| Dispatch | DSP | `SYN-DSP-000061` | Supply SC-06 and SC-07; a delivery dispatch only, never a dispute (14 November 2026) |
+| Customer dispute | DPT | `SYN-DPT-000003` | Finance FN-02; disputes drawn as `SYN-DSP-` move here and keep their numbers (14 November 2026) |
+| Progress claim | CLM | `SYN-CLM-000016` | Finance FN-04; never a supplier claim (14 November 2026) |
+| Supplier claim | SCL | `SYN-SCL-000320` | Supply SC-08; supplier claims drawn as `SYN-CLM-` move here and keep their numbers (14 November 2026) |
+| Estimate-to-actual review | EAR | `SYN-EAR-0001` | Estimating ES-09 outcome review; the four-digit r01 references are preserved (14 November 2026) |
+| Calibration proposal | CAL | `SYN-CAL-0003` | Estimating ES-10; the four-digit references are preserved; never an instrument tag (14 November 2026) |
+| Inspection | INS | `SYN-INS-000021` | Service FI-03 and FI-04 inspections only; never an instrument tag (14 November 2026) |
+| Commissioning handover | CMS | `SYN-CMS-000012` | Engineering EN-08 to Service; registered by the Service alignment decision Q11 (14 November 2026) |
+
+**13 November 2026 amendment:** Dean adopted the fourteen Settings families above, from ACR to TDF ([Settings refined UI record](../decisions/settings-module-refined-ui-proposal.md), A52 and section 11). They name synthetic design records only. No counter, column or allocation is implemented. The families that other module files propose are not added here. The settlement of the clashes between files (cross-file audit AF-141, drawn on the Settings numbering registry) is proposed and not yet adopted.
+
+**14 November 2026 amendment:** On Dean's instruction of 14 November 2026 ("Proceed however you believe is the most professional"), the clash settlement drawn on the Settings numbering registry (GL04; cross-file audit AF-141; [Settings refined UI record](../decisions/settings-module-refined-ui-proposal.md), section 11) is adopted. So are the reference decisions Dean accepted in the [Service alignment audit](../decisions/service-module-figma-alignment-audit.md) (Q11) on 13 November 2026. The eight rows above dated 14 November 2026, from DSP to CMS, record them:
+
+- DSP stays the Supply dispatch, and Finance disputes move to DPT.
+- CLM stays the Finance progress claim, and Supply supplier claims move to SCL.
+- EAR stays the Estimating outcome review, CAL stays the Estimating calibration proposal, and INS stays the Service inspection.
+- CMS is registered for commissioning handovers.
+- A record keeps its number when it changes family, as `SYN-DSP-000003` becomes `SYN-DPT-000003`.
+
+**Test-instrument and certificate tags.** Tags on test instruments and certificates (for example `SYN-MEG-002`, `SYN-CLP-006`, `SYN-PRS-001`, `SYN-FLO-001`, `SYN-TMR-002` and `SYN-CERT-0417`) are asset tags, not record references. They keep their three- or four-digit numbers, outside the six-digit rule of section 10.1 and Addendum A2 (Service Q11). A tag prefix names the instrument's kind and never reuses a record type in the table above:
+
+- insulation testers MEG, not INS, so Engineering's `SYN-INS-003` becomes `SYN-MEG-003`;
+- earth testers ERT, not EAR;
+- pressure gauges PRS, not PG;
+- flow meters FLO, not FLM;
+- the Engineering instrument drawn as `SYN-CAL-002` becomes `SYN-INST-002`.
+
+Each module file renumbers in its own reviewed change, and an accepted file needs a new named version when it does. Like the Settings families, these codes name synthetic design records only: no counter, column or allocation is implemented.
 
 These type codes are a proposed registry. Adding optional references to existing Organisation, Person, Site or revision records requires an explicit dictionary amendment. Do not silently add fields because a naming example mentions them. Existing `display_number` fields should use the common format where applicable.
 
@@ -594,7 +636,7 @@ Name reusable UI components by purpose, such as `StatusBadge`, `RecordReference`
 
 For new design tokens, use semantic names such as `--color-text-primary` and `--color-status-warning`. Avoid tying a business meaning directly to an arbitrary colour label such as `green-thing`. A badge's text/state contract remains authoritative; colour is supporting presentation.
 
-Name Figma files `PPO - <Surface>` and folders `PPO <Group>`, and Figma pages `[Page name] · [scope ID]`, using a real scope ID. Name Figma components `Area / Component`, matching the code name where one exists, without scope IDs or version numbers as prefixes. Name Figma variables by role, such as `status/warning/text`, and set the CSS name when each is created. The [design-to-build standard](design-to-build-standard.md) lists the files and rules. Existing names cited by a record do not change.
+Name Figma files `PPO - <Surface>` and folders `PPO <Group>`, and Figma pages `[Page name] · [scope ID]`, using a real scope ID. A design file carries its status as a suffix: `(proposal)` while it is under proposal and `(accepted)` once Dean accepts it, as in `PPO - Sales module (accepted)` and `PPO - Shell (accepted)`. The file is renamed at acceptance and its decision record notes the new name. The library and the frozen record file, `PPO - Library` and `PPO - Design`, carry no suffix. Name Figma components `Area / Component`, matching the code name where one exists, without scope IDs or version numbers as prefixes. Name Figma variables by role, such as `status/warning/text`, and set the CSS name when each is created. The [design-to-build standard](design-to-build-standard.md) lists the files and rules. Existing names cited by a record do not change, except a design file's status suffix at acceptance; a citation of the earlier name still means that file and is not rewritten.
 
 ## 14. Database fields and schemas
 

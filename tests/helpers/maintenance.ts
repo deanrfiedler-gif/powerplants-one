@@ -10,6 +10,7 @@ import { createCase, warrantyCommand } from "../../src/maintenance/warranty";
 import { createAssessment } from "../../src/maintenance/assessments";
 import { workspace } from "../../src/maintenance/reads";
 import { CRM, crmBase } from "./crm";
+import { maintenanceTestDates } from "./maintenance-dates";
 export { CRM };
 export const base = crmBase;
 export const asset = "80000000-0000-4000-8000-000000000001";
@@ -29,8 +30,7 @@ export const source = () => ({
 });
 export const agreementContent = () => ({
   title: "SYN maintenance agreement",
-  effective_from: "2026-01-01",
-  effective_to: "2028-12-31",
+  ...maintenanceTestDates().agreement,
   service_scope: "Synthetic visual observations",
   exclusions: "No invasive intervention",
   response_terms: null,

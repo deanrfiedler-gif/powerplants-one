@@ -37,13 +37,15 @@ import {
   stable,
 } from "../helpers/acceptance";
 import { finishStage } from "../helpers/acceptance-journey";
+import { verifyConnectedMaintenanceBilling } from "../helpers/connected-maintenance-billing";
+import { verifyClaimEvidence } from "../helpers/claim-finance-evidence";
 if (localConfig().database_name !== "ppo_synthetic_test")
   throw Error("Disposable database required");
 process.env.PPO_ALLOW_RESET = "dispose-synthetic";
 process.env.PPO_RESET_DATABASE = "ppo_synthetic_test";
 before(reset);
 after(closeDatabase);
-test("B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V-01, native closeout and exact reconciliation", async () => {
+test("B4/M2/C1 connected Finance component: project claims, separate agreement fee and covered six-monthly work reconcile without double billing", async () => {
   const f = await projectFinanceFixture(true);
   const work = await linkedFinanceDraft(f.project.id);
   await assert.rejects(
@@ -178,5 +180,12 @@ test("B4 TS-01 connected Finance component: cost-only field work, M1–M4 plus V
   assert.deepEqual(
     [measures.billed_value, measures.cash_received, measures.open_receivable],
     [null, null, null],
+  );
+  await verifyConnectedMaintenanceBilling(f);
+  await verifyClaimEvidence(f.reconciler, claim.id, "ProjectClaim", "135090.00");
+  // The separate fee and covered visit must not change project entitlements.
+  assert.deepEqual(
+    (await readCommercialFinance(f.reconciler, f.project.id)).claim_measures,
+    measures,
   );
 });

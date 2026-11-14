@@ -138,3 +138,23 @@ New since the audit, and also verified:
 - **Gantt alignment.** Elements are centred on their row lines, and the Gantt anatomy matches the Library.
 - **Avatars.** Initials replace full names.
 - **Clipped text.** None remains anywhere in the file.
+
+## 9. Status after audit batch 3, 13 November 2026
+
+Dean accepted every recommendation in section 5 and the three cross-file rulings; the changes are recorded in section 10 of the [proposal record](projects-module-refined-ui-proposal.md). Each status below was re-tested by a read-only sweep of all 229 sheets.
+
+| Finding | Status | Evidence |
+|---|---|---|
+| PJA-01 Kim Patel | Fixed | Sam Jordan in 109 texts and 2 avatars (AQ-2) |
+| PJA-02 Record header | Fixed | Local copies of the Shell's record header (`243:162`), phone header (`243:210`) and phone sticky bar (`243:229`) on 105 record sheets and 4 phone records; one primary per record, Actions and, where the record has outputs, Outputs; no desktop back arrow or "…" menu in any header |
+| PJA-03 Shell basis | Fixed | The Read me and the proposal record cite "Shell refined concept — accepted · record header toolbar" (10 November 2026) |
+| PJA-04 Collapsed menu | Fixed | Local 12 px strip `225:187` on PJ03 and PG02; `25:222` removed; A9 withdrawn (AQ-4) |
+| PJA-05 Flyout | Fixed | X33 uses the local copy of the Shell's Projects flyout (`259:178`) with Favourites, Saved views, Recent, "All 11 Projects pages" and "Edit menu (administrators)"; no route or decision sub-lines |
+| PJA-08 Literal paints | Partly fixed | Unchanged since section 8; the rest waits on the Library's publication |
+| PJA-10 Insights pages | Fixed | IS01 to IS04 and TB16 removed; the menu's Insights items open RP-03 and FN-03 (AQ-5) |
+| PJA-12 Drawer widths | Fixed for drawers | Per AQ-1 the 432 px panels conform; the working calendar is 752 px (800 with its tab column) and the tablet task panel 480 px. AC01's 440 px inline inspector (A76) is unchanged and stays for Dean's review |
+| PJA-18 Signed-in person | Fixed | 71 sheet labels append "· as <person>" (AQ-3) |
+| PJA-20 File name | Fixed, 14 November 2026 | Dean renamed the file "PPO - Projects module (proposal)" (AQ-6), the name the Read me, the records and both named versions use; "(accepted)" waits on his acceptance of the design |
+| PJA-21 Kit mapping | Open | At the Library's publication |
+
+Cross-file rulings: AC-12 needed no change; AC-22 gives the Projects handover SYN-OPP-000338; AF-129 sets SYN-QUO-000170 r01. The Gantt points G-1 to G-4 of the proposal record's section 9 are applied there, except G-2, which waits for the Library's Dependency part, and G-1 on the Programme, which waits for the Library owner's amendment of rule G2.
