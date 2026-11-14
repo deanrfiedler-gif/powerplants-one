@@ -2,14 +2,14 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6), until a different session has checked the alignment batch of 14 November 2026 (section 15), pinned by the named version "PPO - Sales module (accepted) · alignment batch" that Dean saved the same day, and the Products view aligned after it (section 15.7), and Dean has saved the version that follows the check; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6), until a different session has checked the alignment batch of 14 November 2026 (section 15), pinned by the named version "PPO - Sales module (accepted) · alignment batch" that Dean saved the same day, the Products view aligned after it (section 15.7) and the polish pass of the same day (section 16), and Dean has saved the version that follows the check; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
 
 # Sales module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, section 12 the acceptance of N1–N4 and the named version, and section 13 the second batch, the customisation pages, the adoption of N13, the tablet-bar correction, the restructure of the file into pages and the version that pins them. Section 14 records the phone tab bar restyle of 10 November 2026, and section 15 the alignment batch of 14 November 2026, applied on Dean's decisions on the [independent review](sales-module-independent-review.md).
+**Owner:** Dean Fiedler · **Date:** 9 November 2026 · **Status:** Owner-accepted design, 9 November 2026 ([Acceptance — 9 November 2026](#9-acceptance--9-november-2026)). Sections 1 to 8 are the proposal record as written before acceptance; section 9 records the decision, section 10 the audit, section 11 what was drawn after Dean accepted the audit's recommended order, section 12 the acceptance of N1–N4 and the named version, and section 13 the second batch, the customisation pages, the adoption of N13, the tablet-bar correction, the restructure of the file into pages and the version that pins them. Section 14 records the phone tab bar restyle of 10 November 2026, section 15 the alignment batch of 14 November 2026, applied on Dean's decisions on the [independent review](sales-module-independent-review.md), and section 16 the spacing and layout polish pass that followed it the same day.
 
 On 9 November 2026 Dean asked for the refined versions of the UI pages of the Powerplants One Sales module to be built in Figma, in a brand-new file rather than inside the shell file: "I actually wanted you to create a brand new Figma page file for the Sales module UI pages." He set the accepted shell as the source of truth for the chrome ("The Figma link for the Shell UI below is the source of truth for the design of the Shell UI for the Sales module pages") and the trial Sales sheets in "PPO - Shell concept" as reference only, and gave four rules: register tables must not stack data ("only one line of data in each cell, even if this means the table will have to scroll horizontally"); no second search bar in the main content because the shell carries global search, while Find stays in the flyout and docked menus; the pages must look as professional as the shell pages; and otherwise full creative control.
 
@@ -475,3 +475,53 @@ Dean saved the named version "PPO - Sales module (accepted) · alignment batch" 
 **Not changed, for the check.** PR01 keeps its Compatibility button, which CA14 does not draw; no decision removes it. The product names in R03's scope lines and SI02's equipment (EC/pH dosing unit DU-2, a misting line valve, Weather station WS-3) cite no catalogue reference and are not among CA14's rows; they stay as drawn.
 
 These changes postdate the named version. A further version is needed after the independent check, together with any fixes the check brings.
+
+## 16. Polish pass — 14 November 2026
+
+Dean asked for the file to be polished "to ensure all the element look professional", pointing at the signals strip on the Deal record, which sat flush against the bottom of the white header band. The pass was applied in the same file after the alignment batch, and it finished before the Products view of section 15.7 was drawn, so its PR01 edge fix predates PR01's new rows. Dean saved the alignment batch's named version the same day (section 15.7). This record does not establish whether he saved it before or after the pass finished, so the pass is pinned by the version Dean saves after the independent check. It changes spacing, widths, alignment, wrapping and truncation only. No sheet was added or removed, no state or journey changed, every node ID cited earlier still resolves, and the only wording changes are listed in 16.3.
+
+### 16.1 Method
+
+- **Scan.** A read-only script over the nine scope pages (about 61,000 nodes) looked for filled bands with padding on one side only, text extending past its parent or its parent's padding, overlapping siblings, unbound paints and fonts. Every page uses Roboto; unbound paints remain only on the D05 forecast ramp, as section 15.3 records.
+- **Review by eye.** Five read-only reviews, one per group of pages, rendered every sheet and confirmed each defect from node properties and a zoomed render. Each finding was checked again before it was changed, and the shell chrome was left to the Shell file.
+- **Re-scan.** After the fixes the scan finds no text past its container's padding on any scope page apart from the 2 px "AA" contrast sample on ST01, a specimen.
+
+### 16.2 Changes
+
+| Area | Sheets | Change |
+|---|---|---|
+| Signals strip gap (the reported defect) | R01 to R07, X03 to X05, X11, S04; L02 to L06, X06, X14, X15 | The Record header's bottom padding goes from 0 to 12 px, matching its top padding and S03; 20 headers |
+| Tables fitted to their cards | R02, R03, R06, SI02, AD03, AD08 | Tables that were fixed wider than the card content now fill it; R02, R03 and R06 columns rebalanced so headers and values are not clipped; R03's Kind column is a fixed 96 px so the columns after it sit under their headers |
+| Column widths | H01, W01, X16 (Revision and Handover, 100 px); D06, X17 (Outcome, 80 px); AD02 (Default, 100 px); SI02 (State, 140 px); TB09 (Rev, 90 px); TB12 (Oldest 204 px, Above 2 × median 132 px); X06 (130 / 230 / fill); H04 (r01 and r02 fill) | Header and body cells share one width, so every column lines up with its header |
+| Quoted column | D01, D03, D07, X01, X07, X23, X24 | The status chip sits in a 52 px slot and the dash is right-aligned, so amounts and dashes end on one line |
+| Toolbars | D01, D03, D07, X01, X07, X09, X23, X24, S02, D06, X17, X08 | Gaps from 8 to 6 px; D06 and X17 also take 8 px chip padding; X08's filtered toolbar wraps, with Group, Sort and the columns button on a second row; the columns button now ends on the 24 px gutter |
+| Text past its container | P01, X10, X13, S05 (Focus for today); view chips on AC01, H01, C01, O01, SI01 and the dialogs over them; view tiles on L01, X02, S01; H02, TB17, X22 inputs; C02, X21, L03, PH03, X18, X20, TB07, X25, PH09 | Single-line text ends in an ellipsis inside its padding and the count or chip beside it stays visible; spacers that competed with a truncating text are hidden |
+| KPI tile component `9:287` | All 48 instances | Label and Meta fill the tile and wrap instead of running into its padding; on IN01, where one meta now wraps, every tile in the strip stretches to one height |
+| Close buttons | X10, X11, X13, X14, X15, X16, X24 | The title fills the header row instead of a fixed width, so the close button sits inside the dialog's padding (X16's was clipped) |
+| Card headers | R03, AD05 | R03's three scope chips move under the card title, so Edit scope is no longer clipped; AD05's Draft chip moves to the meta line, so the title no longer overlaps it |
+| Wrapping | Contact (12) and Site (14) fields on the Deal record; Captured enquiry on the Lead record (8); X03; TB17; PH10; X05 | Non-breaking spaces keep phone numbers and "Lindenow VIC" whole; X03's evidence options wrap whole; TB17's references keep their hyphens; "EC/pH" stays together; X05's descriptions fill their column, so no option ends in one orphan word |
+| Calendars | A01, TB18, PH11 | A01's day columns are 238, 237, 238, 237 and 238 px inside the 1252 px grid (header, due lane, lines and events), so Friday is no longer cut; TB18's events and hour lines fit their 162 px day columns and truncate with an ellipsis; PH11's empty 18 px frame, left behind when section 15 removed the now line, is deleted |
+| Equal heights and scale | IN01, IN02, AD05 | Cards in a row stretch to one height; IN02's conversion bars are drawn at their percentage of the track (54 %, 61 %, 62 %) |
+| Edges and padding | S04, TB02, PH01, PH02, PH04, PH05, PH09, PH10, TB04, D03, D07, AD01, AD03, AD04, X25, C01, O01, SI01, PR01, X21, X22, TB01, M01, TB19, X08, S02 | S04's banner sits 16 px below the header; tablet and phone bodies, card rows and signal grids take the same side padding as the header above them (20 px tablet, 16 px phone); TB04's tiles sit 12 px above the table; D03's quick actions sit 12 px below the drawer header; AD01's header takes 12 px below it and its body 24 px above, AD04's body 24 px as AD07 to AD09 have, and AD03's stepper 12 px below the subtitle; X25's description sits inside the 24 px padding with 16 px above the footer; view tiles sit 8 px below the page header; TB01's toolbar hugs its switcher; M01's message text keeps its right padding; TB19's odd avatar is 24 px like the rest; D07's selection bar floats 16 px above the footer; X08 and S02 empty states are centred on the table |
+| State chips and tabs | TB13, TB15, TB16, TB14 | The tablet state strips wrap with each chip at its natural width instead of cutting every label; TB14's tab labels take 8 px side padding so all seven tabs fit the column |
+| Small alignment | X07, X10, X14, X15, L03, ST01, TB01, D02, X09 | X07's radio labels line up with the checkbox labels; option rows are the same height selected or not; L03's chevrons are centred; ST01's row markers leave the layout flow, its button grid fits the card padding and its title wraps; X15's empty "revisit on" box becomes a date field with a placeholder and calendar icon; TB01 and D02 stage totals fit their values; X09's loading rows follow the table's columns |
+
+### 16.3 Wording changes
+
+- The "Deals needing attention" tile on P01, X10, X13, S05 and a Leads tablet sheet: "no next step 1 · overdue 1 · moved 3 times 1" becomes "1 no next step · 1 overdue · 1 moved 3×", number first like the tiles beside it, so it fits the tile.
+- TB12's "Needs attention" tile: "1 overdue · 1 no next step · 1 close date moved 3×" becomes "1 overdue · 1 no next step · 1 moved 3×", IN01's wording, so it fits the tile.
+- X15's date field shows the placeholder "dd Mon yyyy".
+
+The non-breaking spaces, hyphens and word joiners change no visible text.
+
+### 16.4 Verification and limits
+
+- **Checked.** The re-scan above; renders of R01, R02, R03, R06, X03, X15, X25, the Focus card, the KPI tiles, A01, TB12, TB13, TB15, TB16, TB17, TB18, IN02, AD05, SI02, C02, PH09, ST01, D01's Quoted column and X08's toolbar. Thirteen record headers keep 0 px bottom padding (H02 to H04, W02, AC02, X18 to X20, TB13 to TB17): they have no fill of their own, and renders of H02 and TB16 show the bar below supplies the spacing.
+- **Not done.** Keyboard, screen-reader and touch behaviour cannot be tested in a static file.
+- **Open.**
+  1. The tablet rail (`Shell / Rail · collapsed` `7:155`) at 768 px cuts More at the bottom of its scroll viewport, just above Settings. It is shell chrome and belongs to PPO - Shell.
+  2. TB13's Next activity signal still truncates its time ("Call · today, 11:…"), because the tablet signal tiles are one line high.
+  3. Borderless footer buttons (X13 "Skip this call", X23 "Reset to view default") keep their 12 px padding, so their labels sit 12 px inside the content edge. Left as button padding.
+  4. TB16's state strip wraps with Kick-off alone on its second row.
+  5. Some rows keep odd spacing values (5 and 7 px) that render correctly.
+- **Named version.** Section 15.7 records the saved "PPO - Sales module (accepted) · alignment batch" version. Whether it holds all, part or none of this pass is not established. The version Dean saves after the independent check pins this pass together with section 15.7, and the check by a different session covers this pass too.
