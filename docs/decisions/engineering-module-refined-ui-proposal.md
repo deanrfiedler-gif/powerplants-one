@@ -385,7 +385,7 @@ Page `7:15` · Engineering settings; no route is built · 11 sheets, desktop onl
 
 | ID | Assumption or departure |
 |---|---|
-| A1 | File name. The file is "PPO - Engineering module (proposal)" as Dean created it; Dean's link of 13 November 2026 names it "PPO - Engineering module", and the Read me title follows that name; the design-to-build standard names the domain file "PPO - Engineering & Projects", and Projects has its own file. Recorded, not changed |
+| A1 | Settled by Dean on 14 November 2026: the file is "PPO - Engineering module (proposal)". Dean's link of 13 November 2026 named it "PPO - Engineering module" (audit AF-028); Dean renamed it on 14 November, so the file name, the Read me title and this record agree. It becomes "PPO - Engineering module (accepted)" only when Dean accepts it. The design-to-build standard names the domain file "PPO - Engineering & Projects", and Projects has its own file |
 | A2 | Page titles are the rail labels, with the module's full name as the sub-line (Q1); the route register's long titles differ. A departure for the register |
 | A3 | Reference families follow PPO-REFERENCE-NAMESPACES-DEC: supplier submittals are `SYN-SMT-` so `SYN-SUB-` stays the subcontract package family (Q2); the EN-04 and PD-04 fixtures that used `SYN-SUB-` are earlier examples. The flyout's Recent rows use this file's fixtures; the Shell file's accepted stand-ins (DRW-, TQ-, CH-) remain to be aligned there |
 | A4 | The collapsed docked menu is the accepted Shell strip as drawn in the Shell file: 12 px wide with 1300 px of content. The brief described 80 px and 1232 px; the accepted component was used (Q8) |
