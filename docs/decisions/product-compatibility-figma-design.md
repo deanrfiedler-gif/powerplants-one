@@ -2,7 +2,7 @@
 document_id: PPO-PD04-PRODUCT-COMPATIBILITY-FIGMA-DEC
 date: 2026-11-01
 owner: Dean Fiedler
-status: Owner-accepted design; restyling the built page, the new relationship words, lifecycle words and L/h unit are separate
+status: Owner-accepted design; D2 amended 14 November 2026 (section 8); the relationship, criterion and lifecycle words are built (#947); restyling the built page and the L/h unit are separate
 source_commit: 1fc002978ee2a6871121d9252609a49c6dc31b9a
 versioning: git
 ---
@@ -77,7 +77,7 @@ Declared under [PPO-UI-CONFORMANCE](../standards/html-module-conformance.md).
 | ID | Rule or departure | Basis |
 |---|---|---|
 | D1 | DP-25 against MD-20 reads Unresolved, not Conditional, and keeps the drafted condition "Compatible if fitted with hose adaptor kit SYN-PROD-AK8 r01". EN-06's acceptance of `SYN-SBS-000007` remains EN-06's own decision | Contract; `relationshipOutcome` refuses Conditional unless every criterion is Met. Q1 |
-| D2 | Five relationship words: Compatible with, Replaces, Replaced by, Alternative to, Requires accessory. Replaces and Replaced by are one stored relationship read from each side | Dean's brief. The app stores only Compatibility and CandidateReplacement today |
+| D2 | Five relationship words: Compatible with, Replaces, Replaced by, Alternative to, Requires accessory. Replaces and Replaced by are one stored relationship read from each side. Amended 14 November 2026: section 8 | Dean's brief. The app stores only Compatibility and CandidateReplacement today |
 | D3 | Criteria read Met, Unresolved or Not met. Conclusions read Not reviewed, Conditional, Unresolved or Rejected, plus the derived Needs reassessment. Every status has words, never colour alone | Brief and contract. The app stores Met, Unknown and NotMet |
 | D4 | Lifecycle reads Current, Last-time buy, Discontinued or Unknown, always with its source and date | Brief. Products and the app say Supported and also have Retired. Q5 |
 | D5 | The register collapses the rail to icons so all eight columns fit at 1440 without horizontal scroll. Rows group by conclusion, and the bands span the checkbox and settings columns in the group colour | Pipedrive grid preference; band rule |
@@ -114,3 +114,16 @@ These are recorded, not changed:
 - After acceptance Claude changed status wording on the page, the "Recommended" wording in the notes and the location of the parts, and added the File index row. Two small corrections followed, found while checking the captures: the register heading "Interface criteria" was clipped and now reads "Criteria", and the register footnote gained padding.
 - Dean saved the named version "Product compatibility — accepted" on 1 November 2026: "I have saved the named version as Product compatibility — accepted". Claude did not open version history to confirm it. After the save, Claude changed only the named-version wording in the page header.
 - Nothing is built by this record, so there is no application or device evidence, and no UI baseline.
+
+## 8. Amendment — 14 November 2026
+
+On 14 November 2026 Dean decided seven points for the first Products build step, [PR #947](https://github.com/deanrfiedler-gif/powerplants-one/pull/947), accepting Claude's recommendation on each. He confirmed them on the pull request: "[DEAN] I confirm decisions 1–7 in comment 6871312916." Two of them amend D2:
+
+- **D2 gains a sixth word, Accessory for.** It is read from the accessory's side of a Requires accessory relationship, so the accessory's page no longer says that the accessory requires an accessory. This changes the display only: the stored type stays `RequiresAccessory` (decision 7).
+- **Which side reads Replaces.** A Replaces relationship stores the original, older product as `from` and its successor as `to`. The original's side reads Replaced by and the successor's side reads Replaces. This matches the record form's Original and Candidate ends, the cards and the replacement chain (decision 1).
+
+Two more give D2 and D4 words to stored values that had none: CandidateReplacement reads Alternative to, because a candidate substitute is not recorded succession, and Retired reads Discontinued (decisions 3 and 2).
+
+Dean merged #947 the same day. It builds the relationship words of D2 as amended, the criterion words of D3 (Met, Not met and Unresolved, with Not reviewed for a missing conclusion) and the lifecycle words of D4 and Q5 for new writes, while older revisions are still read. The [Products contract](../contracts/products-catalogue.md) records the built behaviour, and the [Products module record](products-module-refined-ui-proposal.md), section 16, records which build items it closes.
+
+Section 5 otherwise stands. The built page is not yet moved to this design, and the derived Needs reassessment (D10), Q3's standard criteria, Q4's estimator rule and Q6's L/h unit are not built.

@@ -9,7 +9,7 @@ versioning: git
 
 # Products module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, section 13 the named version that pins it as the build basis, section 14 the alignment batch applied after that version, and section 15 the file's current name.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, section 13 the named version that pins it as the build basis, section 14 the alignment batch applied after that version, section 15 the file's current name, and section 16 the five section 6 items built on 14 November 2026.
 
 On 12 November 2026 Dean supplied the prompt "Design the Products module pages for Powerplants One in Figma" with Addendum A3 (persona and story reconciliation, section A3.13 for Products) and a new, empty Figma file: "Below is the link to the new Figma page file that I have created for this." The prompt carries his standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach."
 
@@ -498,3 +498,27 @@ It is the same file. Read through the Figma connector that day, it has the same 
 Every citation of "PPO - Products module" means this file. That covers this record (A1 and sections 1 to 14), the [independent review](products-module-independent-review.md), the status fragments and the build brief for the first Products build step. No citation is rewritten. The two named versions keep their titles, "PPO - Products module (accepted)" and "PPO - Products module (accepted) · alignment batch", and section 13's build basis is unchanged.
 
 The file's link and key stay out of this public repository (ADR-0050, ADR-0053). The Read me header in the file already reads "PPO - Products module (accepted 12 November 2026)" and is not edited, so the file stays identical to its named version. A1's other point stays open: the design-to-build standard still names "PPO - Sales & Products" as the domain file for Products.
+
+## 16. Build of five section 6 items — 14 November 2026
+
+Dean merged [PR #947](https://github.com/deanrfiedler-gif/powerplants-one/pull/947), "Products PR 1: accepted vocabulary, duplicate matching and catalogue order", on 14 November 2026: head `e5690480`, merge `d7260fe1`. Codex built it from Dean's Products PR 1 brief of 13 November 2026 against the build basis of section 13. Claude's two independent reviews are on the pull request, with the confirmation at the merged head that every finding was addressed. Dean confirmed the seven build decisions on it: "[DEAN] I confirm decisions 1–7 in comment 6871312916."
+
+It closes five items of section 6. Section 6 stays as written; this section records the closure.
+
+| Item | Built as |
+|---|---|
+| 3 | The catalogue footer reads `N shown · limit 100 · read live at 09:00 AEDT · no total is claimed`. The time is `read_at` from the catalogue's repeatable-read transaction, shown in the viewer's zone. The footer names no order; the Order control shows it |
+| 16 | Lifecycle reads Current, Last-time buy, Discontinued or Unknown. New writes store `Current`, `LastTimeBuy`, `Discontinued` or `Unknown`. Older revisions keep `Supported`, read as Current, and `Retired`, read as Discontinued |
+| 18 | Relationships read Compatible with, Alternative to, Replaced by and Replaces (one `Replaces` row, read from the original and from the successor), and Requires accessory and Accessory for (one `RequiresAccessory` row). Criteria read Met, Not met and Unresolved, and a missing conclusion reads Not reviewed. Stored rows keep their words |
+| 19 | Duplicate suggestions ignore case, spaces and hyphens. Exact external-key resolution and explicit dispositions are unchanged |
+| 24 | The catalogue orders by Product or by Updated, with ties broken by product ID and the 100-row bound kept |
+
+The build adds to or narrows the accepted design at three points, each Dean's decision on #947:
+
+- **Two stored values without a word of their own:** Retired reads as Discontinued, and CandidateReplacement reads as Alternative to, because a candidate substitute is not recorded succession (decisions 2 and 3).
+- **Accessory for:** read from the accessory's side of a Requires accessory relationship. It adds a sixth word to the five of section 4 and PD-04 D2. [PD-04's record](product-compatibility-figma-design.md), section 8, holds the amendment, with the side that reads Replaces (decisions 7 and 1).
+- **The lifecycle filter** takes only the four stored write values. A saved link that filters on `Supported`, `Retired` or `Last-time buy` is refused rather than redirected (decision 5; PPO-STD-001 section 12.2).
+
+The [Products contract](../contracts/products-catalogue.md) is the authority for the built behaviour. No migration, permission, grant, seed or route changed, and stored revisions and their hashes are unchanged.
+
+This records code delivery only. It is not a visual review or acceptance of the built pages, and nothing is deployed. Items 1, 2, 4 to 15, 17, 20 to 23 and 25 to 32 stay open, each needing its own go-ahead and pull request.
