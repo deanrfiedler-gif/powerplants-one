@@ -176,7 +176,7 @@ The batch was applied in the file on 14 November 2026; [section 15 of the propos
 | Findings | Outcome |
 |---|---|
 | SR-01 to SR-05, SR-07 to SR-10, SR-25, SR-26 | Fixed as decided under Q-A to Q-E |
-| SR-06, SR-14 | Fixed in part: PR01 and TB08 are the read-only Sales view (Q-H); the `SYN-PRD-` references wait for the Products file (A3.13) |
+| SR-06, SR-14 | Fixed: PR01 and TB08 are the read-only Sales view (Q-H) and follow the Products file's CA14 rows and references (proposal record section 15.7) |
 | SR-11, SR-20, SR-21, SR-23, SR-24, SR-27, SR-29, SR-30 | Fixed; no text below 4.5:1 or under 11 px remains outside components |
 | SR-12, SR-13 | Fixed: the toolbar and the collapsed strip are local copies of the Shell components, placed on 37 record headers and 82 desktop sheets |
 | SR-15 | Fixed in part: R02's discovery workspace reads SYN-DISC-000312; the `SYN-REF-` family waits for the reference registry |

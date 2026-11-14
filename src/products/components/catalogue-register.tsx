@@ -17,6 +17,17 @@ import { usePublishPageDescription } from "../../shell/page-description";
 import { catalogueHref, catalogueQuery } from "../catalogue-navigation";
 import { useCatalogueReturn } from "./catalogue-return";
 import { ResourceState, options, type Catalogue } from "./shared";
+import {
+  lifecycleOptions,
+  lifecycleLabel,
+  catalogueOrderOptions,
+} from "../vocabulary";
+import {
+  DEFAULT_ZONE,
+  formatTime,
+  zoneAbbreviation,
+  zoneOffset,
+} from "../../shell/date-format";
 import "./catalogue-register.css";
 
 export function CataloguePage() {
@@ -62,10 +73,14 @@ export function CataloguePage() {
   }
   const data = !resource.error ? resource.data : null;
   const count = data
-    ? `${data.items.length} shown · maximum ${data.limit}`
+    ? `${data.items.length} shown · limit ${data.limit}`
     : resource.error
       ? "Catalogue unavailable"
       : "Reading catalogue…";
+  const zone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_ZONE;
+  const footer = data
+    ? `${count} · read live at ${formatTime(data.read_at, zone)} ${zoneAbbreviation(data.read_at, zone) ?? zoneOffset(data.read_at, zone)} · no total is claimed`
+    : "";
   const canCreate = data?.access.some((a) =>
     a.capabilities.includes("products.edit"),
   );
@@ -96,7 +111,7 @@ export function CataloguePage() {
       menuId="pd-catalogue-menu"
       contentId="pd-catalogue-content"
       attributes={{ "data-catalogue": "true" }}
-      message={data ? count : ""}
+      message={footer}
       menu={
         <>
           <h2 className="pd-menu-heading">Workspaces</h2>
@@ -150,14 +165,24 @@ export function CataloguePage() {
               label="Lifecycle"
               value={params.get("lifecycle") ?? ""}
               onChange={(v) => filter("lifecycle", v)}
-              options={options([
-                "Unknown",
-                "Supported",
-                "Discontinued",
-                "Retired",
-              ])}
+              options={lifecycleOptions}
               empty="All lifecycle states"
             />
+            <div className="field">
+              <label htmlFor="sort">Order</label>
+              <select
+                id="sort"
+                name="sort"
+                value={params.get("sort") ?? "product"}
+                onChange={(e) => filter("sort", e.target.value)}
+              >
+                {catalogueOrderOptions.map((option) => (
+                  <option key={option.id} value={option.id}>
+                    {option.display_name}
+                  </option>
+                ))}
+              </select>
+            </div>
             <Button
               className="mw-button"
               onClick={() => router.replace("/products", { scroll: false })}
@@ -275,7 +300,7 @@ export function CataloguePage() {
                           <td>{p.kind}</td>
                           <td>r{p.revision}</td>
                           <td>{p.state}</td>
-                          <td>{p.content.lifecycle}</td>
+                          <td>{lifecycleLabel(p.content.lifecycle)}</td>
                           <td>Not configured</td>
                         </tr>
                       ))}
@@ -295,7 +320,7 @@ export function CataloguePage() {
                       {productLink(p)}
                       <p>
                         {p.kind} · r{p.revision} · {p.state} ·{" "}
-                        {p.content.lifecycle}
+                        {lifecycleLabel(p.content.lifecycle)}
                       </p>
                       <p>Supply evidence: Not configured</p>
                     </li>
@@ -303,6 +328,7 @@ export function CataloguePage() {
                 </ul>
               </>
             )}
+            <footer className="pd-catalogue-note">{footer}</footer>
             <p className="pd-catalogue-note">
               Stock availability: Unknown — source observations are Not
               configured. Listed products do not establish technical

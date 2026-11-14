@@ -2,7 +2,7 @@
 document_id: PPO-SALES-REFINED-FIGMA-PROP
 date: 2026-11-09
 owner: Dean Fiedler
-status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6), until Dean saves "PPO - Sales module (accepted) · alignment batch" for the alignment batch and the polish pass of 14 November 2026 (sections 15 and 16) and a different session has checked the changed sheets; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
+status: Owner-accepted design, 9 November 2026 (A1–A10 accepted as recommended; the audit's recommended order accepted and drawn the same day; N1–N4 accepted and integrated; N13 adopted); build basis is the later of the two versions named "PPO - Sales module (accepted) · batch 2 · N13", saved by Dean on 9 November 2026 after the tablet-bar correction and the restructure into pages (section 13.6), until a different session has checked the alignment batch of 14 November 2026 (section 15), pinned by the named version "PPO - Sales module (accepted) · alignment batch" that Dean saved the same day, the Products view aligned after it (section 15.7) and the polish pass of the same day (section 16), and Dean has saved the version that follows the check; not an implementation baseline; no application code, route, read model, migration, permission, capability, grant, seed or deployment; every record shown is synthetic
 source_commit: 8b73b5616d11b98309b445f3473bf82d100b0edc
 versioning: git
 ---
@@ -454,16 +454,31 @@ The pages now read, in order: Read me `0:1` · — Accepted — · Deals · CR-0
 ### 15.6 Open after the batch
 
 1. TB15 cites SYN-OPP-000301 for "Hillview Growers — Glasshouse 4 climate upgrade", while D01 lists SYN-OPP-000301 as Mallee Fresh Produce. Not changed, because the Hillview deal's own reference is not established in the file or a record.
-2. The `SYN-PRD-` references on PR01 and TB08 follow the Products file (A3.13) once that file is read; its link was not available to this session.
+2. Closed in section 15.7: PR01 and TB08 follow the Products file's Sales view CA14.
 3. The `SYN-REF-` family (Service referral SYN-REF-000802 here, a reference case in the Estimating file) waits for the reference registry (AF-141).
 4. Cross-file order: the Riverbend quotation r01 is issued on Fri 30 Oct, before the brief r01 is submitted on Mon 2 Nov, as the Estimating file has it. Recorded, not changed.
 5. KPI values at 22 px and some 15 and 17 px texts remain, and the file has no text styles (the rest of SR-22).
 6. The Reporting file aligns its stage counts to the Sales distribution under Q-G; that is its own change.
 7. Per-route page guidance and the design register still follow in their own change; no application code exists for these pages.
 
+### 15.7 Named version and the Products view — 14 November 2026
+
+Dean saved the named version "PPO - Sales module (accepted) · alignment batch" on 14 November 2026. It pins sections 15.1 to 15.6 and the phone tab bar change of section 14. He then supplied the link to the accepted PPO - Products module file, which closes open item 2 of section 15.6. That file's sheet CA14 `25:6579` draws the Sales view of Products signed in as Dean Fiedler, and its record ([Products module refined UI pages](products-module-refined-ui-proposal.md), A6) names the Sales file's PR01 and TB08 as earlier fixtures to align in this file's own batch. Both sheets now follow CA14:
+
+| Item | Change on PR01 `42:7122` and TB08 `99:25356` |
+|---|---|
+| Rows | CA14's first twelve catalogue rows, Circulation pump CP-40 to Dosing pump DP-12. Each row carries its reference and alias (`SYN-PROD-000003 · CP-40`), kind in words (Variant of CP, Model of CCF, Family), revision with tier (`r04 · T3`; the tablet column shows the revision alone), publication, lifecycle and availability. Availability reads "Observed 06:00 · Warehouse North · see Inventory", "Not linked to Inventory" or "Not applicable"; PR01 also carries family and updated date |
+| Bounded read | Sub-line "Read from Products, never edited here."; title chip "50 shown · limit 100"; footer "50 shown · limit 100 · ordered by Product · read live at 09:00 AEDT · no total is claimed"; TB08's "248" and "Available now 212" counts removed |
+| Views | CA14's four: Catalogue, Published, Draft, Lifecycle unknown; PR01's three other view tiles hidden |
+| Actions | TB08's "Request a product change" reads "Open in Products", as PR01 (Q-H); TB08's lifecycle filter reads "Lifecycle · All", because the rows include every lifecycle |
+
+**Not changed, for the check.** PR01 keeps its Compatibility button, which CA14 does not draw; no decision removes it. The product names in R03's scope lines and SI02's equipment (EC/pH dosing unit DU-2, a misting line valve, Weather station WS-3) cite no catalogue reference and are not among CA14's rows; they stay as drawn.
+
+These changes postdate the named version. A further version is needed after the independent check, together with any fixes the check brings.
+
 ## 16. Polish pass — 14 November 2026
 
-Dean asked for the file to be polished "to ensure all the element look professional", pointing at the signals strip on the Deal record, which sat flush against the bottom of the white header band. The pass was applied after the alignment batch and before its named version is saved, so that version pins both. It changes spacing, widths, alignment, wrapping and truncation only. No sheet was added or removed, no state or journey changed, every node ID cited earlier still resolves, and the only wording changes are listed in 16.3.
+Dean asked for the file to be polished "to ensure all the element look professional", pointing at the signals strip on the Deal record, which sat flush against the bottom of the white header band. The pass was applied in the same file after the alignment batch, and it finished before the Products view of section 15.7 was drawn, so its PR01 edge fix predates PR01's new rows. Dean saved the alignment batch's named version the same day (section 15.7). This record does not establish whether he saved it before or after the pass finished, so the pass is pinned by the version Dean saves after the independent check. It changes spacing, widths, alignment, wrapping and truncation only. No sheet was added or removed, no state or journey changed, every node ID cited earlier still resolves, and the only wording changes are listed in 16.3.
 
 ### 16.1 Method
 
@@ -509,4 +524,4 @@ The non-breaking spaces, hyphens and word joiners change no visible text.
   3. Borderless footer buttons (X13 "Skip this call", X23 "Reset to view default") keep their 12 px padding, so their labels sit 12 px inside the content edge. Left as button padding.
   4. TB16's state strip wraps with Kick-off alone on its second row.
   5. Some rows keep odd spacing values (5 and 7 px) that render correctly.
-- **Named version.** Dean saves "PPO - Sales module (accepted) · alignment batch" after this pass, so it pins sections 14 to 16. The check by a different session covers this pass too.
+- **Named version.** Section 15.7 records the saved "PPO - Sales module (accepted) · alignment batch" version. Whether it holds all, part or none of this pass is not established. The version Dean saves after the independent check pins this pass together with section 15.7, and the check by a different session covers this pass too.

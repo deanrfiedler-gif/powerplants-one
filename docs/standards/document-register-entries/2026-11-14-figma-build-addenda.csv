@@ -1,0 +1,4 @@
+document_id,title,canonical_path,revision,status,owner,source_commit,legacy_names,supersedes,versioning,last_labelled_revision
+PPO-FIGMA-ADDENDUM-A1,Addendum A1 · Shared record toolbar,docs/standards/figma-addendum-a1-shared-record-toolbar.md,,Living companion to the Figma build prompts; toolbar accepted 9 November 2026,Dean Fiedler,bbc18124abc0d0df78eb4217aebfbb58f4c05225,,,git,
+PPO-FIGMA-ADDENDUM-A2,Addendum A2 · Reference form,docs/standards/figma-addendum-a2-reference-form.md,,Living companion to the Figma build prompts; reference families and asset tags added 14 November 2026,Dean Fiedler,bbc18124abc0d0df78eb4217aebfbb58f4c05225,,,git,
+PPO-FIGMA-ADDENDUM-A3,Addendum A3 · Persona and story reconciliation,docs/standards/figma-addendum-a3-persona-and-story.md,,Living companion to the Figma build prompts; sections A3.1 to A3.13,Dean Fiedler,bbc18124abc0d0df78eb4217aebfbb58f4c05225,,,git,

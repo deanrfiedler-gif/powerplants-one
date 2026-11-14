@@ -1,12 +1,18 @@
 import { randomBytes, randomUUID } from "node:crypto";
-import { database } from "../../src/platform/database";
+import { database, transaction } from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { tokenHash, type Principal } from "../../src/platform/identity";
 import type { Capability } from "../../src/platform/permissions";
-import { createProduct, decideProduct } from "../../src/products/commands";
+import {
+  createProduct,
+  decideProduct,
+  appendProductEvent,
+} from "../../src/products/commands";
 import { readProduct } from "../../src/products/reads";
 import {
+  hash,
   productCapabilities,
+  type Product,
   type Content,
   type RelationshipContent,
 } from "../../src/products/model";
@@ -66,7 +72,7 @@ export const productContentFixture = (
       source_date: "2026-09-19",
     },
   ],
-  lifecycle: "Supported",
+  lifecycle: "Current",
   lifecycle_evidence:
     "SYN source reports current support; end date not supplied.",
   support_until: null,
@@ -224,4 +230,51 @@ export async function publishProduct(
     effective_on: "2026-09-25",
   });
   return readProduct(author, id);
+}
+
+// Insert historical evidence as first-written rows, without bypassing guards or rewriting
+// any revision. New-write commands deliberately cannot manufacture legacy content.
+export async function storedProductFixture(
+  p: Principal,
+  content: Content,
+  updatedAt = new Date(),
+) {
+  if (localConfig().database_name !== "ppo_synthetic_test")
+    throw Error("Stored Products fixtures require ppo_synthetic_test");
+  const input = productInput({ content });
+  await transaction(async (c) => {
+    const product = (
+      await c.query<Product>(
+        `INSERT INTO ppo.products(id,workspace_id,company_id,reference,kind,provider,entity_key,owner_id,current_revision_id,created_by,updated_by,updated_at)
+       VALUES($1,$2,$3,$4,'Family',$5,$6,$7,$8,$7,$7,$9) RETURNING *`,
+        [
+          input.id,
+          p.workspace_id,
+          input.company_id,
+          input.reference,
+          input.provider,
+          input.entity_key,
+          p.actor_id,
+          randomUUID(),
+          updatedAt,
+        ],
+      )
+    ).rows[0];
+    await c.query(
+      `INSERT INTO ppo.product_revisions(id,workspace_id,company_id,product_id,revision,content,content_hash,reason,created_by)
+       VALUES($1,$2,$3,$4,1,$5,$6,$7,$8)`,
+      [
+        product.current_revision_id,
+        p.workspace_id,
+        product.company_id,
+        product.id,
+        content,
+        hash(content),
+        input.reason,
+        p.actor_id,
+      ],
+    );
+    await appendProductEvent(c, p, product, { ...input, schema_version: 1 }, "Draft");
+  });
+  return input;
 }
