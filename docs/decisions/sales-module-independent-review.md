@@ -2,7 +2,7 @@
 document_id: PPO-SALES-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; findings and recommendations only; nothing was changed in Figma; no design is accepted or amended by this record; no application code, route, migration, permission or deployment
+status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided the questions on 14 November 2026 as recommended (section 11) and the alignment batch is being applied in the file; this record accepts no design; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
@@ -148,3 +148,23 @@ The paste-ready alignment batch, the findings and matrix files and the fact-ledg
 ## 10. Boundary
 
 This record changes no design and accepts none. It corrects no other record: the proposal record's Shell basis, named versions and node IDs are findings for the change that follows. It authorises no application code, route, migration, permission, integration, customer communication or deployment. Every record, person, value and date in the file is synthetic.
+
+## 11. Decisions — 14 November 2026
+
+Dean renamed the file "PPO - Sales module (accepted)", the name the proposal record and other records cite (PPO-STD-001 section 13.2: existing names cited by a record do not change). Asked for a professional recommendation on each question in section 9, he was given them and answered: "proceed on your recommendations". That decides Q-A to Q-J as follows.
+
+| # | Decision |
+|---|---|
+| Q-A | Each date is kept and its weekday corrected to the 2026 calendar. The one date that moves is the issue of SYN-QUO-000214 r01, which reads Fri 30 Oct 2026, as the accepted Estimating file has it |
+| Q-B | Kate Morgan owns every deal and lead that Priya Nair owned; Priya Nair stays the Estimating receiver. Checked against the A3 facts the later records quote before the batch, and the result recorded |
+| Q-C | Jess Wong is the Projects receiver (the Projects file's initiation page names "Jess Wong · receiving owner (default)") and Ravi Kumar the Service owner on every sheet; Jordan Wu and Lena Brooks are retired |
+| Q-D | Hillview Growers is sited at Tatura VIC, with the site name and address the Customers, Sites & Equipment file draws; times stay in Melbourne time |
+| Q-E | Staff times are stated in Melbourne AEDT (UTC+11 in November); a site's own zone appears only where that site's time is shown |
+| Q-F | Overlay panels take the Library widths: 360 px for Filters and Columns, 480 px for the side forms; dialogs sit within 560 to 720 px; the 480 px preview drawer is unchanged |
+| Q-G | The Sales stage distribution (9 / 8 / 11 / 6 / 4) stands and the Reporting file aligns to it, unless addendum A3.7 states a distribution, in which case both files take A3's |
+| Q-H | The Sales view of Products is read-only and follows the Products file's Sales view (CA14): the bounded-read wording, no totals, view-tile counts or pager, the A3.13 references, and "Open in Products" in place of "New draft revision" |
+| Q-I | Shell and kit moves below the Proposals separator; the pages take the short names; Administration · Sales sits after Interaction states; IN01, IN02 and TB12 move to their own Insights page; the Page template card is updated |
+| Q-J | Revisions and versions take two digits everywhere (r01, r03, v07); external file names keep their own form |
+
+The process is the one Dean set for the Estimating batch. This session claims the file in a draft pull request, applies the batch with the facts first, and records what changed. Dean saves one named version at the end; it also pins the phone tab bar change of 10 November. A different session checks the changed sheets before Dean accepts them.
+
