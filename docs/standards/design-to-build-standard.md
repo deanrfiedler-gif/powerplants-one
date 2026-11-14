@@ -78,7 +78,7 @@ Compare the running page with the accepted frames at their named version side by
 | `PPO Library` | `PPO - Library` | Variables, styles, icons, shared components, page template, shared patterns |
 | `PPO Domains` | `PPO - Workspace & Assistant` | My Work, Conversations, Assistant, search, calling, account |
 | | `PPO - Sales & Products` | Sales, Products |
-| | `PPO - Estimating & Quotation` | Estimating, CPQ, configurators, quotations |
+| | `PPO - Estimating module` | Estimating, CPQ, configurators, quotations ([record](../decisions/estimating-module-refined-ui-proposal.md), section 14) |
 | | `PPO - Engineering & Projects` | Engineering, Projects |
 | | `PPO - Service & Field` | Service, planning, field, maintenance |
 | | `PPO - Supply Chain & Workshop` | Supply chain, workshop |
