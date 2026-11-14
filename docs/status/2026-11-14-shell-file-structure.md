@@ -1,5 +1,5 @@
 ---
-title: Shell Figma file arranged in the module-file page template
+title: Shell Figma file arranged in the module-file page template; alignment batch 1 and the structure accepted and pinned by a named version
 date: 2026-11-14
 ---
 
@@ -18,7 +18,7 @@ Checked through the Figma connector:
 
 Repository checks: `python3 scripts/build_status.py --check`, `python3 scripts/check_foundation.py` and `python3 scripts/check_naming.py`.
 
-Not done: Dean's acceptance in words and the new named version, which should be saved now so that it pins this structure and alignment batch 1 together. No sheet, component, rule or application code changed.
+Accepted: Dean accepted alignment batch 1 and this structure ("I accept all your recommendations") and saved the named version "Shell refined concept — accepted · alignment batch 1 applied" on 14 November 2026. Builds that start after that date cite it, and it also pins the navy primary action. The file keeps the name "PPO - Shell", which follows PPO-STD-001 section 13.2. No sheet, component, rule or application code changed.
 
 <!-- decision-index -->
-[Shell refined concept decision record, section 15](../decisions/shell-refined-concept-design.md#15-file-structure-aligned-with-the-module-template--14-november-2026) (PPO-SHELL-REFINED-FIGMA-DEC) records the Shell Figma file arranged in the module-file page template on 14 November 2026. The file gains a Read me with the sheet index, status separators, Shell and kit (holding the Components section with its node ID unchanged) and Scratch; the sheets, page names and rules are unchanged. It awaits Dean's acceptance and a named version and authorises no application code.
+[Shell refined concept decision record, section 15](../decisions/shell-refined-concept-design.md#15-file-structure-aligned-with-the-module-template--14-november-2026) (PPO-SHELL-REFINED-FIGMA-DEC) records the Shell Figma file arranged in the module-file page template on 14 November 2026. The file gains a Read me with the sheet index, status separators, Shell and kit (holding the Components section with its node ID unchanged) and Scratch; the sheets, page names and rules are unchanged. Dean accepted it with alignment batch 1 on 14 November 2026 and saved the named version "Shell refined concept — accepted · alignment batch 1 applied". It authorises no application code.

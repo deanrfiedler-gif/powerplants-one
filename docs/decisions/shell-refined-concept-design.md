@@ -353,3 +353,12 @@ The old sheet index section `80:8443` on the first page was removed. No record c
 - **Render:** the Read me page was rendered and inspected.
 
 **Named version.** The new named version that section 14 asks for should be saved after this change, so that one version pins alignment batch 1 and this structure together. The suggested title is "Shell refined concept — accepted · alignment batch 1 applied". The batch and this structure await Dean's acceptance in words.
+
+**Acceptance and named version — 14 November 2026.** Dean, in the session: "I have saved the named version as "Shell refined concept — accepted · alignment batch 1 applied"" and "I accept all your recommendations." That accepts alignment batch 1 (section 14) and the file structure (this section). It also answers the open naming question: the file keeps the name "PPO - Shell", which already follows PPO-STD-001 section 13.2 (`PPO - <Surface>`, with no status in the name). This session cannot read version history, so the title rests on Dean's word. Under [Build from the named Figma version](figma-named-version-build-handoff.md):
+
+| Build | Named version it cites |
+|---|---|
+| Any build step that starts after 14 November 2026 and uses the shell, including the record header toolbar | "Shell refined concept — accepted · alignment batch 1 applied" (14 November 2026). It also pins the navy primary of section 13 |
+| A build step already started from an earlier version, such as the [S1 build](shell-refined-s1-build.md) | Its own version, unchanged; moving it is its own step (rule 5) |
+
+The version titled "Shell refined concept — accepted · alignment batch 1", saved on 13 November 2026 before the batch, stays in the file's history. It pins the navy primary without the batch. Retitling it "… · navy primary action" remains optional. Module files cite the new version when each is next changed.
