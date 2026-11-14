@@ -777,7 +777,18 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
         .getByLabel("Lifecycle evidence conclusion")
         .locator('option:not([value=""])'),
     ).toHaveText(["Current", "Last-time buy", "Discontinued", "Unknown"]);
-    const change = page.locator(".pd-change").filter({
+    // The page-level comparison shows the stored revision against its
+    // predecessor; the editor's own comparison is collapsed until opened.
+    const editor = page.locator("form").filter({
+      has: page.getByRole("heading", {
+        name: "Prepare a draft successor",
+        exact: true,
+      }),
+    });
+    await editor
+      .getByText("Compare proposed content before saving", { exact: true })
+      .click();
+    const change = editor.locator(".pd-change").filter({
       has: page.getByRole("heading", { name: "lifecycle", exact: true }),
     });
     await expect(change).toContainText("Supported");
