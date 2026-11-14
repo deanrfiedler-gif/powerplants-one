@@ -2,7 +2,7 @@
 document_id: PPO-SALES-REVIEW-PROP
 date: 2026-11-12
 owner: Dean Fiedler
-status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided the questions on 14 November 2026 as recommended (section 11) and the alignment batch was applied in the file the same day (section 12; proposal record section 15), awaiting Dean's named version and a check by a different session; this record accepts no design; no application code, route, migration, permission or deployment
+status: Independent read-only review of the accepted private Figma file for the Sales module on 12 November 2026 at Dean's request, by a session that did not draw it; Dean decided the questions on 14 November 2026 as recommended (section 11) and the alignment batch was applied in the file the same day (section 12; proposal record section 15); a different session checked the live file on 14 November 2026 and recommends acceptance after the fixes it lists (section 13); this record accepts no design; no application code, route, migration, permission or deployment
 versioning: git
 ---
 
@@ -187,3 +187,130 @@ The batch was applied in the file on 14 November 2026; [section 15 of the propos
 | SR-28 | Recorded: proposal record section 15.4 lists the IDs that no longer exist |
 
 Page structure followed Q-I. Shell and kit sits below the Proposals separator, the pages take the short names, Administration · Sales follows Interaction states, and IN01, IN02 and TB12 are on their own Insights page. The batch found one new contradiction, which it did not change: TB15 cites SYN-OPP-000301 for a Hillview deal that D01 gives to Mallee Fresh Produce (proposal record section 15.6).
+
+## 13. Independent check — 14 November 2026
+
+Dean asked a session that drew none of the batch to check it before Dean accepts it, to say whether it can be accepted and to list the fixes for the session that applied it. This section is that check. It changed nothing in any Figma file and accepts no design.
+
+### 13.1 Basis
+
+- **What was read.** The live Sales file "PPO - Sales module (accepted)", through the Figma connector, which reads the file's current state and cannot open a saved version. Dean saved the named version "PPO - Sales module (accepted) · alignment batch" on 14 November 2026 (proposal record section 15.7). The live file differs from that version at least by PR01 and TB08 (section 15.7) and possibly by the polish pass (proposal record section 16, merged while this check ran), which says it is not established whether the version holds the pass. Every finding below is about the live file.
+- **Authorities.** The accepted Shell file (record header toolbar `170:10178`, its phone component `170:10215`, the collapsed strip `29:3119`, rules R108 and R116 to R125); the accepted Products file's CA14 `25:6579`; the Estimating file's Sales brief, workbench and quotation sheets, read for the Riverbend references only; the [drawer widths decision](library-drawer-widths.md); Dean's decisions Q-A to Q-J (section 11).
+- **Claims checked.** Proposal record sections 15.1 to 15.7. Section 16 was not checked claim by claim, but the scans and renders below cover the live file, so its effects are included, and two of its claims are tested where they overlap (13.4, SC-10).
+
+### 13.2 Method and limits
+
+- **Read-only.** 42 scripts and 36 renders, all reads: 36 scripts (one failed and was rerun) and 35 renders on the Sales file, four scripts on the Shell file, one script and one render on the Products file, and one script on the Estimating file. No node, text, variable, comment or version was created or changed in any file.
+- **Scans, one script per group of pages.** All nine scope pages, the Read me page and the three Shell and kit components:
+  - structure: sections, gaps, sheet grid, labels, toolbar and strip instances, phone tab bars, panel and dialog geometry, and text cut off by a clipping frame;
+  - content: about 15,900 visible text nodes, tested for weekdays against their dates, dates and times after the story clock, the names in A, avatar initials against the name beside them, pronouns, GST and currency wording, single-digit revisions, and references sharing a row with more than one organisation;
+  - colour: contrast of every text against the background composited from every fill painted beneath it, not only the nearest one; text under 11 px; unbound paints;
+  - kit: a node-by-node fingerprint of each kit copy against its Shell original (names, sizes, positions, layout, text, variable names, paints and stroke weights).
+- **By eye.** 32 Sales sheets rendered in full and one in part:
+  - record headers: R01, L02, H02, W02, AC02, C02, C360, SI02, TB14, TB15, TB16;
+  - panels and dialogs, all eleven resized: X01, X02, X07, X12, X16, X17, X19, X20, X21, X22, X23;
+  - strip sheets: D01, A01, AD05, IN01, PR01;
+  - tablet and phone: TB08, PH02, PH08, PH09, PH11;
+  - in part: D05's forecast table.
+
+  Also rendered: the kit toolbar set, the Read me header card and the Products file's CA14.
+- **Limits.**
+  - About 80 sheets were not read by eye.
+  - Contrast is sampled at each text's centre. Image and gradient fills are skipped, and clipping is ignored, so text hidden under a phone tab bar is flagged; the four such flags (PH01, PH05, PH07, PH08) were checked by render and are not defects.
+  - The reference test finds clashes only within one row. SYN-QUO-000198 (SC-05) was found by eye, so other cross-sheet clashes may remain.
+  - Chip tones were measured only where the fill sits on the chip frame. Where it does, each word has one tone.
+  - Not opened: the Customers, Sites & Equipment file, so Hillview's address "1 Synthetic Lane, Tatura VIC" is not checked against it; addendum A3; the version history.
+  - Keyboard, screen-reader and touch behaviour cannot be tested in a static file.
+
+### 13.3 What the file bears out
+
+| Claim | Result |
+|---|---|
+| Weekdays (Q-A) | No date on the nine scope pages has the wrong weekday for its year |
+| Retired names and zones (Q-C, Q-E) | Jordan Wu, Lena Brooks, Noah Clarke, Brisbane and AEST do not appear as text. A01 reads "Melbourne AEDT (UTC+11)". No gendered pronoun. GST is written "ex GST" (W02's table headers show Ex GST, GST and Inc GST separately). Amounts are in A$ |
+| Places (Q-D) | Hillview Growers is at Tatura on SI01, C01, AC02 and TB07. Westgate Flowers stays at 19 Westgate Rd, Werribee VIC 3030. "Werribee range" and "Werribee house 1" are Westgate's |
+| Riverbend story | R02 reads brief r01 "submitted Mon 2 Nov 2026, 09:05 · accepted for estimating Tue 3 Nov, 10:12 by Priya Nair", word for word with the Estimating file's brief sheets. SYN-QUO-000214 r02 is awaiting approval on R01, R02, C360, TB14, PH09, TB19 and PH07, as in the Estimating file. SYN-EST-000312 v03, SYN-DISC-000312 and the superseded SYN-EST-000398 agree. No sheet read gives SYN-QUO-000214 r01 an issue date that conflicts with the Estimating file's Fri 30 Oct. The exceptions are SC-01 |
+| Lead references (SR-02) | SYN-LEAD-000208 is only Riverbend's source lead; SYN-LEAD-000214 is only the Gippsland Dairy Gardens inbox lead |
+| Roles (Q-B, Q-C) | Priya Nair appears as receiving owner, estimator or quotation preparer on H01, H02, H03, TB09, R02, R04, R07, C360, TB14, M01, TB19 and PH07. Jess Wong is the Projects receiver and Ravi Kumar the Service owner wherever named. Noah Patel is Riverbend's billing contact. The exceptions are SC-02 and SC-03 |
+| Record headers (15.2) | Exactly 37 instances of the local toolbar, on the sheets listed. Each has the breadcrumb, a one-row title with one chip and the star, a one-line sub-line cut off at its width, the toolbar and the rule. Outputs is hidden by an override on every one. "7 of 38 in view" appears on the 13 deal sheets and "1 of 14 in view" on the 9 lead sheets; previous and next are hidden elsewhere. H02 and TB15 show "Submit r01" disabled with its reason; W02 reads "Read only · awaiting review by Jess Wong (Projects) since Mon 2 Nov 2026". S03 has no header |
+| Collapsed strip | 82 instances, each at x 80 and 852 px tall, on the 82 sheets claimed. Every one of those sheets has its content region at x 92, 1300 px wide, and nothing in it starts left of x 92. Register action columns end at x 1393, 1 px under the right strip, where the region's clip hides the overrun. A01's five day columns fit the grid with Friday whole |
+| Widths (Q-F) | X07 and X23 are 360 px at x 1032. X01, X02 and X19 to X22 are 480 px at x 912, against the right strip. X12 and X17 are 560 px at x 440, and X16 is 720 px at x 360, centred on the 1440 frame. Nothing is cut off |
+| Accessibility | No text falls below 4.5:1, or 3:1 at 18.66 px and above, against its composited background, apart from disabled controls. No text under 11 px outside component instances |
+| Phone | The tab bar set `339:217` is on all 11 phone sheets, each with its own tab current: Deals on PH01, PH02 and PH05; Activities on PH11; Contacts on PH08 and PH09; More on PH03, PH04, PH06, PH07 and PH10. The sticky bars of PH02, PH09 and PH10 hold a labelled Actions menu and the primary, 48 px high (R124) |
+| Docked menu (SR-18, SR-19) | D02 nests List, Board, Forecast, Archive and Needs attention under Deals. Its badges (Leads 14, Tasks 5, Sales Inbox 6, Hand over to Estimating 4, Won-deal receiving 4) match the counts the pages they open show: 14 in the Leads inbox, 3 overdue and 2 due today on Tasks, and the M01, H01 and W01 counts section 4 gives |
+| Page structure (15.4) | The pages and their order match 15.4. The Insights page holds IN01, IN02 and TB12. Every scope page keeps its sections in the template order, 360 px apart, omitting those it has nothing for. All 114 sheets sit on the grid, each with a one-line label cut off at the sheet's width. The page counts on the Read me header card add up to 114 and match the pages |
+| Kit copies | Names, variant names, sizes, node counts, text, variable names and icon colours match the Shell originals. The exceptions are SC-07 |
+
+### 13.4 Findings
+
+Severity as in section 4. "Batch session" means the session that applied the batch.
+
+| ID | Sev. | Sheet and node | The record claims | The file shows | Fix | Owner |
+|---|---|---|---|---|---|---|
+| SC-01 | Blocker | D01 `11:89`, D02 `11:995`, D03 `13:809`, D07 `13:1826`, X01 `47:7518`, X07 `47:11814`, X23 `89:21045`, X24 `89:21894`; D04 `14:1487`; C02 `87:18770` | One Riverbend state on every sheet (15.1) | Riverbend's Quoted cell reads "A$129,500 · Draft" on the eight Deals sheets; the D04 card reads "Quote draft"; C02's open-work row reads "Quotation SYN-QUO-000214 r02 · Awaiting approval" beside a "Draft" chip. R02 says the Quoted column shows the newest revision and its state; that is r02, awaiting approval, A$126,800 | Quoted cell "A$126,800" with the "In approval" state the deal record uses; D04 "Quote in approval"; C02 chip "Awaiting approval" | Batch session |
+| SC-02 | Blocker | D05 `15:2176` (SYN-OPP-000262, -000259); D06 `14:2316` and X17 `62:14191` (-000355, -000244); TB01 `65:14070` (-000309, -000284); L01 `21:2710` and X02 `47:8197` (SYN-LEAD-000209, -000214, -000205); TB04 `65:14651` (-000209) | Kate Morgan owns the deals and leads Priya Nair owned; Priya Nair appears only in Estimating roles (15.1) | Each owner cell shows Kate Morgan's "KM" avatar beside the label "PN" (render of D05 confirms). L01 and X02 also give SYN-LEAD-000209's activity to "PN". The avatar layers are still named "Avatar · PN" | Owner label "KM" (or "Kate Morgan" where the column shows names) and activity owner Kate Morgan; rename the layers | Batch session |
+| SC-03 | Major | AC02 `35:5789`, X18 `86:18164`, X19 `86:18466`, X20 `86:18737`; C02 `87:19087`, C360 `39:7219`, PH08 `103:27403`; C01 `41:6960`, X22 `89:20483`; TB06 `99:24448`, PH08 `103:27461` | Ravi Kumar replaces Lena Brooks and Noah Patel replaces Noah Clarke (15.1) | The names changed but the avatars did not: Ravi Kumar shows "LB" and Noah Patel "NC". Priya Shah shows "PN" on C01 and X22 (AC02 has "PS"), and Jo Marsh shows "JW" | Initials RK, NP, PS and JM; rename the avatar layers | Batch session |
+| SC-04 | Major | AD05 `96:22104` | Nothing happens after Thu 5 Nov 2026, 09:00 unless labelled a later frame (15.1, 15.5) | "Recent changes" lists "Tom Reid created the personal view … Fri 6 Nov, 16:02" and "Dean Fiedler set 'Close date moved' … Fri 6 Nov, 09:15" between "2 min ago" and Thu 5 Nov 08:20. The cards read "Dean Fiedler · Fri 6 Nov 2026" and "Tom Reid · Fri 6 Nov". Keeping the date under Q-A moved these past events after the story clock | Re-date the three changes before Thu 5 Nov 09:00 (for example Wed 4 Nov), keeping the list newest first, and record the exception to Q-A | Batch session |
+| SC-05 | Major | X16 `62:13516`, D06 `14:2316`, X17 `62:14191`; TB16 `101:26748`; TB15 `101:26350` | Each reference names one record | SYN-QUO-000198 is Lockyer Lettuce's signed quotation r02 on X16, D06 and X17, and Hillcrest Tomatoes' accepted quotation r03 on TB16. SYN-OPP-000301 is still both Mallee Fresh Produce (D01, H01, P01) and Hillview (TB15), as 15.6 item 1 records | Give Hillcrest's quotation and TB15's Hillview deal unused numbers in their families, and record them in 15.6 | Batch session |
+| SC-06 | Major | D05 `15:2176`, D06 `14:2316`, X17 `62:14191`, IN01 `44:6852`; D01 `11:89`, TB01 `65:14070`, H03 `85:17647` | One fact per record (A) | SYN-OPP-000249 Tamar Valley Greens is open in Negotiation on D05, with its close date of Wed 14 Oct passed, but Lost on Fri 30 Oct on D06 and X17; IN01 counts no open deal past its close date. SYN-OPP-000277 Coastal Herbs is owned by Dean Fiedler on D01 and by Sasha Clarke on TB01, H03 and IN01. Neither was raised in section 4; both may predate the batch | Remove SYN-OPP-000249 from D05's open groups; D01's owner Sasha Clarke | Batch session |
+| SC-07 | Major | Kit: `355:278` (button `355:315`), `355:438` (button `355:463`, bar `355:458`), `355:466`; visible on all 82 strip sheets | Copied "with the Shell's names, sizes and variable bindings" (15.2) | Three states differ from the Shell. (1) In the "Awaiting approval · preparer" variant, Approve… is fully opaque; the Shell draws it at 45 %, disabled under R117. H02 and TB15 override it back to 45 %. (2) The phone component's "Issue on desktop" is fully opaque; the Shell draws it at 45 % under R124. (3) The strip's Default handle is brand/navy at 100 %, bound; the Shell's is #242a37 at 40 %, a deliberate plain paint. The handle reads as a solid bar on every strip sheet (seen on X01 and A01). Smaller departures: the copies use the Sales icons, with 1.6 px strokes against the Shell's 1.33 px at 20 px and 1.07 px at 16 px; frames clip content; the sub-line has a 19 px line height against 18 px; the phone sticky bar has borders top and bottom only, against the Shell's on all sides | Set both disabled buttons to 45 % and the handle to the Shell's paint (or brand/navy at 40 % paint opacity, recorded); note the icon strokes until the library is published | Batch session |
+| SC-08 | Major | TB08 `99:25356` | TB08 follows CA14: each row carries its reference and alias; CA14's four views; the bounded-read sub-line (15.7) | TB08 has no Reference · alias column. Its only view control reads "Published only", above rows that include Draft products (CP-40, CP-60). CA14's four views are absent, and so is the sub-line "Read from Products, never edited here." | Add the reference column (alias may truncate), replace "Published only" with CA14's views or "Catalogue", and add the sub-line | Batch session |
+| SC-09 | Minor | PR01 `42:7122` | PR01 follows CA14 (15.7) | Rows, revisions, kinds, lifecycles, availability, views, title chip, footer and no totals all match. But the Reference column cuts the alias ("SYN-PROD-000003 ·…") while Revision has spare width; CP-40's publication lacks "basis r03 Published"; there is no Lifecycle filter; product names are not styled as links; and CA14's facts strip is missing. That strip reads "Bounded read · 50 shown · limit 100 · no total is claimed · Catalogue evidence, not installation approval · MYOB remains the ERP authority" | Rebalance the columns; add the basis note, the Lifecycle filter, the link style and the facts strip; see 13.6 for Compatibility | Batch session |
+| SC-10 | Minor | Scrims on X03, X04, X05, X06, X10, X11, X12, X13, X14, X15, X16, X18 and X25 (the Deals page's sample limit was reached, so X17 and X24 are unconfirmed) | Literal paints remain only on section backgrounds and the D05 ramp (15.3; also 16.1) | Every scrim named "Scrim · brand/navy 32%" is a literal #242a37 | Bind the scrims to brand/navy at 32 % paint opacity, or record them as deliberate literals | Batch session |
+| SC-11 | Minor | T01 `29:3470`, X12 `60:11678`, M01 `30:3952` | No single-digit revision except an external file name (15.5; Q-J) | "Procurement replies after rev 3" (T01 and X12) and, on M01, the subject "Frost protection — revised rev 3 received" and the line "Thanks, rev 3 received." | "r03" in the task note; on M01 either "r03" or a recorded exception for a customer's own words | Batch session |
+| SC-12 | Minor | TB16 `101:26748` | A state with no action reads "Read only" with its reason and date (R117; 15.2) | "Read only · accepted by Projects", with no date. W02 gives one | "Read only · accepted by Projects Thu 29 Oct 2026" | Batch session |
+| SC-13 | Minor | All 37 headers | Instances swap to the published library later (15.2) | The quotation variants serve as presets. Draft is used wherever the primary is live, on deals, leads, briefs, reviews, people, organisations and sites. "Awaiting approval · preparer" is used on H02 and TB15, whose primary is blocked by missing checks, not by the preparer rule. Closed is used on W02 and TB16. The primary layer keeps the name "Button · Submit for approval" under labels such as Move to Quoting, Convert to deal or Plan activity. A build reading variant or layer names gets quotation meanings | Record the mapping (variant used as a layout preset; the label is the override) in 15.2. Raise a state-neutral variant set with the Shell when the library is published | Batch session; Shell |
+| SC-14 | Minor | AC02 `35:5495` | One state-driven primary (R117; 15.2) | "Complete review" is live on a review that is Planned for Thu 12 Nov, with preparation 3 of 4 and "Review held" unchecked | At Planned, show Complete review disabled with "Review on Thu 12 Nov · hold it first", or make the primary the preparation step; keep Complete review for X18's later frame | Batch session; Dean, if Dean prefers otherwise |
+| SC-15 | Minor | R03 `60:10146`, X16 `62:13516` | Products names follow the catalogue (15.7, left for this check) | R03's scope line "Fertigation controller CC-8" and X16's delivery item "Chiller controller CC-8" use a model that CA14 and PR01 list as SYN-PROD-000016 "Climate controller CC-8", discontinued. "EC/pH dosing unit DU-2" is not in the catalogue | See 13.6 | Batch session |
+| SC-16 | Minor | Read me: header card `9:161`, sheet index `51:9990`, Page template card `135:2` | The cards state the batch, the versions and the page order (15.4) | Both the header card and the Page template card say the batch awaits the named version Dean has saved. The header card still says "batch 2" pins the current state of every sheet. Neither card mentions PR01 and TB08 after the version, or the polish pass. The index card's polish list still reads "P10 contrast proof: every text pair ≥ 4.5:1, so no colour changed", which the audit card marks superseded | Update all three once the version that follows the fixes is saved | Batch session |
+| SC-17 | Minor | W02 `34:5264` | People and roles hold (A) | The customer acceptance evidence is an "Email from Priya Shah, Thu 17 Sep 2026" on Bellarine Berries, but Priya Shah is Hillview Growers' operations manager (C01, AC02, X18 to X20). Probably predates the batch | Name a Bellarine Berries contact | Batch session |
+| SC-18 | Polish | C02 `87:18770`, C360 `39:7219`, TB14 `101:25936`; R01 to R07, L02 to L06, W02, AC02 | The taller headers hide nothing the sheet exists to show (asked of this check) | Nothing a sheet exists to show is lost, but the frame now cuts C02's relationships card through the "Noah Patel" row. Noah Patel's billing role, the evidence of SR-04, falls below the frame on C360 and TB14. The deal and lead Details columns, W02's obligation card and AC02's source projection fall below too | End each cut between rows (move the card or trim a gap); no frame needs to grow | Batch session |
+| SC-19 | Polish | PH02 `67:15797`; X24 `89:21894`; X25 `96:22962` | — | PH02's Actions button is 89 px wide against 176 px on PH09 and PH10. X24's 862 px dialog starts at y 19, over the top bar. X25's scrim covers the top bar, which other scrims leave clear | Match the sticky-bar split; keep dialogs and scrims below the top bar | Batch session |
+
+**Follow-ups outside the batch.** These are not findings against it.
+
+- **Preview drawer.** D03 keeps the 432 px drawer panel plus the 48 px tab column. Under the [drawer widths decision](library-drawer-widths.md) of 14 November 2026 it moves to a 480 px panel once the Shell's batch 2 draws that panel; Q-F left it unchanged.
+- **Estimating file.** Its workbench sheets (W04 to W07, W09 to W13, W17) say brief r01 was "accepted Mon 2 Nov 2026", while its own brief sheets and W08 say Tue 3 Nov. The Sales file follows the brief sheets. This is for the Estimating file's owner.
+- **Products file.** CA14 draws a search box in the content area, which Dean's direction for the Sales pages rules out. This is for the Products file's owner.
+- **Weekends from keeping dates.** Keeping every date under Q-A leaves some business events on weekends: the Riverbend deal was opened on Sat 24 Oct, emails and a document are dated Sat 31 Oct, Riverbend's expected close is Sat 19 Dec, and IN01 moves one close date to Sun 20 Dec. This follows from the decision and is recorded, not counted as a finding.
+
+### 13.5 The decisions recorded in section 15.2
+
+| Decision | View |
+|---|---|
+| Plan activity, Mark as lost, Log call and the other title-row buttons move into Actions | Agree. R118 and R123 call for it, it leaves one primary, and the Estimating batch did the same. The frequent actions stay one click away on the next-step card (Reschedule, Record outcome), as R01 shows |
+| Outputs hidden on every Sales record | Agree. No Sales record issues a document, and R119 makes Outputs absent where there are none. It is hidden by an override rather than by a variant without Outputs, which survives a library swap; SC-13 records that |
+| One chip per header | Agree. On the person and site records the chip is a role ("Primary contact", "Operator · Riverbend Growers") because those records have no lifecycle state. Record that reading of R116 rather than inventing a state |
+| Existing primaries kept on the person, organisation and site records | Agree. Plan activity, Create follow-up and Plan site visit are each record's next action, and none is a New (R123). Replacing TB14's and PH09's "New deal" with Create follow-up is right |
+| Previous and next only where shown | Agree (R120) |
+| Headers 50 px taller on desktop and 54 px on tablet | Acceptable. The renders show every sheet still opens on its subject; what falls below is secondary. Make each cut fall between rows (SC-18) |
+
+### 13.6 The Products view: the two items left to this check
+
+- **PR01's Compatibility button.** Remove it. CA14, which owns the Sales view of Products, draws none, and the Sales view is a bounded read with one way out, "Open in Products". A salesperson who needs a compatibility check reaches it through Open in Products. If Dean wants it closer, it belongs in a row's menu as "Check compatibility in Products", not as a second header button.
+- **Product names in R03 and SI02.**
+  - **R03.** Its scope lines are what is being sold, so each line that is a catalogue product should carry its `SYN-PROD-` reference and the catalogue's name. A line that is not yet a catalogue product should read as such, for example "to be specified by Estimating". "Fertigation controller CC-8" must change, because CC-8 is a discontinued climate controller in the catalogue. X16's "Chiller controller CC-8" takes the same fix.
+  - **SI02.** Its equipment items are installed assets with their own `SYN-AST-` references, owned by Customers, Sites & Equipment. They need no catalogue reference and can stay as drawn. Where an asset is a Powerplants catalogue product, it may show the `SYN-PROD-` reference as a secondary link once that file draws one.
+
+### 13.7 Verdict
+
+**Accept after the listed fixes.** The structure of the batch holds: the Shell parts, the widths, the page structure, the weekdays, the retired names and zones, contrast, sizes and the phone tab bar all bear out the record. The file is not ready as it stands, though, because the batch's own fact pass left residues that contradict its claims:
+
+- Riverbend's quotation reads Draft on ten sheets (SC-01).
+- Fifteen owner cells and two activity owners still read "PN" (SC-02).
+- Avatar initials of retired or other people remain (SC-03).
+- Events on AD05 are dated after the story clock (SC-04).
+- Two references each name two records (SC-05).
+- Two records contradict each other between sheets (SC-06).
+- Three kit states depart from the Shell (SC-07).
+- TB08 does not follow CA14 as claimed (SC-08).
+
+The fixes are mechanical, and none needs a new decision except SC-14, where Dean may prefer the drawn primary.
+
+The order:
+
+1. The batch session fixes SC-01 to SC-08 and, in the same pass, SC-09 to SC-12 and SC-15 to SC-17. It records SC-13 and decides SC-14 under the standing order unless Dean answers. It then re-runs the owner, initials, quotation-state, story-clock and reference scans and the kit comparison, and posts the results.
+2. A session other than the batch session confirms those findings only, under the one-review rule. It does not review the file again from the start.
+3. Dean saves one named version over the result. Recommended title: "PPO - Sales module (accepted) · alignment batch · checked". It pins the phone tab bar change (section 14), the alignment batch (sections 15.1 to 15.6), the Products view (section 15.7), the polish pass (section 16) and these fixes. It becomes the build basis, and the proposal record names it.
+
+SC-18 and SC-19 can follow in the same pass or later. Until the version is saved, the build basis stays "· batch 2 · N13".
