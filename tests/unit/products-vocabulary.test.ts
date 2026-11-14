@@ -44,7 +44,7 @@ test("PD every lifecycle has one display word; legacy reads and hashes remain as
     assert.equal(hash(productContent(stored)), hash(stored));
     assert.equal(lifecycleLabel(lifecycle), expected[lifecycle]);
     assert.ok(
-      lifecycleFilterValues(lifecycleLabel(lifecycle)).includes(lifecycle),
+      lifecycleFilterValues(currentLifecycle(lifecycle)).includes(lifecycle),
     );
   }
   assert.deepEqual(lifecycleFilterValues("Current"), ["Current", "Supported"]);
@@ -105,8 +105,8 @@ test("PD relationship and criterion storage is unchanged while each side has its
   const expected = {
     Compatibility: ["Compatible with", "Compatible with"],
     CandidateReplacement: ["Alternative to", "Alternative to"],
-    Replaces: ["Replaces", "Replaced by"],
-    RequiresAccessory: ["Requires accessory", "Requires accessory"],
+    Replaces: ["Replaced by", "Replaces"],
+    RequiresAccessory: ["Requires accessory", "Accessory for"],
   };
   for (const type of relationshipTypes) {
     const content = relationshipFixture({ type });

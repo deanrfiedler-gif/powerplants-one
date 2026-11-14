@@ -1,7 +1,11 @@
 import assert from "node:assert/strict";
 import { before, after, test } from "node:test";
 import { randomUUID, createHash } from "node:crypto";
-import { database, closeDatabase } from "../../src/platform/database";
+import {
+  database,
+  closeDatabase,
+  transaction,
+} from "../../src/platform/database";
 import { localConfig } from "../../src/platform/config";
 import { reset } from "../../scripts/database";
 import { createProduct, reviseProduct } from "../../src/products/commands";
@@ -16,6 +20,7 @@ import {
   createRelationship,
   listRelationships,
 } from "../../src/products/relationships";
+import { AppError } from "../../src/platform/errors";
 import { hash } from "../../src/products/model";
 import {
   currentLifecycle,
@@ -69,7 +74,13 @@ test("PD legacy revisions verify unchanged, group under current lifecycle filter
       lifecycle: "LastTimeBuy",
     }),
   });
-  for (const input of [current, discontinued, lastTimeBuy])
+  const unknown = productInput({
+    content: productContentFixture({
+      title: `${marker} unknown`,
+      lifecycle: "Unknown",
+    }),
+  });
+  for (const input of [current, discontinued, lastTimeBuy, unknown])
     await createProduct(p, input);
   const ids = async (lifecycle: string) =>
     (await listProducts(p, { q: marker, lifecycle })).items
@@ -80,7 +91,8 @@ test("PD legacy revisions verify unchanged, group under current lifecycle filter
     await ids("Discontinued"),
     [retired.id, discontinued.id].sort(),
   );
-  assert.deepEqual(await ids("Last-time buy"), [lastTimeBuy.id]);
+  assert.deepEqual(await ids("LastTimeBuy"), [lastTimeBuy.id]);
+  assert.deepEqual(await ids("Unknown"), [unknown.id]);
   for (const input of [supported, retired]) {
     const original = (await readProduct(p, input.id)).revision;
     assert.deepEqual(original.content, input.content);
@@ -110,8 +122,14 @@ test("PD legacy revisions verify unchanged, group under current lifecycle filter
     );
     assert.equal(detail.revision.content_hash, hash(next));
   }
-  for (const lifecycle of ["Supported", "Retired", "LastTimeBuy"])
-    await assert.rejects(listProducts(p, { lifecycle }));
+  for (const lifecycle of ["Supported", "Retired", "Last-time buy"])
+    await assert.rejects(
+      listProducts(p, { lifecycle }),
+      (e: unknown) =>
+        e instanceof AppError &&
+        e.status === 422 &&
+        e.field_errors.some((f) => f.field === "lifecycle"),
+    );
 });
 
 test("PD catalogue default and updated orders use stable id ties, retain the bound and return transaction read time", async () => {
@@ -311,8 +329,152 @@ test("PD new relationship types retain one exact relationship from either produc
     assert.deepEqual(left.content, content);
     assert.equal(left.content_hash, hash(content));
     if (type === "Replaces") {
-      assert.equal(relationshipLabel(left.content.type, "from"), "Replaces");
-      assert.equal(relationshipLabel(right.content.type, "to"), "Replaced by");
+      assert.equal(relationshipLabel(left.content.type, "from"), "Replaced by");
+      assert.equal(relationshipLabel(right.content.type, "to"), "Replaces");
     }
+  }
+});
+
+test("PD legacy mapped plans refuse Review, remain Mapped and can be mapped again without changing retained evidence", async () => {
+  const { p } = await productActor(),
+    reviewer = await productActor();
+  for (const lifecycle of ["Supported", "Retired"] as const) {
+    const id = randomUUID();
+    const raw = JSON.stringify({
+      format: "PPO synthetic catalogue 1",
+      rows: [
+        {
+          external_key: `SYN-${randomUUID()}`,
+          reference: `SYN-${randomUUID()}`,
+          kind: "Family",
+          parent_id: null,
+          content: productContentFixture({ lifecycle }),
+        },
+      ],
+    });
+    await stageImport(p, {
+      ...crmBase(),
+      id,
+      company_id: CRM.company,
+      filename: "old-mapped-plan.json",
+      provider: "SYN historical supplier",
+      source_description: "SYN pre-vocabulary plan",
+      source_time: null,
+      raw_content: raw,
+    });
+    const mappings = [
+      {
+        row_number: 1,
+        action: "New",
+        target_id: null,
+        reason: "SYN explicit new identity",
+      },
+    ];
+    await mapImport(p, id, { ...crmBase(), expected_version: 1, mappings });
+    const mapped = await readImport(p, id);
+    // Install a historical plan as new immutable evidence, retaining the graph
+    // and event constraints. Never rewrite a retained plan or disable triggers.
+    const rows = structuredClone(mapped.rows);
+    rows[0].parsed!.lifecycle = lifecycle;
+    rows[0].create!.content.lifecycle = lifecycle;
+    rows[0].changes = rows[0].changes.map((change) =>
+      change.field === "lifecycle" ? { ...change, after: lifecycle } : change,
+    );
+    rows[0].warnings = [];
+    const planId = randomUUID();
+    await transaction(async (c) => {
+      await c.query(
+        `INSERT INTO ppo.product_import_plans
+        (id,workspace_id,batch_id,predecessor_id,rows,comparison_hash,created_by)
+        VALUES($1,$2,$3,$4,$5,$6,$7)`,
+        [
+          planId,
+          p.workspace_id,
+          id,
+          mapped.current!.id,
+          JSON.stringify(rows),
+          hash(rows),
+          p.actor_id,
+        ],
+      );
+      await c.query(
+        `UPDATE ppo.product_imports SET current_plan_id=$3,
+        version=version+1,updated_by=$4,updated_at=clock_timestamp()
+        WHERE workspace_id=$1 AND id=$2`,
+        [p.workspace_id, id, planId, p.actor_id],
+      );
+      await c.query(
+        `INSERT INTO ppo.product_import_events
+        (id,workspace_id,batch_id,plan_id,batch_version,action,reason,operation_id,created_by)
+        VALUES($1,$2,$3,$4,$5,'Mapped','SYN historical plan',$6,$7)`,
+        [
+          randomUUID(),
+          p.workspace_id,
+          id,
+          planId,
+          mapped.batch.version + 1,
+          randomUUID(),
+          p.actor_id,
+        ],
+      );
+    });
+    const historical = await readImport(p, id);
+    await assert.rejects(
+      decideImport(reviewer.p, id, {
+        ...crmBase(),
+        expected_version: historical.batch.version,
+        plan_id: planId,
+        comparison_hash: historical.current!.comparison_hash,
+        action: "Reviewed",
+      }),
+      (e: unknown) =>
+        e instanceof AppError &&
+        e.status === 422 &&
+        e.field_errors.some(
+          (f) =>
+            f.field === "rows" && f.message.startsWith("Map this batch again"),
+        ),
+    );
+    const refused = await readImport(p, id);
+    assert.equal(refused.batch.state, "Mapped");
+    assert.equal(refused.can_map, true);
+    assert.deepEqual(refused.batch, historical.batch);
+    assert.deepEqual(refused.current, historical.current);
+    assert.deepEqual(refused.history, historical.history);
+    await mapImport(p, id, {
+      ...crmBase(),
+      expected_version: refused.batch.version,
+      mappings,
+    });
+    const remapped = await readImport(p, id);
+    assert.equal(remapped.batch.state, "Mapped");
+    assert.notEqual(remapped.current!.id, planId);
+    assert.equal(
+      remapped.rows[0].parsed!.lifecycle,
+      currentLifecycle(lifecycle),
+    );
+    assert.deepEqual(
+      remapped.plans.find((plan) => plan.id === planId),
+      historical.current,
+    );
+    assert.equal(remapped.batch.raw_content, raw);
+    assert.equal(remapped.batch.content_hash, historical.batch.content_hash);
+    for (const action of ["Reviewed", "Apply"] as const) {
+      const current = await readImport(p, id);
+      await decideImport(action === "Reviewed" ? reviewer.p : p, id, {
+        ...crmBase(),
+        expected_version: current.batch.version,
+        plan_id: current.current!.id,
+        comparison_hash: current.current!.comparison_hash,
+        action,
+      });
+    }
+    const applied = await readImport(p, id);
+    assert.equal(applied.batch.state, "Applied");
+    assert.equal(
+      (await readProduct(p, applied.rows[0].proposed_id)).revision.content
+        .lifecycle,
+      currentLifecycle(lifecycle),
+    );
   }
 });

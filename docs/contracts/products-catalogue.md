@@ -31,9 +31,12 @@ Create/save draft and import application accept only the four new-write values. 
 |---|---|
 | Compatible with | `Compatibility` |
 | Alternative to | `CandidateReplacement` |
-| Replaces | `Replaces`, from the originating product |
-| Replaced by | The same `Replaces` row, from the other product |
-| Requires accessory | `RequiresAccessory` |
+| Replaced by | `Replaces`, from the originating (older) product |
+| Replaces | The same `Replaces` row, from the successor product |
+| Requires accessory | `RequiresAccessory`, from the product requiring the accessory |
+| Accessory for | The same `RequiresAccessory` row, from the accessory |
+
+Relationship cards put the selected product first, followed by its side label and the counterpart. With no product selected, the originating product comes first. The original/candidate revision facts and exact revision links retain their stored roles.
 
 `relationshipLabel(type, side)` supplies the displayed relationship word. CandidateReplacement reads as Alternative to because a candidate substitute does not establish succession. Existing relationship rows retain their stored values. Criteria remain `Met`, `NotMet` and `Unknown`, displayed as Met, Not met and Unresolved. A missing conclusion displays Not reviewed; no reassessment conclusion is introduced.
 
@@ -58,9 +61,9 @@ All API routes below start `/api/v1/products`. Authenticated private no-store re
 | POST `/imports/{id}/map` | Immutable mapping/change-set successor; no Product mutation |
 | POST `/imports/{id}/review` | Independent Reviewed/Returned or explicit Apply, exact plan/hash/version |
 
-The catalogue accepts only `sort=product` (default: revision title, then product UUID) or `sort=updated` (product `updated_at` descending, then product UUID). Unknown order values are refused. Lifecycle filters take the four display words above and match their stored-value group using `r.content->>'lifecycle' = ANY($n::text[])`. Search, scope and `LIMIT 100` are unchanged.
+The catalogue accepts only `sort=product` (default: revision title, then product UUID) or `sort=updated` (product `updated_at` descending, then product UUID). Unknown order values are refused. Lifecycle filters accept only `Current`, `LastTimeBuy`, `Discontinued` and `Unknown`; display labels such as `Last-time buy` and legacy values `Supported`/`Retired` are refused. The select uses `lifecycleOptions` to show friendly labels for those contract values. Filters match their stored-value group using `r.content->>'lifecycle' = ANY($n::text[])`. Search, scope and `LIMIT 100` are unchanged.
 
-The catalogue returns `read_at` as an ISO instant from `now()` inside its existing repeatable-read transaction, and the effective order in `filters.sort`. The existing filter form retains Order in the URL and catalogue return state. Its visible footer reads `N shown · limit 100 · ordered by Product · read live at 09:00 AEDT · no total is claimed` (or Updated). The app's date-time helpers format the transaction time in the viewer's browser zone, including the zone abbreviation; the helper's Brisbane default covers a missing browser zone. No total is queried or displayed.
+The catalogue returns `read_at` as an ISO instant from `now()` inside its existing repeatable-read transaction, and the effective order in `filters.sort`. The existing filter form retains Order in the URL and catalogue return state. Its visible footer reads `N shown · limit 100 · read live at 09:00 AEDT · no total is claimed`. The app's date-time helpers format the transaction time in the viewer's browser zone, including the zone abbreviation; the helper's Brisbane default covers a missing browser zone. No total is queried or displayed.
 
 Original receipt recovery uses existing `GET /api/v1/operations/{operation_id}` and rechecks the actor's current domain authority. Browser commands use the shared actor-bound same-tab journal; unknown outcomes hold the exact original request. Recovery reads the original receipt; explicit retry sends the same payload and operation. No offline catalogue is introduced.
 
@@ -76,7 +79,7 @@ Only `PPO synthetic catalogue 1` JSON is supported, up to 50 rows and 12,000 UTF
 
 Every row requires Resolve, New or Exclude with a rationale. Resolve requires one exact provider/company/entity key and explicit target ID. Unknown keys require explicit New or Exclude. Similar titles/models retain duplicate candidates but never auto-merge. Both sides are lower-cased with the `en-AU` locale, then all whitespace and U+002D, U+2010–U+2015 and U+2212 hyphens/minus signs are removed. DP-25, dp 25, DP25 and DP‑25 therefore match; DP-250 does not. Either a title or a model match suggests a candidate; exact external-key resolution is unchanged. Duplicate keys/rows, conflicting contexts/targets, submitted targets, unsupported units and missing evidence remain exceptions. Exclusion retains original evidence. Immutable plans retain parsed values, mapping, errors/warnings, target version/revision, exact before/after, proposed new UUID and comparison hash. Review/application refuses unresolved errors or an empty change set.
 
-A staged lifecycle of Supported or Retired is planned as Current or Discontinued, with a row note such as “Supplier word Supported read as Current”. Staged source text, bytes and hash are unchanged; the plan retains its exact before/after comparison. Previously retained plans are never rewritten either: application refuses a plan that still proposes a legacy write. Where the existing batch state permits mapping, prepare and independently review a new plan. A previously Reviewed legacy plan remains preserved but cannot be applied by this increment; changing that frozen-plan workflow is outside this PR.
+A staged lifecycle of Supported or Retired is planned as Current or Discontinued, with a row note such as “Supplier word Supported read as Current”. Staged source text, bytes and hash are unchanged; the plan retains its exact before/after comparison. Previously retained plans are never rewritten either: review and application preflight refuse a plan whose parsed lifecycle is an earlier word, with a plain instruction to map the batch again. A refused review leaves the batch Mapped, so a new plan can be mapped and independently reviewed. A previously Reviewed legacy plan remains preserved but cannot be applied by this increment; changing that frozen-plan workflow is outside this PR.
 
 Independent review binds the exact plan. Application rechecks every expected target version and inserts all new products/draft successors plus batch result in one transaction. It cannot publish. An applied batch is terminal; identical content under the same provider/company cannot be staged as another effect. The original receipt remains authoritative under replay. A failed second row rolls back earlier rows, events and receipts. Correcting returned mappings creates another plan; reviewed content is not edited.
 

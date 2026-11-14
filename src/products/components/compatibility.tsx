@@ -297,7 +297,7 @@ export function CompatibilityPage() {
     <ProductsFrame title="Compatibility, replacements and lifecycle">
       <p>
         Conclusions are bounded by exact source revisions, conditions and
-        evidence. Unknown interfaces require owned clarification.
+        evidence. Unresolved interfaces require owned clarification.
       </p>
       {selected && <ProductUses id={selected} />}
       <ResourceState resource={catalogue} />
@@ -307,9 +307,7 @@ export function CompatibilityPage() {
           a.capabilities.includes("products.relationship.edit"),
         ) && (
           <details>
-            <summary>
-              Prepare compatibility or candidate-replacement evidence
-            </summary>
+            <summary>Prepare relationship evidence</summary>
             <RelationshipForm catalogue={catalogue.data} selected={selected} />
           </details>
         )}
@@ -321,120 +319,123 @@ export function CompatibilityPage() {
               Compatibility is unknown.
             </p>
           )}
-          {relationships.data.items.map((r) => (
-            <article className="pd-panel" key={r.id}>
-              <h2>
-                {r.from_content.model} / {r.from_content.variant} →{" "}
-                {r.to_content.model} / {r.to_content.variant}
-              </h2>
-              <p>
-                {relationshipLabel(
-                  r.content.type,
-                  selected === r.to_product_id ? "to" : "from",
-                )}{" "}
-                · {conclusionLabel(r.outcome)} · {r.content.purpose}
-              </p>
-              <p>
-                Original r{r.from_revision} / technical{" "}
-                {r.from_content.technical_revision}; candidate r{r.to_revision}{" "}
-                / technical {r.to_content.technical_revision}.
-              </p>
-              <div className="pd-actions">
-                <Link
-                  href={`/products/${r.from_product_id}?revision_id=${r.from_revision_id}`}
-                >
-                  Exact original revision
-                </Link>
-                <Link
-                  href={`/products/${r.to_product_id}?revision_id=${r.to_revision_id}`}
-                >
-                  Exact candidate revision
-                </Link>
-              </div>
-              <p>
-                Source {r.content.source_revision} · {r.content.source_date} ·{" "}
-                {r.content.evidence}
-              </p>
-              <p>
-                <strong>Conditions:</strong> {r.content.conditions}
-              </p>
-              <p>
-                <strong>Limitations:</strong> {r.content.limitations}
-              </p>
-              {r.content.criteria.map((c, i) => (
-                <section className="pd-issue" key={i}>
-                  <h3>
-                    {c.criterion}: {criterionLabel(c.outcome)}
-                  </h3>
-                  <p>
-                    {c.evidence} · Owner {c.owner}
-                  </p>
-                </section>
-              ))}
-              <p>Affected-use evidence: {r.content.affected_use}</p>
-              <p>
-                Owning domain: {r.content.handover}. Original saved/installed
-                identities remain unchanged.
-              </p>
-              <div className="pd-actions">
-                <Link href="/engineering/materials">
-                  Engineering materials / substitutions
-                </Link>
-                <Link href="/engineering/changes">
-                  Engineering change impact
-                </Link>
-                <Link href="/equipment/lifecycle">
-                  Installed equipment lifecycle
-                </Link>
-                <Link href="/equipment/bulletins">Equipment bulletins</Link>
-              </div>
-              {r.reviewer && (
+          {relationships.data.items.map((r) => {
+            const side = selected === r.to_product_id ? "to" : "from";
+            const subject = side === "to" ? r.to_content : r.from_content;
+            const counterpart = side === "to" ? r.from_content : r.to_content;
+            return (
+              <article className="pd-panel" key={r.id}>
+                <h2>
+                  {subject.model} / {subject.variant} ·{" "}
+                  {relationshipLabel(r.content.type, side)} ·{" "}
+                  {counterpart.model} / {counterpart.variant}
+                </h2>
                 <p>
-                  Reviewer {r.reviewer} · {r.review_reason}
+                  {relationshipLabel(r.content.type, side)} ·{" "}
+                  {conclusionLabel(r.outcome)} · {r.content.purpose}
                 </p>
-              )}
-              {r.predecessor_id && (
-                <p>Retained predecessor relationship {r.predecessor_id}</p>
-              )}
-              <details>
-                <summary>Compare technical source content</summary>
-                <div className="pd-form-grid">
-                  <div>
-                    <h3>Original</h3>
-                    <TechnicalContent content={r.from_content} asRecorded />
-                  </div>
-                  <div>
-                    <h3>Candidate</h3>
-                    <TechnicalContent content={r.to_content} asRecorded />
-                  </div>
+                <p>
+                  Original r{r.from_revision} / technical{" "}
+                  {r.from_content.technical_revision}; candidate r
+                  {r.to_revision} / technical {r.to_content.technical_revision}.
+                </p>
+                <div className="pd-actions">
+                  <Link
+                    href={`/products/${r.from_product_id}?revision_id=${r.from_revision_id}`}
+                  >
+                    Exact original revision
+                  </Link>
+                  <Link
+                    href={`/products/${r.to_product_id}?revision_id=${r.to_revision_id}`}
+                  >
+                    Exact candidate revision
+                  </Link>
                 </div>
-              </details>
-              {r.can_review && (
-                <div className="pd-cards">
-                  {relationshipConclusions.map((outcome) => (
-                    <RecoveryAction
-                      key={outcome}
-                      label={`Record ${conclusionLabel(outcome).toLowerCase()} conclusion`}
-                      id={r.id}
-                      path={`products/relationships/${r.id}/review`}
-                      fields={{
-                        expected_version: r.version,
-                        content_hash: r.content_hash,
-                        outcome,
-                      }}
-                      target="/products/compatibility"
-                      onSaved={relationships.reload}
-                    />
-                  ))}
+                <p>
+                  Source {r.content.source_revision} · {r.content.source_date} ·{" "}
+                  {r.content.evidence}
+                </p>
+                <p>
+                  <strong>Conditions:</strong> {r.content.conditions}
+                </p>
+                <p>
+                  <strong>Limitations:</strong> {r.content.limitations}
+                </p>
+                {r.content.criteria.map((c, i) => (
+                  <section className="pd-issue" key={i}>
+                    <h3>
+                      {c.criterion}: {criterionLabel(c.outcome)}
+                    </h3>
+                    <p>
+                      {c.evidence} · Owner {c.owner}
+                    </p>
+                  </section>
+                ))}
+                <p>Affected-use evidence: {r.content.affected_use}</p>
+                <p>
+                  Owning domain: {r.content.handover}. Original saved/installed
+                  identities remain unchanged.
+                </p>
+                <div className="pd-actions">
+                  <Link href="/engineering/materials">
+                    Engineering materials / substitutions
+                  </Link>
+                  <Link href="/engineering/changes">
+                    Engineering change impact
+                  </Link>
+                  <Link href="/equipment/lifecycle">
+                    Installed equipment lifecycle
+                  </Link>
+                  <Link href="/equipment/bulletins">Equipment bulletins</Link>
                 </div>
-              )}
-              <p className="pd-muted">
-                Relationship identity {r.id}. A reviewed candidate remains
-                subject to separate application suitability and installed-impact
-                review.
-              </p>
-            </article>
-          ))}
+                {r.reviewer && (
+                  <p>
+                    Reviewer {r.reviewer} · {r.review_reason}
+                  </p>
+                )}
+                {r.predecessor_id && (
+                  <p>Retained predecessor relationship {r.predecessor_id}</p>
+                )}
+                <details>
+                  <summary>Compare technical source content</summary>
+                  <div className="pd-form-grid">
+                    <div>
+                      <h3>Original</h3>
+                      <TechnicalContent content={r.from_content} asRecorded />
+                    </div>
+                    <div>
+                      <h3>Candidate</h3>
+                      <TechnicalContent content={r.to_content} asRecorded />
+                    </div>
+                  </div>
+                </details>
+                {r.can_review && (
+                  <div className="pd-cards">
+                    {relationshipConclusions.map((outcome) => (
+                      <RecoveryAction
+                        key={outcome}
+                        label={`Record ${conclusionLabel(outcome).toLowerCase()} conclusion`}
+                        id={r.id}
+                        path={`products/relationships/${r.id}/review`}
+                        fields={{
+                          expected_version: r.version,
+                          content_hash: r.content_hash,
+                          outcome,
+                        }}
+                        target="/products/compatibility"
+                        onSaved={relationships.reload}
+                      />
+                    ))}
+                  </div>
+                )}
+                <p className="pd-muted">
+                  Relationship identity {r.id}. A reviewed candidate remains
+                  subject to separate application suitability and
+                  installed-impact review.
+                </p>
+              </article>
+            );
+          })}
         </>
       )}
     </ProductsFrame>

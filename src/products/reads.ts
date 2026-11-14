@@ -19,7 +19,7 @@ import {
 import { productAuthority, productContext, productRevision } from "./context";
 
 import {
-  lifecycleLabels,
+  lifecycleWriteValues,
   lifecycleFilterValues,
   catalogueOrders,
 } from "./vocabulary";
@@ -33,7 +33,7 @@ export async function listProducts(
   const kind = b.kind ? choice(b.kind, "kind", kinds) : null,
     state = b.state ? choice(b.state, "state", states) : null;
   const lifecycle = b.lifecycle
-    ? choice(b.lifecycle, "lifecycle", lifecycleLabels)
+    ? choice(b.lifecycle, "lifecycle", lifecycleWriteValues)
     : null;
   const sort =
     b.sort === undefined ? "product" : choice(b.sort, "sort", catalogueOrders);

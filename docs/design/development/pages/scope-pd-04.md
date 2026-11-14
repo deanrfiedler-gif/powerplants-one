@@ -26,7 +26,7 @@ Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared But
 
 ## Task and handovers
 
-1. Choose exact original and candidate revisions; similar display names do not identify a record.
+1. Choose exact original and candidate revisions; similar display names do not identify a record. For Replaces, the original is the older product and the candidate is its successor. Cards read from the selected product first: older product · Replaced by · successor, or successor · Replaces · older product. An accessory reads Accessory for from its side; stored endpoints and revision roles stay unchanged.
 2. Record relationship purpose, evidence, conditions, limitations, lifecycle source and criteria with clarification owners.
 3. A separate reviewer records Conditional only when every criterion is Met, or Unresolved/Rejected.
 4. Preview a permitted Asset or Engineering MaterialLine and retain its exact version as observed-use evidence.

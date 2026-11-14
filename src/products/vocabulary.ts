@@ -15,13 +15,9 @@ export type LifecycleLabel = (typeof lifecycleVocabulary)[number]["label"];
 export const lifecycleStoredValues = lifecycleVocabulary.flatMap((v) => [
   ...v.stored,
 ]);
-export const lifecycleLabels = lifecycleVocabulary.map((v) => v.label);
+export const lifecycleWriteValues = lifecycleVocabulary.map((v) => v.value);
 export const lifecycleOptions = lifecycleVocabulary.map((v) => ({
   id: v.value,
-  display_name: v.label,
-}));
-export const lifecycleFilterOptions = lifecycleVocabulary.map((v) => ({
-  id: v.label,
   display_name: v.label,
 }));
 const lifecycleEntry = (value: Lifecycle) =>
@@ -33,15 +29,15 @@ export const currentLifecycle = (value: Lifecycle): WriteLifecycle =>
 export const lifecycleLabel = (value: Lifecycle): LifecycleLabel =>
   lifecycleEntry(value).label;
 export const lifecycleFilterValues = (
-  label: LifecycleLabel,
+  value: WriteLifecycle,
 ): readonly Lifecycle[] =>
-  lifecycleVocabulary.find((v) => v.label === label)!.stored;
+  lifecycleVocabulary.find((v) => v.value === value)!.stored;
 
 export const relationshipVocabulary = {
   Compatibility: { from: "Compatible with", to: "Compatible with" },
   CandidateReplacement: { from: "Alternative to", to: "Alternative to" },
-  Replaces: { from: "Replaces", to: "Replaced by" },
-  RequiresAccessory: { from: "Requires accessory", to: "Requires accessory" },
+  Replaces: { from: "Replaced by", to: "Replaces" },
+  RequiresAccessory: { from: "Requires accessory", to: "Accessory for" },
 } as const;
 export type RelationshipType = keyof typeof relationshipVocabulary;
 export const relationshipTypes = Object.keys(

@@ -559,7 +559,7 @@ test("PD publication and candidate evidence use independent browser review witho
   await login(page, f.author.token);
   await page.goto(`/products/compatibility?product_id=${f.variant.id}`);
   await page
-    .getByText("Prepare compatibility or candidate-replacement evidence", {
+    .getByText("Prepare relationship evidence", {
       exact: true,
     })
     .click();
@@ -730,7 +730,11 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
     const marker = `SYN Legacy ${randomUUID()}`;
     const stored = await storedProductFixture(
       f.author.p,
-      productContentFixture({ title: marker, lifecycle: "Supported" }),
+      productContentFixture({
+        title: marker,
+        model: "SYN Original",
+        lifecycle: "Supported",
+      }),
     );
     const original = (await readProduct(f.author.p, stored.id)).revision;
     await login(page, f.author.token);
@@ -739,7 +743,7 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
     );
     const footer = page.locator("#ppo-products footer");
     await expect(footer).toHaveText(
-      /1 shown · limit 100 · ordered by Product · read live at \d{2}:\d{2} AE[DS]T · no total is claimed/,
+      /^1 shown · limit 100 · read live at \d{2}:\d{2} AE[DS]T · no total is claimed$/,
     );
     const order = page.getByLabel("Order", { exact: true });
     if (!(await order.isVisible()))
@@ -747,12 +751,26 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
     await expect(page.getByLabel("Lifecycle", { exact: true })).toHaveValue(
       "Current",
     );
+    const filter = page.getByLabel("Lifecycle", { exact: true });
+    await expect(filter.locator('option:not([value=""])')).toHaveText([
+      "Current",
+      "Last-time buy",
+      "Discontinued",
+      "Unknown",
+    ]);
+    await filter.selectOption({ label: "Last-time buy" });
+    await expect(page).toHaveURL(/lifecycle=LastTimeBuy/);
+    await expect(footer).toHaveText(
+      /^0 shown · limit 100 · read live at \d{2}:\d{2} AE[DS]T · no total is claimed$/,
+    );
+    await filter.selectOption("Current");
+    await expect(page).toHaveURL(/lifecycle=Current/);
     await expect(order.locator("option")).toHaveText(["Product", "Updated"]);
+    await expect(order).toHaveValue("product");
     await order.selectOption("updated");
     await expect(page).toHaveURL(/lifecycle=Current&sort=updated/);
-    await expect(footer).toContainText("ordered by Updated");
+    await expect(order).toHaveValue("updated");
     await page.reload();
-    await expect(footer).toContainText("ordered by Updated");
     await expect(order).toHaveValue("updated");
     expect(
       await page.evaluate(
@@ -812,12 +830,18 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
     await createRelationship(f.author.p, {
       ...crmBase(),
       id: randomUUID(),
-      from: { product_id: f.variant.id, revision_id: candidate.id },
-      to: { product_id: stored.id, revision_id: saved.revision.id },
+      from: { product_id: stored.id, revision_id: saved.revision.id },
+      to: { product_id: f.variant.id, revision_id: candidate.id },
       predecessor_id: null,
       content: relationshipFixture({ type: "Replaces" }),
     });
     await page.goto(`/products/compatibility?product_id=${stored.id}`);
+    await expect(
+      page.getByRole("heading", {
+        name: `${saved.revision.content.model} / ${saved.revision.content.variant} · Replaced by · ${candidate.content.model} / ${candidate.content.variant}`,
+        exact: true,
+      }),
+    ).toBeVisible();
     await expect(
       page.getByText("Replaced by · Not reviewed", { exact: false }),
     ).toBeVisible();
@@ -828,6 +852,12 @@ test.describe("PD accepted vocabulary and catalogue read", () => {
       }),
     ).toBeVisible();
     await page.goto(`/products/compatibility?product_id=${f.variant.id}`);
+    await expect(
+      page.getByRole("heading", {
+        name: `${candidate.content.model} / ${candidate.content.variant} · Replaces · ${saved.revision.content.model} / ${saved.revision.content.variant}`,
+        exact: true,
+      }),
+    ).toBeVisible();
     await expect(
       page.getByText("Replaces · Not reviewed", { exact: false }),
     ).toBeVisible();

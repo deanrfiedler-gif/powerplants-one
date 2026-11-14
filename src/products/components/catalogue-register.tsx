@@ -18,10 +18,9 @@ import { catalogueHref, catalogueQuery } from "../catalogue-navigation";
 import { useCatalogueReturn } from "./catalogue-return";
 import { ResourceState, options, type Catalogue } from "./shared";
 import {
-  lifecycleFilterOptions,
+  lifecycleOptions,
   lifecycleLabel,
   catalogueOrderOptions,
-  catalogueOrderVocabulary,
 } from "../vocabulary";
 import {
   DEFAULT_ZONE,
@@ -80,7 +79,7 @@ export function CataloguePage() {
       : "Reading catalogue…";
   const zone = Intl.DateTimeFormat().resolvedOptions().timeZone || DEFAULT_ZONE;
   const footer = data
-    ? `${count} · ordered by ${catalogueOrderVocabulary[data.filters.sort]} · read live at ${formatTime(data.read_at, zone)} ${zoneAbbreviation(data.read_at, zone) ?? zoneOffset(data.read_at, zone)} · no total is claimed`
+    ? `${count} · read live at ${formatTime(data.read_at, zone)} ${zoneAbbreviation(data.read_at, zone) ?? zoneOffset(data.read_at, zone)} · no total is claimed`
     : "";
   const canCreate = data?.access.some((a) =>
     a.capabilities.includes("products.edit"),
@@ -166,7 +165,7 @@ export function CataloguePage() {
               label="Lifecycle"
               value={params.get("lifecycle") ?? ""}
               onChange={(v) => filter("lifecycle", v)}
-              options={lifecycleFilterOptions}
+              options={lifecycleOptions}
               empty="All lifecycle states"
             />
             <div className="field">

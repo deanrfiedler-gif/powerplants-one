@@ -22,7 +22,7 @@ Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared But
 
 ## Task and handovers
 
-1. Search and apply kind, state or lifecycle filters; the query remains in the URL.
+1. Search and apply kind, state or lifecycle filters; the query remains in the URL. Lifecycle labels are Current, Last-time buy, Discontinued and Unknown; their query values are Current, LastTimeBuy, Discontinued and Unknown. Select Product or Updated in Order. The bounded footer shows the count, limit and live read time in the viewer’s zone, without repeating the order or claiming a total.
 2. Open the exact model/variant and inspect catalogue revision separately from explicit technical/source revision.
 3. Inspect attribute units, unresolved clarification owners, controlled document applicability and lifecycle evidence.
 4. Choose a retained revision before handing its exact identity to an authorised receiving workspace.

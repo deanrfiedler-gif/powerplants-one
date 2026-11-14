@@ -537,7 +537,15 @@ async function applyPreflight(c: QueryClient, p: Principal, rows: ImportRow[]) {
     );
   if (!rows.some((r) => r.mapping?.action !== "Exclude"))
     invalid("rows", "No product changes remain to apply.");
-  for (const row of rows)
+  for (const row of rows) {
+    if (
+      row.parsed &&
+      currentLifecycle(row.parsed.lifecycle) !== row.parsed.lifecycle
+    )
+      invalid(
+        "rows",
+        "Map this batch again before review or application; its plan uses an earlier lifecycle word.",
+      );
     if (row.target_id) {
       const target = await productContext(c, p, row.target_id);
       expectVersion(target.version, row.expected_version!);
@@ -554,6 +562,7 @@ async function applyPreflight(c: QueryClient, p: Principal, rows: ImportRow[]) {
           "Original target content changed.",
         );
     }
+  }
 }
 export async function decideImport(p: Principal, id: string, value: unknown) {
   const b = object(value, [
