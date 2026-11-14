@@ -11,7 +11,8 @@ const script = fileURLToPath(new URL("../../scripts/install-browser.sh", import.
 const linux = process.platform === "linux";
 
 // PATH shims never run apt, sudo or a real package/browser install. Only the
-// watchdog is real, shortened here so the process-tree regression takes <1s.
+// deliberate-hang watchdog is real, shortened so the process-tree regression
+// takes <1s. Ordinary shim outcomes must not race that synthetic 300ms clock.
 function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: string; noTimeout?: boolean; sudoPassword?: boolean } = {}) {
   const root = mkdtempSync(join(tmpdir(), "ppo browser install "));
   const bin = join(root, "bin");
@@ -38,11 +39,14 @@ function run(scenario: string, options: { nonRoot?: boolean; downloadTimeout?: s
   if (!options.noTimeout) shim("timeout", `
     echo "timeout:$*" >> "$STATE/events"
     signal="$1"; duration="$2"; shift 2
-    case "$duration" in
-      120s) duration=0.3s ;;
-      30s) duration=0.3s ;;
+    case "$SCENARIO:$duration" in
+      hang:120s|guard-hangs:30s) ;;
+      hang-once:120s)
+        [[ "\${@: -1}" == 1 ]] || exec "$@"
+        ;;
+      *) exec "$@" ;;
     esac
-    exec /usr/bin/timeout "$signal" "$duration" "$@"
+    exec /usr/bin/timeout "$signal" 0.3s "$@"
   `);
   shim("dpkg", `
     echo "dpkg:$*" >> "$STATE/events"

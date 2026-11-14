@@ -9,5 +9,7 @@ The [execution evidence](../testing/evidence/warranty-supply-return/README.md#re
 
 The first correction head's CI exposed an existing Engineering Materials browser reload race: its post-failure snapshot already contains the expected count. A bounded test-only repair waits for the new frame request before the original assertions; no assertion or timeout is weakened, and no failed job is rerun. The [CI investigation](../testing/evidence/warranty-supply-return/README.md#ci-reload-synchronization) links the failed head, passing unchanged-main control and retained snapshot. Fresh final-head CI remains required.
 
+The next head exposed an unchanged installer unit fixture racing its synthetic 300 ms hang timer during ordinary subprocess startup. A matched 350 ms startup-delay control fails on main's harness and passes after the test-only repair; real hang/watchdog coverage and all original assertions remain. A separate compiled-proof artifact upload failed with `ETIMEDOUT` after proof execution passed. [Follow-up evidence](../testing/evidence/warranty-supply-return/README.md#ci-installer-fixture-and-artifact-upload) records both, with no job rerun or production installer change.
+
 <!-- decision-index -->
 [Warranty to Supply return receiving](../decisions/warranty-supply-return-receiving.md) (PPO-WARRANTY-SUPPLY-RETURN-DEC) records the two review corrections using the existing application transaction and physical-progress projection.
