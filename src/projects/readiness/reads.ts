@@ -223,7 +223,24 @@ export async function readProjectReadiness(
       {
         kind: "SpecialistPackage",
         capability: "project.specialist.read",
-        sql: "SELECT id FROM ppo.project_specialist_packages WHERE workspace_id=$1 AND project_id=$2 ORDER BY id LIMIT $3",
+        // Assess only current briefs, before applying the candidate bound. Native
+        // history remains available in the specialist workflow; a successor's
+        // evidence still has to pass its own full authority checks below.
+        sql: `SELECT package.id FROM ppo.project_specialist_packages package
+          JOIN LATERAL (
+            SELECT state FROM ppo.project_specialist_events
+            WHERE workspace_id=package.workspace_id AND package_id=package.id
+            ORDER BY version DESC LIMIT 1
+          ) latest ON true
+          WHERE package.workspace_id=$1 AND package.project_id=$2
+            AND latest.state <> 'Withdrawn'
+            AND NOT EXISTS (
+              SELECT 1 FROM ppo.project_specialist_packages successor
+              WHERE successor.workspace_id=package.workspace_id
+                AND successor.project_id=package.project_id
+                AND successor.predecessor_id=package.id
+            )
+          ORDER BY package.id LIMIT $3`,
         read: (source) => specialist(c, p, id, source),
       },
     ];

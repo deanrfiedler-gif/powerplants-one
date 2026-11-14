@@ -350,3 +350,134 @@ test("PJ07-07 promises use the demand's current civil date and never turn a shor
     family(second, "MaterialDemand").items[0].source_hash,
   );
 });
+
+test("PJ07-08 withdrawn specialist packages are omitted with or without retained-source drift (review scenario A)", async () => {
+  const f = await specialistFixture();
+  await commandPackage(f.owner, f.project.id, f.package);
+  const current = { id: randomUUID() };
+  await commandPackage(f.owner, f.project.id, {
+    ...f.package,
+    ...packageAction(current.id, 0, "Create"),
+  });
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(current.id, 1, "Withdraw"),
+  );
+  const beforeDrift = await readProjectReadiness(f.owner, f.project.id);
+  assert.deepEqual(
+    family(beforeDrift, "SpecialistPackage").items.map((item) => item.id),
+    [f.package.id],
+  );
+  assert.ok(!JSON.stringify(beforeDrift).includes(current.id));
+
+  await coordinateEngineering(f.owner, f.engineering.id, engineeringUpdate());
+  const drifted = await readProjectReadiness(f.owner, f.project.id);
+  assert.equal(drifted.summary.blocked, 2);
+  assert.equal(family(drifted, "SpecialistPackage").items[0].state, "Blocked");
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(f.package.id, 1, "Withdraw"),
+  );
+  const before = await snapshot();
+  const withdrawn = await readProjectReadiness(f.owner, f.project.id);
+  const source = family(withdrawn, "SpecialistPackage");
+  assert.deepEqual(source.items, []);
+  assert.equal(source.count, 0);
+  assert.equal(source.coverage, "Complete");
+  assert.equal(source.evidence, "Missing");
+  assert.equal(withdrawn.summary.blocked, 1); // Only the unallocated demand.
+  assert.ok(!JSON.stringify(withdrawn).includes(f.package.id));
+  assert.deepEqual(await snapshot(), before);
+
+  // Resolve the remaining native blocker: terminal history must not keep the
+  // Project Blocked, while the explicit non-release boundary remains intact.
+  const supply = supplyInput("Supply");
+  await saveRecord(f.owner, supply);
+  await allocate(f.owner, {
+    ...supplyBase(),
+    id: randomUUID(),
+    demand_id: f.demand.id,
+    supply_id: supply.id,
+    demand_version: 1,
+    supply_version: 1,
+    expected_version: null,
+    quantity: "10",
+    unit: "EA",
+    basis: "Usable",
+  });
+  const cleared = await readProjectReadiness(f.owner, f.project.id);
+  assert.equal(cleared.summary.blocked, 0);
+  assert.equal(cleared.summary.state, "NotAssessed");
+  assert.equal(cleared.summary.can_release, false);
+  assert.equal(cleared.summary.full_scope_assessed, false);
+});
+
+test("PJ07-09 a successor carries the specialist assessment and clears the predecessor blocker (review scenario B)", async () => {
+  const f = await specialistFixture();
+  await commandPackage(f.owner, f.project.id, f.package);
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(f.package.id, 1, "Submit"),
+  );
+  await commandPackage(
+    f.reviewer,
+    f.project.id,
+    packageAction(f.package.id, 2, "Accept"),
+  );
+  await coordinateEngineering(f.owner, f.engineering.id, engineeringUpdate());
+  assert.equal(
+    (await readProjectReadiness(f.owner, f.project.id)).summary.blocked,
+    2,
+  );
+  const successor = { id: randomUUID() };
+  await commandPackage(f.owner, f.project.id, {
+    ...f.package,
+    ...packageAction(successor.id, 0, "Create"),
+    predecessor_id: f.package.id,
+    content: {
+      ...f.package.content,
+      engineering: { id: f.engineering.id, version: 2 },
+    },
+  });
+  const draft = await readProjectReadiness(f.owner, f.project.id);
+  assert.deepEqual(
+    family(draft, "SpecialistPackage").items.map((item) => item.id),
+    [successor.id],
+  );
+  assert.equal(draft.summary.blocked, 1);
+  await commandPackage(
+    f.owner,
+    f.project.id,
+    packageAction(successor.id, 1, "Submit"),
+  );
+  await commandPackage(
+    f.reviewer,
+    f.project.id,
+    packageAction(successor.id, 2, "Accept"),
+  );
+  const read = await readProjectReadiness(f.owner, f.project.id);
+  const source = family(read, "SpecialistPackage");
+  assert.equal(source.count, 1);
+  assert.equal(source.coverage, "Complete");
+  assert.equal(source.items[0].id, successor.id);
+  assert.equal(source.items[0].source_state, "Accepted");
+  assert.equal(source.items[0].source_status, "Current");
+  assert.equal(source.items[0].state, "EvidenceNeeded");
+  assert.equal(read.summary.blocked, 1); // Only the unallocated demand.
+  assert.ok(!JSON.stringify(read).includes(f.package.id));
+
+  await database().query(
+    "DELETE FROM ppo.permission_grants WHERE workspace_id=$1 AND user_id=$2 AND capability='engineering.read'",
+    [f.owner.workspace_id, f.owner.actor_id],
+  );
+  const hidden = await readProjectReadiness(f.owner, f.project.id);
+  assert.equal(family(hidden, "SpecialistPackage").coverage, "Partial");
+  assert.deepEqual(family(hidden, "SpecialistPackage").items, []);
+  assert.equal(family(hidden, "SpecialistPackage").count, 0);
+  assert.ok(!JSON.stringify(hidden).includes(successor.id));
+  assert.ok(!JSON.stringify(hidden).includes(f.package.id));
+  assert.equal(hidden.summary.can_release, false);
+});
