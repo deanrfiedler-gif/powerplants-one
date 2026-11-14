@@ -601,7 +601,7 @@ Dean saved the named version "PPO - Projects module (proposal) · 13 November 20
 | AQ-3 | Keep the source bracket and append "· as <person>" when the signed-in person is not Morgan Lee | 71 sheet labels (76 before the Insights sheets were removed) |
 | AQ-4 | The Shell's 12 px collapsed strip; A9 withdrawn | Local component "Shell / Workspace menu · collapsed strip" `225:187` (Default and Hover) on PJ03 (`225:402`) and PG02 (`225:618`); their content region starts at x 92 and is 1300 px wide; the 56 px strip `25:222` is removed |
 | AQ-5 | Projects draws no Reporting or Finance page | IS01 to IS04 and TB16 removed; the menu's Insights items open Reporting RP-03 (`/reports/delivery`) and Finance FN-03 (`/finance/projects`); the page is now "Field work · PJ" and its notes card says so |
-| AQ-6 | The file is named "PPO - Projects module (proposal)" | Dean's rename in Figma; the Read me and this record already use the name |
+| AQ-6 | The file is named "PPO - Projects module (proposal)" | Dean renamed the file in Figma on 14 November 2026; the Read me and this record already used the name |
 | G-1 | Gantt rows follow density: Comfortable 40 px rows with 26 px bars, Compact 32 px rows with 20 px bars | The record schedules drawn with 40 px rows (RC02, X14, PS10, TB05) have 26 px bars with the baseline pill below; the Programme keeps its rows until Library rule G2 is amended to the density rule (Library owner) |
 | G-2 | Connector bends rounded at 4 px | Deferred to the Library's Dependency part |
 | G-3 | The attention icon sits inside a bar at least 32 px wide, otherwise before the label | 48 at-risk or conflict bars on the three chart pages: 24 inside the bar, 24 before the label, in the warning or danger colour of the bar's state |
@@ -659,7 +659,7 @@ Screenshots were checked for PG02, PG07, TB07, RC01, RC02, CM03, CM06, TB10, TB0
 
 **Open.**
 - **Waiting on the Library.** PJA-08's remaining literal paints and PJA-21's kit mapping wait for the Library's publication. G-2 waits for its Dependency part. The amendment of rule G2 and the correction of the Library record's drawer row are the Library owner's.
-- **Elsewhere.** The Sales Handovers page's "Mon 3 Nov" is the Sales session's. The rename (AQ-6) is Dean's.
+- **Elsewhere.** The Sales Handovers page's "Mon 3 Nov" is the Sales session's. The rename (AQ-6) was made by Dean on 14 November 2026.
 - **For Dean's review.** RAID entries keep Edit as their primary, as drawn, rather than a state decision such as Move to Monitoring. AC01's 440 px inline inspector (A76) was not changed.
 
 Dean saved the named version "PPO - Projects module (proposal)" after the batch on 13 November 2026; the Read me's status line records it.

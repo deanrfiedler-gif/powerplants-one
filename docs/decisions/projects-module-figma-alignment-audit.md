@@ -154,7 +154,7 @@ Dean accepted every recommendation in section 5 and the three cross-file rulings
 | PJA-10 Insights pages | Fixed | IS01 to IS04 and TB16 removed; the menu's Insights items open RP-03 and FN-03 (AQ-5) |
 | PJA-12 Drawer widths | Fixed for drawers | Per AQ-1 the 432 px panels conform; the working calendar is 752 px (800 with its tab column) and the tablet task panel 480 px. AC01's 440 px inline inspector (A76) is unchanged and stays for Dean's review |
 | PJA-18 Signed-in person | Fixed | 71 sheet labels append "· as <person>" (AQ-3) |
-| PJA-20 File name | Open | Dean renames the file "PPO - Projects module (proposal)" (AQ-6); the Read me and record already use it |
+| PJA-20 File name | Fixed, 14 November 2026 | Dean renamed the file "PPO - Projects module (proposal)" (AQ-6), the name the Read me, the records and both named versions use; "(accepted)" waits on his acceptance of the design |
 | PJA-21 Kit mapping | Open | At the Library's publication |
 
 Cross-file rulings: AC-12 needed no change; AC-22 gives the Projects handover SYN-OPP-000338; AF-129 sets SYN-QUO-000170 r01. The Gantt points G-1 to G-4 of the proposal record's section 9 are applied there, except G-2, which waits for the Library's Dependency part, and G-1 on the Programme, which waits for the Library owner's amendment of rule G2.
