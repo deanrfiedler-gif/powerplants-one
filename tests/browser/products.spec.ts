@@ -7,6 +7,7 @@ import {
   publishProduct,
   productContentFixture,
   relationshipFixture,
+  storedProductFixture,
 } from "../helpers/products";
 import { createRelationship } from "../../src/products/relationships";
 import { reviseProduct, bindProductSource } from "../../src/products/commands";
@@ -558,7 +559,7 @@ test("PD publication and candidate evidence use independent browser review witho
   await login(page, f.author.token);
   await page.goto(`/products/compatibility?product_id=${f.variant.id}`);
   await page
-    .getByText("Prepare compatibility or candidate-replacement evidence", {
+    .getByText("Prepare relationship evidence", {
       exact: true,
     })
     .click();
@@ -718,4 +719,147 @@ test("PD import browser maps clean and excluded invalid rows, reviews exact chan
       exact: true,
     }),
   ).toHaveCount(0);
+});
+
+test.describe("PD accepted vocabulary and catalogue read", () => {
+  test.use({ timezoneId: "Australia/Melbourne" });
+  test("legacy lifecycle displays, successor comparison, relationship sides, URL order and live footer", async ({
+    page,
+  }) => {
+    const f = await productFixture();
+    const marker = `SYN Legacy ${randomUUID()}`;
+    const stored = await storedProductFixture(
+      f.author.p,
+      productContentFixture({
+        title: marker,
+        model: "SYN Original",
+        lifecycle: "Supported",
+      }),
+    );
+    const original = (await readProduct(f.author.p, stored.id)).revision;
+    await login(page, f.author.token);
+    await page.goto(
+      `/products?q=${encodeURIComponent(marker)}&lifecycle=Current`,
+    );
+    const footer = page.locator("#ppo-products footer");
+    await expect(footer).toHaveText(
+      /^1 shown · limit 100 · read live at \d{2}:\d{2} AE[DS]T · no total is claimed$/,
+    );
+    const order = page.getByLabel("Order", { exact: true });
+    if (!(await order.isVisible()))
+      await page.getByRole("button", { name: /^Filters/ }).click();
+    await expect(page.getByLabel("Lifecycle", { exact: true })).toHaveValue(
+      "Current",
+    );
+    const filter = page.getByLabel("Lifecycle", { exact: true });
+    await expect(filter.locator('option:not([value=""])')).toHaveText([
+      "Current",
+      "Last-time buy",
+      "Discontinued",
+      "Unknown",
+    ]);
+    await filter.selectOption({ label: "Last-time buy" });
+    await expect(page).toHaveURL(/lifecycle=LastTimeBuy/);
+    await expect(footer).toHaveText(
+      /^0 shown · limit 100 · read live at \d{2}:\d{2} AE[DS]T · no total is claimed$/,
+    );
+    await filter.selectOption("Current");
+    await expect(page).toHaveURL(/lifecycle=Current/);
+    await expect(order.locator("option")).toHaveText(["Product", "Updated"]);
+    await expect(order).toHaveValue("product");
+    await order.selectOption("updated");
+    await expect(page).toHaveURL(/lifecycle=Current&sort=updated/);
+    await expect(order).toHaveValue("updated");
+    await page.reload();
+    await expect(order).toHaveValue("updated");
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth + 1,
+      ),
+    ).toBe(true);
+    await page.goto(`/products/${stored.id}`);
+    const lifecycle = page.locator(".pd-panel").filter({
+      has: page.getByRole("heading", {
+        name: "Lifecycle and support",
+        exact: true,
+      }),
+    });
+    await expect(lifecycle).toContainText("Current ·");
+    await expect(lifecycle).not.toContainText("Supported");
+    await page.goto(`/products/publication?product_id=${stored.id}`);
+    await expect(page.getByLabel("Lifecycle evidence conclusion")).toHaveValue(
+      "Current",
+    );
+    await expect(
+      page
+        .getByLabel("Lifecycle evidence conclusion")
+        .locator('option:not([value=""])'),
+    ).toHaveText(["Current", "Last-time buy", "Discontinued", "Unknown"]);
+    // The page-level comparison shows the stored revision against its
+    // predecessor; the editor's own comparison is collapsed until opened.
+    const editor = page.locator("form").filter({
+      has: page.getByRole("heading", {
+        name: "Prepare a draft successor",
+        exact: true,
+      }),
+    });
+    await editor
+      .getByText("Compare proposed content before saving", { exact: true })
+      .click();
+    const change = editor.locator(".pd-change").filter({
+      has: page.getByRole("heading", { name: "lifecycle", exact: true }),
+    });
+    await expect(change).toContainText("Supported");
+    await expect(change).toContainText("Current");
+    await page
+      .getByLabel("Reason and evidence basis")
+      .first()
+      .fill("SYN explicitly save accepted lifecycle word");
+    await page
+      .getByRole("button", { name: "Save draft successor", exact: true })
+      .click();
+    await expect(
+      page.getByText("Saved / recovered:", { exact: false }).first(),
+    ).toBeVisible();
+    const saved = await readProduct(f.author.p, stored.id);
+    expect(saved.revision.content.lifecycle).toBe("Current");
+    expect(saved.previous).toEqual(original);
+    await page.goto(`/products/${stored.id}?revision_id=${original.id}`);
+    await expect(lifecycle).toContainText("Supported ·");
+    const candidate = (await readProduct(f.author.p, f.variant.id)).revision;
+    await createRelationship(f.author.p, {
+      ...crmBase(),
+      id: randomUUID(),
+      from: { product_id: stored.id, revision_id: saved.revision.id },
+      to: { product_id: f.variant.id, revision_id: candidate.id },
+      predecessor_id: null,
+      content: relationshipFixture({ type: "Replaces" }),
+    });
+    await page.goto(`/products/compatibility?product_id=${stored.id}`);
+    await expect(
+      page.getByRole("heading", {
+        name: `${saved.revision.content.model} / ${saved.revision.content.variant} · Replaced by · ${candidate.content.model} / ${candidate.content.variant}`,
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Replaced by · Not reviewed", { exact: false }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole("heading", {
+        name: "Controller interface: Unresolved",
+        exact: true,
+      }),
+    ).toBeVisible();
+    await page.goto(`/products/compatibility?product_id=${f.variant.id}`);
+    await expect(
+      page.getByRole("heading", {
+        name: `${candidate.content.model} / ${candidate.content.variant} · Replaces · ${saved.revision.content.model} / ${saved.revision.content.variant}`,
+        exact: true,
+      }),
+    ).toBeVisible();
+    await expect(
+      page.getByText("Replaces · Not reviewed", { exact: false }),
+    ).toBeVisible();
+  });
 });

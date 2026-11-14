@@ -83,7 +83,13 @@ export function ProductDetailPage() {
             )}
             .
           </p>
-          <TechnicalContent content={resource.data.revision.content} />
+          <TechnicalContent
+            content={resource.data.revision.content}
+            asRecorded={
+              resource.data.revision.id !==
+              resource.data.product.current_revision_id
+            }
+          />
           <section className="pd-panel">
             <h2>Retained revision history</h2>
             {resource.data.revisions.map((r) => (

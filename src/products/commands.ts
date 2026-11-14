@@ -25,7 +25,7 @@ import {
 import {
   hash,
   kinds,
-  productContent,
+  productWriteContent,
   syntheticReference,
   type Content,
   type Product,
@@ -70,7 +70,7 @@ export function createInput(value: unknown): NewProduct {
     parent_id,
     provider: label(b.provider, "provider", 200),
     entity_key: label(b.entity_key, "entity_key", 200),
-    content: productContent(b.content),
+    content: productWriteContent(b.content),
   };
 }
 export async function appendProductEvent(
@@ -121,6 +121,7 @@ async function insertRevision(
   predecessor: string | null,
   reason: string,
 ) {
+  content = productWriteContent(content);
   await c.query(
     `INSERT INTO ppo.product_revisions(id,workspace_id,company_id,product_id,revision,predecessor_id,content,content_hash,reason,created_by) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
     [
@@ -222,7 +223,7 @@ export async function reviseProduct(p: Principal, id: string, value: unknown) {
     ...common(b),
     id: uuid(id, "id"),
     expected_version: version(b.expected_version),
-    content: productContent(b.content),
+    content: productWriteContent(b.content),
   };
   return sharedOperation(
     p,

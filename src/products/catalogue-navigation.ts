@@ -1,4 +1,4 @@
-const keys = ["q", "kind", "state", "lifecycle"] as const;
+const keys = ["q", "kind", "state", "lifecycle", "sort"] as const;
 
 /** UI return state never becomes an extra API filter or an arbitrary redirect. */
 export function catalogueQuery(params: Pick<URLSearchParams, "get">) {

@@ -29,7 +29,7 @@ Reuse ProductsFrame, ProductContext, TechnicalContent and Comparison; shared But
 1. Stage a file or pasted JSON in PPO synthetic catalogue 1 format, up to 12,000 UTF-8 bytes and 50 rows; retain source description/provider/company/time.
 2. Inspect raw rows, source hash and original keys. Choose Resolve exact target, New identity or Exclude with a reason.
 3. Prepare a mapping preview. Inspect duplicate candidates, missing units/context, unsupported claims and exact before/after values.
-4. Correct every blocking exception; similarity is never automatic merge. A separate reviewer approves the exact comparison hash.
+4. Correct every blocking exception; similarity is never automatic merge. If review asks you to map the batch again because its plan uses an earlier lifecycle word, prepare a new mapping while the batch remains Mapped. The old plan and source remain preserved. A separate reviewer approves the new exact comparison hash. Already Reviewed legacy plans remain frozen and cannot apply.
 5. Apply the reviewed plan. Published targets receive draft successors; new identities remain Draft. Open resulting records and retain the original receipt.
 
 Incoming: exact permitted Product/company/source context. Outgoing: ES-03 source review/refresh, EN-06 Materials, EN-07 Change Impact, EQ-06 Bulletins and EQ-07 Lifecycle as applicable. Published catalogue evidence is not an owning-domain suitability or commercial decision.
