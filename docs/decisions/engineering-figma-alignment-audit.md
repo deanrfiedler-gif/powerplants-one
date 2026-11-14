@@ -318,6 +318,10 @@ The batch took about 57 Figma calls. Three stopped on an instance sublayer that 
 
 The file is still a proposal, and nothing is accepted by this record. Dean is asked to save a named version that pins the aligned state, for example "PPO - Engineering module (proposal) · alignment batch 13 November 2026".
 
+### 8.7 File name
+
+AF-028 is closed. On 14 November 2026 Dean renamed the file "PPO - Engineering module (proposal)", and the name in his new link matches. The file name, the Read me title (text 78:3), the A1 notes line (79:48) and record assumption A1 now agree; A1 was corrected in its own change. The Plugin API does not expose a file's title, so the rename rests on Dean's statement and his link, and was not read from the file. The file is renamed "(accepted)" only when Dean accepts it, with a named version of the same title.
+
 ## Appendix A · Alignment batch · PPO - Engineering module
 
 From the read-only alignment audit of 13 November 2026 (this record). Apply in this order. Node IDs are in this file unless another file is named; most are sheet frames, and the rest are text nodes or components. Change nothing else.
