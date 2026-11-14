@@ -9,7 +9,7 @@ versioning: git
 
 # Products module refined UI pages — proposal
 
-**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, section 13 the named version that pins it as the build basis, and section 14 the alignment batch applied after that version.
+**Owner:** Dean Fiedler · **Date:** 12 November 2026 · **Status:** Owner-accepted design, 12 November 2026 ([Acceptance — 12 November 2026](#11-acceptance--12-november-2026)). Sections 1 to 9 are the proposal record as written before acceptance; section 10 holds the audit, section 11 the acceptance, section 12 what was applied after it, section 13 the named version that pins it as the build basis, section 14 the alignment batch applied after that version, and section 15 the file's current name.
 
 On 12 November 2026 Dean supplied the prompt "Design the Products module pages for Powerplants One in Figma" with Addendum A3 (persona and story reconciliation, section A3.13 for Products) and a new, empty Figma file: "Below is the link to the new Figma page file that I have created for this." The prompt carries his standing instruction: "If you need any decisions from me, just proceed however you believe is the most professional and advanced approach."
 
@@ -488,3 +488,13 @@ The [independent review](products-module-independent-review.md) (PPO-PRODUCTS-RE
 Every node ID in section 3 is unchanged. PH11's sheet name now reads "Unresolved source — SYN-SRC-0025 r01". Sections 3 to 7 otherwise stay as written, including the six-digit cost-source references in section 7's evidence scan, and are read with this section.
 
 Dean saved the batch as the named version "PPO - Products module (accepted) · alignment batch" on 13 November 2026. Section 13 names it as the build basis.
+
+## 15. File name — 14 November 2026
+
+Dean renamed the private Figma file **"PPO - Products module (accepted)"** on 14 November 2026. This follows the convention he has used for the module files: "(proposal)" while a design awaits acceptance, "(accepted)" once he has accepted it.
+
+It is the same file. Read through the Figma connector that day, it has the same twelve pages with the same IDs, from Read me `0:1` to Scratch `9:12`, and its key is unchanged. The connector returns only the generic name "Document", so the name rests on Dean's word.
+
+Every citation of "PPO - Products module" means this file. That covers this record (A1 and sections 1 to 14), the [independent review](products-module-independent-review.md), the status fragments and the build brief for the first Products build step. No citation is rewritten. The two named versions keep their titles, "PPO - Products module (accepted)" and "PPO - Products module (accepted) · alignment batch", and section 13's build basis is unchanged.
+
+The file's link and key stay out of this public repository (ADR-0050, ADR-0053). The Read me header in the file already reads "PPO - Products module (accepted 12 November 2026)" and is not edited, so the file stays identical to its named version. A1's other point stays open: the design-to-build standard still names "PPO - Sales & Products" as the domain file for Products.
